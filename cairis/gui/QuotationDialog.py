@@ -17,10 +17,10 @@
 
 
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from QuotationPanel import QuotationPanel
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 class QuotationDialog(wx.Dialog):
   def __init__(self,parent):
@@ -33,17 +33,17 @@ class QuotationDialog(wx.Dialog):
     self.panel = QuotationPanel(self)
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.QUOTATION_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,QUOTATION_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,codeName,atName,aName,startIdx,endIdx,synopsis,label):
     self.theOldStartIdx = startIdx
     self.theOldEndIdx = endIdx
-    codeCtrl = self.FindWindowById(armid.QUOTATION_TEXTCODE_ID)
-    atCtrl = self.FindWindowById(armid.QUOTATION_TEXTARTIFACTTYPE_ID)
-    anCtrl = self.FindWindowById(armid.QUOTATION_TEXTARTIFACTNAME_ID)
-    srcCtrl = self.FindWindowById(armid.QUOTATION_TEXTSOURCE_ID)
-    synCtrl = self.FindWindowById(armid.QUOTATION_TEXTSYNOPSIS_ID)
-    lblCtrl = self.FindWindowById(armid.QUOTATION_TEXTLABEL_ID)
+    codeCtrl = self.FindWindowById(QUOTATION_TEXTCODE_ID)
+    atCtrl = self.FindWindowById(QUOTATION_TEXTARTIFACTTYPE_ID)
+    anCtrl = self.FindWindowById(QUOTATION_TEXTARTIFACTNAME_ID)
+    srcCtrl = self.FindWindowById(QUOTATION_TEXTSOURCE_ID)
+    synCtrl = self.FindWindowById(QUOTATION_TEXTSYNOPSIS_ID)
+    lblCtrl = self.FindWindowById(QUOTATION_TEXTLABEL_ID)
 
     codeCtrl.SetValue(codeName)
     atCtrl.SetValue(atName)
@@ -57,12 +57,12 @@ class QuotationDialog(wx.Dialog):
   def onCommit(self,evt):
     commitLabel = 'Update quotation'
 
-    codeCtrl = self.FindWindowById(armid.QUOTATION_TEXTCODE_ID)
-    atCtrl = self.FindWindowById(armid.QUOTATION_TEXTARTIFACTTYPE_ID)
-    anCtrl = self.FindWindowById(armid.QUOTATION_TEXTARTIFACTNAME_ID)
-    srcCtrl = self.FindWindowById(armid.QUOTATION_TEXTSOURCE_ID)
-    synCtrl = self.FindWindowById(armid.QUOTATION_TEXTSYNOPSIS_ID)
-    lblCtrl = self.FindWindowById(armid.QUOTATION_TEXTLABEL_ID)
+    codeCtrl = self.FindWindowById(QUOTATION_TEXTCODE_ID)
+    atCtrl = self.FindWindowById(QUOTATION_TEXTARTIFACTTYPE_ID)
+    anCtrl = self.FindWindowById(QUOTATION_TEXTARTIFACTNAME_ID)
+    srcCtrl = self.FindWindowById(QUOTATION_TEXTSOURCE_ID)
+    synCtrl = self.FindWindowById(QUOTATION_TEXTSYNOPSIS_ID)
+    lblCtrl = self.FindWindowById(QUOTATION_TEXTLABEL_ID)
 
     codeName = codeCtrl.GetValue()
     atName = atCtrl.GetValue()
@@ -80,4 +80,4 @@ class QuotationDialog(wx.Dialog):
       self.EndModal(wx.ID_CLOSE)
     b = Borg()
     b.dbProxy.updateQuotation(codeName,atName,aName,self.theOldStartIdx,self.theOldEndIdx,startIdx,endIdx,synopsis,label)
-    self.EndModal(armid.QUOTATION_BUTTONCOMMIT_ID)
+    self.EndModal(QUOTATION_BUTTONCOMMIT_ID)

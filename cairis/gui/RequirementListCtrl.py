@@ -17,13 +17,13 @@
 
 
 import wx
-import armid
-import ARM
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
 from RequirementDialog import RequirementDialog
 
 class RequirementListCtrl(wx.ListCtrl):
-  def __init__(self,parent,structCtrl,winId = armid.SECURITYPATTERN_LISTREQUIREMENTS_ID):
+  def __init__(self,parent,structCtrl,winId = SECURITYPATTERN_LISTREQUIREMENTS_ID):
     wx.ListCtrl.__init__(self,parent,winId,size=wx.DefaultSize,style=wx.LC_REPORT)
     b = Borg()
     self.dbProxy = b.dbProxy
@@ -33,11 +33,11 @@ class RequirementListCtrl(wx.ListCtrl):
     self.SetColumnWidth(0,250)
     self.theSelectedIdx = -1
     self.theDimMenu = wx.Menu()
-    self.theDimMenu.Append(armid.AA_MENUADD_ID,'Add')
-    self.theDimMenu.Append(armid.AA_MENUDELETE_ID,'Delete')
+    self.theDimMenu.Append(AA_MENUADD_ID,'Add')
+    self.theDimMenu.Append(AA_MENUDELETE_ID,'Delete')
     self.Bind(wx.EVT_RIGHT_DOWN,self.OnRightDown)
-    wx.EVT_MENU(self.theDimMenu,armid.AA_MENUADD_ID,self.onAddRequirement)
-    wx.EVT_MENU(self.theDimMenu,armid.AA_MENUDELETE_ID,self.onDeleteRequirement)
+    wx.EVT_MENU(self.theDimMenu,AA_MENUADD_ID,self.onAddRequirement)
+    wx.EVT_MENU(self.theDimMenu,AA_MENUDELETE_ID,self.onDeleteRequirement)
 
     self.Bind(wx.EVT_LIST_ITEM_SELECTED,self.OnItemSelected)
     self.Bind(wx.EVT_LIST_ITEM_DESELECTED,self.OnItemDeselected)
@@ -48,7 +48,7 @@ class RequirementListCtrl(wx.ListCtrl):
 
   def onAddRequirement(self,evt):
     dlg = RequirementDialog(self,self.theStructureCtrl.assets())
-    if (dlg.ShowModal() == armid.PATTERNREQUIREMENT_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == PATTERNREQUIREMENT_BUTTONCOMMIT_ID):
       self.theSelectedIdx = self.GetItemCount()
       reqName = dlg.name()
       self.InsertStringItem(self.theSelectedIdx,reqName)
@@ -84,7 +84,7 @@ class RequirementListCtrl(wx.ListCtrl):
     reqAsset = reqData[4]
      
     dlg = RequirementDialog(self,self.theStructureCtrl.assets(),reqName,reqDesc,reqType,reqRationale,reqFC,reqAsset)
-    if (dlg.ShowModal() == armid.PATTERNREQUIREMENT_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == PATTERNREQUIREMENT_BUTTONCOMMIT_ID):
       del self.reqs[reqName]
       reqName = dlg.name()
       self.SetStringItem(self.theSelectedIdx,0,reqName)

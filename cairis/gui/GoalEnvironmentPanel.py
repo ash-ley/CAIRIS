@@ -17,14 +17,14 @@
 
 
 import wx
-import armid
-from GoalEnvironmentProperties import GoalEnvironmentProperties
+from cairis.core.armid import *
+from cairis.core.GoalEnvironmentProperties import GoalEnvironmentProperties
 from GoalEnvironmentNotebook import GoalEnvironmentNotebook
 from EnvironmentListCtrl import EnvironmentListCtrl
 
 class GoalEnvironmentPanel(wx.Panel):
   def __init__(self,parent,dp):
-    wx.Panel.__init__(self,parent,armid.GOAL_PANELENVIRONMENT_ID)
+    wx.Panel.__init__(self,parent,GOAL_PANELENVIRONMENT_ID)
     self.dbProxy = dp
     self.theGoalId = None
     self.theEnvironmentDictionary = {}
@@ -34,7 +34,7 @@ class GoalEnvironmentPanel(wx.Panel):
     environmentBox = wx.StaticBox(self)
     environmentListSizer = wx.StaticBoxSizer(environmentBox,wx.HORIZONTAL)
     mainSizer.Add(environmentListSizer,0,wx.EXPAND)
-    self.environmentList = EnvironmentListCtrl(self,armid.GOAL_LISTENVIRONMENTS_ID,self.dbProxy)
+    self.environmentList = EnvironmentListCtrl(self,GOAL_LISTENVIRONMENTS_ID,self.dbProxy)
     environmentListSizer.Add(self.environmentList,1,wx.EXPAND)
     environmentDimSizer = wx.BoxSizer(wx.VERTICAL)
     mainSizer.Add(environmentDimSizer,1,wx.EXPAND)
@@ -47,16 +47,16 @@ class GoalEnvironmentPanel(wx.Panel):
 
     self.SetSizer(mainSizer)
 
-    self.labelCtrl = self.notebook.FindWindowById(armid.GOAL_TEXTLABEL_ID)
-    self.definitionCtrl = self.notebook.FindWindowById(armid.GOAL_TEXTDEFINITION_ID)
-    self.categoryCtrl = self.notebook.FindWindowById(armid.GOAL_COMBOCATEGORY_ID)
-    self.priorityCtrl = self.notebook.FindWindowById(armid.GOAL_COMBOPRIORITY_ID)
-    self.fitCriterionCtrl = self.notebook.FindWindowById(armid.GOAL_TEXTFITCRITERION_ID)
-    self.issueCtrl = self.notebook.FindWindowById(armid.GOAL_TEXTISSUE_ID)
-    self.goalAssociationCtrl = self.notebook.FindWindowById(armid.GOAL_LISTGOALREFINEMENTS_ID)
-    self.subGoalAssociationCtrl = self.notebook.FindWindowById(armid.GOAL_LISTSUBGOALREFINEMENTS_ID)
-    self.cCtrl = self.notebook.FindWindowById(armid.GOAL_LISTCONCERNS_ID)
-    self.caCtrl = self.notebook.FindWindowById(armid.GOAL_LISTCONCERNASSOCIATIONS_ID)
+    self.labelCtrl = self.notebook.FindWindowById(GOAL_TEXTLABEL_ID)
+    self.definitionCtrl = self.notebook.FindWindowById(GOAL_TEXTDEFINITION_ID)
+    self.categoryCtrl = self.notebook.FindWindowById(GOAL_COMBOCATEGORY_ID)
+    self.priorityCtrl = self.notebook.FindWindowById(GOAL_COMBOPRIORITY_ID)
+    self.fitCriterionCtrl = self.notebook.FindWindowById(GOAL_TEXTFITCRITERION_ID)
+    self.issueCtrl = self.notebook.FindWindowById(GOAL_TEXTISSUE_ID)
+    self.goalAssociationCtrl = self.notebook.FindWindowById(GOAL_LISTGOALREFINEMENTS_ID)
+    self.subGoalAssociationCtrl = self.notebook.FindWindowById(GOAL_LISTSUBGOALREFINEMENTS_ID)
+    self.cCtrl = self.notebook.FindWindowById(GOAL_LISTCONCERNS_ID)
+    self.caCtrl = self.notebook.FindWindowById(GOAL_LISTCONCERNASSOCIATIONS_ID)
 
     self.environmentList.Bind(wx.EVT_LIST_INSERT_ITEM,self.OnAddEnvironment)
     self.environmentList.Bind(wx.EVT_LIST_DELETE_ITEM,self.OnDeleteEnvironment)

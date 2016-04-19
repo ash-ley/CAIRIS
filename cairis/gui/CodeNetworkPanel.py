@@ -17,8 +17,8 @@
 
 
 import wx
-import armid
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.Borg import Borg
 from BasePanel import BasePanel
 from CodeNetworkView import CodeNetworkView
 from CodeNetworkModel import CodeNetworkModel
@@ -27,30 +27,30 @@ from CodeRelationshipEditor import CodeRelationshipEditor
 
 class CodeNetworkPanel(BasePanel):
   def __init__(self,parent,personaName,codeNet):
-    BasePanel.__init__(self,parent,armid.CODENETWORK_ID)
+    BasePanel.__init__(self,parent,CODENETWORK_ID)
     b = Borg()
     self.dbProxy = b.dbProxy
     self.theCodeNetwork = codeNet
 
     self.theViewMenu = wx.Menu()
-    self.theViewMenu.Append(armid.CNV_MENU_ADD_ID,'Add')
-    self.theViewMenu.Append(armid.CNV_MENU_EDIT_ID,'Edit')
-    wx.EVT_MENU(self,armid.CNV_MENU_ADD_ID,self.onAddRelationship)
-    wx.EVT_MENU(self,armid.CNV_MENU_EDIT_ID,self.onEditRelationship)
+    self.theViewMenu.Append(CNV_MENU_ADD_ID,'Add')
+    self.theViewMenu.Append(CNV_MENU_EDIT_ID,'Edit')
+    wx.EVT_MENU(self,CNV_MENU_ADD_ID,self.onAddRelationship)
+    wx.EVT_MENU(self,CNV_MENU_EDIT_ID,self.onEditRelationship)
 
     mainSizer = wx.BoxSizer(wx.VERTICAL)
     personas = self.dbProxy.getDimensionNames('persona')
-    mainSizer.Add(self.buildComboSizerList('Persona',(87,30),armid.CODENETWORK_COMBOPERSONA_ID,personas),0,wx.EXPAND)
+    mainSizer.Add(self.buildComboSizerList('Persona',(87,30),CODENETWORK_COMBOPERSONA_ID,personas),0,wx.EXPAND)
 
     cnBox = wx.StaticBox(self,-1,'Code Network')
     cnSizer = wx.StaticBoxSizer(cnBox,wx.HORIZONTAL)
     mainSizer.Add(cnSizer,1,wx.EXPAND)
-    self.codeNetView = CodeNetworkView(self,armid.CODENETWORK_IMAGENETWORK_ID)
+    self.codeNetView = CodeNetworkView(self,CODENETWORK_IMAGENETWORK_ID)
     self.codeNetView.Bind(wx.EVT_RIGHT_DOWN,self.onRightDown)
     self.codeNetView.reloadImage()
     cnSizer.Add(self.codeNetView,1,wx.EXPAND)
 
-    self.personaCtrl = self.FindWindowById(armid.CODENETWORK_COMBOPERSONA_ID)
+    self.personaCtrl = self.FindWindowById(CODENETWORK_COMBOPERSONA_ID)
     self.personaCtrl.SetValue(personaName)
     self.personaCtrl.Bind(wx.EVT_COMBOBOX,self.onPersonaChange)
     self.SetSizer(mainSizer)
@@ -68,7 +68,7 @@ class CodeNetworkPanel(BasePanel):
   def onAddRelationship(self,evt):
     personaName = self.personaCtrl.GetValue()
     dlg = CodeRelationshipDialog(self)
-    if (dlg.ShowModal() == armid.CODERELATIONSHIP_BUTTONADD_ID):
+    if (dlg.ShowModal() == CODERELATIONSHIP_BUTTONADD_ID):
       fromName = dlg.fromName()
       toName = dlg.toName()
       rshipType = dlg.relationship()
@@ -80,7 +80,7 @@ class CodeNetworkPanel(BasePanel):
   def onEditRelationship(self,evt):
     personaName = self.personaCtrl.GetValue()
     dlg = CodeRelationshipEditor(self,personaName)
-    if (dlg.ShowModal() == armid.CODERELATIONSHIP_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == CODERELATIONSHIP_BUTTONCOMMIT_ID):
       self.codeNetView.reloadImage()
 
   def onRightDown(self,evt):

@@ -18,8 +18,8 @@
 
 import wx
 import os
-import armid
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.Borg import Borg
 
 class EditorBase(wx.Panel):
   def __init__(self,parent,id):
@@ -45,21 +45,21 @@ class EditorBase(wx.Panel):
     locationViewBmp = wx.Image(directoryPrefix + 'location_view.png',wx.BITMAP_TYPE_PNG).ConvertToBitmap()
 
     self.visToolbar = wx.ToolBar(self,style=wx.TB_HORIZONTAL | wx.TB_DOCKABLE)
-    self.visToolbar.AddSimpleTool(armid.RMFRAME_TOOL_DEPENDENCIES,dependenciesBmp,'Edit Dependencies')
-    self.visToolbar.AddSimpleTool(armid.RMFRAME_TOOL_GOALASSOCIATIONS,goalAssociationsBmp,'Edit Goal Associations')
-    self.visToolbar.AddSimpleTool(armid.RMFRAME_TOOL_CLASSASSOCIATIONS,classAssociationsBmp,'Edit Asset Associations')
+    self.visToolbar.AddSimpleTool(RMFRAME_TOOL_DEPENDENCIES,dependenciesBmp,'Edit Dependencies')
+    self.visToolbar.AddSimpleTool(RMFRAME_TOOL_GOALASSOCIATIONS,goalAssociationsBmp,'Edit Goal Associations')
+    self.visToolbar.AddSimpleTool(RMFRAME_TOOL_CLASSASSOCIATIONS,classAssociationsBmp,'Edit Asset Associations')
     self.visToolbar.AddSeparator()
-    self.visToolbar.AddSimpleTool(armid.RMFRAME_TOOL_ENVIRONMENTMODEL,environmentModelBmp,'View Risk Analysis Model')
-    self.visToolbar.AddSimpleTool(armid.RMFRAME_TOOL_GOALMODEL,goalModelBmp,'View Goal Model')
-    self.visToolbar.AddSimpleTool(armid.RMFRAME_TOOL_OBSTACLEMODEL,obstacleModelBmp,'View Obstacle Model')
-    self.visToolbar.AddSimpleTool(armid.RMFRAME_TOOL_RESPONSIBILITYMODEL,responsibilityModelBmp,'View Responsibility Model')
-    self.visToolbar.AddSimpleTool(armid.RMFRAME_TOOL_ASSETMODEL,assetModelBmp,'View Asset Model')
-    self.visToolbar.AddSimpleTool(armid.RMFRAME_TOOL_TASKMODEL,taskModelBmp,'View Task Model')
-    self.visToolbar.AddSimpleTool(armid.RMFRAME_TOOL_APMODEL,apModelBmp,'View Assumption Persona Model')
-    self.visToolbar.AddSimpleTool(armid.RMFRAME_TOOL_ATMODEL,atModelBmp,'View Assumption Task Model')
-    self.visToolbar.AddSimpleTool(armid.RMFRAME_TOOL_CMMODEL,cmModelBmp,'View Concept Map Model')
-    self.visToolbar.AddSimpleTool(armid.RMFRAME_TOOL_COMPONENTMODEL,componentModelBmp,'View Component Model')
-    self.visToolbar.AddSimpleTool(armid.RMFRAME_TOOL_LOCATIONMODEL,locationViewBmp,'View Location Model')
+    self.visToolbar.AddSimpleTool(RMFRAME_TOOL_ENVIRONMENTMODEL,environmentModelBmp,'View Risk Analysis Model')
+    self.visToolbar.AddSimpleTool(RMFRAME_TOOL_GOALMODEL,goalModelBmp,'View Goal Model')
+    self.visToolbar.AddSimpleTool(RMFRAME_TOOL_OBSTACLEMODEL,obstacleModelBmp,'View Obstacle Model')
+    self.visToolbar.AddSimpleTool(RMFRAME_TOOL_RESPONSIBILITYMODEL,responsibilityModelBmp,'View Responsibility Model')
+    self.visToolbar.AddSimpleTool(RMFRAME_TOOL_ASSETMODEL,assetModelBmp,'View Asset Model')
+    self.visToolbar.AddSimpleTool(RMFRAME_TOOL_TASKMODEL,taskModelBmp,'View Task Model')
+    self.visToolbar.AddSimpleTool(RMFRAME_TOOL_APMODEL,apModelBmp,'View Assumption Persona Model')
+    self.visToolbar.AddSimpleTool(RMFRAME_TOOL_ATMODEL,atModelBmp,'View Assumption Task Model')
+    self.visToolbar.AddSimpleTool(RMFRAME_TOOL_CMMODEL,cmModelBmp,'View Concept Map Model')
+    self.visToolbar.AddSimpleTool(RMFRAME_TOOL_COMPONENTMODEL,componentModelBmp,'View Component Model')
+    self.visToolbar.AddSimpleTool(RMFRAME_TOOL_LOCATIONMODEL,locationViewBmp,'View Location Model')
 
     self.visToolbar.Realize()
 
@@ -75,18 +75,18 @@ class EditorBase(wx.Panel):
     modBox = wx.StaticBox(self,-1,self.objectLabel)
     modSizer = wx.StaticBoxSizer(modBox,wx.HORIZONTAL)
     if len(reqMods) == 0:
-      self.modCombo = wx.ComboBox(self,armid.RMFRAME_TOOL_COMBOOBJECT,'',choices=[],size=(200,-1),style=wx.CB_DROPDOWN)
+      self.modCombo = wx.ComboBox(self,RMFRAME_TOOL_COMBOOBJECT,'',choices=[],size=(200,-1),style=wx.CB_DROPDOWN)
     else:
-      self.modCombo = wx.ComboBox(self,armid.RMFRAME_TOOL_COMBOOBJECT,reqMods[0],choices=reqMods,size=(200,-1),style=wx.CB_DROPDOWN)
+      self.modCombo = wx.ComboBox(self,RMFRAME_TOOL_COMBOOBJECT,reqMods[0],choices=reqMods,size=(200,-1),style=wx.CB_DROPDOWN)
     modSizer.Add(self.modCombo,0,wx.EXPAND)
     filterSizer.Add(modSizer,0,wx.ALL | wx.ALIGN_LEFT,4)
 
     envBox = wx.StaticBox(self,-1,'Environments')
     envSizer = wx.StaticBoxSizer(envBox,wx.HORIZONTAL)
     if len(envMods) == 0:
-      self.envCombo = wx.ComboBox(self,armid.RMFRAME_TOOL_COMBOENVIRONMENT,'',choices=[],size=(200,-1),style=wx.CB_DROPDOWN)
+      self.envCombo = wx.ComboBox(self,RMFRAME_TOOL_COMBOENVIRONMENT,'',choices=[],size=(200,-1),style=wx.CB_DROPDOWN)
     else:
-      self.envCombo = wx.ComboBox(self,armid.RMFRAME_TOOL_COMBOENVIRONMENT,envMods[0],choices=envMods,size=(200,-1),style=wx.CB_DROPDOWN)
+      self.envCombo = wx.ComboBox(self,RMFRAME_TOOL_COMBOENVIRONMENT,envMods[0],choices=envMods,size=(200,-1),style=wx.CB_DROPDOWN)
     envSizer.Add(self.envCombo,0,wx.EXPAND)
     filterSizer.Add(envSizer,0,wx.ALL | wx.ALIGN_LEFT,4)
     filterSizer.Add(self.visToolbar,0,wx.ALL | wx.ALIGN_LEFT,4)

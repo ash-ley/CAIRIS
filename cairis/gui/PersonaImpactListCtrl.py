@@ -17,9 +17,9 @@
 
 
 import wx
-import armid
-import ARM
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
 from PersonaImpactDialog import PersonaImpactDialog
 
 class PersonaImpactListCtrl(wx.ListCtrl):

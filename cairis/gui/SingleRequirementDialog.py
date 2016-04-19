@@ -17,13 +17,13 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
 from SingleRequirementNotebook import SingleRequirementNotebook
 
 class SingleRequirementDialog(wx.Dialog):
   def __init__(self,parent):
-    wx.Dialog.__init__(self,parent,armid.SINGLEREQUIREMENT_ID,'Add Requirement',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,475))
+    wx.Dialog.__init__(self,parent,SINGLEREQUIREMENT_ID,'Add Requirement',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,475))
     self.theType = ''
     self.theReferrerType = 'asset'
     self.theReferrer = ''
@@ -36,24 +36,24 @@ class SingleRequirementDialog(wx.Dialog):
     mainSizer = wx.BoxSizer(wx.VERTICAL)
     
     mainSizer.Add(SingleRequirementNotebook(self),1,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,armid.SINGLEREQUIREMENT_BUTTONCOMMIT_ID),0,wx.ALIGN_CENTER)
+    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,SINGLEREQUIREMENT_BUTTONCOMMIT_ID),0,wx.ALIGN_CENTER)
     self.SetSizer(mainSizer)
 
-    wx.EVT_BUTTON(self,armid.SINGLEREQUIREMENT_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,SINGLEREQUIREMENT_BUTTONCOMMIT_ID,self.onCommit)
     self.commitLabel = 'Add'
       
 
   def onCommit(self,evt):
-    typeCtrl = self.FindWindowById(armid.SINGLEREQUIREMENT_COMBOTYPE_ID)
-    assetCtrl = self.FindWindowById(armid.SINGLEREQUIREMENT_RADIOASSET_ID)
-    envCtrl = self.FindWindowById(armid.SINGLEREQUIREMENT_RADIOENVIRONMENT_ID)
-    refCtrl = self.FindWindowById(armid.SINGLEREQUIREMENT_COMBOREFERRER_ID)
-    priCtrl = self.FindWindowById(armid.SINGLEREQUIREMENT_COMBOPRIORITY_ID)
-    descCtrl = self.FindWindowById(armid.SINGLEREQUIREMENT_TEXTDESCRIPTION_ID)
-    ctCtrl = self.FindWindowById(armid.SINGLEREQUIREMENT_COMBOCONTRIBUTIONTYPE_ID)
-    rationaleCtrl = self.FindWindowById(armid.SINGLEREQUIREMENT_TEXTRATIONALE_ID)
-    fcCtrl = self.FindWindowById(armid.SINGLEREQUIREMENT_TEXTFITCRITERION_ID)
-    originatorCtrl = self.FindWindowById(armid.SINGLEREQUIREMENT_TEXTORIGINATOR_ID)
+    typeCtrl = self.FindWindowById(SINGLEREQUIREMENT_COMBOTYPE_ID)
+    assetCtrl = self.FindWindowById(SINGLEREQUIREMENT_RADIOASSET_ID)
+    envCtrl = self.FindWindowById(SINGLEREQUIREMENT_RADIOENVIRONMENT_ID)
+    refCtrl = self.FindWindowById(SINGLEREQUIREMENT_COMBOREFERRER_ID)
+    priCtrl = self.FindWindowById(SINGLEREQUIREMENT_COMBOPRIORITY_ID)
+    descCtrl = self.FindWindowById(SINGLEREQUIREMENT_TEXTDESCRIPTION_ID)
+    ctCtrl = self.FindWindowById(SINGLEREQUIREMENT_COMBOCONTRIBUTIONTYPE_ID)
+    rationaleCtrl = self.FindWindowById(SINGLEREQUIREMENT_TEXTRATIONALE_ID)
+    fcCtrl = self.FindWindowById(SINGLEREQUIREMENT_TEXTFITCRITERION_ID)
+    originatorCtrl = self.FindWindowById(SINGLEREQUIREMENT_TEXTORIGINATOR_ID)
 
 
     self.theType = typeCtrl.GetStringSelection()
@@ -108,7 +108,7 @@ class SingleRequirementDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.SINGLEREQUIREMENT_BUTTONCOMMIT_ID)
+      self.EndModal(SINGLEREQUIREMENT_BUTTONCOMMIT_ID)
 
   def type(self): return self.theType
   def referrerType(self): return self.theReferrerType

@@ -17,16 +17,16 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from EnvironmentListCtrl import EnvironmentListCtrl
 from DimensionListCtrl import DimensionListCtrl
 from CapabilitiesListCtrl import CapabilitiesListCtrl
-from AttackerEnvironmentProperties import AttackerEnvironmentProperties
+from cairis.core.AttackerEnvironmentProperties import AttackerEnvironmentProperties
 
 
 class AttackerEnvironmentPanel(wx.Panel):
   def __init__(self,parent,dp):
-    wx.Panel.__init__(self,parent,armid.ATTACKER_PANELENVIRONMENT_ID)
+    wx.Panel.__init__(self,parent,ATTACKER_PANELENVIRONMENT_ID)
     self.dbProxy = dp
     self.theAttackerId = None
     self.theEnvironmentDictionary = {}
@@ -36,19 +36,19 @@ class AttackerEnvironmentPanel(wx.Panel):
     environmentBox = wx.StaticBox(self)
     environmentListSizer = wx.StaticBoxSizer(environmentBox,wx.HORIZONTAL)
     mainSizer.Add(environmentListSizer,0,wx.EXPAND)
-    self.environmentList = EnvironmentListCtrl(self,armid.ATTACKERENVIRONMENT_LISTENVIRONMENTS_ID,self.dbProxy)
+    self.environmentList = EnvironmentListCtrl(self,ATTACKERENVIRONMENT_LISTENVIRONMENTS_ID,self.dbProxy)
     environmentListSizer.Add(self.environmentList,1,wx.EXPAND)
     environmentDimSizer = wx.BoxSizer(wx.VERTICAL)
     mainSizer.Add(environmentDimSizer,1,wx.EXPAND)
     rmSizer = wx.BoxSizer(wx.HORIZONTAL)
     environmentDimSizer.Add(rmSizer,1,wx.EXPAND)
-    self.roleList = DimensionListCtrl(self,armid.ATTACKERENVIRONMENT_LISTROLES_ID,wx.DefaultSize,'Role','role',self.dbProxy)
+    self.roleList = DimensionListCtrl(self,ATTACKERENVIRONMENT_LISTROLES_ID,wx.DefaultSize,'Role','role',self.dbProxy)
     roleBox = wx.StaticBox(self)
     roleSizer = wx.StaticBoxSizer(roleBox,wx.HORIZONTAL)
     roleSizer.Add(self.roleList,1,wx.EXPAND)
     rmSizer.Add(roleSizer,1,wx.EXPAND)
 
-    self.motiveList = DimensionListCtrl(self,armid.ATTACKERENVIRONMENT_LISTMOTIVES_ID,wx.DefaultSize,'Motive','motivation',self.dbProxy)
+    self.motiveList = DimensionListCtrl(self,ATTACKERENVIRONMENT_LISTMOTIVES_ID,wx.DefaultSize,'Motive','motivation',self.dbProxy)
     motiveBox = wx.StaticBox(self)
     motiveSizer = wx.StaticBoxSizer(motiveBox,wx.HORIZONTAL)
     motiveSizer.Add(self.motiveList,1,wx.EXPAND)
@@ -56,7 +56,7 @@ class AttackerEnvironmentPanel(wx.Panel):
     capBox = wx.StaticBox(self)
     capSizer = wx.StaticBoxSizer(capBox,wx.HORIZONTAL)
     environmentDimSizer.Add(capSizer,1,wx.EXPAND)
-    self.capabilitiesList = CapabilitiesListCtrl(self,armid.ATTACKERENVIRONMENT_LISTCAPABILITIES_ID,self.dbProxy)
+    self.capabilitiesList = CapabilitiesListCtrl(self,ATTACKERENVIRONMENT_LISTCAPABILITIES_ID,self.dbProxy)
     capSizer.Add(self.capabilitiesList,1,wx.EXPAND)
     self.SetSizer(mainSizer)
     self.environmentList.Bind(wx.EVT_LIST_INSERT_ITEM,self.OnAddEnvironment)

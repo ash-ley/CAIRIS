@@ -6,7 +6,7 @@
 #  under the License.
 
 import wx
-import armid
+from cairis.core.armid import *
 from CodingTextCtrl import CodingTextCtrl
 from CodeMarginCtrl import CodeMarginCtrl
 

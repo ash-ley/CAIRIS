@@ -17,9 +17,9 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from DomainPropertyPanel import DomainPropertyPanel
-from DomainPropertyParameters import DomainPropertyParameters
+from cairis.core.DomainPropertyParameters import DomainPropertyParameters
 import DialogClassParameters
 
 class DomainPropertyDialog(wx.Dialog):
@@ -41,7 +41,7 @@ class DomainPropertyDialog(wx.Dialog):
     self.panel.buildControls(parameters.createFlag())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.DOMAINPROPERTY_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,DOMAINPROPERTY_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,dp):
     self.theId = dp.id()
@@ -49,11 +49,11 @@ class DomainPropertyDialog(wx.Dialog):
     self.commitVerb = 'Edit'
 
   def onCommit(self,evt):
-    nameCtrl = self.FindWindowById(armid.DOMAINPROPERTY_TEXTNAME_ID)
-    tagsCtrl = self.FindWindowById(armid.DOMAINPROPERTY_TAGS_ID)
-    typeCtrl = self.FindWindowById(armid.DOMAINPROPERTY_COMBOTYPE_ID)
-    origCtrl = self.FindWindowById(armid.DOMAINPROPERTY_TEXTORIGINATOR_ID)
-    descCtrl = self.FindWindowById(armid.DOMAINPROPERTY_TEXTDESCRIPTION_ID)
+    nameCtrl = self.FindWindowById(DOMAINPROPERTY_TEXTNAME_ID)
+    tagsCtrl = self.FindWindowById(DOMAINPROPERTY_TAGS_ID)
+    typeCtrl = self.FindWindowById(DOMAINPROPERTY_COMBOTYPE_ID)
+    origCtrl = self.FindWindowById(DOMAINPROPERTY_TEXTORIGINATOR_ID)
+    descCtrl = self.FindWindowById(DOMAINPROPERTY_TEXTDESCRIPTION_ID)
 
     self.theName = nameCtrl.GetValue()
     self.theTags = tagsCtrl.tags()
@@ -83,7 +83,7 @@ class DomainPropertyDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.DOMAINPROPERTY_BUTTONCOMMIT_ID)
+      self.EndModal(DOMAINPROPERTY_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = DomainPropertyParameters(self.theName,self.theDescription,self.theType,self.theOriginator,self.theTags)

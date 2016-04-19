@@ -17,15 +17,15 @@
 
 
 import wx
-import armid
-from ARM import *
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
 from CodingTextCtrl import CodingTextCtrl
 from SingleGoalDialog import SingleGoalDialog
 from SingleObstacleDialog import SingleObstacleDialog
 from SingleRequirementDialog import SingleRequirementDialog
-from GoalAssociationParameters import GoalAssociationParameters
-import RequirementFactory
+from cairis.core.GoalAssociationParameters import GoalAssociationParameters
+import cairis.core.RequirementFactory
 
 
 class NarrativeCtrl(CodingTextCtrl):
@@ -37,20 +37,20 @@ class NarrativeCtrl(CodingTextCtrl):
     self.theEnvironmentName = ''
 
     self.theDimMenu = wx.Menu()
-    self.theDimMenu.Append(armid.NARCTRL_MENUGOAL_ID,'Refining Goal')
-    self.theDimMenu.Append(armid.NARCTRL_MENUOBSTACLE_ID,'Refining Obstacle')
-    self.theDimMenu.Append(armid.NARCTRL_MENUREQUIREMENT_ID,'Refining Requirement')
-    self.theDimMenu.AppendMenu(armid.BVNTC_MENU_CODING,'Coding',self.codingMenu)
+    self.theDimMenu.Append(NARCTRL_MENUGOAL_ID,'Refining Goal')
+    self.theDimMenu.Append(NARCTRL_MENUOBSTACLE_ID,'Refining Obstacle')
+    self.theDimMenu.Append(NARCTRL_MENUREQUIREMENT_ID,'Refining Requirement')
+    self.theDimMenu.AppendMenu(BVNTC_MENU_CODING,'Coding',self.codingMenu)
 
     self.Bind(wx.EVT_RIGHT_DOWN,self.OnRightDown)
-    wx.EVT_MENU(self.theDimMenu,armid.NARCTRL_MENUGOAL_ID,self.onGoal)
-    wx.EVT_MENU(self.theDimMenu,armid.NARCTRL_MENUOBSTACLE_ID,self.onObstacle)
-    wx.EVT_MENU(self.theDimMenu,armid.NARCTRL_MENUREQUIREMENT_ID,self.onRequirement)
-    self.goalItem = self.theDimMenu.FindItemById(armid.NARCTRL_MENUGOAL_ID)
+    wx.EVT_MENU(self.theDimMenu,NARCTRL_MENUGOAL_ID,self.onGoal)
+    wx.EVT_MENU(self.theDimMenu,NARCTRL_MENUOBSTACLE_ID,self.onObstacle)
+    wx.EVT_MENU(self.theDimMenu,NARCTRL_MENUREQUIREMENT_ID,self.onRequirement)
+    self.goalItem = self.theDimMenu.FindItemById(NARCTRL_MENUGOAL_ID)
     self.goalItem.Enable(False)
-    self.reqItem = self.theDimMenu.FindItemById(armid.NARCTRL_MENUREQUIREMENT_ID)
+    self.reqItem = self.theDimMenu.FindItemById(NARCTRL_MENUREQUIREMENT_ID)
     self.reqItem.Enable(False)
-    self.obsItem = self.theDimMenu.FindItemById(armid.NARCTRL_MENUOBSTACLE_ID)
+    self.obsItem = self.theDimMenu.FindItemById(NARCTRL_MENUOBSTACLE_ID)
     self.obsItem.Enable(False)
 
   def setTask(self,tName):
@@ -74,7 +74,7 @@ class NarrativeCtrl(CodingTextCtrl):
   def onGoal(self,evt):
     try:
       dlg = SingleGoalDialog(self,self.theEnvironmentName)
-      if (dlg.ShowModal() == armid.GOAL_BUTTONCOMMIT_ID):
+      if (dlg.ShowModal() == GOAL_BUTTONCOMMIT_ID):
         gp = dlg.parameters()
         self.dbProxy.addGoal(gp)
         gap = GoalAssociationParameters(self.theEnvironmentName,gp.name(),'goal',dlg.theContributionType,self.theTaskName,'task',0,'')
@@ -89,7 +89,7 @@ class NarrativeCtrl(CodingTextCtrl):
   def onObstacle(self,evt):
     try:
       dlg = SingleObstacleDialog(self,self.theEnvironmentName)
-      if (dlg.ShowModal() == armid.OBSTACLE_BUTTONCOMMIT_ID):
+      if (dlg.ShowModal() == OBSTACLE_BUTTONCOMMIT_ID):
         op = dlg.parameters()
         self.dbProxy.addObstacle(op)
         gap = GoalAssociationParameters(self.theEnvironmentName,op.name(),'obstacle','and',self.theTaskName,'task',0,'')
@@ -106,7 +106,7 @@ class NarrativeCtrl(CodingTextCtrl):
     try:
       taskId = self.dbProxy.getDimensionId(self.theTaskName,'task')
       dlg = SingleRequirementDialog(self)
-      if (dlg.ShowModal() == armid.SINGLEREQUIREMENT_BUTTONCOMMIT_ID):
+      if (dlg.ShowModal() == SINGLEREQUIREMENT_BUTTONCOMMIT_ID):
         refName = dlg.referrer()
         completeReqLabel = self.dbProxy.lastRequirementLabel(refName)
         referrer,reqLabel = completeReqLabel.split('-')

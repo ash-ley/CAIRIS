@@ -18,14 +18,16 @@
 import unittest
 import os
 import json
-import BorgFactory
-from Borg import Borg
-from ValueTypeParameters import ValueTypeParameters
+from subprocess import call
+import cairis.core.BorgFactory
+from cairis.core.Borg import Borg
+from cairis.core.ValueTypeParameters import ValueTypeParameters
 
 class ValueTypeTest(unittest.TestCase):
 
   def setUp(self):
-    BorgFactory.initialise()
+    call([os.environ['CAIRIS_SRC'] + "/test/initdb.sh"])
+    cairis.core.BorgFactory.initialise()
     f = open(os.environ['CAIRIS_SRC'] + '/test/valuetypes.json')
     d = json.load(f)
     f.close()
@@ -54,6 +56,7 @@ class ValueTypeTest(unittest.TestCase):
   def tearDown(self):
     b = Borg()
     b.dbProxy.close()
+    call([os.environ['CAIRIS_SRC'] + "/test/dropdb.sh"])
 
 if __name__ == '__main__':
   unittest.main()

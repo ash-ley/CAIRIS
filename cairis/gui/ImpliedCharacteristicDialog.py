@@ -17,11 +17,11 @@
 
 
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from ImpliedCharacteristicPanel import ImpliedCharacteristicPanel
-from ImpliedCharacteristicParameters import ImpliedCharacteristicParameters
-from Borg import Borg
+from cairis.core.ImpliedCharacteristicParameters import ImpliedCharacteristicParameters
+from cairis.core.Borg import Borg
 
 class ImpliedCharacteristicDialog(wx.Dialog):
   def __init__(self,parent,pName,fromCode,toCode,rtName):
@@ -35,15 +35,15 @@ class ImpliedCharacteristicDialog(wx.Dialog):
     self.panel = ImpliedCharacteristicPanel(self,pName,fromCode,toCode,rtName)
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.IMPLIEDCHARACTERISTIC_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,IMPLIEDCHARACTERISTIC_BUTTONCOMMIT_ID,self.onCommit)
 
   def onCommit(self,evt):
 
-    charCtrl = self.FindWindowById(armid.IMPLIEDCHARACTERISTIC_TEXTCHARACTERISTIC_ID)
-    qualCtrl = self.FindWindowById(armid.IMPLIEDCHARACTERISTIC_TEXTQUALIFIER_ID)
-    varCtrl = self.FindWindowById(armid.IMPLIEDCHARACTERISTIC_COMBOTYPE_ID)
-    intCtrl = self.FindWindowById(armid.IMPLIEDCHARACTERISTIC_TEXTINTENTION_ID)
-    itCtrl = self.FindWindowById(armid.IMPLIEDCHARACTERISTIC_COMBOINTENTIONTYPE_ID)
+    charCtrl = self.FindWindowById(IMPLIEDCHARACTERISTIC_TEXTCHARACTERISTIC_ID)
+    qualCtrl = self.FindWindowById(IMPLIEDCHARACTERISTIC_TEXTQUALIFIER_ID)
+    varCtrl = self.FindWindowById(IMPLIEDCHARACTERISTIC_COMBOTYPE_ID)
+    intCtrl = self.FindWindowById(IMPLIEDCHARACTERISTIC_TEXTINTENTION_ID)
+    itCtrl = self.FindWindowById(IMPLIEDCHARACTERISTIC_COMBOINTENTIONTYPE_ID)
 
     charName = charCtrl.GetValue()
     qualName = qualCtrl.GetValue()
@@ -51,8 +51,8 @@ class ImpliedCharacteristicDialog(wx.Dialog):
     intName = intCtrl.GetValue()
     intType = itCtrl.GetValue()
 
-    lhsCodesCtrl = self.FindWindowById(armid.IMPLIEDCHARACTERISTIC_LISTLHS_ID)
-    rhsCodesCtrl = self.FindWindowById(armid.IMPLIEDCHARACTERISTIC_LISTRHS_ID)
+    lhsCodesCtrl = self.FindWindowById(IMPLIEDCHARACTERISTIC_LISTLHS_ID)
+    rhsCodesCtrl = self.FindWindowById(IMPLIEDCHARACTERISTIC_LISTRHS_ID)
 
     lhsCodes = lhsCodesCtrl.dimensions()
     rhsCodes = rhsCodesCtrl.dimensions()

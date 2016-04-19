@@ -18,14 +18,14 @@
 
 import random, math
 from math import pi
-from MySQLDatabaseProxy import MySQLDatabaseProxy
-from Requirement import Requirement
-import RequirementScoreFactory
+from cairis.core.MySQLDatabaseProxy import MySQLDatabaseProxy
+from cairis.core.Requirement import Requirement
+import cairis.core.RequirementScoreFactory
 
 
 class ChernoffFace:
   def __init__(self,objtName,dp):
-    self.p = RequirementScoreFactory.build(dp.dimensionObject(objtName,'requirement'))
+    self.p = cairis.core.RequirementScoreFactory.build(dp.dimensionObject(objtName,'requirement'))
     self.head_radius = 30
     self.eye_radius = 5
     self.eye_left_x = 40

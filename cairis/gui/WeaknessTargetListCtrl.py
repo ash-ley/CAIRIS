@@ -17,9 +17,9 @@
 
 
 import wx
-import armid
-import ARM
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
 from WeaknessTreatmentDialog import WeaknessTreatmentDialog
 
 class WeaknessTargetListCtrl(wx.ListCtrl):
@@ -51,7 +51,7 @@ class WeaknessTargetListCtrl(wx.ListCtrl):
       targetName = evt.GetLabel()
       target = self.theTargets[targetName]
       dlg = WeaknessTreatmentDialog(self,targetName,self.theViewName,target.requirement(),target.asset(),target.effectiveness())  
-      if (dlg.ShowModal() == armid.WEAKNESSTREATMENT_BUTTONCOMMIT_ID):
+      if (dlg.ShowModal() == WEAKNESSTREATMENT_BUTTONCOMMIT_ID):
         target.addTreatment(dlg.requirement(),dlg.asset(),dlg.effectiveness(),dlg.rationale())
         self.theTargets[targetName] = target
       dlg.Destroy()

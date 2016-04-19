@@ -17,20 +17,20 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from BasePanel import BasePanel
 from QuotationListCtrl import QuotationListCtrl
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 class QuotationsPanel(BasePanel):
   def __init__(self,parent):
-    BasePanel.__init__(self,parent,armid.QUOTATIONS_ID)
+    BasePanel.__init__(self,parent,QUOTATIONS_ID)
     b = Borg()
     self.dbProxy = b.dbProxy
 
     mainSizer = wx.BoxSizer(wx.VERTICAL)
 
-    self.qlCtrl = QuotationListCtrl(self,armid.QUOTATIONS_LISTQUOTATIONS_ID)
+    self.qlCtrl = QuotationListCtrl(self,QUOTATIONS_LISTQUOTATIONS_ID)
     self.qlCtrl.load(self.dbProxy.getQuotations())
     mainSizer.Add(self.qlCtrl,1,wx.EXPAND)
 

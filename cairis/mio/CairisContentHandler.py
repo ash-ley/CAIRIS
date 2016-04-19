@@ -17,9 +17,9 @@
 
 import os
 from xml.sax.handler import ContentHandler,EntityResolver
-from EnvironmentParameters import EnvironmentParameters
-from ValueTypeParameters import ValueTypeParameters
-from Borg import Borg
+from cairis.core.EnvironmentParameters import EnvironmentParameters
+from cairis.core.ValueTypeParameters import ValueTypeParameters
+from cairis.core.Borg import Borg
 
 class CairisContentHandler(ContentHandler,EntityResolver):
   def __init__(self):

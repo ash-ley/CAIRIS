@@ -21,8 +21,8 @@ import gtk.gdk
 import apxdot
 import AssumptionNodeDialogFactory
 import os
-from ARM import *
-from Borg import Borg
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
 
 class APModelViewer(apxdot.APDotWindow):
   def __init__(self,pName = '',bvName = ''):

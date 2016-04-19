@@ -17,25 +17,25 @@
 
 
 import wx
-import armid
-import Risk
+from cairis.core.armid import *
+import cairis.core.Risk
 from RiskDialog import RiskDialog
 from DialogClassParameters import DialogClassParameters
 from DimensionBaseDialog import DimensionBaseDialog
-import ARM
+from cairis.core.ARM import *
 
 class RisksDialog(DimensionBaseDialog):
   def __init__(self,parent):
-    DimensionBaseDialog.__init__(self,parent,armid.RISKS_ID,'Risks',(800,300),'risk.png')
-    idList = [armid.RISKS_LISTRISKS_ID,armid.RISKS_BUTTONADD_ID,armid.RISKS_BUTTONDELETE_ID]
+    DimensionBaseDialog.__init__(self,parent,RISKS_ID,'Risks',(800,300),'risk.png')
+    idList = [RISKS_LISTRISKS_ID,RISKS_BUTTONADD_ID,RISKS_BUTTONDELETE_ID]
     columnList = ['Name']
     self.buildControls(idList,columnList,self.dbProxy.getRisks,'risk')
-    listCtrl = self.FindWindowById(armid.RISKS_LISTRISKS_ID)
+    listCtrl = self.FindWindowById(RISKS_LISTRISKS_ID)
     listCtrl.SetColumnWidth(0,600)
 
 
   def addObjectRow(self,riskListCtrl,listRow,risk):
-    riskListCtrl = self.FindWindowById(armid.RISKS_LISTRISKS_ID)
+    riskListCtrl = self.FindWindowById(RISKS_LISTRISKS_ID)
     riskListCtrl.InsertStringItem(listRow,risk.name())
 
   def onAdd(self,evt):
@@ -52,9 +52,9 @@ class RisksDialog(DimensionBaseDialog):
         dlg.ShowModal()
         dlg.Destroy()
         return
-      addParameters = DialogClassParameters(armid.RISK_ID,'Add risk',RiskDialog,armid.RISK_BUTTONCOMMIT_ID,self.dbProxy.addRisk,True)
+      addParameters = DialogClassParameters(RISK_ID,'Add risk',RiskDialog,RISK_BUTTONCOMMIT_ID,self.dbProxy.addRisk,True)
       self.addObject(addParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add risk',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -62,9 +62,9 @@ class RisksDialog(DimensionBaseDialog):
   def onUpdate(self,evt):
     try:
       selectedObjt = self.objts[self.selectedLabel]
-      updateParameters = DialogClassParameters(armid.VULNERABILITY_ID,'Edit risk',RiskDialog,armid.RISK_BUTTONCOMMIT_ID,self.dbProxy.updateRisk,False)
+      updateParameters = DialogClassParameters(VULNERABILITY_ID,'Edit risk',RiskDialog,RISK_BUTTONCOMMIT_ID,self.dbProxy.updateRisk,False)
       self.updateObject(selectedObjt,updateParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Edit risk',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy
@@ -72,7 +72,7 @@ class RisksDialog(DimensionBaseDialog):
   def onDelete(self,evt):
     try:
       self.deleteObject('No risk','Delete risk',self.dbProxy.deleteRisk)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Delete risk',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy

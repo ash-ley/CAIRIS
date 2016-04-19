@@ -18,37 +18,37 @@
 
 #$URL$
 import wx
-import armid
+from cairis.core.armid import *
 from BasePanel import BasePanel
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 class ReferenceSynopsisPanel(BasePanel):
   def __init__(self,parent):
-    wx.Panel.__init__(self,parent,armid.REFERENCESYNOPSIS_ID)
+    wx.Panel.__init__(self,parent,REFERENCESYNOPSIS_ID)
     b = Borg()
     self.dbProxy = b.dbProxy
     mainSizer = wx.BoxSizer(wx.VERTICAL)
-    mainSizer.Add(self.buildTextSizer('Reference',(87,30),armid.REFERENCESYNOPSIS_TEXTREFNAME_ID),0,wx.EXPAND)
-    mainSizer.Add(self.buildTextSizer('Synopsis',(87,30),armid.REFERENCESYNOPSIS_TEXTSYNOPSIS_ID),0,wx.EXPAND)
+    mainSizer.Add(self.buildTextSizer('Reference',(87,30),REFERENCESYNOPSIS_TEXTREFNAME_ID),0,wx.EXPAND)
+    mainSizer.Add(self.buildTextSizer('Synopsis',(87,30),REFERENCESYNOPSIS_TEXTSYNOPSIS_ID),0,wx.EXPAND)
     dimTypes = self.dbProxy.getDimensionNames('trace_dimension')
-    mainSizer.Add(self.buildComboSizerList('Dimension',(87,30),armid.REFERENCESYNOPSIS_COMBODIMENSION_ID,dimTypes),0,wx.EXPAND)
+    mainSizer.Add(self.buildComboSizerList('Dimension',(87,30),REFERENCESYNOPSIS_COMBODIMENSION_ID,dimTypes),0,wx.EXPAND)
 
     actorSizer = wx.BoxSizer(wx.HORIZONTAL)
     mainSizer.Add(actorSizer,0,wx.EXPAND)
-    actorSizer.Add(self.buildComboSizerList('Actor Type',(87,30),armid.REFERENCESYNOPSIS_COMBOACTORTYPE_ID,['asset','persona','component']),1,wx.EXPAND)
-    actorSizer.Add(self.buildComboSizerList('Actor',(87,30),armid.REFERENCESYNOPSIS_COMBOACTORNAME_ID,['']),1,wx.EXPAND)
+    actorSizer.Add(self.buildComboSizerList('Actor Type',(87,30),REFERENCESYNOPSIS_COMBOACTORTYPE_ID,['asset','persona','component']),1,wx.EXPAND)
+    actorSizer.Add(self.buildComboSizerList('Actor',(87,30),REFERENCESYNOPSIS_COMBOACTORNAME_ID,['']),1,wx.EXPAND)
     mainSizer.Add(wx.StaticText(self,-1,''),1,wx.EXPAND)
-    mainSizer.Add(self.buildCommitButtonSizer(armid.REFERENCESYNOPSIS_BUTTONCOMMIT_ID,True),0,wx.ALIGN_CENTER)
+    mainSizer.Add(self.buildCommitButtonSizer(REFERENCESYNOPSIS_BUTTONCOMMIT_ID,True),0,wx.ALIGN_CENTER)
     self.SetSizer(mainSizer)
-    wx.EVT_COMBOBOX(self,armid.REFERENCESYNOPSIS_COMBOACTORTYPE_ID,self.onActorType)
+    wx.EVT_COMBOBOX(self,REFERENCESYNOPSIS_COMBOACTORTYPE_ID,self.onActorType)
 
 
   def load(self,refsyn,charDetails = None):
-    refCtrl = self.FindWindowById(armid.REFERENCESYNOPSIS_TEXTREFNAME_ID)
-    synCtrl = self.FindWindowById(armid.REFERENCESYNOPSIS_TEXTSYNOPSIS_ID)
-    dimCtrl = self.FindWindowById(armid.REFERENCESYNOPSIS_COMBODIMENSION_ID)
-    actorTypeCtrl = self.FindWindowById(armid.REFERENCESYNOPSIS_COMBOACTORTYPE_ID)
-    actorCtrl = self.FindWindowById(armid.REFERENCESYNOPSIS_COMBOACTORNAME_ID)
+    refCtrl = self.FindWindowById(REFERENCESYNOPSIS_TEXTREFNAME_ID)
+    synCtrl = self.FindWindowById(REFERENCESYNOPSIS_TEXTSYNOPSIS_ID)
+    dimCtrl = self.FindWindowById(REFERENCESYNOPSIS_COMBODIMENSION_ID)
+    actorTypeCtrl = self.FindWindowById(REFERENCESYNOPSIS_COMBOACTORTYPE_ID)
+    actorCtrl = self.FindWindowById(REFERENCESYNOPSIS_COMBOACTORNAME_ID)
     refCtrl.SetValue(refsyn.reference())
     synCtrl.SetValue(refsyn.synopsis())
     dimCtrl.SetValue(refsyn.dimension())
@@ -70,5 +70,5 @@ class ReferenceSynopsisPanel(BasePanel):
 
   def setActorNames(self,actorType):
     aNames = self.dbProxy.getDimensionNames(actorType)
-    actorCtrl = self.FindWindowById(armid.REFERENCESYNOPSIS_COMBOACTORNAME_ID)
+    actorCtrl = self.FindWindowById(REFERENCESYNOPSIS_COMBOACTORNAME_ID)
     actorCtrl.SetItems(aNames)

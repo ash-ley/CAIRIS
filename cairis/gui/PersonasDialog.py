@@ -17,19 +17,19 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from PersonaDialog import PersonaDialog
 from DialogClassParameters import DialogClassParameters
-import ARM
+from cairis.core.ARM import *
 from DimensionBaseDialog import DimensionBaseDialog
 
 class PersonasDialog(DimensionBaseDialog):
   def __init__(self,parent):
-    DimensionBaseDialog.__init__(self,parent,armid.PERSONAS_ID,'Personas',(800,300),'persona.png')
-    idList = [armid.PERSONAS_PERSONALIST_ID,armid.PERSONAS_BUTTONADD_ID,armid.PERSONAS_BUTTONDELETE_ID]
+    DimensionBaseDialog.__init__(self,parent,PERSONAS_ID,'Personas',(800,300),'persona.png')
+    idList = [PERSONAS_PERSONALIST_ID,PERSONAS_BUTTONADD_ID,PERSONAS_BUTTONDELETE_ID]
     columnList = ['Name','Type']
     self.buildControls(idList,columnList,self.dbProxy.getPersonas,'persona')
-    listCtrl = self.FindWindowById(armid.PERSONAS_PERSONALIST_ID)
+    listCtrl = self.FindWindowById(PERSONAS_PERSONALIST_ID)
     listCtrl.SetColumnWidth(0,100)
     listCtrl.SetColumnWidth(1,600)
 
@@ -40,9 +40,9 @@ class PersonasDialog(DimensionBaseDialog):
 
   def onAdd(self,evt):
     try:
-      addParameters = DialogClassParameters(armid.PERSONA_ID,'Add persona',PersonaDialog,armid.PERSONA_BUTTONCOMMIT_ID,self.dbProxy.addPersona,True)
+      addParameters = DialogClassParameters(PERSONA_ID,'Add persona',PersonaDialog,PERSONA_BUTTONCOMMIT_ID,self.dbProxy.addPersona,True)
       self.addObject(addParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add persona',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -51,9 +51,9 @@ class PersonasDialog(DimensionBaseDialog):
   def onUpdate(self,evt):
     selectedObjt = self.objts[self.selectedLabel]
     try:
-      updateParameters = DialogClassParameters(armid.PERSONA_ID,'Edit persona',PersonaDialog,armid.PERSONA_BUTTONCOMMIT_ID,self.dbProxy.updatePersona,False)
+      updateParameters = DialogClassParameters(PERSONA_ID,'Edit persona',PersonaDialog,PERSONA_BUTTONCOMMIT_ID,self.dbProxy.updatePersona,False)
       self.updateObject(selectedObjt,updateParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Edit persona',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -62,7 +62,7 @@ class PersonasDialog(DimensionBaseDialog):
   def onDelete(self,evt):
     try:
       self.deleteObject('No persona','Delete persona',self.dbProxy.deletePersona)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Delete persona',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()

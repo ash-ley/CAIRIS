@@ -17,9 +17,9 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from MemoPanel import MemoPanel
-from MemoParameters import MemoParameters
+from cairis.core.MemoParameters import MemoParameters
 import DialogClassParameters
 
 class MemoDialog(wx.Dialog):
@@ -41,7 +41,7 @@ class MemoDialog(wx.Dialog):
     self.panel.buildControls(parameters.createFlag(),parameters.label())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.MEMO_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,MEMO_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,objt):
     self.theId = objt.id()
@@ -50,8 +50,8 @@ class MemoDialog(wx.Dialog):
 
   def onCommit(self,evt):
     commitLabel = self.commitVerb + ' memo'
-    nameCtrl = self.FindWindowById(armid.MEMO_TEXTNAME_ID)
-    descCtrl = self.FindWindowById(armid.MEMO_TEXTDESCRIPTION_ID)
+    nameCtrl = self.FindWindowById(MEMO_TEXTNAME_ID)
+    descCtrl = self.FindWindowById(MEMO_TEXTDESCRIPTION_ID)
     self.theName = nameCtrl.GetValue()
     self.theDescription = descCtrl.GetValue()
 
@@ -66,7 +66,7 @@ class MemoDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.MEMO_BUTTONCOMMIT_ID)
+      self.EndModal(MEMO_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = MemoParameters(self.theName,self.theDescription)

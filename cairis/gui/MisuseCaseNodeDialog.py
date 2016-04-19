@@ -18,7 +18,7 @@
 
 import sys
 import gtk
-from Borg import Borg
+from cairis.core.Borg import Borg
 from NDImplementationDecorator import NDImplementationDecorator
 
 

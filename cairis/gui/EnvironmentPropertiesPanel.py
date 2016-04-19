@@ -17,13 +17,13 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from DimensionListCtrl import DimensionListCtrl
-from Environment import Environment
+from cairis.core.Environment import Environment
 
 class EnvironmentPropertiesPanel(wx.Panel):
   def __init__(self,parent,dp):
-    wx.Panel.__init__(self,parent,armid.ENVIRONMENT_PANELENVIRONMENTPROPERTIES_ID)
+    wx.Panel.__init__(self,parent,ENVIRONMENT_PANELENVIRONMENTPROPERTIES_ID)
     self.theEnvironmentPanel= parent
 
     mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -31,7 +31,7 @@ class EnvironmentPropertiesPanel(wx.Panel):
     environmentBox = wx.StaticBox(self,-1,)
     environmentFrameSizer = wx.StaticBoxSizer(environmentBox,wx.VERTICAL)
     mainSizer.Add(environmentFrameSizer,1,wx.EXPAND)
-    self.environmentList = DimensionListCtrl(self,armid.ENVIRONMENT_LISTENVIRONMENTS_ID,wx.DefaultSize,'Environment','environment',dp,'Adding one or more environments indicates that this is a composite environment')
+    self.environmentList = DimensionListCtrl(self,ENVIRONMENT_LISTENVIRONMENTS_ID,wx.DefaultSize,'Environment','environment',dp,'Adding one or more environments indicates that this is a composite environment')
     environmentFrameSizer.Add(self.environmentList,1,wx.EXPAND)
 
     propertiesBox = wx.StaticBox(self,-1,'Duplication properties')
@@ -40,13 +40,13 @@ class EnvironmentPropertiesPanel(wx.Panel):
     propertiesSizer = wx.FlexGridSizer(rows = 2, cols = 3)
     propertiesFrameSizer.Add(propertiesSizer,1,wx.EXPAND)
     propertiesSizer.Add(wx.StaticText(self,-1,'Override'))
-    self.overrideRadio = wx.RadioButton(self,armid.ENVIRONMENT_RADIOOVERRIDE_ID,style=wx.RB_GROUP)
+    self.overrideRadio = wx.RadioButton(self,ENVIRONMENT_RADIOOVERRIDE_ID,style=wx.RB_GROUP)
     self.overrideRadio.SetToolTip(wx.ToolTip('If an artifact exists in multiple environments, choose the artifact\'s value for the overriding environment.'))
     propertiesSizer.Add(self.overrideRadio)
-    self.overrideCombo = wx.ComboBox(self,armid.ENVIRONMENT_COMBOOVERRIDE_ID,'',choices=[],style=wx.CB_READONLY | wx.CB_DROPDOWN)
+    self.overrideCombo = wx.ComboBox(self,ENVIRONMENT_COMBOOVERRIDE_ID,'',choices=[],style=wx.CB_READONLY | wx.CB_DROPDOWN)
     propertiesSizer.Add(self.overrideCombo,0,wx.EXPAND)
     propertiesSizer.Add(wx.StaticText(self,-1,'Maximise'))
-    self.maxRadio = wx.RadioButton(self,armid.ENVIRONMENT_RADIOMAXIMISE_ID)
+    self.maxRadio = wx.RadioButton(self,ENVIRONMENT_RADIOMAXIMISE_ID)
     self.maxRadio.SetToolTip(wx.ToolTip('If an artifact exists in multiple environments, choose the artifact\'s maximal values.'))
     propertiesSizer.Add(self.maxRadio)
     propertiesSizer.AddGrowableCol(2)

@@ -17,30 +17,30 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 class RoleCostDialog(wx.Dialog):
   def __init__(self,parent):
-    wx.Dialog.__init__(self,parent,armid.ROLECOST_ID,'Add Role Cost',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,140))
+    wx.Dialog.__init__(self,parent,ROLECOST_ID,'Add Role Cost',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,140))
     b = Borg()
     self.dbProxy = b.dbProxy
     self.theRoleName = ''
     self.theRoleCost = ''
     mainSizer = wx.BoxSizer(wx.VERTICAL)
     roleList = self.dbProxy.getDimensionNames('role')
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Role',(87,30),armid.ROLECOST_COMBOROLE_ID,roleList),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Cost',(87,30),armid.ROLECOST_COMBOCOST_ID,['Low','Medium','High']),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Role',(87,30),ROLECOST_COMBOROLE_ID,roleList),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Cost',(87,30),ROLECOST_COMBOCOST_ID,['Low','Medium','High']),0,wx.EXPAND)
     mainSizer.Add(wx.StaticText(self,-1),1,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,armid.ROLECOST_BUTTONADD_ID),0,wx.ALIGN_CENTER)
+    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,ROLECOST_BUTTONADD_ID),0,wx.ALIGN_CENTER)
     self.SetSizer(mainSizer)
 
-    wx.EVT_BUTTON(self,armid.ROLECOST_BUTTONADD_ID,self.onAdd)
+    wx.EVT_BUTTON(self,ROLECOST_BUTTONADD_ID,self.onAdd)
 
   def onAdd(self,evt):
-    roleCtrl = self.FindWindowById(armid.ROLECOST_COMBOROLE_ID)
-    costCtrl = self.FindWindowById(armid.ROLECOST_COMBOCOST_ID)
+    roleCtrl = self.FindWindowById(ROLECOST_COMBOROLE_ID)
+    costCtrl = self.FindWindowById(ROLECOST_COMBOCOST_ID)
     self.theRoleName = roleCtrl.GetStringSelection()
     self.theRoleCost = costCtrl.GetStringSelection()
 
@@ -55,7 +55,7 @@ class RoleCostDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.ROLECOST_BUTTONADD_ID)
+      self.EndModal(ROLECOST_BUTTONADD_ID)
 
   def role(self): return self.theRoleName
 

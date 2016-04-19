@@ -17,7 +17,7 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from DimensionListCtrl import DimensionListCtrl
 from BVNarrativeTextCtrl import BVNarrativeTextCtrl
 
@@ -30,14 +30,14 @@ class SummaryPage(wx.Panel):
     directBox = wx.StaticBox(self,-1,'Direct/Indirect Persona')
     directSizer = wx.StaticBoxSizer(directBox,wx.HORIZONTAL)
     topSizer.Add(directSizer,0,wx.EXPAND)
-    self.directCtrl = wx.CheckBox(self,armid.PERSONA_CHECKDIRECT_ID)
+    self.directCtrl = wx.CheckBox(self,PERSONA_CHECKDIRECT_ID)
     self.directCtrl.SetValue(True)
     directSizer.Add(self.directCtrl,0,wx.EXPAND)
 
     roleBox = wx.StaticBox(self)
     roleSizer = wx.StaticBoxSizer(roleBox,wx.HORIZONTAL)
     topSizer.Add(roleSizer,1,wx.EXPAND)
-    self.roleList = DimensionListCtrl(self,armid.PERSONA_LISTROLES_ID,wx.DefaultSize,'Role','role',self.dbProxy)
+    self.roleList = DimensionListCtrl(self,PERSONA_LISTROLES_ID,wx.DefaultSize,'Role','role',self.dbProxy)
     roleSizer.Add(self.roleList,1,wx.EXPAND)
 
     self.SetSizer(topSizer)
@@ -50,14 +50,14 @@ class NarrativePage(wx.Panel):
     narrativeBox = wx.StaticBox(self,-1)
     narrativeBoxSizer = wx.StaticBoxSizer(narrativeBox,wx.HORIZONTAL)
     topSizer.Add(narrativeBoxSizer,1,wx.EXPAND)
-    self.narrativeCtrl = BVNarrativeTextCtrl(self,armid.PERSONA_TEXTNARRATIVE_ID)
+    self.narrativeCtrl = BVNarrativeTextCtrl(self,PERSONA_TEXTNARRATIVE_ID)
     narrativeBoxSizer.Add(self.narrativeCtrl,1,wx.EXPAND)
 
     self.SetSizer(topSizer)
 
 class PersonaEnvironmentNotebook(wx.Notebook):
   def __init__(self,parent,dp):
-    wx.Notebook.__init__(self,parent,armid.PERSONA_NOTEBOOKENVIRONMENT_ID)
+    wx.Notebook.__init__(self,parent,PERSONA_NOTEBOOKENVIRONMENT_ID)
     p1 = SummaryPage(self,dp)
     p2 = NarrativePage(self)
     self.AddPage(p1,'Summary')

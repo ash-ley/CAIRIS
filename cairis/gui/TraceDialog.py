@@ -17,10 +17,10 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
-import TraceParameters
-import UpdateTraceParameters
+import cairis.core.TraceParameters
+import cairis.core.UpdateTraceParameters
 import TracePanel
 
 class TraceDialog(wx.Dialog):
@@ -50,7 +50,7 @@ class TraceDialog(wx.Dialog):
     self.panel.buildControls(parameters.createFlag())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.TRACE_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,TRACE_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,threat):
     self.panel.loadControls(threat)
@@ -63,7 +63,7 @@ class TraceDialog(wx.Dialog):
     self.theToId = self.panel.theToId
     self.theFromName = self.panel.theFromName
     self.theToName = self.panel.theToName
-    self.EndModal(armid.TRACE_BUTTONCOMMIT_ID)
+    self.EndModal(TRACE_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = 0

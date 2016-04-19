@@ -17,14 +17,14 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from BasePanel import BasePanel
-import Asset
+import cairis.core.Asset
 from WeaknessAnalysisNotebook import WeaknessAnalysisNotebook
 
 class WeaknessAnalysisPanel(BasePanel):
   def __init__(self,parent,cvName,envName):
-    BasePanel.__init__(self,parent,armid.WEAKNESSANALYSIS_ID)
+    BasePanel.__init__(self,parent,WEAKNESSANALYSIS_ID)
     self.theAssetId = None
     mainSizer = wx.BoxSizer(wx.VERTICAL)
     nbBox = wx.StaticBox(self,-1)
@@ -33,7 +33,7 @@ class WeaknessAnalysisPanel(BasePanel):
     nbSizer.Add(WeaknessAnalysisNotebook(self,cvName,envName),1,wx.EXPAND)
 
     buttonSizer = wx.BoxSizer(wx.HORIZONTAL)
-    applyButton = wx.Button(self,armid.WEAKNESSANALYSIS_BUTTONCOMMIT_ID,"Apply")
+    applyButton = wx.Button(self,WEAKNESSANALYSIS_BUTTONCOMMIT_ID,"Apply")
     buttonSizer.Add(applyButton)
     closeButton = wx.Button(self,wx.ID_CANCEL,"Cancel")
     buttonSizer.Add(closeButton)

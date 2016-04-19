@@ -17,9 +17,9 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from EnvironmentPanel import EnvironmentPanel
-from EnvironmentParameters import EnvironmentParameters
+from cairis.core.EnvironmentParameters import EnvironmentParameters
 
 class EnvironmentDialog(wx.Dialog):
   def __init__(self,parent,parameters):
@@ -41,7 +41,7 @@ class EnvironmentDialog(wx.Dialog):
     self.panel.buildControls(parameters.createFlag())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.ENVIRONMENT_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,ENVIRONMENT_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,environment):
     self.theEnvironmentId = environment.id()
@@ -49,11 +49,11 @@ class EnvironmentDialog(wx.Dialog):
     self.theCommitVerb = 'Edit'
 
   def onCommit(self,evt):
-    nameCtrl = self.FindWindowById(armid.ENVIRONMENT_TEXTNAME_ID)
-    shortCodeCtrl = self.FindWindowById(armid.ENVIRONMENT_TEXTSHORTCODE_ID)
-    valueCtrl = self.FindWindowById(armid.ENVIRONMENT_TEXTDESCRIPTION_ID)
-    environmentCtrl = self.FindWindowById(armid.ENVIRONMENT_PANELENVIRONMENTPROPERTIES_ID)
-    tensionsCtrl = self.FindWindowById(armid.ENVIRONMENT_GRIDVALUETENSIONS_ID)
+    nameCtrl = self.FindWindowById(ENVIRONMENT_TEXTNAME_ID)
+    shortCodeCtrl = self.FindWindowById(ENVIRONMENT_TEXTSHORTCODE_ID)
+    valueCtrl = self.FindWindowById(ENVIRONMENT_TEXTDESCRIPTION_ID)
+    environmentCtrl = self.FindWindowById(ENVIRONMENT_PANELENVIRONMENTPROPERTIES_ID)
+    tensionsCtrl = self.FindWindowById(ENVIRONMENT_GRIDVALUETENSIONS_ID)
 
     self.environmentName = nameCtrl.GetValue()
     self.environmentShortCode = shortCodeCtrl.GetValue()
@@ -86,7 +86,7 @@ class EnvironmentDialog(wx.Dialog):
         dlg.Destroy()
         return 
     
-    self.EndModal(armid.ENVIRONMENT_BUTTONCOMMIT_ID)
+    self.EndModal(ENVIRONMENT_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = EnvironmentParameters(self.environmentName,self.environmentShortCode,self.environmentDescription,self.theEnvironments,self.theDuplicateProperty,self.theOverridingEnvironment,self.theTensions)

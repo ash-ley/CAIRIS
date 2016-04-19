@@ -17,34 +17,34 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
-from Borg import Borg
+from cairis.core.Borg import Borg
 from RoleEnvironmentPanel import RoleEnvironmentPanel
 
 class RolePanel(wx.Panel):
   def __init__(self,parent):
-    wx.Panel.__init__(self,parent,armid.ROLE_ID)
+    wx.Panel.__init__(self,parent,ROLE_ID)
     b = Borg()
     self.dbProxy = b.dbProxy
 
   def buildControls(self,isCreate):
     mainSizer = wx.BoxSizer(wx.VERTICAL)
-    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Name',(87,30),armid.ROLE_TEXTNAME_ID),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Short Code',(87,30),armid.ROLE_TEXTSHORTCODE_ID),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Name',(87,30),ROLE_TEXTNAME_ID),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Short Code',(87,30),ROLE_TEXTSHORTCODE_ID),0,wx.EXPAND)
     roleTypes = self.dbProxy.getDimensionNames('role_type')
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Type',(87,30),armid.ROLE_COMBOTYPE_ID,roleTypes),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildMLTextSizer(self,'Description',(87,80),armid.ROLE_TEXTDESCRIPTION_ID),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Type',(87,30),ROLE_COMBOTYPE_ID,roleTypes),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildMLTextSizer(self,'Description',(87,80),ROLE_TEXTDESCRIPTION_ID),0,wx.EXPAND)
     mainSizer.Add(RoleEnvironmentPanel(self,self.dbProxy),1,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildCommitButtonSizer(self,armid.ROLE_BUTTONCOMMIT_ID,isCreate),0,wx.ALIGN_CENTER)
+    mainSizer.Add(WidgetFactory.buildCommitButtonSizer(self,ROLE_BUTTONCOMMIT_ID,isCreate),0,wx.ALIGN_CENTER)
     self.SetSizer(mainSizer)
 
   def loadControls(self,role):
-    nameCtrl = self.FindWindowById(armid.ROLE_TEXTNAME_ID)
-    scCtrl = self.FindWindowById(armid.ROLE_TEXTSHORTCODE_ID)
-    typeCtrl = self.FindWindowById(armid.ROLE_COMBOTYPE_ID)
-    descCtrl = self.FindWindowById(armid.ROLE_TEXTDESCRIPTION_ID)
-    environmentCtrl = self.FindWindowById(armid.ROLE_PANELENVIRONMENT_ID)
+    nameCtrl = self.FindWindowById(ROLE_TEXTNAME_ID)
+    scCtrl = self.FindWindowById(ROLE_TEXTSHORTCODE_ID)
+    typeCtrl = self.FindWindowById(ROLE_COMBOTYPE_ID)
+    descCtrl = self.FindWindowById(ROLE_TEXTDESCRIPTION_ID)
+    environmentCtrl = self.FindWindowById(ROLE_PANELENVIRONMENT_ID)
     nameCtrl.SetValue(role.name())
     scCtrl.SetValue(role.shortCode())
     typeCtrl.SetValue(role.type())

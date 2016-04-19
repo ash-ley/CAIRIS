@@ -18,17 +18,19 @@
 import unittest
 import os
 import json
-import BorgFactory
-from Borg import Borg
-from EnvironmentParameters import EnvironmentParameters
-from AssetParameters import AssetParameters
-from AssetEnvironmentProperties import AssetEnvironmentProperties
-from ARM import DatabaseProxyException
+from subprocess import call
+import cairis.core.BorgFactory
+from cairis.core.Borg import Borg
+from cairis.core.EnvironmentParameters import EnvironmentParameters
+from cairis.core.AssetParameters import AssetParameters
+from cairis.core.AssetEnvironmentProperties import AssetEnvironmentProperties
+from cairis.core.ARM import DatabaseProxyException
 
 class AssetTest(unittest.TestCase):
 
   def setUp(self):
-    BorgFactory.initialise()
+    call([os.environ['CAIRIS_SRC'] + "/test/initdb.sh"])
+    cairis.core.BorgFactory.initialise()
     f = open(os.environ['CAIRIS_SRC'] + '/test/assets.json')
     d = json.load(f)
     f.close()
@@ -86,6 +88,7 @@ class AssetTest(unittest.TestCase):
     b.dbProxy.deleteEnvironment(self.oenvs[self.iep3.name()].id())
 
     b.dbProxy.close()
+    call([os.environ['CAIRIS_SRC'] + "/test/dropdb.sh"])
 
 if __name__ == '__main__':
   unittest.main()

@@ -17,8 +17,8 @@
 
 
 from xml.sax.handler import ContentHandler,EntityResolver
-from ValueTypeParameters import ValueTypeParameters
-from Borg import Borg
+from cairis.core.ValueTypeParameters import ValueTypeParameters
+from cairis.core.Borg import Borg
 
 class TVTypeContentHandler(ContentHandler,EntityResolver):
   def __init__(self):

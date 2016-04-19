@@ -16,13 +16,13 @@
 #  under the License.
 
 
-import DotTrace
+import cairis.core.DotTrace
 import pydot
 import wx
 import os
-import ARM
+from cairis.core.ARM import *
 import gtk
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 class AssumptionTaskModel:
   def __init__(self,tlinks):

@@ -19,10 +19,10 @@
 import wx
 import wx.grid
 import wx.lib.gridmovers as gridmovers
-from ObstacleManager import ObstacleManager
-import ARM
-import armid
-from Borg import Borg
+from cairis.core.ObstacleManager import ObstacleManager
+from cairis.core.ARM import *
+from cairis.core.armid import *
+from cairis.core.Borg import Borg
 from EnvironmentGrid import EnvironmentGrid
 from DimensionNameDialog import DimensionNameDialog
 from datetime import datetime
@@ -96,7 +96,7 @@ class ObstaclesTable(wx.grid.PyGridTableBase):
         newPos = pos + 1
         try:
           self.om.add(newPos,obsName)
-        except ARM.ARMException,errorText:
+        except ARMException,errorText:
           dlg = wx.MessageDialog(self.GetView(),str(errorText),'Add Obstacle',wx.OK | wx.ICON_ERROR)
           dlg.ShowModal()
           dlg.Destroy()
@@ -119,7 +119,7 @@ class ObstaclesTable(wx.grid.PyGridTableBase):
       deletedNoObs = self.om.delete(pos)
       self.deleteFromView(pos,deletedNoObs)
       return True
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self.GetView(),str(errorText),'Delete Obstacle',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -129,7 +129,7 @@ class ObstaclesTable(wx.grid.PyGridTableBase):
     try:
       self.deleteFromView(0,numRows)
       return True
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self.GetView(),str(errorText),'Delete Obstacle',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -190,7 +190,7 @@ class ObstaclesCellEditor(wx.grid.GridCellAutoWrapStringEditor):
  
 class ObstaclesGrid(wx.grid.Grid,EnvironmentGrid):
   def __init__(self,parent,obsCombo,envCombo):
-    wx.grid.Grid.__init__(self,parent,armid.ID_REQGRID)
+    wx.grid.Grid.__init__(self,parent,ID_REQGRID)
     EnvironmentGrid.__init__(self)
     self.thePanel = parent
     wx.lib.gridmovers.GridRowMover(self)

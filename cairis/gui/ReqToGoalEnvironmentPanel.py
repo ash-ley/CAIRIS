@@ -17,15 +17,15 @@
 
 
 import wx
-import armid
-from Borg import Borg
-from GoalEnvironmentProperties import GoalEnvironmentProperties
+from cairis.core.armid import *
+from cairis.core.Borg import Borg
+from cairis.core.GoalEnvironmentProperties import GoalEnvironmentProperties
 from ReqToGoalNotebook import ReqToGoalNotebook
 from EnvironmentListCtrl import EnvironmentListCtrl
 
 class ReqToGoalEnvironmentPanel(wx.Panel):
   def __init__(self,parent,goalDef,goalCat,goalPri,goalFc,goalIssue,goalAssets,defaultEnv):
-    wx.Panel.__init__(self,parent,armid.GOAL_PANELENVIRONMENT_ID)
+    wx.Panel.__init__(self,parent,GOAL_PANELENVIRONMENT_ID)
     b = Borg()
     self.dbProxy = b.dbProxy
     self.theGoalId = None
@@ -42,7 +42,7 @@ class ReqToGoalEnvironmentPanel(wx.Panel):
     environmentBox = wx.StaticBox(self)
     environmentListSizer = wx.StaticBoxSizer(environmentBox,wx.HORIZONTAL)
     mainSizer.Add(environmentListSizer,0,wx.EXPAND)
-    self.environmentList = EnvironmentListCtrl(self,armid.GOAL_LISTENVIRONMENTS_ID,self.dbProxy)
+    self.environmentList = EnvironmentListCtrl(self,GOAL_LISTENVIRONMENTS_ID,self.dbProxy)
     environmentListSizer.Add(self.environmentList,1,wx.EXPAND)
     environmentDimSizer = wx.BoxSizer(wx.VERTICAL)
     mainSizer.Add(environmentDimSizer,1,wx.EXPAND)
@@ -55,8 +55,8 @@ class ReqToGoalEnvironmentPanel(wx.Panel):
 
     self.SetSizer(mainSizer)
 
-    self.goalAssociationCtrl = self.notebook.FindWindowById(armid.GOAL_LISTGOALREFINEMENTS_ID)
-    self.subGoalAssociationCtrl = self.notebook.FindWindowById(armid.GOAL_LISTSUBGOALREFINEMENTS_ID)
+    self.goalAssociationCtrl = self.notebook.FindWindowById(GOAL_LISTGOALREFINEMENTS_ID)
+    self.subGoalAssociationCtrl = self.notebook.FindWindowById(GOAL_LISTSUBGOALREFINEMENTS_ID)
 
     self.environmentList.Bind(wx.EVT_LIST_INSERT_ITEM,self.OnAddEnvironment)
     self.environmentList.Bind(wx.EVT_LIST_DELETE_ITEM,self.OnDeleteEnvironment)

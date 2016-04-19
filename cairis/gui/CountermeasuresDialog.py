@@ -17,21 +17,21 @@
 
 
 import wx
-import armid
-import Risk
+from cairis.core.armid import *
+import cairis.core.Risk
 from CountermeasureDialog import CountermeasureDialog
 from DialogClassParameters import DialogClassParameters
 from DimensionBaseDialog import DimensionBaseDialog
-import ARM
+from cairis.core.ARM import *
 
 class CountermeasuresDialog(DimensionBaseDialog):
   def __init__(self,parent):
-    DimensionBaseDialog.__init__(self,parent,armid.COUNTERMEASURES_ID,'Countermeasures',(800,300),'countermeasure.png')
+    DimensionBaseDialog.__init__(self,parent,COUNTERMEASURES_ID,'Countermeasures',(800,300),'countermeasure.png')
     self.theMainWindow = parent
-    idList = [armid.COUNTERMEASURES_LISTCOUNTERMEASURES_ID,armid.COUNTERMEASURES_BUTTONADD_ID,armid.COUNTERMEASURES_BUTTONDELETE_ID]
+    idList = [COUNTERMEASURES_LISTCOUNTERMEASURES_ID,COUNTERMEASURES_BUTTONADD_ID,COUNTERMEASURES_BUTTONDELETE_ID]
     columnList = ['Name']
     self.buildControls(idList,columnList,self.dbProxy.getCountermeasures,'countermeasure')
-    listCtrl = self.FindWindowById(armid.COUNTERMEASURES_LISTCOUNTERMEASURES_ID)
+    listCtrl = self.FindWindowById(COUNTERMEASURES_LISTCOUNTERMEASURES_ID)
     listCtrl.SetColumnWidth(0,300)
 
 
@@ -40,9 +40,9 @@ class CountermeasuresDialog(DimensionBaseDialog):
 
   def onAdd(self,evt):
     try:
-      addParameters = DialogClassParameters(armid.COUNTERMEASURE_ID,'Add countermeasure',CountermeasureDialog,armid.COUNTERMEASURE_BUTTONCOMMIT_ID,self.dbProxy.addCountermeasure,True)
+      addParameters = DialogClassParameters(COUNTERMEASURE_ID,'Add countermeasure',CountermeasureDialog,COUNTERMEASURE_BUTTONCOMMIT_ID,self.dbProxy.addCountermeasure,True)
       self.addObject(addParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add countermeasure',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -51,18 +51,18 @@ class CountermeasuresDialog(DimensionBaseDialog):
   def onUpdate(self,evt):
     try:
       selectedObjt = self.objts[self.selectedLabel]
-      updateParameters = DialogClassParameters(armid.COUNTERMEASURE_ID,'Edit countermeasure',CountermeasureDialog,armid.COUNTERMEASURE_BUTTONCOMMIT_ID,self.dbProxy.updateCountermeasure,False)
+      updateParameters = DialogClassParameters(COUNTERMEASURE_ID,'Edit countermeasure',CountermeasureDialog,COUNTERMEASURE_BUTTONCOMMIT_ID,self.dbProxy.updateCountermeasure,False)
       self.updateObject(selectedObjt,updateParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Edit countermeasure',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy
 
   def onDelete(self,evt):
     try:
-      self.dbProxy.associateGrid(self.theMainWindow.FindWindowById(armid.ID_REQGRID))
+      self.dbProxy.associateGrid(self.theMainWindow.FindWindowById(ID_REQGRID))
       self.deleteObject('No countermeasure','Delete countermeasure',self.dbProxy.deleteCountermeasure)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Delete countermeasure',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()

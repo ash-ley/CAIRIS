@@ -17,36 +17,36 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from BasePanel import BasePanel
-import DomainProperty
-from Borg import Borg
+import cairis.core.DomainProperty
+from cairis.core.Borg import Borg
 
 class DomainPropertyPanel(BasePanel):
   def __init__(self,parent):
-    BasePanel.__init__(self,parent,armid.DOMAINPROPERTY_ID)
+    BasePanel.__init__(self,parent,DOMAINPROPERTY_ID)
     b = Borg()
     self.dbProxy = b.dbProxy
     
   def buildControls(self,isCreate,isUpdateable=True):
     mainSizer = wx.BoxSizer(wx.VERTICAL)
-    mainSizer.Add(self.buildTextSizer('Name',(87,30),armid.DOMAINPROPERTY_TEXTNAME_ID),0,wx.EXPAND)
-    mainSizer.Add(self.buildTagCtrlSizer((87,30),armid.DOMAINPROPERTY_TAGS_ID),0,wx.EXPAND)
+    mainSizer.Add(self.buildTextSizer('Name',(87,30),DOMAINPROPERTY_TEXTNAME_ID),0,wx.EXPAND)
+    mainSizer.Add(self.buildTagCtrlSizer((87,30),DOMAINPROPERTY_TAGS_ID),0,wx.EXPAND)
     typeList = ['Hypothesis','Invariant']
-    mainSizer.Add(self.buildComboSizerList('Type',(87,30),armid.DOMAINPROPERTY_COMBOTYPE_ID,typeList),0,wx.EXPAND)
-    mainSizer.Add(self.buildTextSizer('Originator',(87,30),armid.DOMAINPROPERTY_TEXTORIGINATOR_ID),0,wx.EXPAND)
-    mainSizer.Add(self.buildMLTextSizer('Description',(87,30),armid.DOMAINPROPERTY_TEXTDESCRIPTION_ID),1,wx.EXPAND)
-    mainSizer.Add(self.buildCommitButtonSizer(armid.DOMAINPROPERTY_BUTTONCOMMIT_ID,isCreate),0,wx.CENTER)
+    mainSizer.Add(self.buildComboSizerList('Type',(87,30),DOMAINPROPERTY_COMBOTYPE_ID,typeList),0,wx.EXPAND)
+    mainSizer.Add(self.buildTextSizer('Originator',(87,30),DOMAINPROPERTY_TEXTORIGINATOR_ID),0,wx.EXPAND)
+    mainSizer.Add(self.buildMLTextSizer('Description',(87,30),DOMAINPROPERTY_TEXTDESCRIPTION_ID),1,wx.EXPAND)
+    mainSizer.Add(self.buildCommitButtonSizer(DOMAINPROPERTY_BUTTONCOMMIT_ID,isCreate),0,wx.CENTER)
     self.SetSizer(mainSizer)
 
   def loadControls(self,dp,isReadOnly=False):
-    nameCtrl = self.FindWindowById(armid.DOMAINPROPERTY_TEXTNAME_ID)
-    tagsCtrl = self.FindWindowById(armid.DOMAINPROPERTY_TAGS_ID)
+    nameCtrl = self.FindWindowById(DOMAINPROPERTY_TEXTNAME_ID)
+    tagsCtrl = self.FindWindowById(DOMAINPROPERTY_TAGS_ID)
     tagsCtrl.set(dp.tags())
 
-    typeCtrl = self.FindWindowById(armid.DOMAINPROPERTY_COMBOTYPE_ID)
-    origCtrl = self.FindWindowById(armid.DOMAINPROPERTY_TEXTORIGINATOR_ID)
-    descCtrl = self.FindWindowById(armid.DOMAINPROPERTY_TEXTDESCRIPTION_ID)
+    typeCtrl = self.FindWindowById(DOMAINPROPERTY_COMBOTYPE_ID)
+    origCtrl = self.FindWindowById(DOMAINPROPERTY_TEXTORIGINATOR_ID)
+    descCtrl = self.FindWindowById(DOMAINPROPERTY_TEXTDESCRIPTION_ID)
     nameCtrl.SetValue(dp.name())
     typeCtrl.SetValue(dp.type())
     origCtrl.SetValue(dp.originator())

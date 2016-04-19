@@ -18,12 +18,12 @@
 
 #$URL$ $Id: UseCaseDialog.py 530 2011-11-16 19:29:16Z shaf $
 import wx
-import armid
-from UseCaseParameters import UseCaseParameters
+from cairis.core.armid import *
+from cairis.core.UseCaseParameters import UseCaseParameters
 import WidgetFactory
 from UseCasePanel import UseCasePanel
-from UseCaseEnvironmentProperties import UseCaseEnvironmentProperties
-from Borg import Borg
+from cairis.core.UseCaseEnvironmentProperties import UseCaseEnvironmentProperties
+from cairis.core.Borg import Borg
 
 class UseCaseDialog(wx.Dialog):
   def __init__(self,parent,parameters):
@@ -50,9 +50,9 @@ class UseCaseDialog(wx.Dialog):
       isCreate = True
     else:
       isCreate = False
-    mainSizer.Add(WidgetFactory.buildCommitButtonSizer(self,armid.USECASE_BUTTONCOMMIT_ID,isCreate),0,wx.ALIGN_CENTER)
+    mainSizer.Add(WidgetFactory.buildCommitButtonSizer(self,USECASE_BUTTONCOMMIT_ID,isCreate),0,wx.ALIGN_CENTER)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.USECASE_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,USECASE_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,uc):
     self.theUseCaseId = uc.id()
@@ -60,13 +60,13 @@ class UseCaseDialog(wx.Dialog):
     self.panel.loadControls(uc)
 
   def onCommit(self,evt):
-    nameCtrl = self.FindWindowById(armid.USECASE_TEXTNAME_ID)
-    tagCtrl = self.FindWindowById(armid.USECASE_TAGS_ID)
-    authCtrl = self.FindWindowById(armid.USECASE_TEXTAUTHOR_ID)
-    codeCtrl = self.FindWindowById(armid.USECASE_TEXTSHORTCODE_ID)
-    actorsCtrl = self.FindWindowById(armid.USECASE_LISTACTORS_ID)
-    descCtrl = self.FindWindowById(armid.USECASE_TEXTDESCRIPTION_ID)
-    environmentCtrl = self.FindWindowById(armid.USECASE_PANELENVIRONMENT_ID)
+    nameCtrl = self.FindWindowById(USECASE_TEXTNAME_ID)
+    tagCtrl = self.FindWindowById(USECASE_TAGS_ID)
+    authCtrl = self.FindWindowById(USECASE_TEXTAUTHOR_ID)
+    codeCtrl = self.FindWindowById(USECASE_TEXTSHORTCODE_ID)
+    actorsCtrl = self.FindWindowById(USECASE_LISTACTORS_ID)
+    descCtrl = self.FindWindowById(USECASE_TEXTDESCRIPTION_ID)
+    environmentCtrl = self.FindWindowById(USECASE_PANELENVIRONMENT_ID)
 
     self.theName = nameCtrl.GetValue()
     self.theTags = tagCtrl.tags()
@@ -130,7 +130,7 @@ class UseCaseDialog(wx.Dialog):
           dlg.ShowModal()
           dlg.Destroy()
           return
-    self.EndModal(armid.USECASE_BUTTONCOMMIT_ID)
+    self.EndModal(USECASE_BUTTONCOMMIT_ID)
 
   def parameters(self): 
     parameters = UseCaseParameters(self.theName,self.theAuthor,self.theCode,self.theActors,self.theDescription,self.theTags,self.theEnvironmentProperties)

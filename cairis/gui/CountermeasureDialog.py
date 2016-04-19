@@ -17,8 +17,8 @@
 
 
 import wx
-import armid
-from CountermeasureParameters import CountermeasureParameters
+from cairis.core.armid import *
+from cairis.core.CountermeasureParameters import CountermeasureParameters
 from CountermeasurePanel import CountermeasurePanel
 
 class CountermeasureDialog(wx.Dialog):
@@ -35,7 +35,7 @@ class CountermeasureDialog(wx.Dialog):
     self.panel.buildControls(parameters.createFlag())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.COUNTERMEASURE_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,COUNTERMEASURE_BUTTONCOMMIT_ID,self.onCommit)
 
 
   def load(self,countermeasure):
@@ -44,7 +44,7 @@ class CountermeasureDialog(wx.Dialog):
 
   def onCommit(self,evt):
     if (self.panel.commit() != -1):
-      self.EndModal(armid.COUNTERMEASURE_BUTTONCOMMIT_ID)
+      self.EndModal(COUNTERMEASURE_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = self.panel.parameters()

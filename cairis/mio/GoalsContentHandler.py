@@ -17,16 +17,16 @@
 
 
 from xml.sax.handler import ContentHandler,EntityResolver
-from DomainPropertyParameters import DomainPropertyParameters
-from GoalParameters import GoalParameters
-from ObstacleParameters import ObstacleParameters
-from CountermeasureParameters import CountermeasureParameters
-from GoalEnvironmentProperties import GoalEnvironmentProperties
-from ObstacleEnvironmentProperties import ObstacleEnvironmentProperties
-from CountermeasureEnvironmentProperties import CountermeasureEnvironmentProperties
-from Target import Target
-import RequirementFactory
-from Borg import Borg
+from cairis.core.DomainPropertyParameters import DomainPropertyParameters
+from cairis.core.GoalParameters import GoalParameters
+from cairis.core.ObstacleParameters import ObstacleParameters
+from cairis.core.CountermeasureParameters import CountermeasureParameters
+from cairis.core.GoalEnvironmentProperties import GoalEnvironmentProperties
+from cairis.core.ObstacleEnvironmentProperties import ObstacleEnvironmentProperties
+from cairis.core.CountermeasureEnvironmentProperties import CountermeasureEnvironmentProperties
+from cairis.core.Target import Target
+import cairis.core.RequirementFactory
+from cairis.core.Borg import Borg
 
 def a2s(aStr):
   if aStr == 'a':
@@ -293,7 +293,7 @@ class GoalsContentHandler(ContentHandler,EntityResolver):
       self.resetObstacleAttributes()
     elif name == 'requirement':
       reqId = self.dbProxy.newId()
-      r = RequirementFactory.build(reqId,self.theLabel,self.theName,self.theDescription,self.thePriority,self.theRationale,self.theFitCriterion,self.theOriginator,self.theType,self.theReference)
+      r = cairis.core.RequirementFactory.build(reqId,self.theLabel,self.theName,self.theDescription,self.thePriority,self.theRationale,self.theFitCriterion,self.theOriginator,self.theType,self.theReference)
       self.theRequirements.append((r,self.theReference,self.theReferenceType))
       self.resetRequirementAttributes()
     elif name == 'countermeasure':

@@ -17,10 +17,10 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from ValueTypeDialog import ValueTypeDialog
 from ValueTypeDialogParameters import ValueTypeDialogParameters
-import ARM
+from cairis.core.ARM import *
 from DimensionBaseDialog import DimensionBaseDialog
 
 class ValueTypesDialog(DimensionBaseDialog):
@@ -76,8 +76,8 @@ class ValueTypesDialog(DimensionBaseDialog):
       imageFile = 'asset.png'
     else:
       exceptionText = 'Unknown value type ' + value_type
-      raise ARM.ARMException(exceptionText)
-    DimensionBaseDialog.__init__(self,parent,armid.VALUETYPES_ID,label,(930,300),imageFile)
+      raise ARMException(exceptionText)
+    DimensionBaseDialog.__init__(self,parent,VALUETYPES_ID,label,(930,300),imageFile)
 
     self.deleteFn = None
     if (self.theValueType == 'capability'): 
@@ -91,24 +91,24 @@ class ValueTypesDialog(DimensionBaseDialog):
     elif (self.theValueType == 'vulnerability_type'): 
       self.deleteFn = self.dbProxy.deleteVulnerabilityType
 
-    idList = [armid.VALUETYPES_VALUELIST_ID,armid.VALUETYPES_BUTTONADD_ID,armid.VALUETYPES_BUTTONDELETE_ID]
+    idList = [VALUETYPES_VALUELIST_ID,VALUETYPES_BUTTONADD_ID,VALUETYPES_BUTTONDELETE_ID]
     columnList = ['Name','Description']
     envName = ''
     self.buildControls(idList,columnList,self.dbProxy.getValueTypes,self.theValueType,self.theDefaultEnvironment)
     if (self.theValueType == 'asset_value'):
-      comboCtrl = self.FindWindowById(armid.VALUETYPES_COMBOENVIRONMENT_ID)
+      comboCtrl = self.FindWindowById(VALUETYPES_COMBOENVIRONMENT_ID)
       comboCtrl.SetValue(self.theDefaultEnvironment)
-      wx.EVT_COMBOBOX(self,armid.VALUETYPES_COMBOENVIRONMENT_ID,self.onEnvironmentChange)
+      wx.EVT_COMBOBOX(self,VALUETYPES_COMBOENVIRONMENT_ID,self.onEnvironmentChange)
 
-    self.listCtrl = self.FindWindowById(armid.VALUETYPES_VALUELIST_ID)
+    self.listCtrl = self.FindWindowById(VALUETYPES_VALUELIST_ID)
     self.listCtrl.SetColumnWidth(0,150)
     self.listCtrl.SetColumnWidth(1,700)
 
 
     if ((self.theValueType == 'asset_value') or (self.theValueType == 'threat_value') or (self.theValueType == 'risk_class') or (self.theValueType == 'countermeasure_value') or (self.theValueType == 'severity') or (self.theValueType == 'likelihood')):
-      addButton = self.FindWindowById(armid.VALUETYPES_BUTTONADD_ID)
+      addButton = self.FindWindowById(VALUETYPES_BUTTONADD_ID)
       addButton.Hide()
-      deleteButton = self.FindWindowById(armid.VALUETYPES_BUTTONDELETE_ID)
+      deleteButton = self.FindWindowById(VALUETYPES_BUTTONDELETE_ID)
       deleteButton.Hide()
 
   def addObjectRow(self,listCtrl,listRow,objt):
@@ -117,9 +117,9 @@ class ValueTypesDialog(DimensionBaseDialog):
 
   def onAdd(self,evt):
     try:
-      addParameters = ValueTypeDialogParameters(armid.VALUETYPE_ID,'Add ' + self.theValueType,ValueTypeDialog,armid.VALUETYPE_BUTTONCOMMIT_ID,self.dbProxy.addValueType,True,self.theValueType)
+      addParameters = ValueTypeDialogParameters(VALUETYPE_ID,'Add ' + self.theValueType,ValueTypeDialog,VALUETYPE_BUTTONCOMMIT_ID,self.dbProxy.addValueType,True,self.theValueType)
       self.addObject(addParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add ' + self.theValueType,wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -130,12 +130,12 @@ class ValueTypesDialog(DimensionBaseDialog):
     assetId = selectedObjt.id()
     try:
       if (self.theValueType != 'asset_value'):
-        updateParameters = ValueTypeDialogParameters(armid.VALUETYPE_ID,'Edit ' + self.theValueType,ValueTypeDialog,armid.VALUETYPE_BUTTONCOMMIT_ID,self.dbProxy.updateValueType,False,self.theValueType)
+        updateParameters = ValueTypeDialogParameters(VALUETYPE_ID,'Edit ' + self.theValueType,ValueTypeDialog,VALUETYPE_BUTTONCOMMIT_ID,self.dbProxy.updateValueType,False,self.theValueType)
       else:
         envName = self.environmentCtrl.GetValue()
-        updateParameters = ValueTypeDialogParameters(armid.VALUETYPE_ID,'Edit ' + self.theValueType,ValueTypeDialog,armid.VALUETYPE_BUTTONCOMMIT_ID,self.dbProxy.updateValueType,False,self.theValueType,envName)
+        updateParameters = ValueTypeDialogParameters(VALUETYPE_ID,'Edit ' + self.theValueType,ValueTypeDialog,VALUETYPE_BUTTONCOMMIT_ID,self.dbProxy.updateValueType,False,self.theValueType,envName)
       self.updateObject(selectedObjt,updateParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Edit ' + self.theValueType,wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy
@@ -143,7 +143,7 @@ class ValueTypesDialog(DimensionBaseDialog):
   def onDelete(self,evt):
     try:
       self.deleteObject('No ' + self.theValueType,'Delete ' + self.theValueType,self.deleteFn)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Delete ' + self.theValueType,wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy
@@ -160,7 +160,7 @@ class ValueTypesDialog(DimensionBaseDialog):
         newObjts[objt.name()] = objt
         listRow += 1
       self.objts = newObjts
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Edit Values',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()

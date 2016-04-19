@@ -17,8 +17,8 @@
 
 
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from ConcernAssociationDialog import ConcernAssociationDialog
 
 class ConcernAssociationListCtrl(wx.ListCtrl):
@@ -38,11 +38,11 @@ class ConcernAssociationListCtrl(wx.ListCtrl):
     self.SetColumnWidth(4,100)
     self.theSelectedIdx = -1
     self.theDimMenu = wx.Menu()
-    self.theDimMenu.Append(armid.CONCA_MENUADD_ID,'Add')
-    self.theDimMenu.Append(armid.CONCA_MENUDELETE_ID,'Delete')
+    self.theDimMenu.Append(CONCA_MENUADD_ID,'Add')
+    self.theDimMenu.Append(CONCA_MENUDELETE_ID,'Delete')
     self.Bind(wx.EVT_RIGHT_DOWN,self.OnRightDown)
-    wx.EVT_MENU(self.theDimMenu,armid.CONCA_MENUADD_ID,self.onAddAssociation)
-    wx.EVT_MENU(self.theDimMenu,armid.CONCA_MENUDELETE_ID,self.onDeleteAssociation)
+    wx.EVT_MENU(self.theDimMenu,CONCA_MENUADD_ID,self.onAddAssociation)
+    wx.EVT_MENU(self.theDimMenu,CONCA_MENUDELETE_ID,self.onDeleteAssociation)
 
     self.Bind(wx.EVT_LIST_ITEM_SELECTED,self.OnItemSelected)
     self.Bind(wx.EVT_LIST_ITEM_DESELECTED,self.OnItemDeselected)
@@ -56,7 +56,7 @@ class ConcernAssociationListCtrl(wx.ListCtrl):
 
   def onAddAssociation(self,evt):
     dlg = ConcernAssociationDialog(self,self.dbProxy,self.theCurrentEnvironment)
-    if (dlg.ShowModal() == armid.CONCERNASSOCIATION_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == CONCERNASSOCIATION_BUTTONCOMMIT_ID):
       self.theSelectedIdx = self.GetItemCount()
       self.InsertStringItem(self.theSelectedIdx,dlg.source())
       self.SetStringItem(self.theSelectedIdx,1,dlg.sourceMultiplicity())
@@ -91,7 +91,7 @@ class ConcernAssociationListCtrl(wx.ListCtrl):
     target = self.GetItem(self.theSelectedIdx,4)
      
     dlg = ConcernAssociationDialog(self,self.dbProxy,self.theCurrentEnvironment,source,sourceMultiplicity.GetText(),link.GetText(),target.GetText(),targetMultiplicity.GetText())
-    if (dlg.ShowModal() == armid.CONCERNASSOCIATION_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == CONCERNASSOCIATION_BUTTONCOMMIT_ID):
       self.SetStringItem(self.theSelectedIdx,0,dlg.source())
       self.SetStringItem(self.theSelectedIdx,1,dlg.sourceMultiplicity())
       self.SetStringItem(self.theSelectedIdx,2,dlg.link())

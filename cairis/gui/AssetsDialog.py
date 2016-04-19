@@ -17,23 +17,23 @@
 
 
 import wx
-import armid
-import Asset
+from cairis.core.armid import *
+import cairis.core.Asset
 from AssetDialog import AssetDialog
 from DialogClassParameters import DialogClassParameters
-import ARM
+from cairis.core.ARM import *
 import os
 import xml.sax
 from DimensionBaseDialog import DimensionBaseDialog
 
 class AssetsDialog(DimensionBaseDialog):
   def __init__(self,parent):
-    DimensionBaseDialog.__init__(self,parent,armid.ASSETS_ID,'Assets',(930,300),'asset.png')
+    DimensionBaseDialog.__init__(self,parent,ASSETS_ID,'Assets',(930,300),'asset.png')
     self.rmFrame = parent
-    idList = [armid.ASSETS_ASSETLIST_ID,armid.ASSETS_BUTTONADD_ID,armid.ASSETS_BUTTONDELETE_ID]
+    idList = [ASSETS_ASSETLIST_ID,ASSETS_BUTTONADD_ID,ASSETS_BUTTONDELETE_ID]
     columnList = ['Name','Type']
     self.buildControls(idList,columnList,self.dbProxy.getAssets,'asset')
-    listCtrl = self.FindWindowById(armid.ASSETS_ASSETLIST_ID)
+    listCtrl = self.FindWindowById(ASSETS_ASSETLIST_ID)
     listCtrl.SetColumnWidth(0,200)
     listCtrl.SetColumnWidth(1,200)
     
@@ -43,10 +43,10 @@ class AssetsDialog(DimensionBaseDialog):
 
   def onAdd(self,evt):
     try:
-      addParameters = DialogClassParameters(armid.ASSET_ID,'Add asset',AssetDialog,armid.ASSET_BUTTONCOMMIT_ID,self.dbProxy.addAsset,True)
+      addParameters = DialogClassParameters(ASSET_ID,'Add asset',AssetDialog,ASSET_BUTTONCOMMIT_ID,self.dbProxy.addAsset,True)
       self.addObject(addParameters)
       self.rmFrame.updateObjectSelection(self.selectedLabel)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add asset',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -56,9 +56,9 @@ class AssetsDialog(DimensionBaseDialog):
     selectedObjt = self.objts[self.selectedLabel]
     assetId = selectedObjt.id()
     try:
-      updateParameters = DialogClassParameters(armid.ASSET_ID,'Edit asset',AssetDialog,armid.ASSET_BUTTONCOMMIT_ID,self.dbProxy.updateAsset,False)
+      updateParameters = DialogClassParameters(ASSET_ID,'Edit asset',AssetDialog,ASSET_BUTTONCOMMIT_ID,self.dbProxy.updateAsset,False)
       self.updateObject(selectedObjt,updateParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Edit asset',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy
@@ -67,7 +67,7 @@ class AssetsDialog(DimensionBaseDialog):
     try:
       self.deleteObject('No asset','Delete asset',self.dbProxy.deleteAsset)
       self.rmFrame.updateObjectSelection()
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Delete asset',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy

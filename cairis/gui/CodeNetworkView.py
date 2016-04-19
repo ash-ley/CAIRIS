@@ -15,10 +15,10 @@
 #  specific language governing permissions and limitations
 #  under the License.
 
-from Borg import Borg
+from cairis.core.Borg import Borg
 import wx.lib.imagebrowser
 import os
-import armid
+from cairis.core.armid import *
 
 class CodeNetworkView(wx.lib.imagebrowser.ImageView):
   def __init__(self,parent,winId,fileName = 'codenetwork'):

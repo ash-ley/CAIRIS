@@ -17,14 +17,14 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from BasePanel import BasePanel
-import InternalDocument
+import cairis.core.InternalDocument
 from InternalDocumentNotebook import InternalDocumentNotebook
 
 class InternalDocumentPanel(BasePanel):
   def __init__(self,parent):
-    BasePanel.__init__(self,parent,armid.EXTERNALDOCUMENT_ID)
+    BasePanel.__init__(self,parent,EXTERNALDOCUMENT_ID)
     self.theId = None
     
   def buildControls(self,isCreate,isUpdateable=True):
@@ -32,14 +32,14 @@ class InternalDocumentPanel(BasePanel):
 
     nb = InternalDocumentNotebook(self)
     mainSizer.Add(nb,1,wx.EXPAND)
-    mainSizer.Add(self.buildCommitButtonSizer(armid.INTERNALDOCUMENT_BUTTONCOMMIT_ID,isCreate),0,wx.CENTER)
+    mainSizer.Add(self.buildCommitButtonSizer(INTERNALDOCUMENT_BUTTONCOMMIT_ID,isCreate),0,wx.CENTER)
     self.SetSizer(mainSizer)
 
   def loadControls(self,objt,isReadOnly=False):
     self.theId = objt.id()
-    nameCtrl = self.FindWindowById(armid.INTERNALDOCUMENT_TEXTNAME_ID)
-    descCtrl = self.FindWindowById(armid.INTERNALDOCUMENT_TEXTDESCRIPTION_ID)
-    contCtrl = self.FindWindowById(armid.INTERNALDOCUMENT_TEXTCONTENT_ID)
+    nameCtrl = self.FindWindowById(INTERNALDOCUMENT_TEXTNAME_ID)
+    descCtrl = self.FindWindowById(INTERNALDOCUMENT_TEXTDESCRIPTION_ID)
+    contCtrl = self.FindWindowById(INTERNALDOCUMENT_TEXTCONTENT_ID)
 
     nameCtrl.SetValue(objt.name())
     descCtrl.SetValue(objt.description())

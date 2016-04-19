@@ -17,14 +17,14 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from ComponentPanel import ComponentPanel
-from ComponentParameters import ComponentParameters
+from cairis.core.ComponentParameters import ComponentParameters
 import DialogClassParameters
 
 class ComponentDialog(wx.Dialog):
   def __init__(self,parent):
-    wx.Dialog.__init__(self,parent,armid.COMPONENT_ID,'Edit Component',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,500))
+    wx.Dialog.__init__(self,parent,COMPONENT_ID,'Edit Component',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,500))
     self.theName = ''
     self.theDescription = ''
     self.theInterfaces = []
@@ -42,7 +42,7 @@ class ComponentDialog(wx.Dialog):
     self.panel.buildControls()
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.COMPONENT_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,COMPONENT_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,component):
     self.theComponentId = component.id()
@@ -51,12 +51,12 @@ class ComponentDialog(wx.Dialog):
 
   def onCommit(self,evt):
     commitLabel = self.commitVerb + ' component'
-    nameCtrl = self.FindWindowById(armid.COMPONENT_TEXTNAME_ID)
-    descCtrl = self.FindWindowById(armid.COMPONENT_TEXTDESCRIPTION_ID)
-    ifCtrl = self.FindWindowById(armid.COMPONENT_LISTINTERFACES_ID)
-    structCtrl = self.FindWindowById(armid.COMPONENT_LISTSTRUCTURE_ID)
-    reqsCtrl = self.FindWindowById(armid.COMPONENT_LISTREQUIREMENTS_ID)
-    goalsCtrl = self.FindWindowById(armid.COMPONENT_LISTGOALS_ID)
+    nameCtrl = self.FindWindowById(COMPONENT_TEXTNAME_ID)
+    descCtrl = self.FindWindowById(COMPONENT_TEXTDESCRIPTION_ID)
+    ifCtrl = self.FindWindowById(COMPONENT_LISTINTERFACES_ID)
+    structCtrl = self.FindWindowById(COMPONENT_LISTSTRUCTURE_ID)
+    reqsCtrl = self.FindWindowById(COMPONENT_LISTREQUIREMENTS_ID)
+    goalsCtrl = self.FindWindowById(COMPONENT_LISTGOALS_ID)
     self.theName = nameCtrl.GetValue()
     self.theDescription = descCtrl.GetValue()
     self.theInterfaces = ifCtrl.dimensions()
@@ -80,7 +80,7 @@ class ComponentDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.COMPONENT_BUTTONCOMMIT_ID)
+      self.EndModal(COMPONENT_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = ComponentParameters(self.theName,self.theDescription,self.theInterfaces,self.theStructure,self.theRequirements,self.theGoals)

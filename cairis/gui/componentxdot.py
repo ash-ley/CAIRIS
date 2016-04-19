@@ -17,13 +17,13 @@
 
 
 import xdot
-from Borg import Borg
-import ARM
+from cairis.core.Borg import Borg
+from cairis.core.ARM import *
 import gtk
 import math
 import cairo
 import pangocairo
-import armid
+from cairis.core.armid import *
 from ComponentModel import ComponentModel
 
 class ComponentTextShape(xdot.TextShape):
@@ -53,7 +53,7 @@ class AttackerShape(xdot.Shape):
         self.filled = filled
 
     def draw(self, cr, highlight=False,zoom_ratio=-1):
-      if (zoom_ratio == -1) or (zoom_ratio > armid.HIGH_ZOOM_RATIO):
+      if (zoom_ratio == -1) or (zoom_ratio > HIGH_ZOOM_RATIO):
         cr.save()
         cr.set_source_rgb(0,0,0)
         cr.translate(self.x0, self.y0)
@@ -99,7 +99,7 @@ class PersonaShape(xdot.Shape):
         self.filled = filled
 
     def draw(self, cr, highlight=False,zoom_ratio=-1):
-      if (zoom_ratio == -1) or (zoom_ratio > armid.HIGH_ZOOM_RATIO):
+      if (zoom_ratio == -1) or (zoom_ratio > HIGH_ZOOM_RATIO):
         cr.save()
         cr.translate(self.x0, self.y0)
         cr.scale(self.w, self.h)
@@ -162,7 +162,7 @@ class MisuseCaseShape(xdot.EllipseShape):
       xdot.EllipseShape.__init__(self,pen,x0,y0,w,h,filled)
 
     def draw(self, cr, highlight=False,zoom_ratio=-1):
-      if (zoom_ratio == -1) or (zoom_ratio > armid.HIGH_ZOOM_RATIO):
+      if (zoom_ratio == -1) or (zoom_ratio > HIGH_ZOOM_RATIO):
         xdot.EllipseShape.draw(self,cr,highlight,-1)
 
    
@@ -177,7 +177,7 @@ class RoleShape(xdot.Shape):
         self.filled = filled
 
     def draw(self, cr, highlight=False,zoom_ratio=-1):
-      if (zoom_ratio == -1) or (zoom_ratio > armid.HIGH_ZOOM_RATIO):
+      if (zoom_ratio == -1) or (zoom_ratio > HIGH_ZOOM_RATIO):
         cr.save()
         cr.translate(self.x0, self.y0)
         cr.scale(self.w, self.h)
@@ -209,7 +209,7 @@ class GoalShape(xdot.Shape):
         self.filled = filled
 
     def draw(self, cr, highlight=False,zoom_ratio=-1):
-      if (zoom_ratio == -1) or (zoom_ratio > armid.HIGH_ZOOM_RATIO):
+      if (zoom_ratio == -1) or (zoom_ratio > HIGH_ZOOM_RATIO):
         cr.save()
         cr.translate(self.x0, self.y0)
         cr.scale(self.w, self.h)
@@ -264,7 +264,7 @@ class ComponentPolygonShape(xdot.PolygonShape):
         self.objt = objt
 
     def draw(self, cr, highlight=False,zoom_ratio=-1):
-      if (zoom_ratio == -1) or (self.dim == 'risk') or (zoom_ratio > armid.LOW_ZOOM_RATIO and (self.dim == 'asset' or self.dim == 'threat' or self.dim == 'vulnerability')) or (zoom_ratio > armid.HIGH_ZOOM_RATIO):
+      if (zoom_ratio == -1) or (self.dim == 'risk') or (zoom_ratio > LOW_ZOOM_RATIO and (self.dim == 'asset' or self.dim == 'threat' or self.dim == 'vulnerability')) or (zoom_ratio > HIGH_ZOOM_RATIO):
         if (self.dim != 'role'):
           x0, y0 = self.points[-1]
           cr.move_to(x0, y0)
@@ -283,7 +283,7 @@ class ComponentPolygonShape(xdot.PolygonShape):
             cr.stroke()
 
         if (len(self.points) == 4):
-          if (self.dim != 'role') and ((zoom_ratio == -1) or (zoom_ratio > armid.HIGH_ZOOM_RATIO)):
+          if (self.dim != 'role') and ((zoom_ratio == -1) or (zoom_ratio > HIGH_ZOOM_RATIO)):
             if (self.points[0][0] == self.points[1][0]):
               cr.set_source_rgba(*pen.color)
               xs = self.points[0][0]
@@ -294,7 +294,7 @@ class ComponentPolygonShape(xdot.PolygonShape):
               cr.line_to(xe,ys + 7.5)
               cr.stroke()
 
-        if (zoom_ratio > armid.LOW_ZOOM_RATIO):
+        if (zoom_ratio > LOW_ZOOM_RATIO):
           if (self.dim == 'asset'):
             self.decorateAssetNode(cr,zoom_ratio)
           elif (self.dim == 'threat'):
@@ -302,7 +302,7 @@ class ComponentPolygonShape(xdot.PolygonShape):
           elif (self.dim == 'vulnerability'):
             self.decorateVulnerabilityNode(cr,zoom_ratio)
 
-        if (zoom_ratio > armid.HIGH_ZOOM_RATIO and self.dim == 'role'):
+        if (zoom_ratio > HIGH_ZOOM_RATIO and self.dim == 'role'):
             self.decorateRoleNode(cr)
 
     def decorateRoleNode(self,cr):
@@ -321,7 +321,7 @@ class ComponentPolygonShape(xdot.PolygonShape):
       
 
     def decorateAssetNode(self,cr,zoom_ratio):
-     if (zoom_ratio == -1) or (zoom_ratio > armid.HIGH_ZOOM_RATIO):
+     if (zoom_ratio == -1) or (zoom_ratio > HIGH_ZOOM_RATIO):
       xs = self.points[0][0]
       ye = self.points[2][1]
       xs = self.points[0][0]
@@ -362,7 +362,7 @@ class ComponentPolygonShape(xdot.PolygonShape):
       cr.fill()
  
     def decorateThreatNode(self,cr,zoom_ratio):
-     if (zoom_ratio > armid.LOW_ZOOM_RATIO) and (zoom_ratio < armid.HIGH_ZOOM_RATIO):
+     if (zoom_ratio > LOW_ZOOM_RATIO) and (zoom_ratio < HIGH_ZOOM_RATIO):
       threat = self.dbProxy.dimensionObject(self.objt,self.dim)
       likelihood = threat.likelihood(self.environment.name(),self.environment.duplicateProperty(),self.environment.overridingEnvironment())
       if (likelihood == 'Incredible'):
@@ -383,7 +383,7 @@ class ComponentPolygonShape(xdot.PolygonShape):
       cr.set_source_rgb(lhoodScore[0],lhoodScore[1],lhoodScore[2])
       cr.fill_preserve()
       cr.fill()
-     elif (zoom_ratio > armid.HIGH_ZOOM_RATIO):
+     elif (zoom_ratio > HIGH_ZOOM_RATIO):
       xs = self.points[0][0]
       ye = self.points[2][1]
       xs = self.points[0][0]
@@ -449,7 +449,7 @@ class ComponentPolygonShape(xdot.PolygonShape):
 
 
     def decorateVulnerabilityNode(self,cr,zoom_ratio):
-     if (zoom_ratio > armid.LOW_ZOOM_RATIO) and (zoom_ratio < armid.HIGH_ZOOM_RATIO):
+     if (zoom_ratio > LOW_ZOOM_RATIO) and (zoom_ratio < HIGH_ZOOM_RATIO):
       vulnerability = self.dbProxy.dimensionObject(self.objt,self.dim)
       severity = vulnerability.severity(self.environment.name(),self.environment.duplicateProperty(),self.environment.overridingEnvironment())
       if (severity == 'Negligible'):
@@ -468,7 +468,7 @@ class ComponentPolygonShape(xdot.PolygonShape):
       cr.set_source_rgb(sevCol[0],sevCol[1],sevCol[2])
       cr.fill_preserve()
       cr.fill()
-     elif (zoom_ratio > armid.HIGH_ZOOM_RATIO):
+     elif (zoom_ratio > HIGH_ZOOM_RATIO):
       xs = self.points[0][0]
       ye = self.points[2][1]
       xs = self.points[0][0]
@@ -745,7 +745,7 @@ class ComponentDotWindow(gtk.Window):
         self.set_xdotcode(self.traceModel.graph())
         self.widget.zoom_to_fit()
 
-      except ARM.ARMException, ex:
+      except ARMException, ex:
         dlg = gtk.MessageDialog(type=gtk.MESSAGE_ERROR,message_format=str(ex),buttons=gtk.BUTTONS_OK)
         dlg.set_title('Component Model Viewer')
         dlg.run()

@@ -17,9 +17,9 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from PersonaCharacteristicNotebook import PersonaCharacteristicNotebook
-from PersonaCharacteristicParameters import PersonaCharacteristicParameters
+from cairis.core.PersonaCharacteristicParameters import PersonaCharacteristicParameters
 from BaseDialog import BaseDialog 
 
 class PersonaCharacteristicDialog(BaseDialog):
@@ -50,14 +50,14 @@ class PersonaCharacteristicDialog(BaseDialog):
     mainSizer = wx.BoxSizer(wx.VERTICAL)
     self.panel = PersonaCharacteristicNotebook(self,self.thePersonaName)
     mainSizer.Add(self.panel,1,wx.EXPAND)
-    mainSizer.Add(self.buildCommitButtonSizer(armid.PERSONACHARACTERISTIC_BUTTONCOMMIT_ID,True),0,wx.CENTER)
+    mainSizer.Add(self.buildCommitButtonSizer(PERSONACHARACTERISTIC_BUTTONCOMMIT_ID,True),0,wx.CENTER)
 
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.PERSONACHARACTERISTIC_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,PERSONACHARACTERISTIC_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,objt):
     self.theId = objt.id()
-    buttonCtrl = self.FindWindowById(armid.PERSONACHARACTERISTIC_BUTTONCOMMIT_ID)
+    buttonCtrl = self.FindWindowById(PERSONACHARACTERISTIC_BUTTONCOMMIT_ID)
     buttonCtrl.SetLabel('Edit')
     self.panel.loadControls(objt)
     self.commitVerb = 'Edit'
@@ -65,11 +65,11 @@ class PersonaCharacteristicDialog(BaseDialog):
   def onCommit(self,evt):
     commitLabel = self.commitVerb + ' persona characteristic'
 
-    qualCtrl = self.FindWindowById(armid.PERSONACHARACTERISTIC_TEXTQUALIFIER_ID)
-    charCtrl = self.FindWindowById(armid.PERSONACHARACTERISTIC_TEXTCHARACTERISTIC_ID)
-    groundsCtrl = self.FindWindowById(armid.PERSONACHARACTERISTIC_LISTGROUNDS_ID)
-    warrantCtrl = self.FindWindowById(armid.PERSONACHARACTERISTIC_LISTWARRANT_ID)
-    rebuttalCtrl = self.FindWindowById(armid.PERSONACHARACTERISTIC_LISTREBUTTAL_ID)
+    qualCtrl = self.FindWindowById(PERSONACHARACTERISTIC_TEXTQUALIFIER_ID)
+    charCtrl = self.FindWindowById(PERSONACHARACTERISTIC_TEXTCHARACTERISTIC_ID)
+    groundsCtrl = self.FindWindowById(PERSONACHARACTERISTIC_LISTGROUNDS_ID)
+    warrantCtrl = self.FindWindowById(PERSONACHARACTERISTIC_LISTWARRANT_ID)
+    rebuttalCtrl = self.FindWindowById(PERSONACHARACTERISTIC_LISTREBUTTAL_ID)
 
     self.theModalQualifier = qualCtrl.GetValue()
     self.theCharacteristic = charCtrl.GetValue()
@@ -79,8 +79,8 @@ class PersonaCharacteristicDialog(BaseDialog):
  
     
     if (self.inPersona == False):
-      pCtrl = self.FindWindowById(armid.PERSONACHARACTERISTIC_COMBOPERSONA_ID)
-      varCtrl = self.FindWindowById(armid.PERSONACHARACTERISTIC_COMBOVARIABLE_ID)
+      pCtrl = self.FindWindowById(PERSONACHARACTERISTIC_COMBOPERSONA_ID)
+      varCtrl = self.FindWindowById(PERSONACHARACTERISTIC_COMBOVARIABLE_ID)
       self.thePersonaName = pCtrl.GetValue()
       self.theVariable = varCtrl.GetValue()
 
@@ -110,7 +110,7 @@ class PersonaCharacteristicDialog(BaseDialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.PERSONACHARACTERISTIC_BUTTONCOMMIT_ID)
+      self.EndModal(PERSONACHARACTERISTIC_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = PersonaCharacteristicParameters(self.thePersonaName,self.theModalQualifier,self.theVariable,self.theCharacteristic,self.theGrounds,self.theWarrant,[],self.theRebuttal)

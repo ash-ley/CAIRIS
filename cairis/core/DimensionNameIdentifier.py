@@ -16,7 +16,7 @@
 #  under the License.
 
 
-import ARM
+from ARM import *
 
 def dimensionName(className):
   if (className == 'AttackersDialog'):  return 'attacker'
@@ -54,4 +54,4 @@ def dimensionName(className):
   if (className == 'TaskCharacteristicsDialog'): return 'task_characteristic'
   if (className == 'BehaviouralCharacteristicsDialog'): return 'persona_characteristic'
   if (className == 'ConceptReferencesDialog'): return 'concept_reference'
-  raise ARM.UnknownDialogClass(className)
+  raise UnknownDialogClass(className)

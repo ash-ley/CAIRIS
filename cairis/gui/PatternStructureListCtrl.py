@@ -17,13 +17,13 @@
 
 
 import wx
-import armid
-import ARM
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
 from PatternStructureDialog import PatternStructureDialog
 
 class PatternStructureListCtrl(wx.ListCtrl):
-  def __init__(self,parent,winId = armid.SECURITYPATTERN_LISTPATTERNSTRUCTURE_ID):
+  def __init__(self,parent,winId = SECURITYPATTERN_LISTPATTERNSTRUCTURE_ID):
     wx.ListCtrl.__init__(self,parent,winId,size=wx.DefaultSize,style=wx.LC_REPORT)
     b = Borg()
     self.dbProxy = b.dbProxy
@@ -49,11 +49,11 @@ class PatternStructureListCtrl(wx.ListCtrl):
     self.SetColumnWidth(9,100)
     self.theSelectedIdx = -1
     self.theDimMenu = wx.Menu()
-    self.theDimMenu.Append(armid.AA_MENUADD_ID,'Add')
-    self.theDimMenu.Append(armid.AA_MENUDELETE_ID,'Delete')
+    self.theDimMenu.Append(AA_MENUADD_ID,'Add')
+    self.theDimMenu.Append(AA_MENUDELETE_ID,'Delete')
     self.Bind(wx.EVT_RIGHT_DOWN,self.OnRightDown)
-    wx.EVT_MENU(self.theDimMenu,armid.AA_MENUADD_ID,self.onAddAssociation)
-    wx.EVT_MENU(self.theDimMenu,armid.AA_MENUDELETE_ID,self.onDeleteAssociation)
+    wx.EVT_MENU(self.theDimMenu,AA_MENUADD_ID,self.onAddAssociation)
+    wx.EVT_MENU(self.theDimMenu,AA_MENUDELETE_ID,self.onDeleteAssociation)
 
     self.Bind(wx.EVT_LIST_ITEM_SELECTED,self.OnItemSelected)
     self.Bind(wx.EVT_LIST_ITEM_DESELECTED,self.OnItemDeselected)
@@ -64,7 +64,7 @@ class PatternStructureListCtrl(wx.ListCtrl):
 
   def onAddAssociation(self,evt):
     dlg = PatternStructureDialog(self)
-    if (dlg.ShowModal() == armid.PATTERNSTRUCTURE_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == PATTERNSTRUCTURE_BUTTONCOMMIT_ID):
       self.theSelectedIdx = self.GetItemCount()
       self.InsertStringItem(self.theSelectedIdx,dlg.headAsset())
       self.SetStringItem(self.theSelectedIdx,1,dlg.headAdornment())
@@ -109,7 +109,7 @@ class PatternStructureListCtrl(wx.ListCtrl):
     tailAsset = self.GetItem(self.theSelectedIdx,9)
      
     dlg = PatternStructureDialog(self,headAsset,headAdornment.GetText(),headNav.GetText(),headNry.GetText(),headRole.GetText(),tailRole.GetText(),tailNry.GetText(),tailNav.GetText(),tailAdornment.GetText(),tailAsset.GetText())
-    if (dlg.ShowModal() == armid.PATTERNSTRUCTURE_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == PATTERNSTRUCTURE_BUTTONCOMMIT_ID):
       self.SetStringItem(self.theSelectedIdx,0,dlg.headAsset())
       self.SetStringItem(self.theSelectedIdx,1,dlg.headAdornment())
       self.SetStringItem(self.theSelectedIdx,2,dlg.headNavigation())

@@ -16,17 +16,17 @@
 #  under the License.
 
 
-import DotTrace
+import cairis.core.DotTrace
 import pydot
 import wx
 import os
-import ARM
+from cairis.core.ARM import *
 import gtk
-from Borg import Borg
-from colourcodes import threatColourCode
-from colourcodes import responseColourCode
-from colourcodes import usabilityColourCode
-from colourcodes import riskTextColourCode
+from cairis.core.Borg import Borg
+from cairis.core.colourcodes import threatColourCode
+from cairis.core.colourcodes import responseColourCode
+from cairis.core.colourcodes import usabilityColourCode
+from cairis.core.colourcodes import riskTextColourCode
 
 USECASE_TYPE = 0
 MISUSECASE_TYPE = 1

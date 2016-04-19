@@ -17,9 +17,9 @@
 
 
 import wx
-import armid
-import ARM
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
 from ReferenceDialog import ReferenceDialog
 from ReferenceSynopsisDialog import ReferenceSynopsisDialog
 from ReferenceContributionDialog import ReferenceContributionDialog
@@ -39,18 +39,18 @@ class ReferenceListCtrl(wx.ListCtrl):
 
     self.theSelectedIdx = -1
     self.theDimMenu = wx.Menu()
-    self.theDimMenu.Append(armid.DIMLIST_MENUADD_ID,'Add')
-    self.theDimMenu.Append(armid.DIMLIST_MENUDELETE_ID,'Delete')
-    self.theDimMenu.Append(armid.CLC_MENU_REFERENCESYNOPSIS_ID,'Reference Synopsis')
-    self.theDimMenu.Append(armid.CLC_MENU_REFERENCECONTRIBUTION_ID,'Reference Contribution')
+    self.theDimMenu.Append(DIMLIST_MENUADD_ID,'Add')
+    self.theDimMenu.Append(DIMLIST_MENUDELETE_ID,'Delete')
+    self.theDimMenu.Append(CLC_MENU_REFERENCESYNOPSIS_ID,'Reference Synopsis')
+    self.theDimMenu.Append(CLC_MENU_REFERENCECONTRIBUTION_ID,'Reference Contribution')
 
     self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK,self.OnRightDown)
-    wx.EVT_MENU(self.theDimMenu,armid.DIMLIST_MENUADD_ID,self.onAddReference)
-    wx.EVT_MENU(self.theDimMenu,armid.DIMLIST_MENUDELETE_ID,self.onDeleteReference)
-    wx.EVT_MENU(self.theDimMenu,armid.CLC_MENU_REFERENCESYNOPSIS_ID,self.onReferenceSynopsis)
-    wx.EVT_MENU(self.theDimMenu,armid.CLC_MENU_REFERENCECONTRIBUTION_ID,self.onReferenceContribution)
+    wx.EVT_MENU(self.theDimMenu,DIMLIST_MENUADD_ID,self.onAddReference)
+    wx.EVT_MENU(self.theDimMenu,DIMLIST_MENUDELETE_ID,self.onDeleteReference)
+    wx.EVT_MENU(self.theDimMenu,CLC_MENU_REFERENCESYNOPSIS_ID,self.onReferenceSynopsis)
+    wx.EVT_MENU(self.theDimMenu,CLC_MENU_REFERENCECONTRIBUTION_ID,self.onReferenceContribution)
 
-    self.rcItem = self.theDimMenu.FindItemById(armid.CLC_MENU_REFERENCECONTRIBUTION_ID)
+    self.rcItem = self.theDimMenu.FindItemById(CLC_MENU_REFERENCECONTRIBUTION_ID)
     self.rcItem.Enable(False)
 
 
@@ -79,7 +79,7 @@ class ReferenceListCtrl(wx.ListCtrl):
 
   def onAddReference(self,evt):
     dlg = ReferenceDialog(self,self.theCharacteristicType)
-    if (dlg.ShowModal() == armid.CHARACTERISTICREFERENCE_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == CHARACTERISTICREFERENCE_BUTTONCOMMIT_ID):
       self.theSelectedIdx = self.GetItemCount()
       refName = dlg.reference()
       dimName = dlg.dimension()
@@ -114,7 +114,7 @@ class ReferenceListCtrl(wx.ListCtrl):
     desc = descItem.GetText()
      
     dlg = ReferenceDialog(self,self.theCharacteristicType,refName,desc,dimName)
-    if (dlg.ShowModal() == armid.CHARACTERISTICREFERENCE_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == CHARACTERISTICREFERENCE_BUTTONCOMMIT_ID):
       refName = dlg.reference()
       dimName = dlg.dimension()
       refDesc = dlg.description()
@@ -143,7 +143,7 @@ class ReferenceListCtrl(wx.ListCtrl):
     refName = self.GetItemText(self.theSelectedIdx)
     rs = self.dbProxy.getReferenceSynopsis(refName)
     dlg = ReferenceSynopsisDialog(self,rs)
-    if (dlg.ShowModal() == armid.REFERENCESYNOPSIS_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == REFERENCESYNOPSIS_BUTTONCOMMIT_ID):
       if (rs.id() == -1):
         self.dbProxy.addReferenceSynopsis(dlg.parameters())
       else:
@@ -155,7 +155,7 @@ class ReferenceListCtrl(wx.ListCtrl):
     for charName in charNames:
       rc = self.dbProxy.getReferenceContribution(charName,refName)
       dlg = ReferenceContributionDialog(self,rc)
-      if (dlg.ShowModal() == armid.REFERENCECONTRIBUTION_BUTTONCOMMIT_ID):
+      if (dlg.ShowModal() == REFERENCECONTRIBUTION_BUTTONCOMMIT_ID):
         if (rc.meansEnd() == ''):
           self.dbProxy.addReferenceContribution(dlg.parameters())
         else:

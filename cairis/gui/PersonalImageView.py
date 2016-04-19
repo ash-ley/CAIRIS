@@ -17,17 +17,17 @@
 
 
 import wx.lib.imagebrowser
-import armid
+from cairis.core.armid import *
 
 class PersonalImageView(wx.lib.imagebrowser.ImageView):
   def __init__(self,parent,winId):
     wx.lib.imagebrowser.ImageView.__init__(self,parent,winId)
     self.theLoadMenu = wx.Menu()
     self.theImageFile = ''
-    self.theLoadMenu.Append(armid.PIV_MENULOAD_LOADIMAGE_ID,'Load Image')
+    self.theLoadMenu.Append(PIV_MENULOAD_LOADIMAGE_ID,'Load Image')
 
     self.Bind(wx.EVT_RIGHT_DOWN,self.onRightDown)
-    wx.EVT_MENU(self,armid.PIV_MENULOAD_LOADIMAGE_ID,self.onLoadImage)
+    wx.EVT_MENU(self,PIV_MENULOAD_LOADIMAGE_ID,self.onLoadImage)
 
 
   def onRightDown(self,evt):

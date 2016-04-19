@@ -17,10 +17,10 @@
 
 
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from PropertyDialog import PropertyDialog
-from ValueDictionary import ValueDictionary
+from cairis.core.ValueDictionary import ValueDictionary
 
 class SingleEnvironmentPropertiesListCtrl(wx.ListCtrl):
   def __init__(self,parent,winId,values,boxSize=wx.DefaultSize):
@@ -33,8 +33,8 @@ class SingleEnvironmentPropertiesListCtrl(wx.ListCtrl):
     self.InsertColumn(2,'Rationale')
     self.SetColumnWidth(1,300)
     self.theDimMenu = wx.Menu()
-    self.theDimMenu.Append(armid.PROPERTIESLISTCTRL_MENUADD_ID,'Add')
-    self.theDimMenu.Append(armid.PROPERTIESLISTCTRL_MENUDELETE_ID,'Delete')
+    self.theDimMenu.Append(PROPERTIESLISTCTRL_MENUADD_ID,'Add')
+    self.theDimMenu.Append(PROPERTIESLISTCTRL_MENUDELETE_ID,'Delete')
     self.theSelectedValue = ''
     self.theSelectedIdx = -1
     self.valueLookup = values
@@ -45,8 +45,8 @@ class SingleEnvironmentPropertiesListCtrl(wx.ListCtrl):
     self.Bind(wx.EVT_LIST_ITEM_DESELECTED,self.OnItemDeselected)
     self.Bind(wx.EVT_LIST_ITEM_ACTIVATED,self.onItemActivated)
 
-    wx.EVT_MENU(self.theDimMenu,armid.PROPERTIESLISTCTRL_MENUADD_ID,self.onAddProperty)
-    wx.EVT_MENU(self.theDimMenu,armid.PROPERTIESLISTCTRL_MENUDELETE_ID,self.onDeleteProperty)
+    wx.EVT_MENU(self.theDimMenu,PROPERTIESLISTCTRL_MENUADD_ID,self.onAddProperty)
+    wx.EVT_MENU(self.theDimMenu,PROPERTIESLISTCTRL_MENUDELETE_ID,self.onDeleteProperty)
 
   def OnItemSelected(self,evt):
     self.theSelectedIdx = evt.GetIndex()
@@ -64,7 +64,7 @@ class SingleEnvironmentPropertiesListCtrl(wx.ListCtrl):
     rItem = self.GetItem(x,2)
     dlg = PropertyDialog(self,self.setProperties,self.valueLookup.values())
     dlg.load(propertyName,valueItem.GetText(),rItem.GetText())
-    if (dlg.ShowModal() == armid.PROPERTY_BUTTONADD_ID):
+    if (dlg.ShowModal() == PROPERTY_BUTTONADD_ID):
       pName = dlg.property()
       pValue = dlg.value()
       pRationale = dlg.rationale()
@@ -78,7 +78,7 @@ class SingleEnvironmentPropertiesListCtrl(wx.ListCtrl):
 
   def onAddProperty(self,evt):
     dlg = PropertyDialog(self,self.setProperties,self.valueLookup.values())
-    if (dlg.ShowModal() == armid.PROPERTY_BUTTONADD_ID):
+    if (dlg.ShowModal() == PROPERTY_BUTTONADD_ID):
       propertyName = dlg.property()
       propertyValue = dlg.value()
       pRationale = dlg.rationale()
@@ -102,72 +102,72 @@ class SingleEnvironmentPropertiesListCtrl(wx.ListCtrl):
       self.setProperties.remove(selectedValue)
 
   def load(self,syProperties):
-    cProperty = syProperties[armid.C_PROPERTY][0]
-    cRationale = syProperties[armid.C_PROPERTY][1]
-    if (cProperty != armid.NONE_VALUE):
+    cProperty = syProperties[C_PROPERTY][0]
+    cRationale = syProperties[C_PROPERTY][1]
+    if (cProperty != NONE_VALUE):
       idx = self.GetItemCount()
       self.InsertStringItem(idx,'Confidentiality')
       self.SetStringItem(idx,1,self.valueLookup.name(cProperty))
       self.SetStringItem(idx,2,cRationale)
       self.setProperties.add('Confidentiality')
 
-    iProperty = syProperties[armid.I_PROPERTY][0]
-    iRationale = syProperties[armid.I_PROPERTY][1]
-    if (iProperty != armid.NONE_VALUE):
+    iProperty = syProperties[I_PROPERTY][0]
+    iRationale = syProperties[I_PROPERTY][1]
+    if (iProperty != NONE_VALUE):
       idx = self.GetItemCount()
       self.InsertStringItem(idx,'Integrity')
       self.SetStringItem(idx,1,self.valueLookup.name(iProperty))
       self.SetStringItem(idx,2,iRationale)
       self.setProperties.add('Integrity')
 
-    avProperty = syProperties[armid.AV_PROPERTY][0]
-    avRationale = syProperties[armid.AV_PROPERTY][1]
-    if (avProperty != armid.NONE_VALUE):
+    avProperty = syProperties[AV_PROPERTY][0]
+    avRationale = syProperties[AV_PROPERTY][1]
+    if (avProperty != NONE_VALUE):
       idx = self.GetItemCount()
       self.InsertStringItem(idx,'Availability')
       self.SetStringItem(idx,1,self.valueLookup.name(avProperty))
       self.SetStringItem(idx,2,avRationale)
       self.setProperties.add('Availability')
 
-    acProperty = syProperties[armid.AC_PROPERTY][0]
-    acRationale = syProperties[armid.AC_PROPERTY][1]
-    if (acProperty != armid.NONE_VALUE):
+    acProperty = syProperties[AC_PROPERTY][0]
+    acRationale = syProperties[AC_PROPERTY][1]
+    if (acProperty != NONE_VALUE):
       idx = self.GetItemCount()
       self.InsertStringItem(idx,'Accountability')
       self.SetStringItem(idx,1,self.valueLookup.name(acProperty))
       self.SetStringItem(idx,2,acRationale)
       self.setProperties.add('Accountability')
 
-    anProperty = syProperties[armid.AN_PROPERTY][0]
-    anRationale = syProperties[armid.AN_PROPERTY][1]
-    if (anProperty != armid.NONE_VALUE):
+    anProperty = syProperties[AN_PROPERTY][0]
+    anRationale = syProperties[AN_PROPERTY][1]
+    if (anProperty != NONE_VALUE):
       idx = self.GetItemCount()
       self.InsertStringItem(idx,'Anonymity')
       self.SetStringItem(idx,1,self.valueLookup.name(anProperty))
       self.SetStringItem(idx,2,anRationale)
       self.setProperties.add('Anonymity')
 
-    panProperty = syProperties[armid.PAN_PROPERTY][0]
-    panRationale = syProperties[armid.PAN_PROPERTY][1]
-    if (panProperty != armid.NONE_VALUE):
+    panProperty = syProperties[PAN_PROPERTY][0]
+    panRationale = syProperties[PAN_PROPERTY][1]
+    if (panProperty != NONE_VALUE):
       idx = self.GetItemCount()
       self.InsertStringItem(idx,'Pseudonymity')
       self.SetStringItem(idx,1,self.valueLookup.name(panProperty))
       self.SetStringItem(idx,2,panRationale)
       self.setProperties.add('Pseudonymity')
 
-    unlProperty = syProperties[armid.UNL_PROPERTY][0]
-    unlRationale = syProperties[armid.UNL_PROPERTY][1]
-    if (unlProperty != armid.NONE_VALUE):
+    unlProperty = syProperties[UNL_PROPERTY][0]
+    unlRationale = syProperties[UNL_PROPERTY][1]
+    if (unlProperty != NONE_VALUE):
       idx = self.GetItemCount()
       self.InsertStringItem(idx,'Unlinkability')
       self.SetStringItem(idx,1,self.valueLookup.name(unlProperty))
       self.SetStringItem(idx,2,unlRationale)
       self.setProperties.add('Unlinkability')
 
-    unoProperty = syProperties[armid.UNO_PROPERTY][0]
-    unoRationale = syProperties[armid.UNO_PROPERTY][1]
-    if (unoProperty != armid.NONE_VALUE):
+    unoProperty = syProperties[UNO_PROPERTY][0]
+    unoRationale = syProperties[UNO_PROPERTY][1]
+    if (unoProperty != NONE_VALUE):
       idx = self.GetItemCount()
       self.InsertStringItem(idx,'Unobservability')
       self.SetStringItem(idx,1,self.valueLookup.name(unoProperty))

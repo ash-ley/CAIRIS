@@ -17,7 +17,7 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from DictionaryListCtrl import DictionaryListCtrl
 from ContributorListCtrl import ContributorListCtrl
 from RevisionListCtrl import RevisionListCtrl
@@ -44,13 +44,13 @@ class BackgroundPage(wx.Panel):
     nameBox = wx.StaticBox(self,-1,'Project Name')
     nameBoxSizer = wx.StaticBoxSizer(nameBox,wx.HORIZONTAL)
     topSizer.Add(nameBoxSizer,0,wx.EXPAND)
-    self.nameCtrl = wx.TextCtrl(self,armid.PROJECTSETTINGS_TEXTPROJECTNAME_ID,'')
+    self.nameCtrl = wx.TextCtrl(self,PROJECTSETTINGS_TEXTPROJECTNAME_ID,'')
     nameBoxSizer.Add(self.nameCtrl,1,wx.EXPAND)
 
     narrativeBox = wx.StaticBox(self,-1,'Project Background')
     narrativeBoxSizer = wx.StaticBoxSizer(narrativeBox,wx.HORIZONTAL)
     topSizer.Add(narrativeBoxSizer,1,wx.EXPAND)
-    self.narrativeCtrl = wx.TextCtrl(self,armid.PROJECTSETTINGS_TEXTBACKGROUND_ID,'',style=wx.TE_MULTILINE)
+    self.narrativeCtrl = wx.TextCtrl(self,PROJECTSETTINGS_TEXTBACKGROUND_ID,'',style=wx.TE_MULTILINE)
     narrativeBoxSizer.Add(self.narrativeCtrl,1,wx.EXPAND)
 
     self.SetSizer(topSizer)
@@ -75,7 +75,7 @@ class RichPicturePage(wx.Panel):
     iBox = wx.StaticBox(self,-1)
     iSizer = wx.StaticBoxSizer(iBox,wx.HORIZONTAL)
     topSizer.Add(iSizer,1,wx.EXPAND)
-    imagePanel = PersonalImageView(self,armid.PROJECTSETTINGS_IMAGERICHPICTURE_ID)
+    imagePanel = PersonalImageView(self,PROJECTSETTINGS_IMAGERICHPICTURE_ID)
     iSizer.Add(imagePanel,1,wx.EXPAND)
 
     self.SetSizer(topSizer)
@@ -106,10 +106,10 @@ class RevisionPage(wx.Panel):
 
 class ProjectSettingsNotebook(wx.Notebook):
   def __init__(self,parent):
-    wx.Notebook.__init__(self,parent,armid.PROJECTSETTINGS_NOTEBOOKSETTINGS_ID)
+    wx.Notebook.__init__(self,parent,PROJECTSETTINGS_NOTEBOOKSETTINGS_ID)
     p1 = BackgroundPage(self)
-    p2 = MLTextPage(self,armid.PROJECTSETTINGS_TEXTGOALS_ID)
-    p3 = MLTextPage(self,armid.PROJECTSETTINGS_TEXTSCOPE_ID)
+    p2 = MLTextPage(self,PROJECTSETTINGS_TEXTGOALS_ID)
+    p3 = MLTextPage(self,PROJECTSETTINGS_TEXTSCOPE_ID)
     p4 = RichPicturePage(self)
     p5 = DictionaryPage(self)
     p6 = ContributorPage(self)

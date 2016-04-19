@@ -17,10 +17,10 @@
 
 
 import wx
-import armid
-import GoalFactory
-from Borg import Borg
-from ARM import *
+from cairis.core.armid import *
+import cairis.core.GoalFactory
+from cairis.core.Borg import Borg
+from cairis.core.ARM import *
 
 class ResponseListCtrl(wx.ListCtrl):
 
@@ -30,13 +30,13 @@ class ResponseListCtrl(wx.ListCtrl):
     b = Borg()
     self.dbProxy = b.dbProxy
     self.theTraceMenu = wx.Menu()
-    self.theTraceMenu.Append(armid.TRACE_MENUTRACE_GENERATESPECIFIC_ID,'Generate Goal')
-    wx.EVT_MENU(self,armid.TRACE_MENUTRACE_GENERATESPECIFIC_ID,self.onSelectGenerate)
+    self.theTraceMenu.Append(TRACE_MENUTRACE_GENERATESPECIFIC_ID,'Generate Goal')
+    wx.EVT_MENU(self,TRACE_MENUTRACE_GENERATESPECIFIC_ID,self.onSelectGenerate)
     self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK, self.onRightClick)
 
 
   def onRightClick(self,evt):
-    generateItem = self.theTraceMenu.FindItemById(armid.TRACE_MENUTRACE_GENERATESPECIFIC_ID)
+    generateItem = self.theTraceMenu.FindItemById(TRACE_MENUTRACE_GENERATESPECIFIC_ID)
     if (evt.GetIndex() == -1):
       generateItem.Enable(False)
     else:
@@ -56,7 +56,7 @@ class ResponseListCtrl(wx.ListCtrl):
         dlg.Destroy()
         return
       else:
-        goalParameters = GoalFactory.build(response)
+        goalParameters = cairis.core.GoalFactory.build(response)
         riskParameters = goalParameters[0]
         riskGoalId = self.dbProxy.addGoal(riskParameters)
         self.dbProxy.addTrace('response_goal',response.id(),riskGoalId)

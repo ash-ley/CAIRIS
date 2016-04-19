@@ -17,9 +17,9 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from TemplateRequirementPanel import TemplateRequirementPanel
-from TemplateRequirementParameters import TemplateRequirementParameters
+from cairis.core.TemplateRequirementParameters import TemplateRequirementParameters
 import DialogClassParameters
 
 class TemplateRequirementDialog(wx.Dialog):
@@ -42,7 +42,7 @@ class TemplateRequirementDialog(wx.Dialog):
     self.panel.buildControls(parameters.createFlag())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.TEMPLATEREQUIREMENT_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,TEMPLATEREQUIREMENT_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,req):
     self.theRequirementId = req.id()
@@ -51,12 +51,12 @@ class TemplateRequirementDialog(wx.Dialog):
 
   def onCommit(self,evt):
     commitLabel = self.commitVerb + ' template requirement'
-    nameCtrl = self.FindWindowById(armid.TEMPLATEREQUIREMENT_TEXTNAME_ID)
-    assetCtrl = self.FindWindowById(armid.TEMPLATEREQUIREMENT_COMBOASSET_ID)
-    descCtrl = self.FindWindowById(armid.TEMPLATEREQUIREMENT_TEXTDESCRIPTION_ID)
-    typeCtrl = self.FindWindowById(armid.TEMPLATEREQUIREMENT_COMBOTYPE_ID)
-    ratCtrl = self.FindWindowById(armid.TEMPLATEREQUIREMENT_TEXTRATIONALE_ID)
-    fcCtrl = self.FindWindowById(armid.TEMPLATEREQUIREMENT_TEXTFITCRITERION_ID)
+    nameCtrl = self.FindWindowById(TEMPLATEREQUIREMENT_TEXTNAME_ID)
+    assetCtrl = self.FindWindowById(TEMPLATEREQUIREMENT_COMBOASSET_ID)
+    descCtrl = self.FindWindowById(TEMPLATEREQUIREMENT_TEXTDESCRIPTION_ID)
+    typeCtrl = self.FindWindowById(TEMPLATEREQUIREMENT_COMBOTYPE_ID)
+    ratCtrl = self.FindWindowById(TEMPLATEREQUIREMENT_TEXTRATIONALE_ID)
+    fcCtrl = self.FindWindowById(TEMPLATEREQUIREMENT_TEXTFITCRITERION_ID)
 
     self.theName = nameCtrl.GetValue()
     self.theAssetName = assetCtrl.GetValue()
@@ -96,7 +96,7 @@ class TemplateRequirementDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.TEMPLATEREQUIREMENT_BUTTONCOMMIT_ID)
+      self.EndModal(TEMPLATEREQUIREMENT_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = TemplateRequirementParameters(self.theName,self.theAssetName,self.theType,self.theDescription,self.theRationale,self.theFitCriterion)

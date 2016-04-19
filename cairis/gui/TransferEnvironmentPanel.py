@@ -17,16 +17,16 @@
 
 
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from RiskEnvironmentListCtrl import RiskEnvironmentListCtrl
 from RoleCostListCtrl import RoleCostListCtrl
-from TransferEnvironmentProperties import TransferEnvironmentProperties
+from cairis.core.TransferEnvironmentProperties import TransferEnvironmentProperties
 
 
 class TransferEnvironmentPanel(wx.Panel):
   def __init__(self,parent,dp):
-    wx.Panel.__init__(self,parent,armid.TRANSFER_PANELENVIRONMENT_ID)
+    wx.Panel.__init__(self,parent,TRANSFER_PANELENVIRONMENT_ID)
     self.dbProxy = dp
     self.theEnvironmentDictionary = {}
     self.theSelectedIdx = -1
@@ -35,7 +35,7 @@ class TransferEnvironmentPanel(wx.Panel):
     environmentBox = wx.StaticBox(self)
     environmentListSizer = wx.StaticBoxSizer(environmentBox,wx.HORIZONTAL)
     mainSizer.Add(environmentListSizer,0,wx.EXPAND)
-    self.environmentList = RiskEnvironmentListCtrl(self,armid.TRANSFER_LISTENVIRONMENTS_ID,self.dbProxy)
+    self.environmentList = RiskEnvironmentListCtrl(self,TRANSFER_LISTENVIRONMENTS_ID,self.dbProxy)
     environmentListSizer.Add(self.environmentList,1,wx.EXPAND)
     environmentDimSizer = wx.BoxSizer(wx.VERTICAL)
     mainSizer.Add(environmentDimSizer,1,wx.EXPAND)
@@ -43,13 +43,13 @@ class TransferEnvironmentPanel(wx.Panel):
     roleBox = wx.StaticBox(self,-1)
     roleBoxSizer = wx.StaticBoxSizer(roleBox,wx.HORIZONTAL)
     environmentDimSizer.Add(roleBoxSizer,0,wx.EXPAND)
-    self.roleList = RoleCostListCtrl(self,armid.TRANSFER_LISTROLES_ID)
+    self.roleList = RoleCostListCtrl(self,TRANSFER_LISTROLES_ID)
     roleBoxSizer.Add(self.roleList,1,wx.EXPAND)
 
     rationaleBox = wx.StaticBox(self,-1,'Rationale')
     rationaleBoxSizer = wx.StaticBoxSizer(rationaleBox,wx.HORIZONTAL)
     environmentDimSizer.Add(rationaleBoxSizer,1,wx.EXPAND)
-    self.rationaleCtrl = wx.TextCtrl(self,armid.TRANSFER_TEXTRATIONALE_ID,'',style=wx.TE_MULTILINE)
+    self.rationaleCtrl = wx.TextCtrl(self,TRANSFER_TEXTRATIONALE_ID,'',style=wx.TE_MULTILINE)
     rationaleBoxSizer.Add(self.rationaleCtrl,1,wx.EXPAND)
     self.roleList.Disable()
     self.rationaleCtrl.Disable()

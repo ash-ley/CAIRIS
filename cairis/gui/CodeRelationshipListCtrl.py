@@ -17,14 +17,14 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from CodeRelationshipDialog import CodeRelationshipDialog
 from ImpliedCharacteristicDialog import ImpliedCharacteristicDialog
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 class CodeRelationshipListCtrl(wx.ListCtrl):
   def __init__(self,parent,personaName):
-    wx.ListCtrl.__init__(self,parent,armid.CODERELATIONSHIP_LISTRELATIONSHIPS_ID,size=wx.DefaultSize,style=wx.LC_REPORT | wx.LC_SORT_ASCENDING)
+    wx.ListCtrl.__init__(self,parent,CODERELATIONSHIP_LISTRELATIONSHIPS_ID,size=wx.DefaultSize,style=wx.LC_REPORT | wx.LC_SORT_ASCENDING)
     b = Borg()
     self.dbProxy = b.dbProxy
     self.rtLookup = {'associated':'==','implies':'=>','conflict':'<>','part-of':'[]'}
@@ -39,19 +39,19 @@ class CodeRelationshipListCtrl(wx.ListCtrl):
     self.theSelectedIdx = -1
     self.theLastRevision = 0
     self.theMenu = wx.Menu()
-    self.theMenu.Append(armid.CODERELATIONSHIPLISTCTRL_MENUADD_ID,'Add')
-    self.deleteMenu = self.theMenu.Append(armid.CODERELATIONSHIPLISTCTRL_MENUDELETE_ID,'Delete')
+    self.theMenu.Append(CODERELATIONSHIPLISTCTRL_MENUADD_ID,'Add')
+    self.deleteMenu = self.theMenu.Append(CODERELATIONSHIPLISTCTRL_MENUDELETE_ID,'Delete')
     self.deleteMenu.Enable(False)
-    self.charMenu = self.theMenu.Append(armid.CODERELATIONSHIPLISTCTRL_MENUCHARACTERISTICS_ID,'Set Implied Characteristic')
+    self.charMenu = self.theMenu.Append(CODERELATIONSHIPLISTCTRL_MENUCHARACTERISTICS_ID,'Set Implied Characteristic')
     self.charMenu.Enable(False)
     self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK,self.OnRightDown)
     self.Bind(wx.EVT_LIST_ITEM_SELECTED,self.OnItemSelected)
     self.Bind(wx.EVT_LIST_ITEM_DESELECTED,self.OnItemDeselected)
     self.Bind(wx.EVT_LIST_ITEM_ACTIVATED,self.onItemActivated)
 
-    wx.EVT_MENU(self.theMenu,armid.CODERELATIONSHIPLISTCTRL_MENUADD_ID,self.onAddRelationship)
-    wx.EVT_MENU(self.theMenu,armid.CODERELATIONSHIPLISTCTRL_MENUDELETE_ID,self.onDeleteRelationship)
-    wx.EVT_MENU(self.theMenu,armid.CODERELATIONSHIPLISTCTRL_MENUCHARACTERISTICS_ID,self.onEditCharacteristics)
+    wx.EVT_MENU(self.theMenu,CODERELATIONSHIPLISTCTRL_MENUADD_ID,self.onAddRelationship)
+    wx.EVT_MENU(self.theMenu,CODERELATIONSHIPLISTCTRL_MENUDELETE_ID,self.onDeleteRelationship)
+    wx.EVT_MENU(self.theMenu,CODERELATIONSHIPLISTCTRL_MENUCHARACTERISTICS_ID,self.onEditCharacteristics)
 
     for fromName,fromType,toName,toType,rType in self.dbProxy.personaCodeNetwork(personaName):
       idx = self.GetItemCount()
@@ -74,7 +74,7 @@ class CodeRelationshipListCtrl(wx.ListCtrl):
 
   def onAddRelationship(self,evt):
     dlg = CodeRelationshipDialog(self)
-    if (dlg.ShowModal() == armid.CODERELATIONSHIP_BUTTONADD_ID):
+    if (dlg.ShowModal() == CODERELATIONSHIP_BUTTONADD_ID):
       idx = self.GetItemCount()
       fromName = dlg.fromName()
       toName = dlg.toName()
@@ -88,7 +88,7 @@ class CodeRelationshipListCtrl(wx.ListCtrl):
     rType = self.GetItem(self.theSelectedIdx,1)
     toName = self.GetItem(self.theSelectedIdx,2)
     dlg = CodeRelationshipDialog(self,fromName,toName.GetText(),rType.GetText())
-    if (dlg.ShowModal() == armid.CODERELATIONSHIP_BUTTONADD_ID):
+    if (dlg.ShowModal() == CODERELATIONSHIP_BUTTONADD_ID):
       fromName = dlg.fromName()
       toName = dlg.toName()
       rshipType = dlg.relationship()

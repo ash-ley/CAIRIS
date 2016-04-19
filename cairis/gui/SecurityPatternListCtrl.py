@@ -17,11 +17,11 @@
 
 
 import wx
-import armid
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.Borg import Borg
 from SecurityPatternEnvironmentDialog import SecurityPatternEnvironmentDialog
-import AssetParametersFactory
-from ARM import *
+import cairis.core.AssetParametersFactory
+from cairis.core.ARM import *
 
 class SecurityPatternListCtrl(wx.ListCtrl):
 
@@ -29,8 +29,8 @@ class SecurityPatternListCtrl(wx.ListCtrl):
     wx.ListCtrl.__init__(self,parent,winId,style=wx.LC_REPORT)
     self.theParentDialog = parent
     self.theTraceMenu = wx.Menu()
-    self.theTraceMenu.Append(armid.TRACE_MENUTRACE_GENERATESPECIFIC_ID,'Situate pattern')
-    wx.EVT_MENU(self,armid.TRACE_MENUTRACE_GENERATESPECIFIC_ID,self.onSituate)
+    self.theTraceMenu.Append(TRACE_MENUTRACE_GENERATESPECIFIC_ID,'Situate pattern')
+    wx.EVT_MENU(self,TRACE_MENUTRACE_GENERATESPECIFIC_ID,self.onSituate)
     self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK, self.onRightClick)
 
 
@@ -42,7 +42,7 @@ class SecurityPatternListCtrl(wx.ListCtrl):
     patternId = spObjt.id()
     try:
       dlg = SecurityPatternEnvironmentDialog(self,patternId)
-      if (dlg.ShowModal() == armid.SPENVIRONMENT_BUTTONCOMMIT_ID):
+      if (dlg.ShowModal() == SPENVIRONMENT_BUTTONCOMMIT_ID):
         self.situatePattern(patternId,dlg.assetEnvironments())
       dlg.Destroy()
     except ARMException,errorText:
@@ -54,7 +54,7 @@ class SecurityPatternListCtrl(wx.ListCtrl):
   def situatePattern(self,patternId,assetEnvs):
     assetParametersList = []
     for assetName,envs in assetEnvs.iteritems():
-      assetParametersList.append(AssetParametersFactory.buildFromTemplate(assetName,envs))
+      assetParametersList.append(cairis.core.AssetParametersFactory.buildFromTemplate(assetName,envs))
     b = Borg()
     b.dbProxy.addSituatedAssets(patternId,assetParametersList)
     self.theParentDialog.theMainWindow.updateObjectSelection()

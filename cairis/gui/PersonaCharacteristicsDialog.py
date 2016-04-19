@@ -17,21 +17,21 @@
 
 
 import wx
-import armid
-import PersonaCharacteristic
+from cairis.core.armid import *
+import cairis.core.PersonaCharacteristic
 from PersonaCharacteristicDialog import PersonaCharacteristicDialog
 from DialogClassParameters import DialogClassParameters
-import ARM
+from cairis.core.ARM import *
 from DimensionBaseDialog import DimensionBaseDialog
 
 class PersonaCharacteristicsDialog(DimensionBaseDialog):
   def __init__(self,parent):
-    DimensionBaseDialog.__init__(self,parent,armid.PERSONACHARACTERISTICS_ID,'Persona Characteristics',(930,300),'persona.png')
+    DimensionBaseDialog.__init__(self,parent,PERSONACHARACTERISTICS_ID,'Persona Characteristics',(930,300),'persona.png')
     self.theMainWindow = parent
-    idList = [armid.PERSONACHARACTERISTICS_CHARLIST_ID,armid.PERSONACHARACTERISTICS_BUTTONADD_ID,armid.PERSONACHARACTERISTICS_BUTTONDELETE_ID]
+    idList = [PERSONACHARACTERISTICS_CHARLIST_ID,PERSONACHARACTERISTICS_BUTTONADD_ID,PERSONACHARACTERISTICS_BUTTONDELETE_ID]
     columnList = ['Persona','Variable','Characteristic']
     self.buildControls(idList,columnList,self.dbProxy.getPersonaCharacteristics,'persona_characteristic')
-    listCtrl = self.FindWindowById(armid.PERSONACHARACTERISTICS_CHARLIST_ID)
+    listCtrl = self.FindWindowById(PERSONACHARACTERISTICS_CHARLIST_ID)
     listCtrl.SetColumnWidth(0,100)
     listCtrl.SetColumnWidth(1,100)
     listCtrl.SetColumnWidth(2,700)
@@ -44,9 +44,9 @@ class PersonaCharacteristicsDialog(DimensionBaseDialog):
 
   def onAdd(self,evt):
     try:
-      addParameters = DialogClassParameters(armid.PERSONACHARACTERISTIC_ID,'Add Persona Characteristic',PersonaCharacteristicDialog,armid.PERSONACHARACTERISTIC_BUTTONCOMMIT_ID,self.dbProxy.addPersonaCharacteristic,True)
+      addParameters = DialogClassParameters(PERSONACHARACTERISTIC_ID,'Add Persona Characteristic',PersonaCharacteristicDialog,PERSONACHARACTERISTIC_BUTTONCOMMIT_ID,self.dbProxy.addPersonaCharacteristic,True)
       self.addObject(addParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add persona characteristic',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -56,9 +56,9 @@ class PersonaCharacteristicsDialog(DimensionBaseDialog):
     selectedObjt = self.objts[self.deprecatedLabel()]
     objtId = selectedObjt.id()
     try:
-      updateParameters = DialogClassParameters(armid.PERSONACHARACTERISTIC_ID,'Edit Persona Characteristic',PersonaCharacteristicDialog,armid.PERSONACHARACTERISTIC_BUTTONCOMMIT_ID,self.dbProxy.updatePersonaCharacteristic,False)
+      updateParameters = DialogClassParameters(PERSONACHARACTERISTIC_ID,'Edit Persona Characteristic',PersonaCharacteristicDialog,PERSONACHARACTERISTIC_BUTTONCOMMIT_ID,self.dbProxy.updatePersonaCharacteristic,False)
       self.updateObject(selectedObjt,updateParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Edit persona characteristic',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy
@@ -66,13 +66,13 @@ class PersonaCharacteristicsDialog(DimensionBaseDialog):
   def onDelete(self,evt):
     try:
       self.deleteObject('No persona characteristic','Delete persona characteristic',self.dbProxy.deletePersonaCharacteristic)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Delete persona characteristic',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy
 
   def deprecatedLabel(self):
-    listCtrl = self.FindWindowById(armid.PERSONACHARACTERISTICS_CHARLIST_ID)
+    listCtrl = self.FindWindowById(PERSONACHARACTERISTICS_CHARLIST_ID)
     pItem = listCtrl.GetItem(self.selectedIdx,0)
     pTxt = pItem.GetText()
     bvItem = listCtrl.GetItem(self.selectedIdx,1)

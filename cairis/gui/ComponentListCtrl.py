@@ -17,18 +17,18 @@
 
 
 import wx
-import armid
-from ARM import *
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from AssetModel import AssetModel
 from KaosModel import KaosModel
-from Borg import Borg
+from cairis.core.Borg import Borg
 from TraceableList import TraceableList
 from ComponentDialog import ComponentDialog
-from ComponentParameters import ComponentParameters
+from cairis.core.ComponentParameters import ComponentParameters
 from CanonicalModelViewer import CanonicalModelViewer
 
 class ComponentListCtrl(TraceableList):
-  def __init__(self,parent,winId = armid.COMPONENTVIEW_LISTCOMPONENTS_ID):
+  def __init__(self,parent,winId = COMPONENTVIEW_LISTCOMPONENTS_ID):
     TraceableList.__init__(self,parent,winId,'component')
     self.theParentDialog = parent
     b = Borg()
@@ -44,16 +44,16 @@ class ComponentListCtrl(TraceableList):
     self.InsertColumn(2,'Interface')
     self.SetColumnWidth(2,100)
     self.theSelectedIdx = -1
-    self.theTraceMenu.Append(armid.AA_MENUADD_ID,'Add')
-    self.theTraceMenu.Append(armid.AA_MENUDELETE_ID,'Delete')
+    self.theTraceMenu.Append(AA_MENUADD_ID,'Add')
+    self.theTraceMenu.Append(AA_MENUDELETE_ID,'Delete')
     self.theTraceMenu.AppendSeparator()
-    self.theTraceMenu.Append(armid.COMPONENTLIST_VIEWASSETS_ID,'View Assets')
-    self.theTraceMenu.Append(armid.COMPONENTLIST_VIEWGOALS_ID,'View Goals')
+    self.theTraceMenu.Append(COMPONENTLIST_VIEWASSETS_ID,'View Assets')
+    self.theTraceMenu.Append(COMPONENTLIST_VIEWGOALS_ID,'View Goals')
     self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK,self.onRightClick)
-    wx.EVT_MENU(self.theTraceMenu,armid.AA_MENUADD_ID,self.onAddComponent)
-    wx.EVT_MENU(self.theTraceMenu,armid.AA_MENUDELETE_ID,self.onDeleteComponent)
-    wx.EVT_MENU(self.theTraceMenu,armid.COMPONENTLIST_VIEWASSETS_ID,self.onViewAssets)
-    wx.EVT_MENU(self.theTraceMenu,armid.COMPONENTLIST_VIEWGOALS_ID,self.onViewGoals)
+    wx.EVT_MENU(self.theTraceMenu,AA_MENUADD_ID,self.onAddComponent)
+    wx.EVT_MENU(self.theTraceMenu,AA_MENUDELETE_ID,self.onDeleteComponent)
+    wx.EVT_MENU(self.theTraceMenu,COMPONENTLIST_VIEWASSETS_ID,self.onViewAssets)
+    wx.EVT_MENU(self.theTraceMenu,COMPONENTLIST_VIEWGOALS_ID,self.onViewGoals)
 
     self.Bind(wx.EVT_LIST_ITEM_SELECTED,self.OnItemSelected)
     self.Bind(wx.EVT_LIST_ITEM_DESELECTED,self.OnItemDeselected)
@@ -63,7 +63,7 @@ class ComponentListCtrl(TraceableList):
 
   def onAddComponent(self,evt):
     dlg = ComponentDialog(self)
-    if (dlg.ShowModal() == armid.COMPONENT_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == COMPONENT_BUTTONCOMMIT_ID):
       parameters = dlg.parameters()
       self.theSelectedIdx = self.GetItemCount()
       self.InsertStringItem(self.theSelectedIdx,parameters.name())
@@ -95,7 +95,7 @@ class ComponentListCtrl(TraceableList):
     dlg = ComponentDialog(self)
     inParameters = self.theComponents[self.theSelectedIdx]
     dlg.load(inParameters)
-    if (dlg.ShowModal() == armid.COMPONENT_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == COMPONENT_BUTTONCOMMIT_ID):
       outParameters = dlg.parameters()
       self.theComponents[self.theSelectedIdx] = outParameters
       self.SetStringItem(self.theSelectedIdx,0,outParameters.name())

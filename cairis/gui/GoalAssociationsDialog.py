@@ -17,20 +17,20 @@
 
 
 import wx
-import armid
-import GoalAssociation
+from cairis.core.armid import *
+import cairis.core.GoalAssociation
 from GoalAssociationDialog import GoalAssociationDialog
 from DialogClassParameters import DialogClassParameters
-import ARM
+from cairis.core.ARM import *
 from DimensionBaseDialog import DimensionBaseDialog
 
 class GoalAssociationsDialog(DimensionBaseDialog):
   def __init__(self,parent):
-    DimensionBaseDialog.__init__(self,parent,armid.GOALASSOCIATIONS_ID,'GoalAssociations',(930,300),'goalassociations.png')
-    idList = [armid.GOALASSOCIATIONS_GOALASSOCIATIONLIST_ID,armid.GOALASSOCIATIONS_BUTTONADD_ID,armid.GOALASSOCIATIONS_BUTTONDELETE_ID]
+    DimensionBaseDialog.__init__(self,parent,GOALASSOCIATIONS_ID,'GoalAssociations',(930,300),'goalassociations.png')
+    idList = [GOALASSOCIATIONS_GOALASSOCIATIONLIST_ID,GOALASSOCIATIONS_BUTTONADD_ID,GOALASSOCIATIONS_BUTTONDELETE_ID]
     columnList = ['Environment/Head/Tail','Type','Alternative','Rationale']
     self.buildControls(idList,columnList,self.dbProxy.getGoalAssociations,'goalassociation')
-    listCtrl = self.FindWindowById(armid.GOALASSOCIATIONS_GOALASSOCIATIONLIST_ID)
+    listCtrl = self.FindWindowById(GOALASSOCIATIONS_GOALASSOCIATIONLIST_ID)
     listCtrl.SetColumnWidth(0,300)
     listCtrl.SetColumnWidth(1,100)
     listCtrl.SetColumnWidth(2,100)
@@ -49,9 +49,9 @@ class GoalAssociationsDialog(DimensionBaseDialog):
 
   def onAdd(self,evt):
     try:
-      addParameters = DialogClassParameters(armid.GOALASSOCIATION_ID,'Add goal association',GoalAssociationDialog,armid.GOALASSOCIATION_BUTTONCOMMIT_ID,self.dbProxy.addGoalAssociation,True)
+      addParameters = DialogClassParameters(GOALASSOCIATION_ID,'Add goal association',GoalAssociationDialog,GOALASSOCIATION_BUTTONCOMMIT_ID,self.dbProxy.addGoalAssociation,True)
       self.addObject(addParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add goal association',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -61,9 +61,9 @@ class GoalAssociationsDialog(DimensionBaseDialog):
     selectedObjt = self.objts[self.selectedLabel]
     goalId = selectedObjt.id()
     try:
-      updateParameters = DialogClassParameters(armid.GOALASSOCIATION_ID,'Edit goal association',GoalAssociationDialog,armid.GOALASSOCIATION_BUTTONCOMMIT_ID,self.dbProxy.updateGoalAssociation,False)
+      updateParameters = DialogClassParameters(GOALASSOCIATION_ID,'Edit goal association',GoalAssociationDialog,GOALASSOCIATION_BUTTONCOMMIT_ID,self.dbProxy.updateGoalAssociation,False)
       self.updateObject(selectedObjt,updateParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Edit goal association',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy
@@ -71,7 +71,7 @@ class GoalAssociationsDialog(DimensionBaseDialog):
   def onDelete(self,evt):
     try:
       self.deleteObject('No goal association','Delete goal association',self.dbProxy.deleteGoalAssociation)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Delete goal association',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy

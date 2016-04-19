@@ -17,13 +17,13 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from ReferencePanel import ReferencePanel
 import DialogClassParameters
 
 class ReferenceDialog(wx.Dialog):
   def __init__(self,parent,crTypeName,refName = '',desc = '',dimName = ''):
-    wx.Dialog.__init__(self,parent,armid.CHARACTERISTICREFERENCE_ID,'Add Characteristic Reference',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,300))
+    wx.Dialog.__init__(self,parent,CHARACTERISTICREFERENCE_ID,'Add Characteristic Reference',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,300))
     self.theCharacteristicReferenceType = crTypeName
     self.theReferenceName = refName
     self.theDescription = desc
@@ -40,14 +40,14 @@ class ReferenceDialog(wx.Dialog):
 
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.CHARACTERISTICREFERENCE_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,CHARACTERISTICREFERENCE_BUTTONCOMMIT_ID,self.onCommit)
 
   def onCommit(self,evt):
     commitLabel = self.commitVerb + ' Characteristic Reference'
 
-    refCtrl = self.FindWindowById(armid.CHARACTERISTICREFERENCE_COMBOREFERENCE_ID)
-    descCtrl = self.FindWindowById(armid.CHARACTERISTICREFERENCE_TEXTDESCRIPTION_ID)
-    dimCtrl = self.FindWindowById(armid.CHARACTERISTICREFERENCE_COMBODIMENSION_ID)
+    refCtrl = self.FindWindowById(CHARACTERISTICREFERENCE_COMBOREFERENCE_ID)
+    descCtrl = self.FindWindowById(CHARACTERISTICREFERENCE_TEXTDESCRIPTION_ID)
+    dimCtrl = self.FindWindowById(CHARACTERISTICREFERENCE_COMBODIMENSION_ID)
 
     self.theReferenceName = refCtrl.GetValue()
     self.theDescription = descCtrl.GetValue()
@@ -70,7 +70,7 @@ class ReferenceDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.CHARACTERISTICREFERENCE_BUTTONCOMMIT_ID)
+      self.EndModal(CHARACTERISTICREFERENCE_BUTTONCOMMIT_ID)
 
   def reference(self):
     return self.theReferenceName

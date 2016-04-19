@@ -17,7 +17,7 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from StepPanel import StepPanel
 from UseCaseTextCtrl import UseCaseTextCtrl
 
@@ -48,10 +48,10 @@ class StepPage(wx.Panel):
 
 class UseCaseEnvironmentNotebook(wx.Notebook):
   def __init__(self,parent,envName):
-    wx.Notebook.__init__(self,parent,armid.USECASE_NOTEBOOKENVIRONMENT_ID)
-    p1 = TextPage(self,armid.USECASE_TEXTPRECONDITION_ID)
+    wx.Notebook.__init__(self,parent,USECASE_NOTEBOOKENVIRONMENT_ID)
+    p1 = TextPage(self,USECASE_TEXTPRECONDITION_ID)
     p2 = StepPage(self,envName)
-    p3 = TextPage(self,armid.USECASE_TEXTPOSTCONDITION_ID)
+    p3 = TextPage(self,USECASE_TEXTPOSTCONDITION_ID)
     self.AddPage(p1,'Pre-Conditions')
     self.AddPage(p2,'Flow')
     self.AddPage(p3,'Post-Conditions')

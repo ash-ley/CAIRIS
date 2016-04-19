@@ -17,25 +17,25 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import DialogClassParametersFactory
 from ProjectSettingsDialog import ProjectSettingsDialog
 from DirectoryEntryDialog import DirectoryEntryDialog
 from SearchOptionsPanel import SearchOptionsPanel
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 class SearchPanel(wx.Panel):
   def __init__(self,parent):
-    wx.Panel.__init__(self,parent,armid.SEARCHMODEL_PANEL_ID)
+    wx.Panel.__init__(self,parent,SEARCHMODEL_PANEL_ID)
     mainSizer = wx.BoxSizer(wx.VERTICAL)
     b = Borg()
     self.dbProxy = b.dbProxy
     findBox = wx.StaticBox(self,-1,'Find')
     findBoxSizer = wx.StaticBoxSizer(findBox,wx.HORIZONTAL)
     mainSizer.Add(findBoxSizer,0,wx.EXPAND)
-    ssCtrl = wx.TextCtrl(self,armid.SEARCHMODEL_TEXTSEARCHSTRING_ID,'')
+    ssCtrl = wx.TextCtrl(self,SEARCHMODEL_TEXTSEARCHSTRING_ID,'')
     findBoxSizer.Add(ssCtrl,1,wx.EXPAND)
-    findCtrl = wx.Button(self,armid.SEARCHMODEL_BUTTONFIND_ID,'Find')
+    findCtrl = wx.Button(self,SEARCHMODEL_BUTTONFIND_ID,'Find')
     findBoxSizer.Add(findCtrl,0)
 
     self.spNotebook = wx.Notebook(self,-1)
@@ -43,7 +43,7 @@ class SearchPanel(wx.Panel):
     spPage = wx.Panel(self.spNotebook)
     spPageSizer = wx.BoxSizer(wx.VERTICAL)
 
-    self.listCtrl = wx.ListCtrl(spPage,armid.SEARCHMODEL_LISTRESULTS_ID,style=wx.LC_REPORT)
+    self.listCtrl = wx.ListCtrl(spPage,SEARCHMODEL_LISTRESULTS_ID,style=wx.LC_REPORT)
     self.listCtrl.InsertColumn(0,'Environment')
     self.listCtrl.InsertColumn(1,'Type')
     self.listCtrl.InsertColumn(2,'Name')
@@ -74,14 +74,14 @@ class SearchPanel(wx.Panel):
     dimLabel = (self.listCtrl.GetItem(idx,1)).GetText()
     objtName = (self.listCtrl.GetItem(idx,2)).GetText()
     b = Borg()
-    reqGrid = b.mainFrame.FindWindowById(armid.ID_REQGRID)
+    reqGrid = b.mainFrame.FindWindowById(ID_REQGRID)
     reqGrid.ClearSelection()
 
     if (dimLabel == 'Requirement'):
       scName,idx = objtName.split('-')
       gridIdx = int(idx) - 1
       dimName,objtName = self.dbProxy.dimensionNameByShortCode(scName)
-      reqPanel = b.mainFrame.FindWindowById(armid.RMPANEL_ID)
+      reqPanel = b.mainFrame.FindWindowById(RMPANEL_ID)
       if (dimName == 'asset'):
         reqPanel.updateObjectSelection(objtName)
       else:
@@ -93,7 +93,7 @@ class SearchPanel(wx.Panel):
       contributors = self.dbProxy.getContributors()
       revisions = self.dbProxy.getRevisions()
       dlg = ProjectSettingsDialog(self,pSettings,pDict,contributors,revisions)
-      if (dlg.ShowModal() == armid.PROJECTSETTINGS_BUTTONCOMMIT_ID):
+      if (dlg.ShowModal() == PROJECTSETTINGS_BUTTONCOMMIT_ID):
         self.dbProxy.updateSettings(dlg.name(),dlg.background(),dlg.goals(),dlg.scope(),dlg.definitions(),dlg.contributors(),dlg.revisions(),dlg.richPicture(),self.b.fontSize,self.b.fontName)
       dlg.Destroy()
     elif (dimLabel == 'Template Threat'):

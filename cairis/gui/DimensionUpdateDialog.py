@@ -17,15 +17,15 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import os
-import ARM
+from cairis.core.ARM import *
 from DimensionNameDialog import DimensionNameDialog
-from Borg import *
+from cairis.core.Borg import *
 
 class DimensionUpdateDialog(wx.Dialog):
   def __init__(self,parent,dp,currentDims,dimensionName):
-    wx.Dialog.__init__(self,parent,armid.DIMUPDATE_ID,'Edit ' + dimensionName,style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(300,200))
+    wx.Dialog.__init__(self,parent,DIMUPDATE_ID,'Edit ' + dimensionName,style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(300,200))
     self.dbProxy = dp
     b = Borg()
     self.theDimensionName = dimensionName
@@ -33,27 +33,27 @@ class DimensionUpdateDialog(wx.Dialog):
     dimSizer = wx.BoxSizer(wx.HORIZONTAL)
     mainSizer.Add(dimSizer,1,wx.EXPAND)
 
-    self.dimList = wx.ListBox(self,armid.DIMUPDATE_LISTDIM_ID,choices=currentDims,style=wx.LB_SINGLE)
+    self.dimList = wx.ListBox(self,DIMUPDATE_LISTDIM_ID,choices=currentDims,style=wx.LB_SINGLE)
     dimSizer.Add(self.dimList,1,wx.EXPAND)
 
     buttonSizer = wx.BoxSizer(wx.VERTICAL)
-    addButton = wx.Button(self,armid.DIMUPDATE_BUTTONADD_ID,"Add")
+    addButton = wx.Button(self,DIMUPDATE_BUTTONADD_ID,"Add")
     buttonSizer.Add(addButton)
-    deleteButton = wx.Button(self,armid.DIMUPDATE_BUTTONDELETE_ID,"Delete")
+    deleteButton = wx.Button(self,DIMUPDATE_BUTTONDELETE_ID,"Delete")
     buttonSizer.Add(deleteButton)
     dimSizer.Add(buttonSizer,0,wx.EXPAND)
 
     buttonSizer = wx.BoxSizer(wx.HORIZONTAL)
     mainSizer.Add(buttonSizer)
-    actionButton = wx.Button(self,armid.DIMUPDATE_BUTTONUPDATE_ID,'Update')
+    actionButton = wx.Button(self,DIMUPDATE_BUTTONUPDATE_ID,'Update')
     buttonSizer.Add(actionButton)
     closeButton = wx.Button(self,wx.ID_CLOSE,"Close")
     buttonSizer.Add(closeButton)
     self.SetSizer(mainSizer)
 
-    wx.EVT_BUTTON(self,armid.DIMUPDATE_BUTTONADD_ID,self.onAdd)
-    wx.EVT_BUTTON(self,armid.DIMUPDATE_BUTTONDELETE_ID,self.onDelete)
-    wx.EVT_BUTTON(self,armid.DIMUPDATE_BUTTONUPDATE_ID,self.onUpdate)
+    wx.EVT_BUTTON(self,DIMUPDATE_BUTTONADD_ID,self.onAdd)
+    wx.EVT_BUTTON(self,DIMUPDATE_BUTTONDELETE_ID,self.onDelete)
+    wx.EVT_BUTTON(self,DIMUPDATE_BUTTONUPDATE_ID,self.onUpdate)
     wx.EVT_BUTTON(self,wx.ID_CLOSE,self.onClose)
     dimIconFile = self.theDimensionName + '.png'
     dimIcon = wx.Icon(b.imageDir + '/' + dimIconFile,wx.BITMAP_TYPE_PNG)
@@ -63,7 +63,7 @@ class DimensionUpdateDialog(wx.Dialog):
   def onAdd(self,evt):
     dims = self.dbProxy.getDimensionNames(self.theDimensionName,False)
     dlg = DimensionNameDialog(self,self.theDimensionName,dims,'Select',(300,200))
-    if (dlg.ShowModal() == armid.DIMNAME_BUTTONACTION_ID):
+    if (dlg.ShowModal() == DIMNAME_BUTTONACTION_ID):
       self.dimList.Append(dlg.dimensionName())
 
   def onDelete(self,evt):

@@ -17,16 +17,16 @@
 
 
 import wx
-import ARM
-import armid
+from cairis.core.ARM import *
+from cairis.core.armid import *
 from BasePanel import BasePanel
-from Borg import Borg
-from CountermeasureParameters import CountermeasureParameters
+from cairis.core.Borg import Borg
+from cairis.core.CountermeasureParameters import CountermeasureParameters
 from CountermeasureEnvironmentPanel import CountermeasureEnvironmentPanel
 
 class CountermeasurePanel(BasePanel):
   def __init__(self,parent):
-    BasePanel.__init__(self,parent,armid.COUNTERMEASURE_ID)
+    BasePanel.__init__(self,parent,COUNTERMEASURE_ID)
     b = Borg()
     self.dbProxy = b.dbProxy
     self.theCountermeasureName = ''
@@ -39,24 +39,24 @@ class CountermeasurePanel(BasePanel):
 
   def buildControls(self,isCreate,isUpdateable = True):
     mainSizer = wx.BoxSizer(wx.VERTICAL)
-    mainSizer.Add(self.buildTextSizer('Name',(87,60),armid.COUNTERMEASURE_TEXTNAME_ID),0,wx.EXPAND)
-    mainSizer.Add(self.buildTagCtrlSizer((87,30),armid.COUNTERMEASURE_TAGS_ID),0,wx.EXPAND)
+    mainSizer.Add(self.buildTextSizer('Name',(87,60),COUNTERMEASURE_TEXTNAME_ID),0,wx.EXPAND)
+    mainSizer.Add(self.buildTagCtrlSizer((87,30),COUNTERMEASURE_TAGS_ID),0,wx.EXPAND)
     typeList = ['Information','Systems','Software','Hardware','People']
-    mainSizer.Add(self.buildComboSizerList('Type',(87,30),armid.COUNTERMEASURE_COMBOTYPE_ID,typeList),0,wx.EXPAND)
-    mainSizer.Add(self.buildMLTextSizer('Description',(87,60),armid.COUNTERMEASURE_TEXTDESCRIPTION_ID),0,wx.EXPAND)
+    mainSizer.Add(self.buildComboSizerList('Type',(87,30),COUNTERMEASURE_COMBOTYPE_ID,typeList),0,wx.EXPAND)
+    mainSizer.Add(self.buildMLTextSizer('Description',(87,60),COUNTERMEASURE_TEXTDESCRIPTION_ID),0,wx.EXPAND)
     mainSizer.Add(self.environmentPanel,1,wx.EXPAND)
-    mainSizer.Add(self.buildCommitButtonSizer(armid.COUNTERMEASURE_BUTTONCOMMIT_ID,isCreate),0,wx.CENTER)
+    mainSizer.Add(self.buildCommitButtonSizer(COUNTERMEASURE_BUTTONCOMMIT_ID,isCreate),0,wx.CENTER)
     self.SetSizer(mainSizer)
 
   def loadControls(self,countermeasure,isReadOnly = False):
-    nameCtrl = self.FindWindowById(armid.COUNTERMEASURE_TEXTNAME_ID)
-    tagsCtrl = self.FindWindowById(armid.COUNTERMEASURE_TAGS_ID)
+    nameCtrl = self.FindWindowById(COUNTERMEASURE_TEXTNAME_ID)
+    tagsCtrl = self.FindWindowById(COUNTERMEASURE_TAGS_ID)
     tagsCtrl.set(countermeasure.tags())
 
-    descriptionCtrl = self.FindWindowById(armid.COUNTERMEASURE_TEXTDESCRIPTION_ID)
+    descriptionCtrl = self.FindWindowById(COUNTERMEASURE_TEXTDESCRIPTION_ID)
     nameCtrl.SetValue(countermeasure.name())
     descriptionCtrl.SetValue(countermeasure.description())
-    typeCtrl = self.FindWindowById(armid.COUNTERMEASURE_COMBOTYPE_ID)
+    typeCtrl = self.FindWindowById(COUNTERMEASURE_COMBOTYPE_ID)
     typeCtrl.SetValue(countermeasure.type())
 
     self.environmentPanel.loadControls(countermeasure)
@@ -64,17 +64,17 @@ class CountermeasurePanel(BasePanel):
 
   def commit(self):
     commitLabel = self.theCommitVerb + ' countermeasure'
-    nameCtrl = self.FindWindowById(armid.COUNTERMEASURE_TEXTNAME_ID)
-    tagsCtrl = self.FindWindowById(armid.COUNTERMEASURE_TAGS_ID)
+    nameCtrl = self.FindWindowById(COUNTERMEASURE_TEXTNAME_ID)
+    tagsCtrl = self.FindWindowById(COUNTERMEASURE_TAGS_ID)
     self.theTags = tagsCtrl.tags()
-    descriptionCtrl = self.FindWindowById(armid.COUNTERMEASURE_TEXTDESCRIPTION_ID)
-    typeCtrl = self.FindWindowById(armid.COUNTERMEASURE_COMBOTYPE_ID)
+    descriptionCtrl = self.FindWindowById(COUNTERMEASURE_TEXTDESCRIPTION_ID)
+    typeCtrl = self.FindWindowById(COUNTERMEASURE_COMBOTYPE_ID)
     self.theCountermeasureName = nameCtrl.GetValue()
     if (self.theCommitVerb == 'Create'):
       b = Borg()
       try:
         b.dbProxy.nameCheck(self.theCountermeasureName,'countermeasure')
-      except ARM.ARMException,errorText:
+      except ARMException,errorText:
         dlg = wx.MessageDialog(self,str(errorText),'Add countermeasure',wx.OK | wx.ICON_ERROR)
         dlg.ShowModal()
         dlg.Destroy()

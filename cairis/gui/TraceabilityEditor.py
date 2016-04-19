@@ -17,14 +17,14 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from TraceabilityPanel import TraceabilityPanel
-from Borg import Borg
-from MySQLDatabaseProxy import MySQLDatabaseProxy
+from cairis.core.Borg import Borg
+from cairis.core.MySQLDatabaseProxy import MySQLDatabaseProxy
 
 class TraceabilityEditor(wx.Dialog):
   def __init__(self,parent):
-    wx.Dialog.__init__(self,parent,armid.TRACEABILITY_ID,'Traceability Relations',style=wx.DEFAULT_DIALOG_STYLE | wx.MAXIMIZE_BOX | wx.THICK_FRAME | wx.RESIZE_BORDER, size=(700,500))
+    wx.Dialog.__init__(self,parent,TRACEABILITY_ID,'Traceability Relations',style=wx.DEFAULT_DIALOG_STYLE | wx.MAXIMIZE_BOX | wx.THICK_FRAME | wx.RESIZE_BORDER, size=(700,500))
     b = Borg()
     self.dbProxy = b.dbProxy
     mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -32,11 +32,11 @@ class TraceabilityEditor(wx.Dialog):
     tcBox = wx.StaticBox(self,-1,'Environment')
     comboSizer = wx.StaticBoxSizer(tcBox,wx.HORIZONTAL)
     environments = self.dbProxy.getDimensionNames('environment')
-    self.environmentCtrl = wx.ComboBox(self,armid.TRACEABILITY_COMBOENVIRONMENT_ID,"",choices=environments,size=wx.DefaultSize,style=wx.CB_READONLY)
+    self.environmentCtrl = wx.ComboBox(self,TRACEABILITY_COMBOENVIRONMENT_ID,"",choices=environments,size=wx.DefaultSize,style=wx.CB_READONLY)
     mainSizer.Add(comboSizer,0,wx.EXPAND)
     comboSizer.Add(self.environmentCtrl,1,wx.EXPAND)
 
-    self.traceList = wx.ListCtrl(self,armid.TRACEABILITY_LISTTRACES_ID,style=wx.LC_REPORT)
+    self.traceList = wx.ListCtrl(self,TRACEABILITY_LISTTRACES_ID,style=wx.LC_REPORT)
     self.traceList.InsertColumn(0,'From')
     self.traceList.InsertColumn(1,'Name')
     self.traceList.InsertColumn(2,'From')
@@ -51,7 +51,7 @@ class TraceabilityEditor(wx.Dialog):
 
     buttonSizer = wx.BoxSizer(wx.HORIZONTAL)
     mainSizer.Add(buttonSizer,0,wx.EXPAND)
-    deleteButton = wx.Button(self,armid.TRACEABILITY_BUTTONDELETE_ID,"Delete")
+    deleteButton = wx.Button(self,TRACEABILITY_BUTTONDELETE_ID,"Delete")
     buttonSizer.Add(deleteButton)
     closeButton = wx.Button(self,wx.ID_CLOSE,"Close")
     buttonSizer.Add(closeButton)
@@ -59,10 +59,10 @@ class TraceabilityEditor(wx.Dialog):
     self.SetSizer(mainSizer)
 
     self.selectedIdx = -1
-    wx.EVT_LIST_ITEM_SELECTED(self,armid.TRACEABILITY_LISTTRACES_ID,self.onItemSelected)
-    wx.EVT_LIST_ITEM_DESELECTED(self,armid.TRACEABILITY_LISTTRACES_ID,self.onItemDeselected)
-    wx.EVT_COMBOBOX(self,armid.TRACEABILITY_COMBOENVIRONMENT_ID,self.onEnvironmentChange)
-    wx.EVT_BUTTON(self,armid.TRACEABILITY_BUTTONDELETE_ID,self.onDelete)
+    wx.EVT_LIST_ITEM_SELECTED(self,TRACEABILITY_LISTTRACES_ID,self.onItemSelected)
+    wx.EVT_LIST_ITEM_DESELECTED(self,TRACEABILITY_LISTTRACES_ID,self.onItemDeselected)
+    wx.EVT_COMBOBOX(self,TRACEABILITY_COMBOENVIRONMENT_ID,self.onEnvironmentChange)
+    wx.EVT_BUTTON(self,TRACEABILITY_BUTTONDELETE_ID,self.onDelete)
     wx.EVT_BUTTON(self,wx.ID_CLOSE,self.onClose)
 
   def onItemSelected(self,evt):

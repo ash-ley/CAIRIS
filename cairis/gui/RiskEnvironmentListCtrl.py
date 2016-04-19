@@ -17,9 +17,9 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from EnvironmentListCtrl import EnvironmentListCtrl
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 class RiskEnvironmentListCtrl(EnvironmentListCtrl):
   def __init__(self,parent,winId,dp):
@@ -35,7 +35,7 @@ class RiskEnvironmentListCtrl(EnvironmentListCtrl):
     remainingDimensions = [x for x in dimensions if x not in currentDimensions]
     from DimensionNameDialog import DimensionNameDialog
     dlg = DimensionNameDialog(self,self.theDimensionTable,remainingDimensions,'Add')
-    if (dlg.ShowModal() == armid.DIMNAME_BUTTONACTION_ID):
+    if (dlg.ShowModal() == DIMNAME_BUTTONACTION_ID):
       for additionalDimension in dlg.dimensionNames():
         idx = self.GetItemCount()
         self.InsertStringItem(idx,additionalDimension)

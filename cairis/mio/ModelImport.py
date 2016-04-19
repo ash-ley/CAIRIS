@@ -31,7 +31,7 @@ from SynopsesContentHandler import SynopsesContentHandler
 from TemplateAssetsContentHandler import TemplateAssetsContentHandler
 from ProcessesContentHandler import ProcessesContentHandler
 from LocationsContentHandler import LocationsContentHandler
-from Borg import Borg
+from cairis.core.Borg import Borg
 import xml.sax
 
 def importSecurityPatterns(importFile):

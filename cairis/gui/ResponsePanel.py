@@ -17,18 +17,18 @@
 
 
 import wx
-import ARM
-import armid
-from Borg import Borg
+from cairis.core.ARM import *
+from cairis.core.armid import *
+from cairis.core.Borg import Borg
 from BasePanel import BasePanel
-from ResponseParameters import ResponseParameters
+from cairis.core.ResponseParameters import ResponseParameters
 from AcceptEnvironmentPanel import AcceptEnvironmentPanel
 from TransferEnvironmentPanel import TransferEnvironmentPanel
 from MitigateEnvironmentPanel import MitigateEnvironmentPanel
 
 class ResponsePanel(BasePanel):
   def __init__(self,parent,responseType,panel):
-    BasePanel.__init__(self,parent,armid.RESPONSE_ID)
+    BasePanel.__init__(self,parent,RESPONSE_ID)
     b = Borg()
     self.dbProxy = b.dbProxy
     self.theResponseName = ''
@@ -42,16 +42,16 @@ class ResponsePanel(BasePanel):
 
   def buildControls(self,isCreate,isUpdateable = True):
     mainSizer = wx.BoxSizer(wx.VERTICAL)
-    mainSizer.Add(self.buildTextSizer('Name',(87,60),armid.RESPONSE_TEXTNAME_ID,isReadOnly=True),0,wx.EXPAND)
-    mainSizer.Add(self.buildTagCtrlSizer((87,30),armid.RESPONSE_TAGS_ID),0,wx.EXPAND)
-    mainSizer.Add(self.buildComboSizerList('Risk',(87,30),armid.RESPONSE_COMBORISK_ID,self.dbProxy.getDimensionNames('risk')),0,wx.EXPAND)
+    mainSizer.Add(self.buildTextSizer('Name',(87,60),RESPONSE_TEXTNAME_ID,isReadOnly=True),0,wx.EXPAND)
+    mainSizer.Add(self.buildTagCtrlSizer((87,30),RESPONSE_TAGS_ID),0,wx.EXPAND)
+    mainSizer.Add(self.buildComboSizerList('Risk',(87,30),RESPONSE_COMBORISK_ID,self.dbProxy.getDimensionNames('risk')),0,wx.EXPAND)
     mainSizer.Add(self.environmentPanel,1,wx.EXPAND)
     if (isUpdateable):
-      mainSizer.Add(self.buildCommitButtonSizer(armid.RESPONSE_BUTTONCOMMIT_ID,isCreate),0,wx.ALIGN_CENTRE)
+      mainSizer.Add(self.buildCommitButtonSizer(RESPONSE_BUTTONCOMMIT_ID,isCreate),0,wx.ALIGN_CENTRE)
     self.SetSizer(mainSizer)
-    self.nameCtrl = self.FindWindowById(armid.RESPONSE_TEXTNAME_ID)
+    self.nameCtrl = self.FindWindowById(RESPONSE_TEXTNAME_ID)
     self.nameCtrl.Disable()
-    self.riskCtrl = self.FindWindowById(armid.RESPONSE_COMBORISK_ID)
+    self.riskCtrl = self.FindWindowById(RESPONSE_COMBORISK_ID)
     self.riskCtrl.Bind(wx.EVT_COMBOBOX,self.onRiskChange)
 
   def onRiskChange(self,evt):
@@ -63,7 +63,7 @@ class ResponsePanel(BasePanel):
         nameLabel = self.theResponseVerb + ' ' + riskName
         self.nameCtrl.SetValue(nameLabel)
       else:
-        mitTypeCombo = self.environmentPanel.FindWindowById(armid.MITIGATE_COMBOTYPE_ID)
+        mitTypeCombo = self.environmentPanel.FindWindowById(MITIGATE_COMBOTYPE_ID)
         mitType = mitTypeCombo.GetValue()
         if (mitType != ''):
           nameLabel = 'Mitigate' + ' ' + riskName 
@@ -75,7 +75,7 @@ class ResponsePanel(BasePanel):
 
   def loadControls(self,response,isReadOnly = False):
     self.nameCtrl.SetValue(response.name())
-    tagsCtrl = self.FindWindowById(armid.RESPONSE_TAGS_ID)
+    tagsCtrl = self.FindWindowById(RESPONSE_TAGS_ID)
     tagsCtrl.set(response.tags())
 
     self.riskCtrl.SetStringSelection(response.risk())
@@ -89,14 +89,14 @@ class ResponsePanel(BasePanel):
       b = Borg()
       try:
         b.dbProxy.nameCheck(self.theResponseName,'response')
-      except ARM.ARMException,errorText:
+      except ARMException,errorText:
         dlg = wx.MessageDialog(self,str(errorText),commitLabel,wx.OK | wx.ICON_ERROR)
         dlg.ShowModal()
         dlg.Destroy()
         return
 
     self.theRiskName = self.riskCtrl.GetStringSelection()
-    tagsCtrl = self.FindWindowById(armid.RESPONSE_TAGS_ID)
+    tagsCtrl = self.FindWindowById(RESPONSE_TAGS_ID)
     self.theTags = tagsCtrl.tags()
     try:
       self.theEnvironmentProperties = self.environmentPanel.environmentProperties()

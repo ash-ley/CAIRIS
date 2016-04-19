@@ -17,8 +17,8 @@
 
 
 import wx
-import armid
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.Borg import Borg
 
 class SecurityPatternEnvironmentPanel(wx.Panel):
   def __init__(self,parent,patternId,cmEnvs = []):
@@ -44,7 +44,7 @@ class SecurityPatternEnvironmentPanel(wx.Panel):
         aBoxSizer.Add(cb,0,wx.EXPAND)
       
     buttonSizer = wx.BoxSizer(wx.HORIZONTAL)
-    buttonSizer.Add(wx.Button(self,armid.SPENVIRONMENT_BUTTONCOMMIT_ID))
+    buttonSizer.Add(wx.Button(self,SPENVIRONMENT_BUTTONCOMMIT_ID))
     buttonSizer.Add(wx.Button(parent,wx.ID_CANCEL,"Close"))
     mainSizer.Add(buttonSizer,0,wx.CENTER)
     self.SetSizer(mainSizer)

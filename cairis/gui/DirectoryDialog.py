@@ -17,18 +17,18 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import os
-import ARM
-from Borg import Borg
-from VulnerabilityParameters import VulnerabilityParameters
-from ThreatParameters import ThreatParameters
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
+from cairis.core.VulnerabilityParameters import VulnerabilityParameters
+from cairis.core.ThreatParameters import ThreatParameters
 from DirectoryEntryDialog import DirectoryEntryDialog
-import ObjectFactory
+from cairis.core.ObjectFactory import *
 
 class DirectoryDialog(wx.Dialog):
   def __init__(self,parent,dimensionName):
-    wx.Dialog.__init__(self,parent,armid.DIRECTORYDIALOG_ID,'Import ' + dimensionName,style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(600,400))
+    wx.Dialog.__init__(self,parent,DIRECTORYDIALOG_ID,'Import ' + dimensionName,style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(600,400))
     b = Borg()
     self.dbProxy = b.dbProxy
     mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -53,10 +53,10 @@ class DirectoryDialog(wx.Dialog):
     typeNames = self.typeDictionary.keys()
     typeNames.sort()
     typeNames = [''] + typeNames
-    self.typeCtrl = wx.ComboBox(self,armid.DIRECTORYDIALOG_COMBOTYPE_ID,"",choices=typeNames,size=wx.DefaultSize,style=wx.CB_READONLY)
+    self.typeCtrl = wx.ComboBox(self,DIRECTORYDIALOG_COMBOTYPE_ID,"",choices=typeNames,size=wx.DefaultSize,style=wx.CB_READONLY)
     comboSizer.Add(self.typeCtrl,1,wx.EXPAND)
 
-    self.entryList = wx.ListCtrl(self,armid.DIRECTORYDIALOG_LISTENTRIES_ID,style=wx.LC_REPORT)
+    self.entryList = wx.ListCtrl(self,DIRECTORYDIALOG_LISTENTRIES_ID,style=wx.LC_REPORT)
     self.entryList.InsertColumn(0,'Label')
     self.entryList.InsertColumn(1,'Name')
     self.entryList.SetColumnWidth(0,200)
@@ -69,17 +69,17 @@ class DirectoryDialog(wx.Dialog):
 
     buttonSizer = wx.BoxSizer(wx.HORIZONTAL)
     mainSizer.Add(buttonSizer,0,wx.CENTER)
-    importButton = wx.Button(self,armid.DIRECTORYDIALOG_BUTTONIMPORT_ID,'Import')
+    importButton = wx.Button(self,DIRECTORYDIALOG_BUTTONIMPORT_ID,'Import')
     buttonSizer.Add(importButton)
     cancelButton = wx.Button(self,wx.ID_CANCEL,"Cancel")
     buttonSizer.Add(cancelButton)
     self.SetSizer(mainSizer)
 
-    wx.EVT_LIST_ITEM_SELECTED(self.entryList,armid.DIRECTORYDIALOG_LISTENTRIES_ID,self.onItemSelected)
-    wx.EVT_LIST_ITEM_DESELECTED(self.entryList,armid.DIRECTORYDIALOG_LISTENTRIES_ID,self.onItemDeselected)
-    wx.EVT_LIST_ITEM_ACTIVATED(self.entryList,armid.DIRECTORYDIALOG_LISTENTRIES_ID,self.onItemActivated)
-    wx.EVT_COMBOBOX(self.typeCtrl,armid.DIRECTORYDIALOG_COMBOTYPE_ID,self.onTypeSelected)
-    wx.EVT_BUTTON(self,armid.DIRECTORYDIALOG_BUTTONIMPORT_ID,self.onImport)
+    wx.EVT_LIST_ITEM_SELECTED(self.entryList,DIRECTORYDIALOG_LISTENTRIES_ID,self.onItemSelected)
+    wx.EVT_LIST_ITEM_DESELECTED(self.entryList,DIRECTORYDIALOG_LISTENTRIES_ID,self.onItemDeselected)
+    wx.EVT_LIST_ITEM_ACTIVATED(self.entryList,DIRECTORYDIALOG_LISTENTRIES_ID,self.onItemActivated)
+    wx.EVT_COMBOBOX(self.typeCtrl,DIRECTORYDIALOG_COMBOTYPE_ID,self.onTypeSelected)
+    wx.EVT_BUTTON(self,DIRECTORYDIALOG_BUTTONIMPORT_ID,self.onImport)
 
     dimIconFile = dimensionName + '.png'
     dimIcon = wx.Icon(b.imageDir + '/' + dimIconFile,wx.BITMAP_TYPE_PNG)
@@ -101,7 +101,7 @@ class DirectoryDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.DIRECTORYDIALOG_BUTTONIMPORT_ID)
+      self.EndModal(DIRECTORYDIALOG_BUTTONIMPORT_ID)
 
   def object(self): 
     row = self.typedEntries[self.theSelectedIdx]
@@ -116,7 +116,7 @@ class DirectoryDialog(wx.Dialog):
       thrMethod = row[1] + '\n\n' + row[2]
       thrType = row[3]
       p = ThreatParameters(thrName,thrType,thrMethod,[])
-    return ObjectFactory.build(-1,p)
+    return cairis.core.ObjectFactory.build(-1,p)
 
   def onItemActivated(self,evt):
     self.theSelectedIdx = evt.GetIndex()

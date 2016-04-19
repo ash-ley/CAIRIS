@@ -17,8 +17,8 @@
 
 
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from InterfaceListDialog import InterfaceListDialog
 
 class InterfaceListCtrl(wx.ListCtrl):
@@ -34,11 +34,11 @@ class InterfaceListCtrl(wx.ListCtrl):
     self.SetColumnWidth(3,100)
     self.theSelectedIdx = -1
     self.theDimMenu = wx.Menu()
-    self.theDimMenu.Append(armid.INTERFACELIST_MENUADD_ID,'Add')
-    self.theDimMenu.Append(armid.INTERFACELIST_MENUDELETE_ID,'Delete')
+    self.theDimMenu.Append(INTERFACELIST_MENUADD_ID,'Add')
+    self.theDimMenu.Append(INTERFACELIST_MENUDELETE_ID,'Delete')
     self.Bind(wx.EVT_RIGHT_DOWN,self.OnRightDown)
-    wx.EVT_MENU(self.theDimMenu,armid.INTERFACELIST_MENUADD_ID,self.onAddInterface)
-    wx.EVT_MENU(self.theDimMenu,armid.INTERFACELIST_MENUDELETE_ID,self.onDeleteInterface)
+    wx.EVT_MENU(self.theDimMenu,INTERFACELIST_MENUADD_ID,self.onAddInterface)
+    wx.EVT_MENU(self.theDimMenu,INTERFACELIST_MENUDELETE_ID,self.onDeleteInterface)
 
     self.Bind(wx.EVT_LIST_ITEM_SELECTED,self.OnItemSelected)
     self.Bind(wx.EVT_LIST_ITEM_DESELECTED,self.OnItemDeselected)

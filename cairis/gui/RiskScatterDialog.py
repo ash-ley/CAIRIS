@@ -17,7 +17,7 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from RiskScatterPanel import RiskScatterPanel
 
 class RiskScatterDialog(wx.Dialog):

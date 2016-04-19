@@ -17,17 +17,17 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
 from EnvironmentPropertiesPanel import EnvironmentPropertiesPanel
 from ValueTensionsGrid import ValueTensionsGrid
 
 class SummaryPage(wx.Panel):
   def __init__(self,parent):
-    wx.Panel.__init__(self,parent,armid.GOAL_PANELSUMMARY_ID)
+    wx.Panel.__init__(self,parent,GOAL_PANELSUMMARY_ID)
     topSizer = wx.BoxSizer(wx.VERTICAL)
-    topSizer.Add(WidgetFactory.buildTextSizer(self,'Short Code',(87,30),armid.ENVIRONMENT_TEXTSHORTCODE_ID,'Code which prefixes requirements which are specific to this environment'),0,wx.EXPAND)
-    topSizer.Add(WidgetFactory.buildMLTextSizer(self,'Description',(87,30),armid.ENVIRONMENT_TEXTDESCRIPTION_ID),1,wx.EXPAND)
+    topSizer.Add(WidgetFactory.buildTextSizer(self,'Short Code',(87,30),ENVIRONMENT_TEXTSHORTCODE_ID,'Code which prefixes requirements which are specific to this environment'),0,wx.EXPAND)
+    topSizer.Add(WidgetFactory.buildMLTextSizer(self,'Description',(87,30),ENVIRONMENT_TEXTDESCRIPTION_ID),1,wx.EXPAND)
     self.SetSizer(topSizer)
 
 class CompositePage(wx.Panel):
@@ -57,7 +57,7 @@ class TensionsPage(wx.Panel):
     rBox = wx.StaticBox(self,-1,'Rationale')
     rBoxSizer = wx.StaticBoxSizer(rBox,wx.VERTICAL)
     topSizer.Add(rBoxSizer,1,wx.EXPAND)
-    self.rationaleCtrl = wx.TextCtrl(self,armid.ENVIRONMENT_TEXTTENSIONRATIONALE_ID,"",size=(200,100),style=wx.TE_MULTILINE)
+    self.rationaleCtrl = wx.TextCtrl(self,ENVIRONMENT_TEXTTENSIONRATIONALE_ID,"",size=(200,100),style=wx.TE_MULTILINE)
     rBoxSizer.Add(self.rationaleCtrl,0,wx.EXPAND)
     self.tensionsCtrl.setRationaleCtrl(self.rationaleCtrl)
     self.SetSizer(topSizer)
@@ -77,7 +77,7 @@ class TensionsPage(wx.Panel):
 
 class EnvironmentNotebook(wx.Notebook):
   def __init__(self,parent,dp):
-    wx.Notebook.__init__(self,parent,armid.ENVIRONMENT_NOTEBOOKENVIRONMENT_ID)
+    wx.Notebook.__init__(self,parent,ENVIRONMENT_NOTEBOOKENVIRONMENT_ID)
     p1 = SummaryPage(self)
     p2 = CompositePage(self,dp)
     p3 = TensionsPage(self)

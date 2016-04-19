@@ -18,7 +18,7 @@
 
 import wx
 import os
-import armid
+from cairis.core.armid import *
 from EditorBase import EditorBase
 from ObstaclesGrid import ObstaclesGrid
 from datetime import datetime
@@ -39,8 +39,8 @@ class OMPanel(EditorBase):
     self.resizeColumns()
     self.SetSizeHints(1150,400)
     self.SetSizer(self.sizer)
-    self.Bind(wx.EVT_COMBOBOX, self.onObjectChange,id = armid.RMFRAME_TOOL_COMBOOBJECT)
-    self.Bind(wx.EVT_COMBOBOX, self.onEnvironmentChange,id = armid.RMFRAME_TOOL_COMBOENVIRONMENT)
+    self.Bind(wx.EVT_COMBOBOX, self.onObjectChange,id = RMFRAME_TOOL_COMBOOBJECT)
+    self.Bind(wx.EVT_COMBOBOX, self.onEnvironmentChange,id = RMFRAME_TOOL_COMBOENVIRONMENT)
 
     
   def onObjectChange(self,evt):
@@ -102,7 +102,7 @@ class OMPanel(EditorBase):
     self.statusBar.SetStatusText(str(datetime.now())[:19] + ' : obstacles relabelled')
 
   def addObject(self):
-    grid = self.FindWindowById(armid.ID_REQGRID)
+    grid = self.FindWindowById(ID_REQGRID)
     pos = grid.GetGridCursorRow()
     grid.InsertRows(pos)
 

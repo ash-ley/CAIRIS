@@ -18,20 +18,21 @@
 import unittest
 import os
 import json
-import BorgFactory
-from Borg import Borg
-from EnvironmentParameters import EnvironmentParameters
-from ARM import DatabaseProxyException
+from subprocess import call
+import cairis.core.BorgFactory
+from cairis.core.Borg import Borg
+from cairis.core.EnvironmentParameters import EnvironmentParameters
+from cairis.core.ARM import DatabaseProxyException
 
 class EnvironmentTest(unittest.TestCase):
 
   def setUp(self):
-    BorgFactory.initialise()
+    call([os.environ['CAIRIS_SRC'] + "/test/initdb.sh"])
+    cairis.core.BorgFactory.initialise()
     f = open(os.environ['CAIRIS_SRC'] + '/test/environments.json')
     d = json.load(f)
     f.close()
     self.ienvs = d['environments']
-    
 
   def testStandardEnvironment(self):
     iep1 = EnvironmentParameters(self.ienvs[0]["theName"],self.ienvs[0]["theShortCode"],self.ienvs[0]["theDescription"])
@@ -92,6 +93,7 @@ class EnvironmentTest(unittest.TestCase):
   def tearDown(self):
     b = Borg()
     b.dbProxy.close()
+    call([os.environ['CAIRIS_SRC'] + "/test/dropdb.sh"])
 
 if __name__ == '__main__':
   unittest.main()

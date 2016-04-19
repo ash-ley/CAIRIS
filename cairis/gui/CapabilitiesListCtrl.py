@@ -17,8 +17,8 @@
 
 
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from CapabilityDialog import CapabilityDialog
 
 class CapabilitiesListCtrl(wx.ListCtrl):
@@ -31,16 +31,16 @@ class CapabilitiesListCtrl(wx.ListCtrl):
     self.InsertColumn(1,'Value')
     self.SetColumnWidth(1,300)
     self.theDimMenu = wx.Menu()
-    self.theDimMenu.Append(armid.CAPABILITIESLISTCTRL_MENUADD_ID,'Add')
-    self.theDimMenu.Append(armid.CAPABILITIESLISTCTRL_MENUDELETE_ID,'Delete')
+    self.theDimMenu.Append(CAPABILITIESLISTCTRL_MENUADD_ID,'Add')
+    self.theDimMenu.Append(CAPABILITIESLISTCTRL_MENUDELETE_ID,'Delete')
     self.theSelectedValue = ''
     self.theSelectedIdx = -1
     self.setCapabilities = {}
     self.Bind(wx.EVT_RIGHT_DOWN,self.OnRightDown)
     self.Bind(wx.EVT_LIST_ITEM_SELECTED,self.OnItemSelected)
     self.Bind(wx.EVT_LIST_ITEM_DESELECTED,self.OnItemDeselected)
-    wx.EVT_MENU(self.theDimMenu,armid.CAPABILITIESLISTCTRL_MENUADD_ID,self.onAddCapability)
-    wx.EVT_MENU(self.theDimMenu,armid.CAPABILITIESLISTCTRL_MENUDELETE_ID,self.onDeleteCapability)
+    wx.EVT_MENU(self.theDimMenu,CAPABILITIESLISTCTRL_MENUADD_ID,self.onAddCapability)
+    wx.EVT_MENU(self.theDimMenu,CAPABILITIESLISTCTRL_MENUDELETE_ID,self.onDeleteCapability)
 
   def setEnvironment(self,environmentName):
     self.theCurrentEnvironment = environmentName
@@ -58,7 +58,7 @@ class CapabilitiesListCtrl(wx.ListCtrl):
 
   def onAddCapability(self,evt):
     dlg = CapabilityDialog(self,self.setCapabilities[self.theCurrentEnvironment],self.dbProxy)
-    if (dlg.ShowModal() == armid.CAPABILITY_BUTTONADD_ID):
+    if (dlg.ShowModal() == CAPABILITY_BUTTONADD_ID):
       capName = dlg.capability()
       capValue = dlg.value()
       idx = self.GetItemCount()

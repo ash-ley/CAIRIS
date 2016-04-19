@@ -38,7 +38,7 @@ import gtk.keysyms
 import cairo
 import pango
 import pangocairo
-import armid
+from cairis.core.armid import *
 
 # See http://www.graphviz.org/pub/scm/graphviz-cairo/plugin/cairo/gvrender_cairo.c
 
@@ -109,7 +109,7 @@ class TextShape(Shape):
         self.t = t
 
     def draw(self, cr, highlight=False,zoom_ratio=-1):
-      if (zoom_ratio == -1) or (zoom_ratio > armid.MED_ZOOM_RATIO):
+      if (zoom_ratio == -1) or (zoom_ratio > MED_ZOOM_RATIO):
         try:
             layout = self.layout
         except AttributeError:
@@ -204,7 +204,7 @@ class EllipseShape(Shape):
         self.filled = filled
 
     def draw(self, cr, highlight=False,zoom_ratio=-1):
-      if (zoom_ratio == -1) or (zoom_ratio > armid.LOW_ZOOM_RATIO):
+      if (zoom_ratio == -1) or (zoom_ratio > LOW_ZOOM_RATIO):
         cr.save()
         cr.translate(self.x0, self.y0)
         cr.scale(self.w, self.h)
@@ -256,7 +256,7 @@ class LineShape(Shape):
         self.points = points
 
     def draw(self, cr, highlight=False,zoom_ratio = -1):
-      if (zoom_ratio == -1) or (zoom_ratio > armid.HIGH_ZOOM_RATIO):
+      if (zoom_ratio == -1) or (zoom_ratio > HIGH_ZOOM_RATIO):
         x0, y0 = self.points[0]
         cr.move_to(x0, y0)
         for x1, y1 in self.points[1:]:
@@ -277,7 +277,7 @@ class BezierShape(Shape):
         self.filled = filled
 
     def draw(self, cr, highlight=False,zoom_ratio=-1):
-      if ((zoom_ratio == -1) or (zoom_ratio > armid.LOW_ZOOM_RATIO)):
+      if ((zoom_ratio == -1) or (zoom_ratio > LOW_ZOOM_RATIO)):
         x0, y0 = self.points[0]
         cr.move_to(x0, y0)
         for i in xrange(1, len(self.points), 3):
@@ -304,7 +304,7 @@ class CompoundShape(Shape):
         self.shapes = shapes
 
     def draw(self, cr, highlight=False,zoom_ratio=-1):
-        if (len(self.shapes) == 1) and (self.shapes[0].__class__.__name__ == 'BezierShape') and (self.url != '') and (zoom_ratio >= armid.LOW_ZOOM_RATIO and zoom_ratio < armid.HIGH_ZOOM_RATIO):
+        if (len(self.shapes) == 1) and (self.shapes[0].__class__.__name__ == 'BezierShape') and (self.url != '') and (zoom_ratio >= LOW_ZOOM_RATIO and zoom_ratio < HIGH_ZOOM_RATIO):
           src = dest = ''
           try:
             src,dest = self.url.split('#')

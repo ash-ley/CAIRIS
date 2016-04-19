@@ -17,9 +17,9 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from SecurityPatternPanel import SecurityPatternPanel
-from SecurityPatternParameters import SecurityPatternParameters
+from cairis.core.SecurityPatternParameters import SecurityPatternParameters
 import DialogClassParameters
 
 class SecurityPatternDialog(wx.Dialog):
@@ -42,7 +42,7 @@ class SecurityPatternDialog(wx.Dialog):
     self.panel.buildControls(parameters.createFlag())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.SECURITYPATTERN_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,SECURITYPATTERN_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,pattern):
     self.thePatternId = pattern.id()
@@ -51,12 +51,12 @@ class SecurityPatternDialog(wx.Dialog):
 
   def onCommit(self,evt):
     commitLabel = self.commitVerb + ' security pattern'
-    nameCtrl = self.FindWindowById(armid.SECURITYPATTERN_TEXTNAME_ID)
-    contextCtrl = self.FindWindowById(armid.SECURITYPATTERN_TEXTCONTEXT_ID)
-    problemCtrl = self.FindWindowById(armid.SECURITYPATTERN_TEXTPROBLEM_ID)
-    solutionCtrl = self.FindWindowById(armid.SECURITYPATTERN_TEXTSOLUTION_ID)
-    concernsCtrl = self.FindWindowById(armid.SECURITYPATTERN_LISTPATTERNSTRUCTURE_ID)
-    reqsCtrl = self.FindWindowById(armid.SECURITYPATTERN_LISTREQUIREMENTS_ID)
+    nameCtrl = self.FindWindowById(SECURITYPATTERN_TEXTNAME_ID)
+    contextCtrl = self.FindWindowById(SECURITYPATTERN_TEXTCONTEXT_ID)
+    problemCtrl = self.FindWindowById(SECURITYPATTERN_TEXTPROBLEM_ID)
+    solutionCtrl = self.FindWindowById(SECURITYPATTERN_TEXTSOLUTION_ID)
+    concernsCtrl = self.FindWindowById(SECURITYPATTERN_LISTPATTERNSTRUCTURE_ID)
+    reqsCtrl = self.FindWindowById(SECURITYPATTERN_LISTREQUIREMENTS_ID)
     self.thePatternName = nameCtrl.GetValue()
     self.thePatternContext = contextCtrl.GetValue()
     self.thePatternProblem = problemCtrl.GetValue()
@@ -85,7 +85,7 @@ class SecurityPatternDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.SECURITYPATTERN_BUTTONCOMMIT_ID)
+      self.EndModal(SECURITYPATTERN_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = SecurityPatternParameters(self.thePatternName,self.thePatternContext,self.thePatternProblem,self.thePatternSolution,self.theRequirements,self.theConcernAssociations)

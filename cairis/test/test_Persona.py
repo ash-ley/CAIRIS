@@ -18,20 +18,22 @@
 import unittest
 import os
 import json
-import BorgFactory
-from Borg import Borg
-from RoleParameters import RoleParameters
-from EnvironmentParameters import EnvironmentParameters
-from PersonaParameters import PersonaParameters
-from PersonaEnvironmentProperties import PersonaEnvironmentProperties
-from ExternalDocumentParameters import ExternalDocumentParameters
-from DocumentReferenceParameters import DocumentReferenceParameters
-from PersonaCharacteristicParameters import PersonaCharacteristicParameters
+from subprocess import call
+import cairis.core.BorgFactory
+from cairis.core.Borg import Borg
+from cairis.core.RoleParameters import RoleParameters
+from cairis.core.EnvironmentParameters import EnvironmentParameters
+from cairis.core.PersonaParameters import PersonaParameters
+from cairis.core.PersonaEnvironmentProperties import PersonaEnvironmentProperties
+from cairis.core.ExternalDocumentParameters import ExternalDocumentParameters
+from cairis.core.DocumentReferenceParameters import DocumentReferenceParameters
+from cairis.core.PersonaCharacteristicParameters import PersonaCharacteristicParameters
 
 class PersonaTest(unittest.TestCase):
 
   def setUp(self):
-    BorgFactory.initialise()
+    call([os.environ['CAIRIS_SRC'] + "/test/initdb.sh"])
+    cairis.core.BorgFactory.initialise()
     f = open(os.environ['CAIRIS_SRC'] + '/test/personas.json')
     d = json.load(f)
     f.close()
@@ -145,6 +147,7 @@ class PersonaTest(unittest.TestCase):
     b.dbProxy.deleteRole(self.theRoles[self.iRoles[0]["theName"]].id())
     b.dbProxy.deleteEnvironment(self.theEnvironments[self.iEnvironments[0]["theName"]].id())
     b.dbProxy.close()
+    call([os.environ['CAIRIS_SRC'] + "/test/dropdb.sh"])
 
 if __name__ == '__main__':
   unittest.main()

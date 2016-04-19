@@ -17,17 +17,16 @@
 
 
 import wx
-import armid
-from TaskParameters import TaskParameters
+from cairis.core.armid import *
+from cairis.core.TaskParameters import TaskParameters
 import WidgetFactory
 from MisuseCasePanel import MisuseCasePanel
-from MisuseCaseParameters import MisuseCaseParameters
-import ObjectFactory
-from Borg import Borg
+from cairis.core.MisuseCaseParameters import MisuseCaseParameters
+from cairis.core.Borg import Borg
 
 class MisuseCaseDialog(wx.Dialog):
   def __init__(self,parent,isCreate = False):
-    wx.Dialog.__init__(self,parent,armid.MISUSECASE_ID,'Create Misuse Case',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(700,800))
+    wx.Dialog.__init__(self,parent,MISUSECASE_ID,'Create Misuse Case',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(700,800))
     b = Borg()
     self.dbProxy = b.dbProxy
     self.theMisuseCaseId = -1
@@ -44,7 +43,7 @@ class MisuseCaseDialog(wx.Dialog):
     self.panel.buildControls(isCreate)
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.MISUSECASE_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,MISUSECASE_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,mc):
     mc.theThreatName,mc.theVulnerabilityName  = self.dbProxy.misuseCaseRiskComponents(mc.name())
@@ -60,9 +59,9 @@ class MisuseCaseDialog(wx.Dialog):
     self.panel.loadRiskComponents(riskName,threatName,vulnerabilityName)
 
   def onCommit(self,evt):
-    nameCtrl = self.FindWindowById(armid.MISUSECASE_TEXTNAME_ID)
-    riskCtrl = self.FindWindowById(armid.MISUSECASE_TEXTRISK_ID)
-    environmentCtrl = self.FindWindowById(armid.MISUSECASE_PANELENVIRONMENT_ID)
+    nameCtrl = self.FindWindowById(MISUSECASE_TEXTNAME_ID)
+    riskCtrl = self.FindWindowById(MISUSECASE_TEXTRISK_ID)
+    environmentCtrl = self.FindWindowById(MISUSECASE_PANELENVIRONMENT_ID)
 
     self.theName = nameCtrl.GetValue()
     self.theRisk = riskCtrl.GetValue()
@@ -76,7 +75,7 @@ class MisuseCaseDialog(wx.Dialog):
         dlg.ShowModal()
         dlg.Destroy()
         return
-    self.EndModal(armid.MISUSECASE_BUTTONCOMMIT_ID)
+    self.EndModal(MISUSECASE_BUTTONCOMMIT_ID)
 
   def parameters(self): 
     parameters = MisuseCaseParameters(self.theName,self.theEnvironmentProperties,self.theRisk)

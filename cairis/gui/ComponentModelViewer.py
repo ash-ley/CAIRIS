@@ -22,8 +22,8 @@ import componentxdot
 import NodeDialogFactory
 import ModelMenuFactory
 import os
-from ARM import *
-from Borg import Borg
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
 
 class ComponentModelViewer(componentxdot.ComponentDotWindow):
   def __init__(self,cvName):

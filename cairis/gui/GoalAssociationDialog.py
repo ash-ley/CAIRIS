@@ -17,14 +17,14 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
-from Borg import Borg
-from GoalAssociationParameters import GoalAssociationParameters
+from cairis.core.Borg import Borg
+from cairis.core.GoalAssociationParameters import GoalAssociationParameters
 
 class GoalAssociationDialog(wx.Dialog):
   def __init__(self,parent,parameters):
-    wx.Dialog.__init__(self,parent,armid.GOALASSOCIATION_ID,'Goal association',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(600,400))
+    wx.Dialog.__init__(self,parent,GOALASSOCIATION_ID,'Goal association',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(600,400))
     b = Borg()
     self.dbProxy = b.dbProxy
     self.theGoalAssociationId = -1
@@ -42,7 +42,7 @@ class GoalAssociationDialog(wx.Dialog):
   def buildControls(self,parameters):
     mainSizer = wx.BoxSizer(wx.VERTICAL)
     associationSizer = wx.BoxSizer(wx.HORIZONTAL)
-    mainSizer.Add(WidgetFactory.buildCheckSizer(self,'Alternative',armid.GOALASSOCIATION_CHECKALTERNATIVE_ID,False),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildCheckSizer(self,'Alternative',GOALASSOCIATION_CHECKALTERNATIVE_ID,False),0,wx.EXPAND)
     mainSizer.Add(associationSizer,0,wx.EXPAND)
     environments = self.dbProxy.getDimensionNames('environment')
     goals = []
@@ -50,32 +50,32 @@ class GoalAssociationDialog(wx.Dialog):
     goalDimensions = ['goal','requirement','countermeasure','obstacle']
     subGoalDimensions = ['goal','requirement','role','task','usecase','countermeasure','domainproperty','obstacle','threat','vulnerability']
 
-    associationSizer.Add(WidgetFactory.buildComboSizerList(self,'Environment',(87,30),armid.GOALASSOCIATION_COMBOENVIRONMENT_ID,environments),0,wx.EXPAND)
-    associationSizer.Add(WidgetFactory.buildComboSizerList(self,'Dimension',(87,30),armid.GOALASSOCIATION_COMBOGOALDIM_ID,goalDimensions),0,wx.EXPAND)
-    associationSizer.Add(WidgetFactory.buildComboSizerList(self,'Goal',(87,30),armid.GOALASSOCIATION_COMBOGOAL_ID,goals),0,wx.EXPAND)
-    associationSizer.Add(WidgetFactory.buildComboSizerList(self,'Type',(87,30),armid.GOALASSOCIATION_COMBOATYPE_ID,associationTypes),0,wx.EXPAND)
-    associationSizer.Add(WidgetFactory.buildComboSizerList(self,'Dimension',(87,30),armid.GOALASSOCIATION_COMBOSUBGOALDIM_ID,subGoalDimensions),0,wx.EXPAND)
-    associationSizer.Add(WidgetFactory.buildComboSizerList(self,'Sub-Goal',(87,30),armid.GOALASSOCIATION_COMBOSUBGOAL_ID,goals),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildMLTextSizer(self,'Rationale',(87,60),armid.GOALASSOCIATION_TEXTRATIONALE_ID),1,wx.EXPAND,1,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,armid.GOALASSOCIATION_BUTTONCOMMIT_ID),0,wx.ALIGN_CENTER)
+    associationSizer.Add(WidgetFactory.buildComboSizerList(self,'Environment',(87,30),GOALASSOCIATION_COMBOENVIRONMENT_ID,environments),0,wx.EXPAND)
+    associationSizer.Add(WidgetFactory.buildComboSizerList(self,'Dimension',(87,30),GOALASSOCIATION_COMBOGOALDIM_ID,goalDimensions),0,wx.EXPAND)
+    associationSizer.Add(WidgetFactory.buildComboSizerList(self,'Goal',(87,30),GOALASSOCIATION_COMBOGOAL_ID,goals),0,wx.EXPAND)
+    associationSizer.Add(WidgetFactory.buildComboSizerList(self,'Type',(87,30),GOALASSOCIATION_COMBOATYPE_ID,associationTypes),0,wx.EXPAND)
+    associationSizer.Add(WidgetFactory.buildComboSizerList(self,'Dimension',(87,30),GOALASSOCIATION_COMBOSUBGOALDIM_ID,subGoalDimensions),0,wx.EXPAND)
+    associationSizer.Add(WidgetFactory.buildComboSizerList(self,'Sub-Goal',(87,30),GOALASSOCIATION_COMBOSUBGOAL_ID,goals),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildMLTextSizer(self,'Rationale',(87,60),GOALASSOCIATION_TEXTRATIONALE_ID),1,wx.EXPAND,1,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,GOALASSOCIATION_BUTTONCOMMIT_ID),0,wx.ALIGN_CENTER)
     self.SetSizer(mainSizer)
 
-    wx.EVT_BUTTON(self,armid.GOALASSOCIATION_BUTTONCOMMIT_ID,self.onCommit)
-    wx.EVT_COMBOBOX(self,armid.GOALASSOCIATION_COMBOENVIRONMENT_ID,self.onEnvironmentChange)
-    wx.EVT_COMBOBOX(self,armid.GOALASSOCIATION_COMBOGOALDIM_ID,self.onGoalDimChange)
-    wx.EVT_COMBOBOX(self,armid.GOALASSOCIATION_COMBOSUBGOALDIM_ID,self.onSubGoalDimChange)
+    wx.EVT_BUTTON(self,GOALASSOCIATION_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_COMBOBOX(self,GOALASSOCIATION_COMBOENVIRONMENT_ID,self.onEnvironmentChange)
+    wx.EVT_COMBOBOX(self,GOALASSOCIATION_COMBOGOALDIM_ID,self.onGoalDimChange)
+    wx.EVT_COMBOBOX(self,GOALASSOCIATION_COMBOSUBGOALDIM_ID,self.onSubGoalDimChange)
 
   def load(self,association):
     self.theGoalAssociationId = association.id()
-    envCtrl = self.FindWindowById(armid.GOALASSOCIATION_COMBOENVIRONMENT_ID)
-    goalCtrl = self.FindWindowById(armid.GOALASSOCIATION_COMBOGOAL_ID)
-    goalDimCtrl = self.FindWindowById(armid.GOALASSOCIATION_COMBOGOALDIM_ID)
-    atypeCtrl = self.FindWindowById(armid.GOALASSOCIATION_COMBOATYPE_ID)
-    subGoalCtrl = self.FindWindowById(armid.GOALASSOCIATION_COMBOSUBGOAL_ID)
-    subGoalDimCtrl = self.FindWindowById(armid.GOALASSOCIATION_COMBOSUBGOALDIM_ID)
-    alternativeCtrl = self.FindWindowById(armid.GOALASSOCIATION_CHECKALTERNATIVE_ID)
-    rationaleCtrl = self.FindWindowById(armid.GOALASSOCIATION_TEXTRATIONALE_ID)
-    buttonCtrl = self.FindWindowById(armid.GOALASSOCIATION_BUTTONCOMMIT_ID)
+    envCtrl = self.FindWindowById(GOALASSOCIATION_COMBOENVIRONMENT_ID)
+    goalCtrl = self.FindWindowById(GOALASSOCIATION_COMBOGOAL_ID)
+    goalDimCtrl = self.FindWindowById(GOALASSOCIATION_COMBOGOALDIM_ID)
+    atypeCtrl = self.FindWindowById(GOALASSOCIATION_COMBOATYPE_ID)
+    subGoalCtrl = self.FindWindowById(GOALASSOCIATION_COMBOSUBGOAL_ID)
+    subGoalDimCtrl = self.FindWindowById(GOALASSOCIATION_COMBOSUBGOALDIM_ID)
+    alternativeCtrl = self.FindWindowById(GOALASSOCIATION_CHECKALTERNATIVE_ID)
+    rationaleCtrl = self.FindWindowById(GOALASSOCIATION_TEXTRATIONALE_ID)
+    buttonCtrl = self.FindWindowById(GOALASSOCIATION_BUTTONCOMMIT_ID)
     buttonCtrl.SetLabel('Edit')
   
     self.theEnvironmentName = association.environment()
@@ -101,14 +101,14 @@ class GoalAssociationDialog(wx.Dialog):
     
   def onCommit(self,evt):
     commitLabel = self.commitVerb + ' association'
-    envCtrl = self.FindWindowById(armid.GOALASSOCIATION_COMBOENVIRONMENT_ID)
-    goalCtrl = self.FindWindowById(armid.GOALASSOCIATION_COMBOGOAL_ID)
-    goalDimCtrl = self.FindWindowById(armid.GOALASSOCIATION_COMBOGOALDIM_ID)
-    atypeCtrl = self.FindWindowById(armid.GOALASSOCIATION_COMBOATYPE_ID)
-    subGoalCtrl = self.FindWindowById(armid.GOALASSOCIATION_COMBOSUBGOAL_ID)
-    subGoalDimCtrl = self.FindWindowById(armid.GOALASSOCIATION_COMBOSUBGOALDIM_ID)
-    alternativeCtrl = self.FindWindowById(armid.GOALASSOCIATION_CHECKALTERNATIVE_ID)
-    rationaleCtrl = self.FindWindowById(armid.GOALASSOCIATION_TEXTRATIONALE_ID)
+    envCtrl = self.FindWindowById(GOALASSOCIATION_COMBOENVIRONMENT_ID)
+    goalCtrl = self.FindWindowById(GOALASSOCIATION_COMBOGOAL_ID)
+    goalDimCtrl = self.FindWindowById(GOALASSOCIATION_COMBOGOALDIM_ID)
+    atypeCtrl = self.FindWindowById(GOALASSOCIATION_COMBOATYPE_ID)
+    subGoalCtrl = self.FindWindowById(GOALASSOCIATION_COMBOSUBGOAL_ID)
+    subGoalDimCtrl = self.FindWindowById(GOALASSOCIATION_COMBOSUBGOALDIM_ID)
+    alternativeCtrl = self.FindWindowById(GOALASSOCIATION_CHECKALTERNATIVE_ID)
+    rationaleCtrl = self.FindWindowById(GOALASSOCIATION_TEXTRATIONALE_ID)
 
     self.theEnvironmentName = envCtrl.GetValue()
     self.theGoal = goalCtrl.GetValue()
@@ -153,17 +153,17 @@ class GoalAssociationDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.GOALASSOCIATION_BUTTONCOMMIT_ID)
+      self.EndModal(GOALASSOCIATION_BUTTONCOMMIT_ID)
 
   def onEnvironmentChange(self,evt):
-    envCtrl = self.FindWindowById(armid.GOALASSOCIATION_COMBOENVIRONMENT_ID)
-    goalCtrl = self.FindWindowById(armid.GOALASSOCIATION_COMBOGOAL_ID)
-    goalDimCtrl = self.FindWindowById(armid.GOALASSOCIATION_COMBOGOALDIM_ID)
-    atypeCtrl = self.FindWindowById(armid.GOALASSOCIATION_COMBOATYPE_ID)
-    subGoalCtrl = self.FindWindowById(armid.GOALASSOCIATION_COMBOSUBGOAL_ID)
-    subGoalDimCtrl = self.FindWindowById(armid.GOALASSOCIATION_COMBOSUBGOALDIM_ID)
-    alternativeCtrl = self.FindWindowById(armid.GOALASSOCIATION_CHECKALTERNATIVE_ID)
-    rationaleCtrl = self.FindWindowById(armid.GOALASSOCIATION_TEXTRATIONALE_ID)
+    envCtrl = self.FindWindowById(GOALASSOCIATION_COMBOENVIRONMENT_ID)
+    goalCtrl = self.FindWindowById(GOALASSOCIATION_COMBOGOAL_ID)
+    goalDimCtrl = self.FindWindowById(GOALASSOCIATION_COMBOGOALDIM_ID)
+    atypeCtrl = self.FindWindowById(GOALASSOCIATION_COMBOATYPE_ID)
+    subGoalCtrl = self.FindWindowById(GOALASSOCIATION_COMBOSUBGOAL_ID)
+    subGoalDimCtrl = self.FindWindowById(GOALASSOCIATION_COMBOSUBGOALDIM_ID)
+    alternativeCtrl = self.FindWindowById(GOALASSOCIATION_CHECKALTERNATIVE_ID)
+    rationaleCtrl = self.FindWindowById(GOALASSOCIATION_TEXTRATIONALE_ID)
     goalCtrl.SetItems([])
     subGoalCtrl.SetItems([])
     goalCtrl.SetValue('')
@@ -176,13 +176,13 @@ class GoalAssociationDialog(wx.Dialog):
     envName = envCtrl.GetStringSelection()
 
   def onGoalDimChange(self,evt):
-    envCtrl = self.FindWindowById(armid.GOALASSOCIATION_COMBOENVIRONMENT_ID)
-    goalDimCtrl = self.FindWindowById(armid.GOALASSOCIATION_COMBOGOALDIM_ID)
+    envCtrl = self.FindWindowById(GOALASSOCIATION_COMBOENVIRONMENT_ID)
+    goalDimCtrl = self.FindWindowById(GOALASSOCIATION_COMBOGOALDIM_ID)
     envName = envCtrl.GetStringSelection()
     goalDimName = goalDimCtrl.GetStringSelection()
 
     if (envName != '') and (goalDimName != ''):
-      goalCtrl = self.FindWindowById(armid.GOALASSOCIATION_COMBOGOAL_ID)
+      goalCtrl = self.FindWindowById(GOALASSOCIATION_COMBOGOAL_ID)
       if (goalDimName == 'goal'):
         goalCtrl.SetItems(self.dbProxy.environmentGoals(envName))
       elif (goalDimName == 'obstacle'):
@@ -198,13 +198,13 @@ class GoalAssociationDialog(wx.Dialog):
 
 
   def onSubGoalDimChange(self,evt):
-    envCtrl = self.FindWindowById(armid.GOALASSOCIATION_COMBOENVIRONMENT_ID)
-    subGoalDimCtrl = self.FindWindowById(armid.GOALASSOCIATION_COMBOSUBGOALDIM_ID)
+    envCtrl = self.FindWindowById(GOALASSOCIATION_COMBOENVIRONMENT_ID)
+    subGoalDimCtrl = self.FindWindowById(GOALASSOCIATION_COMBOSUBGOALDIM_ID)
     envName = envCtrl.GetStringSelection()
     subGoalDimName = subGoalDimCtrl.GetStringSelection()
 
     if (envName != '') and (subGoalDimName != ''):
-      subGoalCtrl = self.FindWindowById(armid.GOALASSOCIATION_COMBOSUBGOAL_ID)
+      subGoalCtrl = self.FindWindowById(GOALASSOCIATION_COMBOSUBGOAL_ID)
       if (subGoalDimName == 'goal'):
         subGoalCtrl.SetItems(self.dbProxy.environmentGoals(envName))
       elif (subGoalDimName == 'obstacle'):

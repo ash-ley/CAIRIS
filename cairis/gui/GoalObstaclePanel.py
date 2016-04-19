@@ -17,38 +17,38 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from BasePanel import BasePanel
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 class GoalObstaclePanel(BasePanel):
   def __init__(self,parent,goalName,obsName,envName):
-    BasePanel.__init__(self,parent,armid.GOALOBSTACLE_ID)
+    BasePanel.__init__(self,parent,GOALOBSTACLE_ID)
     self.theAssetId = None
     b = Borg()
     self.dbProxy = b.dbProxy
 
     mainSizer = wx.BoxSizer(wx.VERTICAL)
-    mainSizer.Add(self.buildMLTextSizer('Goal',(87,30),armid.GOALOBSTACLE_TEXTGOAL_ID,True),1,wx.EXPAND)
-    mainSizer.Add(self.buildMLTextSizer('Obstacle',(87,30),armid.GOALOBSTACLE_TEXTOBSTACLE_ID,True),1,wx.EXPAND)
+    mainSizer.Add(self.buildMLTextSizer('Goal',(87,30),GOALOBSTACLE_TEXTGOAL_ID,True),1,wx.EXPAND)
+    mainSizer.Add(self.buildMLTextSizer('Obstacle',(87,30),GOALOBSTACLE_TEXTOBSTACLE_ID,True),1,wx.EXPAND)
 
     buttonSizer = wx.BoxSizer(wx.HORIZONTAL)
-    addButton = wx.Button(self,armid.GOALOBSTACLE_BUTTONADD_ID,"Add")
+    addButton = wx.Button(self,GOALOBSTACLE_BUTTONADD_ID,"Add")
     buttonSizer.Add(addButton)
-    ignoreButton = wx.Button(self,armid.GOALOBSTACLE_BUTTONIGNORE_ID,"Ignore")
+    ignoreButton = wx.Button(self,GOALOBSTACLE_BUTTONIGNORE_ID,"Ignore")
     buttonSizer.Add(ignoreButton)
     mainSizer.Add(buttonSizer,0,wx.CENTER)
 
     goalId = b.dbProxy.getDimensionId(goalName,'template_goal')
     envId = b.dbProxy.getDimensionId(envName,'environment')
     goalDef = b.dbProxy.templateGoalDefinition(goalId)
-    goalCtrl = self.FindWindowById(armid.GOALOBSTACLE_TEXTGOAL_ID)
+    goalCtrl = self.FindWindowById(GOALOBSTACLE_TEXTGOAL_ID)
     goalCtrl.SetValue(goalDef)
 
     obsId = b.dbProxy.getDimensionId(obsName,'obstacle')
     obsTuple = b.dbProxy.obstacleDefinition(obsId,envId)
     obsDef = obsTuple[0]
-    obsCtrl = self.FindWindowById(armid.GOALOBSTACLE_TEXTOBSTACLE_ID)
+    obsCtrl = self.FindWindowById(GOALOBSTACLE_TEXTOBSTACLE_ID)
     obsCtrl.SetValue(obsDef)
 
     self.SetSizer(mainSizer)

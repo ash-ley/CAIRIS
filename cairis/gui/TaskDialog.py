@@ -17,12 +17,12 @@
 
 
 import wx
-import armid
-from TaskParameters import TaskParameters
+from cairis.core.armid import *
+from cairis.core.TaskParameters import TaskParameters
 from TaskPanel import TaskPanel
 from BaseDialog import BaseDialog
-from TaskEnvironmentProperties import TaskEnvironmentProperties
-from Borg import Borg
+from cairis.core.TaskEnvironmentProperties import TaskEnvironmentProperties
+from cairis.core.Borg import Borg
 
 class TaskDialog(BaseDialog):
   def __init__(self,parent,parameters):
@@ -48,7 +48,7 @@ class TaskDialog(BaseDialog):
     self.panel.buildControls(parameters.createFlag())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.TASK_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,TASK_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,task):
     self.theTaskId = task.id()
@@ -56,13 +56,13 @@ class TaskDialog(BaseDialog):
     self.theCommitVerb = 'Edit'
 
   def onCommit(self,evt):
-    nameCtrl = self.FindWindowById(armid.TASK_TEXTNAME_ID)
-    tagCtrl = self.FindWindowById(armid.TASK_TAGS_ID)
-    shortCodeCtrl = self.FindWindowById(armid.TASK_TEXTSHORTCODE_ID)
-    authorCtrl = self.FindWindowById(armid.TASK_TEXTAUTHOR_ID)
-    objectiveCtrl = self.FindWindowById(armid.TASK_TEXTOBJECTIVE_ID)
-    assumptionCtrl = self.FindWindowById(armid.TASK_CHECKASSUMPTION_ID)
-    environmentCtrl = self.FindWindowById(armid.TASK_PANELENVIRONMENT_ID)
+    nameCtrl = self.FindWindowById(TASK_TEXTNAME_ID)
+    tagCtrl = self.FindWindowById(TASK_TAGS_ID)
+    shortCodeCtrl = self.FindWindowById(TASK_TEXTSHORTCODE_ID)
+    authorCtrl = self.FindWindowById(TASK_TEXTAUTHOR_ID)
+    objectiveCtrl = self.FindWindowById(TASK_TEXTOBJECTIVE_ID)
+    assumptionCtrl = self.FindWindowById(TASK_CHECKASSUMPTION_ID)
+    environmentCtrl = self.FindWindowById(TASK_PANELENVIRONMENT_ID)
 
     self.theName = nameCtrl.GetValue()
     self.theShortCode = shortCodeCtrl.GetValue()
@@ -114,7 +114,7 @@ class TaskDialog(BaseDialog):
           dlg.ShowModal()
           dlg.Destroy()
           return
-    self.EndModal(armid.TASK_BUTTONCOMMIT_ID)
+    self.EndModal(TASK_BUTTONCOMMIT_ID)
 
   def parameters(self): 
     parameters = TaskParameters(self.theName,self.theShortCode,self.theObjective,self.isAssumption,self.theAuthor,self.theTags,self.theEnvironmentProperties)

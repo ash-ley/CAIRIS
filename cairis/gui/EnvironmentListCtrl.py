@@ -17,10 +17,10 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from DimensionListCtrl import DimensionListCtrl
 from SingleEnvironmentDialog import SingleEnvironmentDialog
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 class EnvironmentListCtrl(DimensionListCtrl):
   def __init__(self,parent,winId,dp):
@@ -28,14 +28,14 @@ class EnvironmentListCtrl(DimensionListCtrl):
     b = Borg()
     self.dbProxy = b.dbProxy
     self.theInheritedEnvironment = ''
-    self.theDimMenu.Append(armid.ENVLIST_MENUNEWENVIRONMENT_ID,'New Environment')
-    self.theDimMenu.Append(armid.ENVLIST_MENUINHERITENVIRONMENT_ID,'Inherit Environment')
-    wx.EVT_MENU(self.theDimMenu,armid.ENVLIST_MENUNEWENVIRONMENT_ID,self.onNewEnvironment)
-    wx.EVT_MENU(self.theDimMenu,armid.ENVLIST_MENUINHERITENVIRONMENT_ID,self.onInheritEnvironment)
+    self.theDimMenu.Append(ENVLIST_MENUNEWENVIRONMENT_ID,'New Environment')
+    self.theDimMenu.Append(ENVLIST_MENUINHERITENVIRONMENT_ID,'Inherit Environment')
+    wx.EVT_MENU(self.theDimMenu,ENVLIST_MENUNEWENVIRONMENT_ID,self.onNewEnvironment)
+    wx.EVT_MENU(self.theDimMenu,ENVLIST_MENUINHERITENVIRONMENT_ID,self.onInheritEnvironment)
 
   def onNewEnvironment(self,evt):
     dlg = SingleEnvironmentDialog(self)
-    if (dlg.ShowModal() == armid.ENVIRONMENT_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == ENVIRONMENT_BUTTONCOMMIT_ID):
       self.dbProxy.addEnvironment(dlg.parameters())   
       idx = self.GetItemCount()
       self.InsertStringItem(idx,dlg.name())
@@ -44,10 +44,10 @@ class EnvironmentListCtrl(DimensionListCtrl):
     from DimensionNameDialog import DimensionNameDialog
     dimensions = self.dbProxy.getEnvironmentNames()
     dlg = DimensionNameDialog(self,'environment',dimensions,'Inherit from ')
-    if (dlg.ShowModal() == armid.DIMNAME_BUTTONACTION_ID):
+    if (dlg.ShowModal() == DIMNAME_BUTTONACTION_ID):
       self.theInheritedEnvironment = dlg.dimensionName()
       adddlg = DimensionNameDialog(self,'environment',dimensions,'Add')
-      if (adddlg.ShowModal() == armid.DIMNAME_BUTTONACTION_ID):
+      if (adddlg.ShowModal() == DIMNAME_BUTTONACTION_ID):
         idx = self.GetItemCount()
         self.InsertStringItem(idx,adddlg.dimensionName())
 

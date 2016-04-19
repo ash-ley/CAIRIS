@@ -18,18 +18,18 @@
 
 import wx
 from BasePanel import BasePanel
-from Borg import Borg
-import armid
+from cairis.core.Borg import Borg
+from cairis.core.armid import *
 
 class TraceabilityPanel(BasePanel):
   def __init__(self,parent):
-    BasePanel.__init__(self,parent,armid.TRACEABILITY_ID)
+    BasePanel.__init__(self,parent,TRACEABILITY_ID)
     b = Borg()
     self.dbProxy = b.dbProxy
     self.traces = self.dbProxy.riskAnalysisModel(initContxt)
 
     mainSizer = wx.BoxSizer(wx.VERTICAL)
     columnList = ['From','Name','To','Name']
-    mainSizer.Add(self.buildTraceListCtrl(self,armid.TRACEABILITY_LISTTRACES_ID,columnList,self.traces),1,wx.EXPAND)
-    mainSizer.Add(self.buildAddDeleteCloseButtonSizer(self,armid.TRACEABILITY_BUTTONADD_ID,armid.TRACEABILITY_BUTTONDELETE_ID,wx.HORIZONTAL),0,wx.EXPAND | wx.ALIGN_CENTER)
+    mainSizer.Add(self.buildTraceListCtrl(self,TRACEABILITY_LISTTRACES_ID,columnList,self.traces),1,wx.EXPAND)
+    mainSizer.Add(self.buildAddDeleteCloseButtonSizer(self,TRACEABILITY_BUTTONADD_ID,TRACEABILITY_BUTTONDELETE_ID,wx.HORIZONTAL),0,wx.EXPAND | wx.ALIGN_CENTER)
     self.SetSizer(mainSizer)

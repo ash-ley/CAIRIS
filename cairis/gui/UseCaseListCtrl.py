@@ -17,13 +17,13 @@
 
 
 import wx
-import armid
-from Borg import Borg
-from ARM import *
+from cairis.core.armid import *
+from cairis.core.Borg import Borg
+from cairis.core.ARM import *
 from TraceableList import TraceableList
 from UseCaseContributionDialog import UseCaseContributionDialog
 from DimensionNameDialog import DimensionNameDialog
-from ReferenceContribution import ReferenceContribution
+from cairis.core.ReferenceContribution import ReferenceContribution
 
 class UseCaseListCtrl(TraceableList):
 
@@ -34,14 +34,14 @@ class UseCaseListCtrl(TraceableList):
     self.dbProxy = b.dbProxy
     self.theSelectedLabel = ""
     self.theSelectedIdx = -1
-    self.theTraceMenu.Append(armid.CLC_MENU_REFERENCECONTRIBUTION_ID,'Use Case Contribution')
-    wx.EVT_MENU(self,armid.CLC_MENU_REFERENCECONTRIBUTION_ID,self.onUseCaseContribution)
+    self.theTraceMenu.Append(CLC_MENU_REFERENCECONTRIBUTION_ID,'Use Case Contribution')
+    wx.EVT_MENU(self,CLC_MENU_REFERENCECONTRIBUTION_ID,self.onUseCaseContribution)
 
     self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK, self.onRightClick)
     self.Bind(wx.EVT_LIST_ITEM_SELECTED,self.OnItemSelected)
     self.Bind(wx.EVT_LIST_ITEM_DESELECTED,self.OnItemDeselected)
 
-    self.rsItem = self.theTraceMenu.FindItemById(armid.CLC_MENU_REFERENCECONTRIBUTION_ID)
+    self.rsItem = self.theTraceMenu.FindItemById(CLC_MENU_REFERENCECONTRIBUTION_ID)
     self.rsItem.Enable(False)
 
   def OnItemSelected(self,evt):
@@ -60,7 +60,7 @@ class UseCaseListCtrl(TraceableList):
     ucKeys = ucs.keys()
     ucKeys.append('[New Contribution]')
     rsDlg = DimensionNameDialog(self,'usecase_contribution',ucKeys,'Select')
-    if (rsDlg.ShowModal() == armid.DIMNAME_BUTTONACTION_ID):
+    if (rsDlg.ShowModal() == DIMNAME_BUTTONACTION_ID):
       synName = rsDlg.dimensionName()
       rType = 'reference'
       if (synName != '[New Contribution]'):
@@ -68,7 +68,7 @@ class UseCaseListCtrl(TraceableList):
       else:
         rc = ReferenceContribution(ucName,'','','')
       dlg = UseCaseContributionDialog(self,rc,rType)
-      if (dlg.ShowModal() == armid.REFERENCECONTRIBUTION_BUTTONCOMMIT_ID):
+      if (dlg.ShowModal() == REFERENCECONTRIBUTION_BUTTONCOMMIT_ID):
         if (rc.meansEnd() == ''):
           self.dbProxy.addUseCaseContribution(dlg.parameters())
         else:

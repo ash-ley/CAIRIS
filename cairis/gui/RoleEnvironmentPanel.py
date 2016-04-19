@@ -17,15 +17,15 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from DimensionListCtrl import DimensionListCtrl
-from RoleEnvironmentProperties import RoleEnvironmentProperties
+from cairis.core.RoleEnvironmentProperties import RoleEnvironmentProperties
 from DimensionCostListCtrl import DimensionCostListCtrl
 
 
 class RoleEnvironmentPanel(wx.Panel):
   def __init__(self,parent,dp):
-    wx.Panel.__init__(self,parent,armid.ROLE_PANELENVIRONMENT_ID)
+    wx.Panel.__init__(self,parent,ROLE_PANELENVIRONMENT_ID)
     self.dbProxy = dp
     self.theEnvironmentDictionary = {}
     self.theSelectedIdx = -1
@@ -34,7 +34,7 @@ class RoleEnvironmentPanel(wx.Panel):
     environmentBox = wx.StaticBox(self)
     environmentListSizer = wx.StaticBoxSizer(environmentBox,wx.HORIZONTAL)
     mainSizer.Add(environmentListSizer,0,wx.EXPAND)
-    self.environmentList = DimensionListCtrl(self,armid.ROLE_LISTENVIRONMENTS_ID,wx.DefaultSize,'Environment','environment',self.dbProxy,listStyle=wx.LC_REPORT | wx.LC_SINGLE_SEL)
+    self.environmentList = DimensionListCtrl(self,ROLE_LISTENVIRONMENTS_ID,wx.DefaultSize,'Environment','environment',self.dbProxy,listStyle=wx.LC_REPORT | wx.LC_SINGLE_SEL)
     environmentListSizer.Add(self.environmentList,1,wx.EXPAND)
 
     environmentDimSizer = wx.BoxSizer(wx.VERTICAL)
@@ -42,7 +42,7 @@ class RoleEnvironmentPanel(wx.Panel):
 
     rSizer = wx.BoxSizer(wx.HORIZONTAL)
     environmentDimSizer.Add(rSizer,1,wx.EXPAND)
-    self.responseList = DimensionCostListCtrl(self,armid.ROLE_LISTRESPONSES_ID,'Response')
+    self.responseList = DimensionCostListCtrl(self,ROLE_LISTRESPONSES_ID,'Response')
     responseBox = wx.StaticBox(self)
     responseSizer = wx.StaticBoxSizer(responseBox,wx.HORIZONTAL)
     responseSizer.Add(self.responseList,1,wx.EXPAND)
@@ -50,7 +50,7 @@ class RoleEnvironmentPanel(wx.Panel):
 
     cSizer = wx.BoxSizer(wx.HORIZONTAL)
     environmentDimSizer.Add(cSizer,1,wx.EXPAND)
-    self.cmList = DimensionListCtrl(self,armid.ROLE_LISTCOUNTERMEASURES_ID,wx.DefaultSize,'Countermeasure','countermeasure',self.dbProxy,listStyle = wx.LC_REPORT | wx.LC_SINGLE_SEL)
+    self.cmList = DimensionListCtrl(self,ROLE_LISTCOUNTERMEASURES_ID,wx.DefaultSize,'Countermeasure','countermeasure',self.dbProxy,listStyle = wx.LC_REPORT | wx.LC_SINGLE_SEL)
     cmBox = wx.StaticBox(self)
     cmSizer = wx.StaticBoxSizer(cmBox,wx.HORIZONTAL)
     cmSizer.Add(self.cmList,1,wx.EXPAND)

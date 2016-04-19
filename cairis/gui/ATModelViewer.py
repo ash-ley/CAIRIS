@@ -21,8 +21,8 @@ import gtk.gdk
 import atxdot
 import AssumptionNodeDialogFactory
 import os
-from ARM import *
-from Borg import Borg
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
 
 class ATModelViewer(atxdot.ATDotWindow):
   def __init__(self,tName = ''):

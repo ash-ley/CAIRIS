@@ -17,22 +17,21 @@
 
 
 import wx
-import armid
-import Domain
+from cairis.core.armid import *
+import cairis.core.Domain
 from DomainDialog import DomainDialog
 from DialogClassParameters import DialogClassParameters
 from DimensionBaseDialog import DimensionBaseDialog
-
-import ARM
+from cairis.core.ARM import *
 
 class DomainsDialog(DimensionBaseDialog):
   def __init__(self,parent):
-    DimensionBaseDialog.__init__(self,parent,armid.DOMAINS_ID,'Domains',(930,300),'domain.png')
+    DimensionBaseDialog.__init__(self,parent,DOMAINS_ID,'Domains',(930,300),'domain.png')
     self.rmFrame = parent
-    idList = [armid.DOMAINS_DOMAINLIST_ID,armid.DOMAINS_BUTTONADD_ID,armid.DOMAINS_BUTTONDELETE_ID]
+    idList = [DOMAINS_DOMAINLIST_ID,DOMAINS_BUTTONADD_ID,DOMAINS_BUTTONDELETE_ID]
     columnList = ['Name','Type','Short Code','Description']
     self.buildControls(idList,columnList,self.dbProxy.getDomains,'domain')
-    listCtrl = self.FindWindowById(armid.DOMAINS_DOMAINLIST_ID)
+    listCtrl = self.FindWindowById(DOMAINS_DOMAINLIST_ID)
     listCtrl.SetColumnWidth(0,150)
     listCtrl.SetColumnWidth(1,100)
     listCtrl.SetColumnWidth(2,100)
@@ -47,10 +46,10 @@ class DomainsDialog(DimensionBaseDialog):
 
   def onAdd(self,evt):
     try:
-      addParameters = DialogClassParameters(armid.DOMAIN_ID,'Add Domain',DomainDialog,armid.DOMAIN_BUTTONCOMMIT_ID,self.dbProxy.addDomain,True)
+      addParameters = DialogClassParameters(DOMAIN_ID,'Add Domain',DomainDialog,DOMAIN_BUTTONCOMMIT_ID,self.dbProxy.addDomain,True)
       self.addObject(addParameters)
       self.rmFrame.updateDomainSelection(self.selectedLabel)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add Domain',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -60,9 +59,9 @@ class DomainsDialog(DimensionBaseDialog):
     selectedObjt = self.objts[self.selectedLabel]
     assetId = selectedObjt.id()
     try:
-      updateParameters = DialogClassParameters(armid.DOMAIN_ID,'Edit Domain',DomainDialog,armid.DOMAIN_BUTTONCOMMIT_ID,self.dbProxy.updateDomain,False)
+      updateParameters = DialogClassParameters(DOMAIN_ID,'Edit Domain',DomainDialog,DOMAIN_BUTTONCOMMIT_ID,self.dbProxy.updateDomain,False)
       self.updateObject(selectedObjt,updateParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Edit Domain',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy
@@ -71,7 +70,7 @@ class DomainsDialog(DimensionBaseDialog):
     try:
       self.deleteObject('No Domain','Delete Domain',self.dbProxy.deleteDomain)
       self.rmFrame.updateDomainSelection()
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Delete Domain',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy

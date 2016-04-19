@@ -17,19 +17,19 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from AttackerDialog import AttackerDialog
 from DialogClassParameters import DialogClassParameters
 from DimensionBaseDialog import DimensionBaseDialog
-import ARM
+from cairis.core.ARM import *
 
 class AttackersDialog(DimensionBaseDialog):
   def __init__(self,parent):
-    DimensionBaseDialog.__init__(self,parent,armid.ATTACKERS_ID,'Attackers',(800,300),'attacker.png')
-    idList = [armid.ATTACKERS_ATTACKERLIST_ID,armid.ATTACKERS_BUTTONADD_ID,armid.ATTACKERS_BUTTONDELETE_ID]
+    DimensionBaseDialog.__init__(self,parent,ATTACKERS_ID,'Attackers',(800,300),'attacker.png')
+    idList = [ATTACKERS_ATTACKERLIST_ID,ATTACKERS_BUTTONADD_ID,ATTACKERS_BUTTONDELETE_ID]
     columnList = ['Name','Description']
     self.buildControls(idList,columnList,self.dbProxy.getAttackers,'attacker')
-    listCtrl = self.FindWindowById(armid.ATTACKERS_ATTACKERLIST_ID)
+    listCtrl = self.FindWindowById(ATTACKERS_ATTACKERLIST_ID)
     listCtrl.SetColumnWidth(0,150)
     listCtrl.SetColumnWidth(1,600)
     
@@ -39,9 +39,9 @@ class AttackersDialog(DimensionBaseDialog):
 
   def onAdd(self,evt):
     try:
-      addParameters = DialogClassParameters(armid.ATTACKER_ID,'Add attacker',AttackerDialog,armid.ATTACKER_BUTTONCOMMIT_ID,self.dbProxy.addAttacker,creationFlag=True)
+      addParameters = DialogClassParameters(ATTACKER_ID,'Add attacker',AttackerDialog,ATTACKER_BUTTONCOMMIT_ID,self.dbProxy.addAttacker,creationFlag=True)
       self.addObject(addParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add attacker',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -50,9 +50,9 @@ class AttackersDialog(DimensionBaseDialog):
   def onUpdate(self,evt):
     selectedObjt = self.objts[self.selectedLabel]
     try:
-      updateParameters = DialogClassParameters(armid.ATTACKER_ID,'Edit attacker',AttackerDialog,armid.ATTACKER_BUTTONCOMMIT_ID,self.dbProxy.updateAttacker,creationFlag=False)
+      updateParameters = DialogClassParameters(ATTACKER_ID,'Edit attacker',AttackerDialog,ATTACKER_BUTTONCOMMIT_ID,self.dbProxy.updateAttacker,creationFlag=False)
       self.updateObject(selectedObjt,updateParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Edit attacker',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -61,7 +61,7 @@ class AttackersDialog(DimensionBaseDialog):
   def onDelete(self,evt):
     try:
       self.deleteObject('No attacker','Delete attacker',self.dbProxy.deleteAttacker)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Delete attacker',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()

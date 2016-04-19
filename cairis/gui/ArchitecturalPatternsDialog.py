@@ -17,23 +17,23 @@
 
 
 import wx
-import armid
-import ARM
-from ComponentView import ComponentView
+from cairis.core.armid import *
+from cairis.core.ARM import *
+from cairis.core.ComponentView import ComponentView
 from ComponentViewDialog import ComponentViewDialog
 from DialogClassParameters import DialogClassParameters
-from ComponentViewParameters import ComponentViewParameters
+from cairis.core.ComponentViewParameters import ComponentViewParameters
 from DimensionBaseDialog import DimensionBaseDialog
 
 class ArchitecturalPatternsDialog(DimensionBaseDialog):
   def __init__(self,parent):
-    DimensionBaseDialog.__init__(self,parent,armid.COMPONENTVIEWS_ID,'Architectural Patternss',(930,300),'component_view.png')
+    DimensionBaseDialog.__init__(self,parent,COMPONENTVIEWS_ID,'Architectural Patternss',(930,300),'component_view.png')
     self.theMainWindow = parent
     self.rmFrame = parent
-    idList = [armid.COMPONENTVIEWS_LISTCOMPONENTVIEWS_ID,armid.COMPONENTVIEWS_BUTTONADD_ID,armid.COMPONENTVIEWS_BUTTONDELETE_ID]
+    idList = [COMPONENTVIEWS_LISTCOMPONENTVIEWS_ID,COMPONENTVIEWS_BUTTONADD_ID,COMPONENTVIEWS_BUTTONDELETE_ID]
     columnList = ['Model','Interfaces DER Ratio','Channels DER Ratio','Untrusted Surface DER Ratio']
     self.buildControls(idList,columnList,self.dbProxy.getComponentViews,'component_view')
-    listCtrl = self.FindWindowById(armid.COMPONENTVIEWS_LISTCOMPONENTVIEWS_ID)
+    listCtrl = self.FindWindowById(COMPONENTVIEWS_LISTCOMPONENTVIEWS_ID)
     listCtrl.SetColumnWidth(0,150)
     listCtrl.SetColumnWidth(1,200)
     listCtrl.SetColumnWidth(2,200)
@@ -48,9 +48,9 @@ class ArchitecturalPatternsDialog(DimensionBaseDialog):
 
   def onAdd(self,evt):
     try:
-      addParameters = DialogClassParameters(armid.COMPONENTVIEW_ID,'Add architectural pattern',ComponentViewDialog,armid.COMPONENTVIEW_BUTTONCOMMIT_ID,self.dbProxy.addComponentView,True)
+      addParameters = DialogClassParameters(COMPONENTVIEW_ID,'Add architectural pattern',ComponentViewDialog,COMPONENTVIEW_BUTTONCOMMIT_ID,self.dbProxy.addComponentView,True)
       self.addObject(addParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add architectural pattern',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -59,9 +59,9 @@ class ArchitecturalPatternsDialog(DimensionBaseDialog):
   def onUpdate(self,evt):
     selectedObjt = self.objts[self.selectedLabel]
     try:
-      updateParameters = DialogClassParameters(armid.COMPONENTVIEW_ID,'Edit architectural pattern',ComponentViewDialog,armid.COMPONENTVIEW_BUTTONCOMMIT_ID,self.dbProxy.updateComponentView,False)
+      updateParameters = DialogClassParameters(COMPONENTVIEW_ID,'Edit architectural pattern',ComponentViewDialog,COMPONENTVIEW_BUTTONCOMMIT_ID,self.dbProxy.updateComponentView,False)
       self.updateObject(selectedObjt,updateParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Edit architectural pattern',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy
@@ -69,7 +69,7 @@ class ArchitecturalPatternsDialog(DimensionBaseDialog):
   def onDelete(self,evt):
     try:
       self.deleteObject('No component view','Delete architectural pattern',self.dbProxy.deleteComponentView)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Delete architectural pattern',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy

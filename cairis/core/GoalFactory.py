@@ -17,7 +17,7 @@
 
 
 import Mitigation
-import ARM
+from ARM import *
 from GoalEnvironmentProperties import GoalEnvironmentProperties
 from GoalParameters import GoalParameters
 from Borg import Borg
@@ -122,15 +122,15 @@ def mitigateText(response):
     currentType = p.type()
     if (currentType != firstMitType):
       exceptionText = 'Mitigation ' + response.name() + ' does not have the same mitigation type in all of its situated environments.'
-      raise ARM.ConflictingType(exceptionText)
+      raise ConflictingType(exceptionText)
     elif ((firstMitType == 'Detect') and (firstMitType == 'Detect')):
       if (p.detectionPoint() != firstDetPoint): 
         exceptionText = 'Detection mitigation ' + response.name() + ' needs to detect at the same point in all of its situated environments.'
-        raise ARM.ConflictingType(exceptionText)
+        raise ConflictingType(exceptionText)
     elif ((firstMitType == 'React') and (firstMitType == 'React')):
       if (p.detectionMechanisms() != firstDetMechs): 
         exceptionText = 'React mitigation ' + response.name() + ' needs to use the same countermeasure in each of its situated environments.'
-        raise ARM.ConflictingType(exceptionText)
+        raise ConflictingType(exceptionText)
    
   if ((firstMitType == 'Prevent') or (firstMitType == 'Deter')):
     return preventDeterText(response)

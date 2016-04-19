@@ -16,15 +16,15 @@
 #  under the License.
 
 
-from Borg import Borg
-from kaosxdot import KaosXDotParser
-from componentxdot import ComponentXDotParser
+from cairis.core.Borg import Borg
+from cairis.gui.kaosxdot import KaosXDotParser
+from cairis.gui.componentxdot import ComponentXDotParser
 import cairo
 import pangocairo
-from ConceptMapModel import ConceptMapModel
-from ComponentModel import ComponentModel
-from AssetModel import AssetModel
-from KaosModel import KaosModel
+from cairis.gui.ConceptMapModel import ConceptMapModel
+from cairis.gui.ComponentModel import ComponentModel
+from cairis.gui.AssetModel import AssetModel
+from cairis.gui.KaosModel import KaosModel
 import os
 import re
 

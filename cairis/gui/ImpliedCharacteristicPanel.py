@@ -17,17 +17,17 @@
 
 
 import wx
-import armid
-from ARM import NoImpliedCharacteristic
+from cairis.core.armid import *
+from cairis.core.ARM import NoImpliedCharacteristic
 from BasePanel import BasePanel
-from Borg import Borg
+from cairis.core.Borg import Borg
 from ImpliedCharacteristicElementsListCtrl import ImpliedCharacteristicElementsListCtrl
 from CodeNetworkModel import CodeNetworkModel
 from CodeNetworkView import CodeNetworkView
 
 class ImpliedCharacteristicPanel(BasePanel):
   def __init__(self,parent,pName,fromCode,toCode,rtName):
-    BasePanel.__init__(self,parent,armid.IMPLIEDCHARACTERISTIC_ID)
+    BasePanel.__init__(self,parent,IMPLIEDCHARACTERISTIC_ID)
     b = Borg()
     self.dbProxy = b.dbProxy
     
@@ -41,19 +41,19 @@ class ImpliedCharacteristicPanel(BasePanel):
       self.dbProxy.initialiseImpliedCharacteristic(pName,fromCode,toCode,rtName)
 
     mainSizer = wx.BoxSizer(wx.VERTICAL)
-    self.codeNetView = CodeNetworkView(self,armid.IMPLIEDCHARACTERISTIC_IMAGENETWORK_ID)
+    self.codeNetView = CodeNetworkView(self,IMPLIEDCHARACTERISTIC_IMAGENETWORK_ID)
     mainSizer.Add(self.codeNetView,1,wx.EXPAND)
     codeNet = CodeNetworkModel(self.dbProxy.personaCodeNetwork(pName,fromCode,toCode),pName)
     codeNet.graph()
     self.codeNetView.reloadImage()
-    mainSizer.Add(self.buildTextSizer('Characteristic',(87,30),armid.IMPLIEDCHARACTERISTIC_TEXTCHARACTERISTIC_ID),0,wx.EXPAND)
-    mainSizer.Add(self.buildTextSizer('Qualifier',(87,30),armid.IMPLIEDCHARACTERISTIC_TEXTQUALIFIER_ID),0,wx.EXPAND)
+    mainSizer.Add(self.buildTextSizer('Characteristic',(87,30),IMPLIEDCHARACTERISTIC_TEXTCHARACTERISTIC_ID),0,wx.EXPAND)
+    mainSizer.Add(self.buildTextSizer('Qualifier',(87,30),IMPLIEDCHARACTERISTIC_TEXTQUALIFIER_ID),0,wx.EXPAND)
 
     intentionSizer = wx.BoxSizer(wx.HORIZONTAL)
     mainSizer.Add(intentionSizer,0,wx.EXPAND)
 
-    intentionSizer.Add(self.buildTextSizer('Intention',(87,30),armid.IMPLIEDCHARACTERISTIC_TEXTINTENTION_ID),1,wx.EXPAND)
-    intentionSizer.Add(self.buildComboSizerList('Type',(87,30),armid.IMPLIEDCHARACTERISTIC_COMBOINTENTIONTYPE_ID,['goal','softgoal']),1,wx.EXPAND)
+    intentionSizer.Add(self.buildTextSizer('Intention',(87,30),IMPLIEDCHARACTERISTIC_TEXTINTENTION_ID),1,wx.EXPAND)
+    intentionSizer.Add(self.buildComboSizerList('Type',(87,30),IMPLIEDCHARACTERISTIC_COMBOINTENTIONTYPE_ID,['goal','softgoal']),1,wx.EXPAND)
     
 
     elSizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -63,29 +63,29 @@ class ImpliedCharacteristicPanel(BasePanel):
     lhsSizer = wx.StaticBoxSizer(lhsBox,wx.VERTICAL)
     elSizer.Add(lhsSizer,1,wx.EXPAND)
     lhsEls = self.dbProxy.impliedCharacteristicElements(pName,fromCode,toCode,rtName,1)
-    lhsSizer.Add(ImpliedCharacteristicElementsListCtrl(self,armid.IMPLIEDCHARACTERISTIC_LISTLHS_ID,lhsEls),1,wx.EXPAND)
+    lhsSizer.Add(ImpliedCharacteristicElementsListCtrl(self,IMPLIEDCHARACTERISTIC_LISTLHS_ID,lhsEls),1,wx.EXPAND)
 
 
     rhsBox = wx.StaticBox(self,-1,toCode)
     rhsSizer = wx.StaticBoxSizer(rhsBox,wx.VERTICAL)
     elSizer.Add(rhsSizer,1,wx.EXPAND)
     rhsEls = self.dbProxy.impliedCharacteristicElements(pName,fromCode,toCode,rtName,0)
-    rhsSizer.Add(ImpliedCharacteristicElementsListCtrl(self,armid.IMPLIEDCHARACTERISTIC_LISTRHS_ID,rhsEls),1,wx.EXPAND)
-    mainSizer.Add(self.buildComboSizerList('Characteristic Type',(87,30),armid.IMPLIEDCHARACTERISTIC_COMBOTYPE_ID,['Intrinsic','Contextual']),0,wx.EXPAND)
+    rhsSizer.Add(ImpliedCharacteristicElementsListCtrl(self,IMPLIEDCHARACTERISTIC_LISTRHS_ID,rhsEls),1,wx.EXPAND)
+    mainSizer.Add(self.buildComboSizerList('Characteristic Type',(87,30),IMPLIEDCHARACTERISTIC_COMBOTYPE_ID,['Intrinsic','Contextual']),0,wx.EXPAND)
 
-    mainSizer.Add(self.buildCommitButtonSizer(armid.IMPLIEDCHARACTERISTIC_BUTTONCOMMIT_ID,False),0,wx.CENTER)
+    mainSizer.Add(self.buildCommitButtonSizer(IMPLIEDCHARACTERISTIC_BUTTONCOMMIT_ID,False),0,wx.CENTER)
     self.SetSizer(mainSizer)
 
-    charCtrl = self.FindWindowById(armid.IMPLIEDCHARACTERISTIC_TEXTCHARACTERISTIC_ID)
+    charCtrl = self.FindWindowById(IMPLIEDCHARACTERISTIC_TEXTCHARACTERISTIC_ID)
     charCtrl.SetValue(charName)
-    qualCtrl = self.FindWindowById(armid.IMPLIEDCHARACTERISTIC_TEXTQUALIFIER_ID)
+    qualCtrl = self.FindWindowById(IMPLIEDCHARACTERISTIC_TEXTQUALIFIER_ID)
     qualCtrl.SetValue(qualName)
-    varCtrl = self.FindWindowById(armid.IMPLIEDCHARACTERISTIC_COMBOTYPE_ID)
+    varCtrl = self.FindWindowById(IMPLIEDCHARACTERISTIC_COMBOTYPE_ID)
     varCtrl.SetValue(varName)
 
     itValues = self.dbProxy.impliedCharacteristicIntention(charName,pName,fromCode,toCode,rtName)
-    intCtrl = self.FindWindowById(armid.IMPLIEDCHARACTERISTIC_TEXTINTENTION_ID)
+    intCtrl = self.FindWindowById(IMPLIEDCHARACTERISTIC_TEXTINTENTION_ID)
     intCtrl.SetValue(itValues[0])
-    itCtrl = self.FindWindowById(armid.IMPLIEDCHARACTERISTIC_COMBOINTENTIONTYPE_ID)
+    itCtrl = self.FindWindowById(IMPLIEDCHARACTERISTIC_COMBOINTENTIONTYPE_ID)
     itCtrl.SetValue(itValues[1])
 

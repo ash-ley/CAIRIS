@@ -17,13 +17,13 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 class TracePanel(wx.Panel):
   def __init__(self,parent):
-    wx.Panel.__init__(self,parent,armid.TRACE_ID)
+    wx.Panel.__init__(self,parent,TRACE_ID)
     b = Borg()
     self.dbProxy = b.dbProxy
     self.theFromObject = -1
@@ -39,19 +39,19 @@ class TracePanel(wx.Panel):
   def buildControls(self,isCreate,isUpdateable=True):
     mainSizer = wx.BoxSizer(wx.VERTICAL)
     allDimensionNames = self.dbProxy.getDimensionNames('trace_dimension')
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'From artifact',(87,30),armid.TRACE_COMBOFROMOBJECT_ID,allDimensionNames),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'From name',(87,30),armid.TRACE_COMBOFROMNAME_ID,[]),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'To artifact',(87,30),armid.TRACE_COMBOTOOBJECT_ID,allDimensionNames),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'To name',(87,30),armid.TRACE_COMBOTONAME_ID,[]),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'From artifact',(87,30),TRACE_COMBOFROMOBJECT_ID,allDimensionNames),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'From name',(87,30),TRACE_COMBOFROMNAME_ID,[]),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'To artifact',(87,30),TRACE_COMBOTOOBJECT_ID,allDimensionNames),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'To name',(87,30),TRACE_COMBOTONAME_ID,[]),0,wx.EXPAND)
     mainSizer.Add(wx.StaticText(self,-1,''),1,wx.EXPAND)
     if (isUpdateable):
-      mainSizer.Add(WidgetFactory.buildCommitButtonSizer(self,armid.TRACE_BUTTONCOMMIT_ID,isCreate),0,wx.ALIGN_CENTRE)
+      mainSizer.Add(WidgetFactory.buildCommitButtonSizer(self,TRACE_BUTTONCOMMIT_ID,isCreate),0,wx.ALIGN_CENTRE)
     self.SetSizer(mainSizer)
 
-    self.fromObjectCombo = self.FindWindowById(armid.TRACE_COMBOFROMOBJECT_ID)
-    self.fromNameCombo = self.FindWindowById(armid.TRACE_COMBOFROMNAME_ID)
-    self.toObjectCombo = self.FindWindowById(armid.TRACE_COMBOTOOBJECT_ID)
-    self.toNameCombo = self.FindWindowById(armid.TRACE_COMBOTONAME_ID)
+    self.fromObjectCombo = self.FindWindowById(TRACE_COMBOFROMOBJECT_ID)
+    self.fromNameCombo = self.FindWindowById(TRACE_COMBOFROMNAME_ID)
+    self.toObjectCombo = self.FindWindowById(TRACE_COMBOTOOBJECT_ID)
+    self.toNameCombo = self.FindWindowById(TRACE_COMBOTONAME_ID)
 
     self.fromObjectCombo.Bind(wx.EVT_COMBOBOX,self.onFromObjectChange)
     self.fromNameCombo.Bind(wx.EVT_COMBOBOX,self.onFromNameChange)
@@ -66,10 +66,10 @@ class TracePanel(wx.Panel):
     self.theFromName = trace.fromName()
     self.theToName = trace.toName()
 
-    fdCtrl = self.FindWindowById(armid.TRACE_COMBOFROMOBJECT_ID)
-    fnCtrl = self.FindWindowById(armid.TRACE_COMBOFROMNAME_ID)
-    tdCtrl = self.FindWindowById(armid.TRACE_COMBOTOOBJECT_ID)
-    tnCtrl = self.FindWindowById(armid.TRACE_COMBOTONAME_ID)
+    fdCtrl = self.FindWindowById(TRACE_COMBOFROMOBJECT_ID)
+    fnCtrl = self.FindWindowById(TRACE_COMBOFROMNAME_ID)
+    tdCtrl = self.FindWindowById(TRACE_COMBOTOOBJECT_ID)
+    tnCtrl = self.FindWindowById(TRACE_COMBOTONAME_ID)
 
     self.fromObjectCombo.SetValue(self.theFromObject)
     self.fromNameCombo.SetValue(self.theFromName)

@@ -17,11 +17,11 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 
 class RequirementHistoryDialog(wx.Dialog):
   def __init__(self,parent,history):
-    wx.Dialog.__init__(self,parent,armid.REQUIREMENTHISTORY_ID,'Requirement History',style=wx.DEFAULT_DIALOG_STYLE|wx.THICK_FRAME|wx.RESIZE_BORDER|wx.MAXIMIZE_BOX,size=(1000,300))
+    wx.Dialog.__init__(self,parent,REQUIREMENTHISTORY_ID,'Requirement History',style=wx.DEFAULT_DIALOG_STYLE|wx.THICK_FRAME|wx.RESIZE_BORDER|wx.MAXIMIZE_BOX,size=(1000,300))
     self.theId = -1
     self.panel = wx.Panel(self,-1)
     panelSizer = wx.BoxSizer(wx.VERTICAL)

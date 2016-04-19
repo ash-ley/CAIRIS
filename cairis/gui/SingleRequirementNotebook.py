@@ -17,8 +17,8 @@
 
 
 import wx
-import armid
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.Borg import Borg
 
 class MLTextPage(wx.Panel):
   def __init__(self,parent,winId):
@@ -43,36 +43,36 @@ class SummaryPage(wx.Panel):
     typeBoxSizer = wx.StaticBoxSizer(typeBox,wx.HORIZONTAL)
     topSizer.Add(typeBoxSizer,0,wx.EXPAND)
     typeChoices = ['Functional','Data','Look and Feel','Usability','Performance','Operational','Maintainability','Portability','Security','Cultural and Political','Legal','Privacy']
-    self.typeCtrl = wx.ComboBox(self,armid.SINGLEREQUIREMENT_COMBOTYPE_ID,choices=typeChoices,size=wx.DefaultSize,style=wx.CB_READONLY)
+    self.typeCtrl = wx.ComboBox(self,SINGLEREQUIREMENT_COMBOTYPE_ID,choices=typeChoices,size=wx.DefaultSize,style=wx.CB_READONLY)
     typeBoxSizer.Add(self.typeCtrl,1,wx.EXPAND)
 
     radioBox = wx.StaticBox(self,-1,'Referrer')
     radioSizer = wx.StaticBoxSizer(radioBox,wx.HORIZONTAL)
     topSizer.Add(radioSizer,0,wx.EXPAND)
-    radioSizer.Add(wx.RadioButton(self,armid.SINGLEREQUIREMENT_RADIOASSET_ID,'Asset',style=wx.RB_GROUP))
-    radioSizer.Add(wx.RadioButton(self,armid.SINGLEREQUIREMENT_RADIOENVIRONMENT_ID,'Environment',style=0))
-    self.refCtrl = wx.ComboBox(self,armid.SINGLEREQUIREMENT_COMBOREFERRER_ID,choices=self.dbProxy.getDimensionNames('asset'),size=wx.DefaultSize,style=wx.CB_READONLY)
+    radioSizer.Add(wx.RadioButton(self,SINGLEREQUIREMENT_RADIOASSET_ID,'Asset',style=wx.RB_GROUP))
+    radioSizer.Add(wx.RadioButton(self,SINGLEREQUIREMENT_RADIOENVIRONMENT_ID,'Environment',style=0))
+    self.refCtrl = wx.ComboBox(self,SINGLEREQUIREMENT_COMBOREFERRER_ID,choices=self.dbProxy.getDimensionNames('asset'),size=wx.DefaultSize,style=wx.CB_READONLY)
     radioSizer.Add(self.refCtrl,1,wx.EXPAND)
-    wx.EVT_RADIOBUTTON(self,armid.SINGLEREQUIREMENT_RADIOASSET_ID,self.onAssetSelected)
-    wx.EVT_RADIOBUTTON(self,armid.SINGLEREQUIREMENT_RADIOENVIRONMENT_ID,self.onEnvironmentSelected)
+    wx.EVT_RADIOBUTTON(self,SINGLEREQUIREMENT_RADIOASSET_ID,self.onAssetSelected)
+    wx.EVT_RADIOBUTTON(self,SINGLEREQUIREMENT_RADIOENVIRONMENT_ID,self.onEnvironmentSelected)
     
 
     priBox = wx.StaticBox(self,-1,'Priority')
     priBoxSizer = wx.StaticBoxSizer(priBox,wx.HORIZONTAL)
     topSizer.Add(priBoxSizer,0,wx.EXPAND)
-    self.priorityCtrl = wx.ComboBox(self,armid.SINGLEREQUIREMENT_COMBOPRIORITY_ID,choices=['1','2','3'],size=wx.DefaultSize,style=wx.CB_READONLY)
+    self.priorityCtrl = wx.ComboBox(self,SINGLEREQUIREMENT_COMBOPRIORITY_ID,choices=['1','2','3'],size=wx.DefaultSize,style=wx.CB_READONLY)
     priBoxSizer.Add(self.priorityCtrl,1,wx.EXPAND)
    
     descBox = wx.StaticBox(self,-1,'Description')
     descBoxSizer = wx.StaticBoxSizer(descBox,wx.HORIZONTAL)
     topSizer.Add(descBoxSizer,1,wx.EXPAND)
-    self.descriptionCtrl = wx.TextCtrl(self,armid.SINGLEREQUIREMENT_TEXTDESCRIPTION_ID,'',style=wx.TE_MULTILINE)
+    self.descriptionCtrl = wx.TextCtrl(self,SINGLEREQUIREMENT_TEXTDESCRIPTION_ID,'',style=wx.TE_MULTILINE)
     descBoxSizer.Add(self.descriptionCtrl,1,wx.EXPAND)
 
     ctBox = wx.StaticBox(self,-1,'Contribution Type')
     ctBoxSizer = wx.StaticBoxSizer(ctBox,wx.HORIZONTAL)
     topSizer.Add(ctBoxSizer,0,wx.EXPAND)
-    self.ctCtrl = wx.ComboBox(self,armid.SINGLEREQUIREMENT_COMBOCONTRIBUTIONTYPE_ID,choices=['Operationalises','Obstructs'],size=wx.DefaultSize,style=wx.CB_READONLY)
+    self.ctCtrl = wx.ComboBox(self,SINGLEREQUIREMENT_COMBOCONTRIBUTIONTYPE_ID,choices=['Operationalises','Obstructs'],size=wx.DefaultSize,style=wx.CB_READONLY)
     self.ctCtrl.SetSelection(0)
     ctBoxSizer.Add(self.ctCtrl,1,wx.EXPAND)
 
@@ -88,11 +88,11 @@ class SummaryPage(wx.Panel):
 
 class SingleRequirementNotebook(wx.Notebook):
   def __init__(self,parent):
-    wx.Notebook.__init__(self,parent,armid.SINGLEREQUIREMENT_NOTEBOOKREQUIREMENT_ID)
+    wx.Notebook.__init__(self,parent,SINGLEREQUIREMENT_NOTEBOOKREQUIREMENT_ID)
     p1 = SummaryPage(self)
-    p2 = MLTextPage(self,armid.SINGLEREQUIREMENT_TEXTRATIONALE_ID)
-    p3 = MLTextPage(self,armid.SINGLEREQUIREMENT_TEXTFITCRITERION_ID)
-    p4 = MLTextPage(self,armid.SINGLEREQUIREMENT_TEXTORIGINATOR_ID)
+    p2 = MLTextPage(self,SINGLEREQUIREMENT_TEXTRATIONALE_ID)
+    p3 = MLTextPage(self,SINGLEREQUIREMENT_TEXTFITCRITERION_ID)
+    p4 = MLTextPage(self,SINGLEREQUIREMENT_TEXTORIGINATOR_ID)
     self.AddPage(p1,'Definition')
     self.AddPage(p2,'Rationale')
     self.AddPage(p3,'Fit Criterion')

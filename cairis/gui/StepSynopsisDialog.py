@@ -17,10 +17,10 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
-import ARM
-from Borg import Borg
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
 from StepSynopsisPanel import StepSynopsisPanel
 
 class StepSynopsisDialog(wx.Dialog):
@@ -33,7 +33,7 @@ class StepSynopsisDialog(wx.Dialog):
     self.panel = StepSynopsisPanel(self)
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.STEPSYNOPSIS_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,STEPSYNOPSIS_BUTTONCOMMIT_ID,self.onCommit)
 
     if (self.theSynopsis == ''):
       self.SetLabel = 'Create Step Synopsis'
@@ -41,15 +41,15 @@ class StepSynopsisDialog(wx.Dialog):
    
 
   def onCommit(self,evt):
-    synCtrl = self.FindWindowById(armid.STEPSYNOPSIS_TEXTSYNOPSIS_ID)
-    atCtrl = self.FindWindowById(armid.STEPSYNOPSIS_COMBOACTORTYPE_ID)
-    actorCtrl = self.FindWindowById(armid.STEPSYNOPSIS_COMBOACTORNAME_ID)
+    synCtrl = self.FindWindowById(STEPSYNOPSIS_TEXTSYNOPSIS_ID)
+    atCtrl = self.FindWindowById(STEPSYNOPSIS_COMBOACTORTYPE_ID)
+    actorCtrl = self.FindWindowById(STEPSYNOPSIS_COMBOACTORNAME_ID)
 
     self.theSynopsis = synCtrl.GetValue()
     self.theActorType = atCtrl.GetValue()
     self.theActor = actorCtrl.GetValue()
 
-    self.EndModal(armid.STEPSYNOPSIS_BUTTONCOMMIT_ID)
+    self.EndModal(STEPSYNOPSIS_BUTTONCOMMIT_ID)
 
   def synopsis(self):
     return self.theSynopsis

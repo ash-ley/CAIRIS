@@ -19,10 +19,10 @@
 #$URL$
 
 import wx
-import armid
-import ARM
-from Borg import Borg
-from ReferenceContribution import ReferenceContribution
+from cairis.core.armid import *
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
+from cairis.core.ReferenceContribution import ReferenceContribution
 from UseCaseContributionPanel import UseCaseContributionPanel
 
 class UseCaseContributionDialog(wx.Dialog):
@@ -36,7 +36,7 @@ class UseCaseContributionDialog(wx.Dialog):
     self.panel = UseCaseContributionPanel(self)
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.REFERENCECONTRIBUTION_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,REFERENCECONTRIBUTION_BUTTONCOMMIT_ID,self.onCommit)
 
     if (objt.meansEnd() != ''):
       self.theCommitVerb = 'Create'
@@ -47,10 +47,10 @@ class UseCaseContributionDialog(wx.Dialog):
    
 
   def onCommit(self,evt):
-    charCtrl = self.FindWindowById(armid.REFERENCECONTRIBUTION_COMBOSOURCE_ID)
-    refCtrl = self.FindWindowById(armid.REFERENCECONTRIBUTION_COMBODESTINATION_ID)
-    meCtrl = self.FindWindowById(armid.REFERENCECONTRIBUTION_COMBOMEANSEND_ID)
-    contCtrl = self.FindWindowById(armid.REFERENCECONTRIBUTION_COMBOCONTRIBUTION_ID)
+    charCtrl = self.FindWindowById(REFERENCECONTRIBUTION_COMBOSOURCE_ID)
+    refCtrl = self.FindWindowById(REFERENCECONTRIBUTION_COMBODESTINATION_ID)
+    meCtrl = self.FindWindowById(REFERENCECONTRIBUTION_COMBOMEANSEND_ID)
+    contCtrl = self.FindWindowById(REFERENCECONTRIBUTION_COMBOCONTRIBUTION_ID)
 
     self.theSource = charCtrl.GetValue()
     self.theDestination = refCtrl.GetValue()
@@ -81,7 +81,7 @@ class UseCaseContributionDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.REFERENCECONTRIBUTION_BUTTONCOMMIT_ID)
+      self.EndModal(REFERENCECONTRIBUTION_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = ReferenceContribution(self.theSource,self.theDestination,self.theMeansEnd,self.theContribution)

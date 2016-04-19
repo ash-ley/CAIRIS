@@ -18,7 +18,7 @@
 
 import wx
 import os
-import armid
+from cairis.core.armid import *
 from EditorBase import EditorBase
 from GoalsGrid import GoalsGrid
 from datetime import datetime
@@ -43,8 +43,8 @@ class GMPanel(EditorBase):
     self.SetSizeHints(1150,400)
     self.SetSizer(self.sizer)
 #    self.updateEnvironments()
-    self.Bind(wx.EVT_COMBOBOX, self.onObjectChange,id = armid.RMFRAME_TOOL_COMBOOBJECT)
-    self.Bind(wx.EVT_COMBOBOX, self.onEnvironmentChange,id = armid.RMFRAME_TOOL_COMBOENVIRONMENT)
+    self.Bind(wx.EVT_COMBOBOX, self.onObjectChange,id = RMFRAME_TOOL_COMBOOBJECT)
+    self.Bind(wx.EVT_COMBOBOX, self.onEnvironmentChange,id = RMFRAME_TOOL_COMBOENVIRONMENT)
 
     
   def onObjectChange(self,evt):
@@ -117,7 +117,7 @@ class GMPanel(EditorBase):
       dlg.ShowModal()
       dlg.Destroy()
     else:
-      grid = self.FindWindowById(armid.ID_REQGRID)
+      grid = self.FindWindowById(ID_REQGRID)
       pos = grid.GetGridCursorRow()
       grid.InsertRows(pos)
 

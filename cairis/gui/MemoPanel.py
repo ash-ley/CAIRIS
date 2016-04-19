@@ -17,26 +17,26 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from BasePanel import BasePanel
-import Memo
+import cairis.core.Memo
 
 class MemoPanel(BasePanel):
   def __init__(self,parent):
-    BasePanel.__init__(self,parent,armid.MEMO_ID)
+    BasePanel.__init__(self,parent,MEMO_ID)
     self.theId = None
     
   def buildControls(self,isCreate,lbl=''):
     mainSizer = wx.BoxSizer(wx.VERTICAL)
-    mainSizer.Add(self.buildTextSizer('Name',(87,30),armid.MEMO_TEXTNAME_ID),0,wx.EXPAND)
-    mainSizer.Add(self.buildMLTextSizer('Description',(87,80),armid.MEMO_TEXTDESCRIPTION_ID),1,wx.EXPAND)
-    mainSizer.Add(self.buildCommitButtonSizer(armid.MEMO_BUTTONCOMMIT_ID,isCreate),0,wx.CENTER)
+    mainSizer.Add(self.buildTextSizer('Name',(87,30),MEMO_TEXTNAME_ID),0,wx.EXPAND)
+    mainSizer.Add(self.buildMLTextSizer('Description',(87,80),MEMO_TEXTDESCRIPTION_ID),1,wx.EXPAND)
+    mainSizer.Add(self.buildCommitButtonSizer(MEMO_BUTTONCOMMIT_ID,isCreate),0,wx.CENTER)
     self.SetSizer(mainSizer)
 
   def loadControls(self,objt,isReadOnly=False):
     self.theId = objt.id()
-    nameCtrl = self.FindWindowById(armid.MEMO_TEXTNAME_ID)
-    descCtrl = self.FindWindowById(armid.MEMO_TEXTDESCRIPTION_ID)
+    nameCtrl = self.FindWindowById(MEMO_TEXTNAME_ID)
+    descCtrl = self.FindWindowById(MEMO_TEXTDESCRIPTION_ID)
 
     nameCtrl.SetValue(objt.name())
     descCtrl.SetValue(objt.description())

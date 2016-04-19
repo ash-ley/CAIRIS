@@ -17,9 +17,9 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from DocumentReferencePanel import DocumentReferencePanel
-from DocumentReferenceParameters import DocumentReferenceParameters
+from cairis.core.DocumentReferenceParameters import DocumentReferenceParameters
 import DialogClassParameters
 
 class DocumentReferenceDialog(wx.Dialog):
@@ -40,7 +40,7 @@ class DocumentReferenceDialog(wx.Dialog):
     self.panel.buildControls(parameters.createFlag())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.DOCUMENTREFERENCE_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,DOCUMENTREFERENCE_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,objt):
     self.theId = objt.id()
@@ -50,10 +50,10 @@ class DocumentReferenceDialog(wx.Dialog):
   def onCommit(self,evt):
     commitLabel = self.commitVerb + ' document reference'
 
-    nameCtrl = self.FindWindowById(armid.DOCUMENTREFERENCE_TEXTNAME_ID)
-    docCtrl = self.FindWindowById(armid.DOCUMENTREFERENCE_COMBODOCNAME_ID)
-    conCtrl = self.FindWindowById(armid.DOCUMENTREFERENCE_TEXTCONTRIBUTOR_ID)
-    excCtrl = self.FindWindowById(armid.DOCUMENTREFERENCE_TEXTEXCERPT_ID)
+    nameCtrl = self.FindWindowById(DOCUMENTREFERENCE_TEXTNAME_ID)
+    docCtrl = self.FindWindowById(DOCUMENTREFERENCE_COMBODOCNAME_ID)
+    conCtrl = self.FindWindowById(DOCUMENTREFERENCE_TEXTCONTRIBUTOR_ID)
+    excCtrl = self.FindWindowById(DOCUMENTREFERENCE_TEXTEXCERPT_ID)
 
 
     self.theName = nameCtrl.GetValue()
@@ -77,7 +77,7 @@ class DocumentReferenceDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.DOCUMENTREFERENCE_BUTTONCOMMIT_ID)
+      self.EndModal(DOCUMENTREFERENCE_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = DocumentReferenceParameters(self.theName,self.theDocument,self.theContributor,self.theExcerpt)

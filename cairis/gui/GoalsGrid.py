@@ -19,11 +19,11 @@
 import wx
 import wx.grid
 import wx.lib.gridmovers as gridmovers
-from GoalManager import GoalManager
-import Requirement
-import ARM
-import armid
-from Borg import Borg
+from cairis.core.GoalManager import GoalManager
+import cairis.core.Requirement
+from cairis.core.ARM import *
+from cairis.core.armid import *
+from cairis.core.Borg import Borg
 from EnvironmentGrid import EnvironmentGrid
 from DimensionNameDialog import DimensionNameDialog
 from datetime import datetime
@@ -113,7 +113,7 @@ class GoalsTable(wx.grid.PyGridTableBase):
         newPos = pos + 1
         try:
           self.om.add(newPos,goalName)
-        except ARM.ARMException,errorText:
+        except ARMException,errorText:
           dlg = wx.MessageDialog(self.GetView(),str(errorText),'Add Goal',wx.OK | wx.ICON_ERROR)
           dlg.ShowModal()
           dlg.Destroy()
@@ -141,7 +141,7 @@ class GoalsTable(wx.grid.PyGridTableBase):
       deletedNoGoals = self.om.delete(pos)
       self.deleteFromView(pos,deletedNoGoals)
       return True
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self.GetView(),str(errorText),'Delete Goal',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -151,7 +151,7 @@ class GoalsTable(wx.grid.PyGridTableBase):
     try:
       self.deleteFromView(0,numRows)
       return True
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self.GetView(),str(errorText),'Delete Goal',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -212,7 +212,7 @@ class GoalsCellEditor(wx.grid.GridCellAutoWrapStringEditor):
  
 class GoalsGrid(wx.grid.Grid,EnvironmentGrid):
   def __init__(self,parent,goalCombo,envCombo):
-    wx.grid.Grid.__init__(self,parent,armid.ID_REQGRID)
+    wx.grid.Grid.__init__(self,parent,ID_REQGRID)
     EnvironmentGrid.__init__(self)
     self.thePanel = parent
     wx.lib.gridmovers.GridRowMover(self)

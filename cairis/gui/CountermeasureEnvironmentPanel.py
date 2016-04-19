@@ -17,8 +17,8 @@
 
 
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from EnvironmentListCtrl import EnvironmentListCtrl
 from CountermeasureEnvironmentNotebook import CountermeasureEnvironmentNotebook
 from TargetListCtrl import TargetListCtrl
@@ -26,12 +26,12 @@ from PropertiesListCtrl import PropertiesListCtrl
 from RoleCostListCtrl import RoleCostListCtrl
 from CountermeasureRoleListCtrl import CountermeasureRoleListCtrl
 from CountermeasureTaskPersonaListCtrl import CountermeasureTaskPersonaListCtrl
-from CountermeasureEnvironmentProperties import CountermeasureEnvironmentProperties
+from cairis.core.CountermeasureEnvironmentProperties import CountermeasureEnvironmentProperties
 
 
 class CountermeasureEnvironmentPanel(wx.Panel):
   def __init__(self,parent,dp):
-    wx.Panel.__init__(self,parent,armid.COUNTERMEASURE_PANELENVIRONMENT_ID)
+    wx.Panel.__init__(self,parent,COUNTERMEASURE_PANELENVIRONMENT_ID)
     self.dbProxy = dp
     self.theEnvironmentDictionary = {}
     self.theSelectedIdx = -1
@@ -40,7 +40,7 @@ class CountermeasureEnvironmentPanel(wx.Panel):
     environmentBox = wx.StaticBox(self)
     environmentListSizer = wx.StaticBoxSizer(environmentBox,wx.HORIZONTAL)
     mainSizer.Add(environmentListSizer,0,wx.EXPAND)
-    self.environmentList = EnvironmentListCtrl(self,armid.COUNTERMEASURE_LISTENVIRONMENTS_ID,self.dbProxy)
+    self.environmentList = EnvironmentListCtrl(self,COUNTERMEASURE_LISTENVIRONMENTS_ID,self.dbProxy)
     environmentListSizer.Add(self.environmentList,1,wx.EXPAND)
 
 
@@ -50,7 +50,7 @@ class CountermeasureEnvironmentPanel(wx.Panel):
     costBox = wx.StaticBox(self,-1,'Cost')
     costBoxSizer = wx.StaticBoxSizer(costBox,wx.HORIZONTAL)
     environmentDimSizer.Add(costBoxSizer,0,wx.EXPAND)
-    self.costCombo = wx.ComboBox(self,armid.COUNTERMEASURE_COMBOCOST_ID,"",choices=['Low','Medium','High'],style=wx.CB_READONLY)
+    self.costCombo = wx.ComboBox(self,COUNTERMEASURE_COMBOCOST_ID,"",choices=['Low','Medium','High'],style=wx.CB_READONLY)
     costBoxSizer.Add(self.costCombo,1,wx.EXPAND)
 
     nbBox = wx.StaticBox(self,-1)
@@ -59,11 +59,11 @@ class CountermeasureEnvironmentPanel(wx.Panel):
     self.notebook = CountermeasureEnvironmentNotebook(self,self.dbProxy)
     nbSizer.Add(self.notebook,1,wx.EXPAND)
 
-    self.reqList = self.notebook.FindWindowById(armid.COUNTERMEASURE_LISTREQUIREMENTS_ID)
-    self.targetList = self.notebook.FindWindowById(armid.COUNTERMEASURE_LISTTARGETS_ID)
-    self.propertiesList = self.notebook.FindWindowById(armid.COUNTERMEASURE_LISTPROPERTIES_ID)
-    self.personaList = self.notebook.FindWindowById(armid.COUNTERMEASURE_LISTPERSONAS_ID)
-    self.roleList = self.notebook.FindWindowById(armid.COUNTERMEASURE_LISTROLES_ID)
+    self.reqList = self.notebook.FindWindowById(COUNTERMEASURE_LISTREQUIREMENTS_ID)
+    self.targetList = self.notebook.FindWindowById(COUNTERMEASURE_LISTTARGETS_ID)
+    self.propertiesList = self.notebook.FindWindowById(COUNTERMEASURE_LISTPROPERTIES_ID)
+    self.personaList = self.notebook.FindWindowById(COUNTERMEASURE_LISTPERSONAS_ID)
+    self.roleList = self.notebook.FindWindowById(COUNTERMEASURE_LISTROLES_ID)
 
     self.reqList.Disable()
     self.targetList.Disable()

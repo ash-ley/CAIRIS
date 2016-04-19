@@ -17,8 +17,8 @@
 
 
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 
 class DimensionListBox(wx.ListBox):
   def __init__(self,parent,winId,boxSize,dimensionTable,dp):
@@ -26,11 +26,11 @@ class DimensionListBox(wx.ListBox):
     self.dbProxy = dp
     self.theDimensionTable = dimensionTable
     self.theDimMenu = wx.Menu()
-    self.theDimMenu.Append(armid.DIMLIST_MENUADD_ID,'Add')
-    self.theDimMenu.Append(armid.DIMLIST_MENUDELETE_ID,'Delete')
+    self.theDimMenu.Append(DIMLIST_MENUADD_ID,'Add')
+    self.theDimMenu.Append(DIMLIST_MENUDELETE_ID,'Delete')
     self.Bind(wx.EVT_RIGHT_DOWN,self.OnRightDown)
-    wx.EVT_MENU(self.theDimMenu,armid.DIMLIST_MENUADD_ID,self.onAddDimension)
-    wx.EVT_MENU(self.theDimMenu,armid.DIMLIST_MENUDELETE_ID,self.onDeleteDimension)
+    wx.EVT_MENU(self.theDimMenu,DIMLIST_MENUADD_ID,self.onAddDimension)
+    wx.EVT_MENU(self.theDimMenu,DIMLIST_MENUDELETE_ID,self.onDeleteDimension)
 
   def OnRightDown(self,evt):
     self.PopupMenu(self.theDimMenu)
@@ -39,7 +39,7 @@ class DimensionListBox(wx.ListBox):
     dimensions = self.dbProxy.getDimensionNames(self.theDimensionTable)
     from DimensionNameDialog import DimensionNameDialog
     dlg = DimensionNameDialog(self,self.theDimensionTable,dimensions,'Add')
-    if (dlg.ShowModal() == armid.DIMNAME_BUTTONACTION_ID):
+    if (dlg.ShowModal() == DIMNAME_BUTTONACTION_ID):
       for additionalDimension in dlg.dimensionNames():
         self.Append(additionalDimension)
 

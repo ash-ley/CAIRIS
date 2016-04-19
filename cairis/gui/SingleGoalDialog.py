@@ -17,15 +17,15 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
 from SingleGoalPanel import SingleGoalPanel
-from GoalParameters import GoalParameters
-from GoalEnvironmentProperties import GoalEnvironmentProperties
+from cairis.core.GoalParameters import GoalParameters
+from cairis.core.GoalEnvironmentProperties import GoalEnvironmentProperties
 
 class SingleGoalDialog(wx.Dialog):
   def __init__(self,parent,envName):
-    wx.Dialog.__init__(self,parent,armid.GOAL_ID,'New Goal',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(500,400))
+    wx.Dialog.__init__(self,parent,GOAL_ID,'New Goal',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(500,400))
     self.theCommitVerb = 'Create'
     self.theEnvironmentName = envName
     self.theGoalName = ''
@@ -44,21 +44,21 @@ class SingleGoalDialog(wx.Dialog):
     self.panel = SingleGoalPanel(self)
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.GOAL_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,GOAL_BUTTONCOMMIT_ID,self.onCommit)
 
   def onCommit(self,evt):
-    nameCtrl = self.FindWindowById(armid.GOAL_TEXTNAME_ID)
-    origCtrl = self.FindWindowById(armid.GOAL_TEXTORIGINATOR_ID)
-    definitionCtrl = self.FindWindowById(armid.GOAL_TEXTDEFINITION_ID)
-    categoryCtrl = self.FindWindowById(armid.GOAL_COMBOCATEGORY_ID)
-    priorityCtrl = self.FindWindowById(armid.GOAL_COMBOPRIORITY_ID)
-    fitCriterionCtrl = self.FindWindowById(armid.GOAL_TEXTFITCRITERION_ID)
-    issueCtrl = self.FindWindowById(armid.GOAL_TEXTISSUE_ID)
-    goalAssociationCtrl = self.FindWindowById(armid.GOAL_LISTGOALREFINEMENTS_ID)
-    subGoalAssociationCtrl = self.FindWindowById(armid.GOAL_LISTSUBGOALREFINEMENTS_ID)
-    cCtrl = self.FindWindowById(armid.GOAL_LISTCONCERNS_ID)
-    caCtrl = self.FindWindowById(armid.GOAL_LISTCONCERNASSOCIATIONS_ID)
-    ctCtrl = self.FindWindowById(armid.GOAL_COMBOCONTRIBUTIONTYPE_ID)
+    nameCtrl = self.FindWindowById(GOAL_TEXTNAME_ID)
+    origCtrl = self.FindWindowById(GOAL_TEXTORIGINATOR_ID)
+    definitionCtrl = self.FindWindowById(GOAL_TEXTDEFINITION_ID)
+    categoryCtrl = self.FindWindowById(GOAL_COMBOCATEGORY_ID)
+    priorityCtrl = self.FindWindowById(GOAL_COMBOPRIORITY_ID)
+    fitCriterionCtrl = self.FindWindowById(GOAL_TEXTFITCRITERION_ID)
+    issueCtrl = self.FindWindowById(GOAL_TEXTISSUE_ID)
+    goalAssociationCtrl = self.FindWindowById(GOAL_LISTGOALREFINEMENTS_ID)
+    subGoalAssociationCtrl = self.FindWindowById(GOAL_LISTSUBGOALREFINEMENTS_ID)
+    cCtrl = self.FindWindowById(GOAL_LISTCONCERNS_ID)
+    caCtrl = self.FindWindowById(GOAL_LISTCONCERNASSOCIATIONS_ID)
+    ctCtrl = self.FindWindowById(GOAL_COMBOCONTRIBUTIONTYPE_ID)
 
     self.theGoalName = nameCtrl.GetValue()
     self.theGoalOriginator = origCtrl.GetValue()
@@ -112,7 +112,7 @@ class SingleGoalDialog(wx.Dialog):
       dlg.ShowModal()
       dlg.Destroy()
       return
-    self.EndModal(armid.GOAL_BUTTONCOMMIT_ID)
+    self.EndModal(GOAL_BUTTONCOMMIT_ID)
 
   def parameters(self):
     properties = GoalEnvironmentProperties(self.theEnvironmentName,'',self.theGoalDefinition,self.theGoalCategory,self.theGoalPriority,self.theGoalFitCriterion,self.theGoalIssues,self.theAssociations,self.theSubAssociations,self.theConcerns,self.theConcernAssociations)

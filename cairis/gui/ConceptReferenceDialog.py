@@ -17,9 +17,9 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from ConceptReferencePanel import ConceptReferencePanel
-from ConceptReferenceParameters import ConceptReferenceParameters
+from cairis.core.ConceptReferenceParameters import ConceptReferenceParameters
 import DialogClassParameters
 
 class ConceptReferenceDialog(wx.Dialog):
@@ -40,7 +40,7 @@ class ConceptReferenceDialog(wx.Dialog):
     self.panel.buildControls(parameters.createFlag())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.CONCEPTREFERENCE_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,CONCEPTREFERENCE_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,objt):
     self.theId = objt.id()
@@ -50,10 +50,10 @@ class ConceptReferenceDialog(wx.Dialog):
   def onCommit(self,evt):
     commitLabel = self.commitVerb + ' concept reference'
 
-    nameCtrl = self.FindWindowById(armid.CONCEPTREFERENCE_TEXTNAME_ID)
-    dimCtrl = self.FindWindowById(armid.CONCEPTREFERENCE_COMBODIMNAME_ID)
-    objtCtrl = self.FindWindowById(armid.CONCEPTREFERENCE_COMBOOBJTNAME_ID)
-    descCtrl = self.FindWindowById(armid.CONCEPTREFERENCE_TEXTDESCRIPTION_ID)
+    nameCtrl = self.FindWindowById(CONCEPTREFERENCE_TEXTNAME_ID)
+    dimCtrl = self.FindWindowById(CONCEPTREFERENCE_COMBODIMNAME_ID)
+    objtCtrl = self.FindWindowById(CONCEPTREFERENCE_COMBOOBJTNAME_ID)
+    descCtrl = self.FindWindowById(CONCEPTREFERENCE_TEXTDESCRIPTION_ID)
 
 
     self.theName = nameCtrl.GetValue()
@@ -82,7 +82,7 @@ class ConceptReferenceDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.CONCEPTREFERENCE_BUTTONCOMMIT_ID)
+      self.EndModal(CONCEPTREFERENCE_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = ConceptReferenceParameters(self.theName,self.theDimension,self.theObject,self.theDescription)

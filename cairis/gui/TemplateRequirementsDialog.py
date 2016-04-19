@@ -17,21 +17,21 @@
 
 
 import wx
-import armid
-import Asset
+from cairis.core.armid import *
+import cairis.core.Asset
 from TemplateRequirementDialog import TemplateRequirementDialog
 from DialogClassParameters import DialogClassParameters
-import ARM
+from cairis.core.ARM import *
 from DimensionBaseDialog import DimensionBaseDialog
 
 class TemplateRequirementsDialog(DimensionBaseDialog):
   def __init__(self,parent):
-    DimensionBaseDialog.__init__(self,parent,armid.TEMPLATEREQUIREMENTS_ID,'Template Requirements',(930,300),'requirement.png')
+    DimensionBaseDialog.__init__(self,parent,TEMPLATEREQUIREMENTS_ID,'Template Requirements',(930,300),'requirement.png')
     self.rmFrame = parent
-    idList = [armid.TEMPLATEREQUIREMENTS_REQUIREMENTLIST_ID,armid.TEMPLATEREQUIREMENTS_BUTTONADD_ID,armid.TEMPLATEREQUIREMENTS_BUTTONDELETE_ID]
+    idList = [TEMPLATEREQUIREMENTS_REQUIREMENTLIST_ID,TEMPLATEREQUIREMENTS_BUTTONADD_ID,TEMPLATEREQUIREMENTS_BUTTONDELETE_ID]
     columnList = ['Name','Type']
     self.buildControls(idList,columnList,self.dbProxy.getTemplateRequirements,'template_requirement')
-    listCtrl = self.FindWindowById(armid.TEMPLATEREQUIREMENTS_REQUIREMENTLIST_ID)
+    listCtrl = self.FindWindowById(TEMPLATEREQUIREMENTS_REQUIREMENTLIST_ID)
     listCtrl.SetColumnWidth(0,150)
     listCtrl.SetColumnWidth(1,150)
 
@@ -42,9 +42,9 @@ class TemplateRequirementsDialog(DimensionBaseDialog):
 
   def onAdd(self,evt):
     try:
-      addParameters = DialogClassParameters(armid.TEMPLATEREQUIREMENT_ID,'Add template requirement',TemplateRequirementDialog,armid.TEMPLATEREQUIREMENT_BUTTONCOMMIT_ID,self.dbProxy.addTemplateRequirement,True)
+      addParameters = DialogClassParameters(TEMPLATEREQUIREMENT_ID,'Add template requirement',TemplateRequirementDialog,TEMPLATEREQUIREMENT_BUTTONCOMMIT_ID,self.dbProxy.addTemplateRequirement,True)
       self.addObject(addParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add template requirement',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -54,9 +54,9 @@ class TemplateRequirementsDialog(DimensionBaseDialog):
     selectedObjt = self.objts[self.selectedLabel]
     assetId = selectedObjt.id()
     try:
-      updateParameters = DialogClassParameters(armid.TEMPLATEREQUIREMENT_ID,'Edit template requirement',TemplateRequirementDialog,armid.TEMPLATEREQUIREMENT_BUTTONCOMMIT_ID,self.dbProxy.updateTemplateRequirement,False)
+      updateParameters = DialogClassParameters(TEMPLATEREQUIREMENT_ID,'Edit template requirement',TemplateRequirementDialog,TEMPLATEREQUIREMENT_BUTTONCOMMIT_ID,self.dbProxy.updateTemplateRequirement,False)
       self.updateObject(selectedObjt,updateParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Edit template requirement',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy
@@ -64,7 +64,7 @@ class TemplateRequirementsDialog(DimensionBaseDialog):
   def onDelete(self,evt):
     try:
       self.deleteObject('No template requirement','Delete template requirement',self.dbProxy.deleteTemplateRequirement)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Delete template requirement',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy

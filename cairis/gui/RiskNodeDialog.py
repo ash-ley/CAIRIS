@@ -19,7 +19,7 @@
 import sys
 import gtk
 from NDImplementationDecorator import NDImplementationDecorator
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 class RiskNodeDialog:
   def __init__(self,objt,rating,environmentName,builder):

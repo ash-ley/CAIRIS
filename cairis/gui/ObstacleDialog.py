@@ -17,11 +17,11 @@
 
 
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from ObstaclePanel import ObstaclePanel
-from ObstacleParameters import ObstacleParameters
-from Borg import Borg
+from cairis.core.ObstacleParameters import ObstacleParameters
+from cairis.core.Borg import Borg
 import DialogClassParameters
 
 class ObstacleDialog(wx.Dialog):
@@ -42,7 +42,7 @@ class ObstacleDialog(wx.Dialog):
     self.panel.buildControls(parameters.createFlag())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.OBSTACLE_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,OBSTACLE_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,obstacle):
     self.theObstacleId = obstacle.id()
@@ -50,10 +50,10 @@ class ObstacleDialog(wx.Dialog):
     self.commitVerb = 'Edit'
 
   def onCommit(self,evt):
-    nameCtrl = self.FindWindowById(armid.OBSTACLE_TEXTNAME_ID)
-    tagsCtrl = self.FindWindowById(armid.OBSTACLE_TAGS_ID)
-    origCtrl = self.FindWindowById(armid.OBSTACLE_TEXTORIGINATOR_ID)
-    environmentCtrl = self.FindWindowById(armid.OBSTACLE_PANELENVIRONMENT_ID)
+    nameCtrl = self.FindWindowById(OBSTACLE_TEXTNAME_ID)
+    tagsCtrl = self.FindWindowById(OBSTACLE_TAGS_ID)
+    origCtrl = self.FindWindowById(OBSTACLE_TEXTORIGINATOR_ID)
+    environmentCtrl = self.FindWindowById(OBSTACLE_PANELENVIRONMENT_ID)
 
     self.theObstacleName = nameCtrl.GetValue()
     self.theTags = tagsCtrl.tags()
@@ -62,7 +62,7 @@ class ObstacleDialog(wx.Dialog):
       b = Borg()
       try:
         b.dbProxy.nameCheck(self.theObstacleName,'obstacle')
-      except ARM.ARMException,errorText:
+      except ARMException,errorText:
         dlg = wx.MessageDialog(self,str(errorText),'Add obstacle',wx.OK | wx.ICON_ERROR)
         dlg.ShowModal()
         dlg.Destroy()
@@ -100,7 +100,7 @@ class ObstacleDialog(wx.Dialog):
           dlg.ShowModal()
           dlg.Destroy()
           return
-      self.EndModal(armid.OBSTACLE_BUTTONCOMMIT_ID)
+      self.EndModal(OBSTACLE_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = ObstacleParameters(self.theObstacleName,self.theObstacleOriginator,self.theTags,self.theEnvironmentProperties)

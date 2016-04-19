@@ -17,16 +17,16 @@
 
 
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from RiskEnvironmentListCtrl import RiskEnvironmentListCtrl
 from DimensionListCtrl import DimensionListCtrl
-from MitigateEnvironmentProperties import MitigateEnvironmentProperties
+from cairis.core.MitigateEnvironmentProperties import MitigateEnvironmentProperties
 
 
 class MitigateEnvironmentPanel(wx.Panel):
   def __init__(self,parent,dp):
-    wx.Panel.__init__(self,parent,armid.MITIGATE_PANELENVIRONMENT_ID)
+    wx.Panel.__init__(self,parent,MITIGATE_PANELENVIRONMENT_ID)
     self.theResponsePanel = parent
     self.dbProxy = dp
     self.theEnvironmentDictionary = {}
@@ -36,7 +36,7 @@ class MitigateEnvironmentPanel(wx.Panel):
     environmentBox = wx.StaticBox(self)
     environmentListSizer = wx.StaticBoxSizer(environmentBox,wx.HORIZONTAL)
     mainSizer.Add(environmentListSizer,0,wx.EXPAND)
-    self.environmentList = RiskEnvironmentListCtrl(self,armid.MITIGATE_LISTENVIRONMENTS_ID,self.dbProxy)
+    self.environmentList = RiskEnvironmentListCtrl(self,MITIGATE_LISTENVIRONMENTS_ID,self.dbProxy)
     environmentListSizer.Add(self.environmentList,1,wx.EXPAND)
     environmentDimSizer = wx.BoxSizer(wx.VERTICAL)
     mainSizer.Add(environmentDimSizer,1,wx.EXPAND)
@@ -44,20 +44,20 @@ class MitigateEnvironmentPanel(wx.Panel):
     typeBox = wx.StaticBox(self,-1,'Type')
     typeBoxSizer = wx.StaticBoxSizer(typeBox,wx.HORIZONTAL)
     environmentDimSizer.Add(typeBoxSizer,0,wx.EXPAND)
-    self.typeCombo = wx.ComboBox(self,armid.MITIGATE_COMBOTYPE_ID,"",choices=['Deter','Prevent','Detect','React'],style=wx.CB_READONLY)
+    self.typeCombo = wx.ComboBox(self,MITIGATE_COMBOTYPE_ID,"",choices=['Deter','Prevent','Detect','React'],style=wx.CB_READONLY)
     typeBoxSizer.Add(self.typeCombo,1,wx.EXPAND)
    
     pointBox = wx.StaticBox(self,-1,'Detection Point')
     pointBoxSizer = wx.StaticBoxSizer(pointBox,wx.HORIZONTAL)
     environmentDimSizer.Add(pointBoxSizer,0,wx.EXPAND)
-    self.pointCombo = wx.ComboBox(self,armid.MITIGATE_COMBODETECTIONPOINT_ID,"",choices=['Before','At','After'],style=wx.CB_READONLY)
+    self.pointCombo = wx.ComboBox(self,MITIGATE_COMBODETECTIONPOINT_ID,"",choices=['Before','At','After'],style=wx.CB_READONLY)
     pointBoxSizer.Add(self.pointCombo,1,wx.EXPAND)
 
 
     dmBox = wx.StaticBox(self,-1,)
     dmBoxSizer = wx.StaticBoxSizer(dmBox,wx.HORIZONTAL)
     environmentDimSizer.Add(dmBoxSizer,1,wx.EXPAND)
-    self.dmList = DimensionListCtrl(self,armid.MITIGATE_LISTDETMECH_ID,wx.DefaultSize,'Detection Mechanism','detection_mechanism',self.dbProxy,listStyle=wx.LC_REPORT)
+    self.dmList = DimensionListCtrl(self,MITIGATE_LISTDETMECH_ID,wx.DefaultSize,'Detection Mechanism','detection_mechanism',self.dbProxy,listStyle=wx.LC_REPORT)
     dmBoxSizer.Add(self.dmList,1,wx.EXPAND)
 
     self.typeCombo.Disable()
@@ -74,10 +74,10 @@ class MitigateEnvironmentPanel(wx.Panel):
   def onTypeChange(self,evt):
     self.activateTypeCtrls()
     mitType = self.typeCombo.GetValue()
-    riskCombo = self.theResponsePanel.FindWindowById(armid.RESPONSE_COMBORISK_ID)
+    riskCombo = self.theResponsePanel.FindWindowById(RESPONSE_COMBORISK_ID)
     riskName = riskCombo.GetValue()
     if (riskName != ''):
-      riskNameCtrl = self.theResponsePanel.FindWindowById(armid.RESPONSE_TEXTNAME_ID)
+      riskNameCtrl = self.theResponsePanel.FindWindowById(RESPONSE_TEXTNAME_ID)
       riskNameLabel = mitType + ' ' + riskName
       riskNameCtrl.SetValue(riskNameLabel)
 

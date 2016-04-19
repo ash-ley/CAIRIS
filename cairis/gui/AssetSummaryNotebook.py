@@ -17,7 +17,7 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from DimensionListCtrl import DimensionListCtrl
 from InterfacePage import InterfacePage
 
@@ -40,14 +40,14 @@ class CriticalPage(wx.Panel):
 
     crBoxSizer = wx.BoxSizer(wx.VERTICAL)
     topSizer.Add(crBoxSizer,0,wx.EXPAND)
-    self.criticalCheckCtrl = wx.CheckBox(self,armid.ASSET_CHECKCRITICAL_ID,'Critical Asset')
+    self.criticalCheckCtrl = wx.CheckBox(self,ASSET_CHECKCRITICAL_ID,'Critical Asset')
     self.criticalCheckCtrl.SetValue(False)
     crBoxSizer.Add(self.criticalCheckCtrl,0,wx.EXPAND)
-    self.criticalRationaleCtrl = wx.TextCtrl(self,armid.ASSET_TEXTCRITICALRATIONALE_ID,'',style=wx.TE_MULTILINE)
+    self.criticalRationaleCtrl = wx.TextCtrl(self,ASSET_TEXTCRITICALRATIONALE_ID,'',style=wx.TE_MULTILINE)
     self.criticalRationaleCtrl.Disable()
     crBoxSizer.Add(self.criticalRationaleCtrl,1,wx.EXPAND)
     self.SetSizer(topSizer)
-    wx.EVT_CHECKBOX(self,armid.ASSET_CHECKCRITICAL_ID,self.onCheckCritical)
+    wx.EVT_CHECKBOX(self,ASSET_CHECKCRITICAL_ID,self.onCheckCritical)
 
   def onCheckCritical(self,evt):
     if (self.criticalCheckCtrl.GetValue() == True):
@@ -58,10 +58,10 @@ class CriticalPage(wx.Panel):
 
 class AssetSummaryNotebook(wx.Notebook):
   def __init__(self,parent,isTemplateAsset = False):
-    wx.Notebook.__init__(self,parent,armid.ASSET_NOTEBOOKSUMMARY_ID)
-    p1 = MLTextPage(self,armid.ASSET_TEXTDESCRIPTION_ID)
-    p2 = MLTextPage(self,armid.ASSET_TEXTSIGNIFICANCE_ID)
-    p4 = InterfacePage(self,armid.ASSET_PAGEINTERFACE_ID)
+    wx.Notebook.__init__(self,parent,ASSET_NOTEBOOKSUMMARY_ID)
+    p1 = MLTextPage(self,ASSET_TEXTDESCRIPTION_ID)
+    p2 = MLTextPage(self,ASSET_TEXTSIGNIFICANCE_ID)
+    p4 = InterfacePage(self,ASSET_PAGEINTERFACE_ID)
     self.AddPage(p1,'Description')
     self.AddPage(p2,'Significance')
     if (isTemplateAsset == False):

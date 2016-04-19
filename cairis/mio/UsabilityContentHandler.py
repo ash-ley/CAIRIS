@@ -17,20 +17,20 @@
 
 import os
 from xml.sax.handler import ContentHandler,EntityResolver
-from PersonaParameters import PersonaParameters
-from PersonaEnvironmentProperties import PersonaEnvironmentProperties
-from ExternalDocumentParameters import ExternalDocumentParameters
-from DocumentReferenceParameters import DocumentReferenceParameters
-from ConceptReferenceParameters import ConceptReferenceParameters
-from PersonaCharacteristicParameters import PersonaCharacteristicParameters
-from TaskCharacteristicParameters import TaskCharacteristicParameters
-from TaskParameters import TaskParameters
-from TaskEnvironmentProperties import TaskEnvironmentProperties
-from UseCaseParameters import UseCaseParameters
-from UseCaseEnvironmentProperties import UseCaseEnvironmentProperties
-from Steps import Steps
-from Step import Step
-from Borg import Borg
+from cairis.core.PersonaParameters import PersonaParameters
+from cairis.core.PersonaEnvironmentProperties import PersonaEnvironmentProperties
+from cairis.core.ExternalDocumentParameters import ExternalDocumentParameters
+from cairis.core.DocumentReferenceParameters import DocumentReferenceParameters
+from cairis.core.ConceptReferenceParameters import ConceptReferenceParameters
+from cairis.core.PersonaCharacteristicParameters import PersonaCharacteristicParameters
+from cairis.core.TaskCharacteristicParameters import TaskCharacteristicParameters
+from cairis.core.TaskParameters import TaskParameters
+from cairis.core.TaskEnvironmentProperties import TaskEnvironmentProperties
+from cairis.core.UseCaseParameters import UseCaseParameters
+from cairis.core.UseCaseEnvironmentProperties import UseCaseEnvironmentProperties
+from cairis.core.Steps import Steps
+from cairis.core.Step import Step
+from cairis.core.Borg import Borg
 
 def a2s(aStr):
   if aStr == 'a':

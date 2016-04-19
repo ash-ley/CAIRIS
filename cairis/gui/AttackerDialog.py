@@ -17,12 +17,12 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import os
-import ARM
-from Borg import Borg
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
 from AttackerPanel import AttackerPanel
-from AttackerParameters import AttackerParameters
+from cairis.core.AttackerParameters import AttackerParameters
 
 class AttackerDialog(wx.Dialog):
   def __init__(self,parent,parameters):
@@ -57,22 +57,22 @@ class AttackerDialog(wx.Dialog):
     self.panel.buildControls(parameters.createFlag())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.ATTACKER_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,ATTACKER_BUTTONCOMMIT_ID,self.onCommit)
 
 
   def onCommit(self,evt):
-    nameCtrl = self.FindWindowById(armid.ATTACKER_TEXTNAME_ID)
-    tagCtrl = self.FindWindowById(armid.ATTACKER_TAGS_ID)
-    descriptionCtrl = self.FindWindowById(armid.ATTACKER_TEXTDESCRIPTION_ID)
-    imageCtrl = self.FindWindowById(armid.ATTACKER_IMAGEATTACKERIMAGE_ID)
-    environmentCtrl = self.FindWindowById(armid.ATTACKER_PANELENVIRONMENT_ID)
+    nameCtrl = self.FindWindowById(ATTACKER_TEXTNAME_ID)
+    tagCtrl = self.FindWindowById(ATTACKER_TAGS_ID)
+    descriptionCtrl = self.FindWindowById(ATTACKER_TEXTDESCRIPTION_ID)
+    imageCtrl = self.FindWindowById(ATTACKER_IMAGEATTACKERIMAGE_ID)
+    environmentCtrl = self.FindWindowById(ATTACKER_PANELENVIRONMENT_ID)
 
     self.theAttackerName = nameCtrl.GetValue()
     if (self.theCommitVerb == 'Create'):
       b = Borg()
       try:
         b.dbProxy.nameCheck(self.theAttackerName,'attacker')
-      except ARM.ARMException,errorText:
+      except ARMException,errorText:
         dlg = wx.MessageDialog(self,str(errorText),'Add attacker',wx.OK | wx.ICON_ERROR)
         dlg.ShowModal()
         dlg.Destroy()
@@ -114,7 +114,7 @@ class AttackerDialog(wx.Dialog):
           dlg.ShowModal()
           dlg.Destroy()
           return
-      self.EndModal(armid.ATTACKER_BUTTONCOMMIT_ID)
+      self.EndModal(ATTACKER_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = AttackerParameters(self.theAttackerName,self.theAttackerDescription,self.theAttackerImage,self.theTags,self.theEnvironmentProperties)

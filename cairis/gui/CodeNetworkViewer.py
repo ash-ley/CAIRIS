@@ -17,10 +17,10 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import os
-from Borg import Borg
-import ARM
+from cairis.core.Borg import Borg
+from cairis.core.ARM import *
 from CodeNetworkPanel import CodeNetworkPanel
 
 class CodeNetworkViewer(wx.Dialog):

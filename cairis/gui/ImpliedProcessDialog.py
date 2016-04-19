@@ -17,12 +17,12 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import os
-from Borg import Borg
-import ARM
+from cairis.core.Borg import Borg
+from cairis.core.ARM import *
 from ImpliedProcessPanel import ImpliedProcessPanel
-from ImpliedProcessParameters import ImpliedProcessParameters
+from cairis.core.ImpliedProcessParameters import ImpliedProcessParameters
 
 class ImpliedProcessDialog(wx.Dialog):
   def __init__(self,parent,parameters):
@@ -44,7 +44,7 @@ class ImpliedProcessDialog(wx.Dialog):
     self.panel = ImpliedProcessPanel(self,parameters.createFlag())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.IMPLIEDPROCESS_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,IMPLIEDPROCESS_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,implProc):
     self.theImpliedProcessId = implProc.id()
@@ -52,11 +52,11 @@ class ImpliedProcessDialog(wx.Dialog):
     self.theCommitVerb = 'Edit'
 
   def onCommit(self,evt):
-    nameCtrl = self.FindWindowById(armid.IMPLIEDPROCESS_TEXTNAME_ID)
-    descCtrl = self.FindWindowById(armid.IMPLIEDPROCESS_TEXTDESCRIPTION_ID)
-    personaCtrl = self.FindWindowById(armid.IMPLIEDPROCESS_COMBOPERSONA_ID)
-    specCtrl = self.FindWindowById(armid.IMPLIEDPROCESS_TEXTSPECIFICATION_ID)
-    channelCtrl = self.FindWindowById(armid.IMPLIEDPROCESS_LISTCHANNELS_ID)
+    nameCtrl = self.FindWindowById(IMPLIEDPROCESS_TEXTNAME_ID)
+    descCtrl = self.FindWindowById(IMPLIEDPROCESS_TEXTDESCRIPTION_ID)
+    personaCtrl = self.FindWindowById(IMPLIEDPROCESS_COMBOPERSONA_ID)
+    specCtrl = self.FindWindowById(IMPLIEDPROCESS_TEXTSPECIFICATION_ID)
+    channelCtrl = self.FindWindowById(IMPLIEDPROCESS_LISTCHANNELS_ID)
      
     self.theName = nameCtrl.GetValue()
     self.theDescription = descCtrl.GetValue()
@@ -98,7 +98,7 @@ class ImpliedProcessDialog(wx.Dialog):
       dlg.Destroy()
       return
 
-    self.EndModal(armid.IMPLIEDPROCESS_BUTTONCOMMIT_ID)
+    self.EndModal(IMPLIEDPROCESS_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = ImpliedProcessParameters(self.theName,self.theDescription,self.thePersonaName,self.theCodeNetwork,self.theSpecification,self.theChannels)

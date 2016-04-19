@@ -17,8 +17,8 @@
 
 
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from TaskPersonaDialog import TaskPersonaDialog
 
 class TaskPersonaListCtrl(wx.ListCtrl):
@@ -62,8 +62,8 @@ class TaskPersonaListCtrl(wx.ListCtrl):
     self.InsertColumn(4,'Goals')
     self.SetColumnWidth(4,100)
     self.theDimMenu = wx.Menu()
-    self.theDimMenu.Append(armid.TASKPERSONALISTCTRL_MENUADD_ID,'Add')
-    self.theDimMenu.Append(armid.TASKPERSONALISTCTRL_MENUDELETE_ID,'Delete')
+    self.theDimMenu.Append(TASKPERSONALISTCTRL_MENUADD_ID,'Add')
+    self.theDimMenu.Append(TASKPERSONALISTCTRL_MENUDELETE_ID,'Delete')
     self.theSelectedValue = ''
     self.theSelectedIdx = -1
     self.setPersonas = {}
@@ -71,8 +71,8 @@ class TaskPersonaListCtrl(wx.ListCtrl):
     self.Bind(wx.EVT_LIST_ITEM_SELECTED,self.OnItemSelected)
     self.Bind(wx.EVT_LIST_ITEM_DESELECTED,self.OnItemDeselected)
     self.Bind(wx.EVT_LIST_ITEM_ACTIVATED,self.onPersonaActivated)
-    wx.EVT_MENU(self.theDimMenu,armid.TASKPERSONALISTCTRL_MENUADD_ID,self.onAddTaskPersona)
-    wx.EVT_MENU(self.theDimMenu,armid.TASKPERSONALISTCTRL_MENUDELETE_ID,self.onDeleteTaskPersona)
+    wx.EVT_MENU(self.theDimMenu,TASKPERSONALISTCTRL_MENUADD_ID,self.onAddTaskPersona)
+    wx.EVT_MENU(self.theDimMenu,TASKPERSONALISTCTRL_MENUDELETE_ID,self.onDeleteTaskPersona)
 
   def setEnvironment(self,environmentName):
     self.theCurrentEnvironment = environmentName
@@ -97,7 +97,7 @@ class TaskPersonaListCtrl(wx.ListCtrl):
     pGsup = self.GetItem(self.theSelectedIdx,4)
 
     dlg = TaskPersonaDialog(self,self.setPersonas[self.theCurrentEnvironment],self.theCurrentEnvironment,self.dbProxy,pName,pDur.GetText(),pFreq.GetText(),pDem.GetText(),pGsup.GetText())
-    if (dlg.ShowModal() == armid.TASKPERSONA_BUTTONADD_ID):
+    if (dlg.ShowModal() == TASKPERSONA_BUTTONADD_ID):
       self.SetStringItem(self.theSelectedIdx,0,dlg.persona())
       self.SetStringItem(self.theSelectedIdx,1,dlg.duration())
       self.SetStringItem(self.theSelectedIdx,2,dlg.frequency())
@@ -106,7 +106,7 @@ class TaskPersonaListCtrl(wx.ListCtrl):
 
   def onAddTaskPersona(self,evt):
     dlg = TaskPersonaDialog(self,self.setPersonas[self.theCurrentEnvironment],self.theCurrentEnvironment,self.dbProxy)
-    if (dlg.ShowModal() == armid.TASKPERSONA_BUTTONADD_ID):
+    if (dlg.ShowModal() == TASKPERSONA_BUTTONADD_ID):
       pName = dlg.persona()
       pDur = dlg.duration()
       pFreq = dlg.frequency()

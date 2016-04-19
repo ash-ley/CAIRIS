@@ -18,10 +18,10 @@
 
 
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from QuotationDialog import QuotationDialog
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 class QuotationListCtrl(wx.ListCtrl):
   def __init__(self,parent,winId,boxSize=wx.DefaultSize):
@@ -38,14 +38,14 @@ class QuotationListCtrl(wx.ListCtrl):
     self.InsertColumn(4,'Quote')
     self.SetColumnWidth(4,400)
     self.theDimMenu = wx.Menu()
-    self.theDimMenu.Append(armid.QUOTATIONLISTCTRL_MENUDELETE_ID,'Delete')
+    self.theDimMenu.Append(QUOTATIONLISTCTRL_MENUDELETE_ID,'Delete')
     self.theSelectedValue = ''
     self.theSelectedIdx = -1
     self.Bind(wx.EVT_RIGHT_DOWN,self.OnRightDown)
     self.Bind(wx.EVT_LIST_ITEM_SELECTED,self.OnItemSelected)
     self.Bind(wx.EVT_LIST_ITEM_DESELECTED,self.OnItemDeselected)
     self.Bind(wx.EVT_LIST_ITEM_ACTIVATED,self.onItemActivated)
-    wx.EVT_MENU(self.theDimMenu,armid.QUOTATIONLISTCTRL_MENUDELETE_ID,self.onDeleteQuotation)
+    wx.EVT_MENU(self.theDimMenu,QUOTATIONLISTCTRL_MENUDELETE_ID,self.onDeleteQuotation)
 
   def OnItemSelected(self,evt):
     self.theSelectedIdx = evt.GetIndex()
@@ -100,7 +100,7 @@ class QuotationListCtrl(wx.ListCtrl):
     startIdx,endIdx,synopsis,label = self.theQuoteIndices[(codeName,atName,aName,qTxt.encode('utf-8'))]
     dlg = QuotationDialog(self)
     dlg.load(codeName,atName,aName,startIdx,endIdx,synopsis,label)
-    if (dlg.ShowModal() == armid.QUOTATION_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == QUOTATION_BUTTONCOMMIT_ID):
       # update list and quotation index entry here
       pass
     dlg.Destroy()

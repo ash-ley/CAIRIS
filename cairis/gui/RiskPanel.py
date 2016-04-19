@@ -18,13 +18,13 @@
 
 import wx
 from BasePanel import BasePanel
-import armid
-import RiskParameters
-from Borg import Borg
+from cairis.core.armid import *
+import cairis.core.RiskParameters
+from cairis.core.Borg import Borg
 
 class RiskPanel(BasePanel):
   def __init__(self,parent):
-    BasePanel.__init__(self,parent,armid.RISK_ID)
+    BasePanel.__init__(self,parent,RISK_ID)
     b = Borg()
     self.dbProxy = b.dbProxy
     self.theThreats = self.dbProxy.getDimensions('threat')
@@ -33,25 +33,25 @@ class RiskPanel(BasePanel):
  
   def buildControls(self,isCreate,isUpdateable=True):
     mainSizer = wx.BoxSizer(wx.VERTICAL)
-    mainSizer.Add(self.buildTextSizer('Name',(87,30),armid.RISK_TEXTNAME_ID),0,wx.EXPAND)
-    mainSizer.Add(self.buildTagCtrlSizer((87,30),armid.RISK_TAGS_ID),0,wx.EXPAND)
+    mainSizer.Add(self.buildTextSizer('Name',(87,30),RISK_TEXTNAME_ID),0,wx.EXPAND)
+    mainSizer.Add(self.buildTagCtrlSizer((87,30),RISK_TAGS_ID),0,wx.EXPAND)
     tvSizer = wx.BoxSizer(wx.HORIZONTAL)
     mainSizer.Add(tvSizer,0,wx.EXPAND)
-    tvSizer.Add(self.buildComboSizer('Threat',(87,30),armid.RISK_COMBOTHREAT_ID,self.theThreats),1,wx.EXPAND)
-    tvSizer.Add(self.buildComboSizer('Vulnerability',(87,30),armid.RISK_COMBOVULNERABILITY_ID,self.theVulnerabilities),1,wx.EXPAND)
+    tvSizer.Add(self.buildComboSizer('Threat',(87,30),RISK_COMBOTHREAT_ID,self.theThreats),1,wx.EXPAND)
+    tvSizer.Add(self.buildComboSizer('Vulnerability',(87,30),RISK_COMBOVULNERABILITY_ID,self.theVulnerabilities),1,wx.EXPAND)
 
     environmentBox = wx.StaticBox(self,-1,'Environments')
     environmentBoxSizer = wx.StaticBoxSizer(environmentBox,wx.VERTICAL)
     mainSizer.Add(environmentBoxSizer,0,wx.EXPAND)
-    self.environmentList = wx.ListBox(self,armid.RISK_LISTENVIRONMENTS_ID,size=(150,70),style=wx.LB_SINGLE | wx.LB_SORT)
+    self.environmentList = wx.ListBox(self,RISK_LISTENVIRONMENTS_ID,size=(150,70),style=wx.LB_SINGLE | wx.LB_SORT)
     environmentBoxSizer.Add(self.environmentList,0,wx.EXPAND)
 
-    mainSizer.Add(self.buildTextSizer('Rating',(87,30),armid.RISK_TEXTRATING_ID,isReadOnly=True),0,wx.EXPAND)
+    mainSizer.Add(self.buildTextSizer('Rating',(87,30),RISK_TEXTRATING_ID,isReadOnly=True),0,wx.EXPAND)
 
     scoreBox = wx.StaticBox(self,-1,'')
     scoreBoxSizer = wx.StaticBoxSizer(scoreBox,wx.VERTICAL)
     mainSizer.Add(scoreBoxSizer,1,wx.EXPAND)
-    self.scoreList = wx.ListCtrl(self,armid.RISK_LISTSCORE_ID,style=wx.LC_REPORT)
+    self.scoreList = wx.ListCtrl(self,RISK_LISTSCORE_ID,style=wx.LC_REPORT)
     self.scoreList.InsertColumn(0,'Response')
     self.scoreList.InsertColumn(1,'Unmit. Score')
     self.scoreList.InsertColumn(2,'Mit. Score')
@@ -62,19 +62,19 @@ class RiskPanel(BasePanel):
 
     scoreButtonSizer = wx.BoxSizer(wx.HORIZONTAL)
     scoreBoxSizer.Add(scoreButtonSizer,0,wx.EXPAND)
-    self.detailsButton = wx.Button(self,armid.RISK_BUTTONDETAILS_ID,'Show Details')
+    self.detailsButton = wx.Button(self,RISK_BUTTONDETAILS_ID,'Show Details')
     scoreButtonSizer.Add(self.detailsButton,0,wx.EXPAND)
 
     self.scoreDetailsSizer = wx.BoxSizer(wx.VERTICAL)
     scoreBoxSizer.Add(self.scoreDetailsSizer,1,wx.EXPAND)
-    self.detailsCtrl = wx.TextCtrl(self,armid.RISK_TEXTSCOREDETAILS_ID,style=wx.TE_READONLY | wx.TE_MULTILINE)
+    self.detailsCtrl = wx.TextCtrl(self,RISK_TEXTSCOREDETAILS_ID,style=wx.TE_READONLY | wx.TE_MULTILINE)
     self.scoreDetailsSizer.Add(self.detailsCtrl,1,wx.EXPAND)
-    mainSizer.Add(self.buildRiskButtonSizer(armid.RISK_BUTTONCOMMIT_ID,armid.RISK_BUTTONMISUSECASE_ID,isCreate),0,wx.ALIGN_CENTER)
-    self.nameCtrl = self.FindWindowById(armid.RISK_TEXTNAME_ID)
-    self.tagsCtrl = self.FindWindowById(armid.RISK_TAGS_ID)
-    self.threatCombo = self.FindWindowById(armid.RISK_COMBOTHREAT_ID)
-    self.vulnerabilityCombo = self.FindWindowById(armid.RISK_COMBOVULNERABILITY_ID)
-    self.ratingCtrl = self.FindWindowById(armid.RISK_TEXTRATING_ID)
+    mainSizer.Add(self.buildRiskButtonSizer(RISK_BUTTONCOMMIT_ID,RISK_BUTTONMISUSECASE_ID,isCreate),0,wx.ALIGN_CENTER)
+    self.nameCtrl = self.FindWindowById(RISK_TEXTNAME_ID)
+    self.tagsCtrl = self.FindWindowById(RISK_TAGS_ID)
+    self.threatCombo = self.FindWindowById(RISK_COMBOTHREAT_ID)
+    self.vulnerabilityCombo = self.FindWindowById(RISK_COMBOVULNERABILITY_ID)
+    self.ratingCtrl = self.FindWindowById(RISK_TEXTRATING_ID)
     self.threatCombo.Bind(wx.EVT_COMBOBOX,self.onThreatChange)
     self.vulnerabilityCombo.Bind(wx.EVT_COMBOBOX,self.onVulnerabilityChange)
     self.environmentList.Bind(wx.EVT_LISTBOX,self.onEnvironmentSelected)

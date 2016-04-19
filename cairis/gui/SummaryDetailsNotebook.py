@@ -17,7 +17,7 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import wx.lib.imagebrowser
 from BVNarrativeTextCtrl import BVNarrativeTextCtrl
 
@@ -28,7 +28,7 @@ class SummaryPage(wx.Panel):
     activitiesBox = wx.StaticBox(self,-1,'')
     activitiesSizer = wx.StaticBoxSizer(activitiesBox,wx.HORIZONTAL)
     topSizer.Add(activitiesSizer,1,wx.EXPAND)
-    activitiesCtrl = BVNarrativeTextCtrl(self,armid.PERSONA_TEXTACTIVITIES_ID)
+    activitiesCtrl = BVNarrativeTextCtrl(self,PERSONA_TEXTACTIVITIES_ID)
     activitiesSizer.Add(activitiesCtrl,1,wx.EXPAND)
     self.SetSizer(topSizer)
 
@@ -39,7 +39,7 @@ class AttitudesPage(wx.Panel):
     attitudesBox = wx.StaticBox(self,-1,'')
     attitudesSizer = wx.StaticBoxSizer(attitudesBox,wx.HORIZONTAL)
     topSizer.Add(attitudesSizer,1,wx.EXPAND)
-    attitudesCtrl = BVNarrativeTextCtrl(self,armid.PERSONA_TEXTATTITUDES_ID)
+    attitudesCtrl = BVNarrativeTextCtrl(self,PERSONA_TEXTATTITUDES_ID)
     attitudesSizer.Add(attitudesCtrl,1,wx.EXPAND)
     self.SetSizer(topSizer)
 
@@ -50,7 +50,7 @@ class AptitudesPage(wx.Panel):
     aptitudesBox = wx.StaticBox(self,-1,'')
     aptitudesSizer = wx.StaticBoxSizer(aptitudesBox,wx.HORIZONTAL)
     topSizer.Add(aptitudesSizer,1,wx.EXPAND)
-    aptitudesCtrl = BVNarrativeTextCtrl(self,armid.PERSONA_TEXTAPTITUDES_ID)
+    aptitudesCtrl = BVNarrativeTextCtrl(self,PERSONA_TEXTAPTITUDES_ID)
     aptitudesSizer.Add(aptitudesCtrl,1,wx.EXPAND)
     self.SetSizer(topSizer)
 
@@ -61,7 +61,7 @@ class MotivationsPage(wx.Panel):
     mBox = wx.StaticBox(self,-1,'')
     mSizer = wx.StaticBoxSizer(mBox,wx.HORIZONTAL)
     topSizer.Add(mSizer,1,wx.EXPAND)
-    mCtrl = BVNarrativeTextCtrl(self,armid.PERSONA_TEXTMOTIVATIONS_ID)
+    mCtrl = BVNarrativeTextCtrl(self,PERSONA_TEXTMOTIVATIONS_ID)
     mSizer.Add(mCtrl,1,wx.EXPAND)
     self.SetSizer(topSizer)
 
@@ -72,7 +72,7 @@ class SkillsPage(wx.Panel):
     sBox = wx.StaticBox(self,-1,'')
     sSizer = wx.StaticBoxSizer(sBox,wx.HORIZONTAL)
     topSizer.Add(sSizer,1,wx.EXPAND)
-    sCtrl = BVNarrativeTextCtrl(self,armid.PERSONA_TEXTSKILLS_ID)
+    sCtrl = BVNarrativeTextCtrl(self,PERSONA_TEXTSKILLS_ID)
     sSizer.Add(sCtrl,1,wx.EXPAND)
     self.SetSizer(topSizer)
 
@@ -83,7 +83,7 @@ class IntrinsicPage(wx.Panel):
     sBox = wx.StaticBox(self,-1,'')
     sSizer = wx.StaticBoxSizer(sBox,wx.HORIZONTAL)
     topSizer.Add(sSizer,1,wx.EXPAND)
-    sCtrl = BVNarrativeTextCtrl(self,armid.PERSONA_TEXTINTRINSIC_ID)
+    sCtrl = BVNarrativeTextCtrl(self,PERSONA_TEXTINTRINSIC_ID)
     sSizer.Add(sCtrl,1,wx.EXPAND)
     self.SetSizer(topSizer)
 
@@ -94,13 +94,13 @@ class ContextualPage(wx.Panel):
     sBox = wx.StaticBox(self,-1,'')
     sSizer = wx.StaticBoxSizer(sBox,wx.HORIZONTAL)
     topSizer.Add(sSizer,1,wx.EXPAND)
-    sCtrl = BVNarrativeTextCtrl(self,armid.PERSONA_TEXTCONTEXTUAL_ID)
+    sCtrl = BVNarrativeTextCtrl(self,PERSONA_TEXTCONTEXTUAL_ID)
     sSizer.Add(sCtrl,1,wx.EXPAND)
     self.SetSizer(topSizer)
 
 class SummaryDetailsNotebook(wx.Notebook):
   def __init__(self,parent):
-    wx.Notebook.__init__(self,parent,armid.PERSONA_NOTEBOOKSUMMARY_ID)
+    wx.Notebook.__init__(self,parent,PERSONA_NOTEBOOKSUMMARY_ID)
     p1 = SummaryPage(self)
     p2 = AttitudesPage(self)
     p3 = AptitudesPage(self)

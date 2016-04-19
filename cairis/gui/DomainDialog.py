@@ -17,15 +17,15 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
-from Borg import Borg
-from DomainParameters import DomainParameters
+from cairis.core.Borg import Borg
+from cairis.core.DomainParameters import DomainParameters
 from DomainNotebook import DomainNotebook
 
 class DomainDialog(wx.Dialog):
   def __init__(self,parent,parameters):
-    wx.Dialog.__init__(self,parent,armid.DOMAIN_ID,'Domain',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(350,400))
+    wx.Dialog.__init__(self,parent,DOMAIN_ID,'Domain',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(350,400))
     b = Borg()
     self.dbProxy = b.dbProxy
     self.theModuleId = -1
@@ -41,24 +41,24 @@ class DomainDialog(wx.Dialog):
   def buildControls(self):
     mainSizer = wx.BoxSizer(wx.VERTICAL)
 
-    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Name',(87,30),armid.DOMAIN_TEXTNAME_ID),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Name',(87,30),DOMAIN_TEXTNAME_ID),0,wx.EXPAND)
     self.notebook = DomainNotebook(self)
     mainSizer.Add(self.notebook,1,wx.EXPAND)
 
-    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,armid.DOMAIN_BUTTONCOMMIT_ID),0,wx.ALIGN_CENTER)
+    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,DOMAIN_BUTTONCOMMIT_ID),0,wx.ALIGN_CENTER)
     self.SetSizer(mainSizer)
 
-    wx.EVT_BUTTON(self,armid.DOMAIN_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,DOMAIN_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,reqMod):
     self.theModuleId = reqMod.id()
-    nameCtrl = self.FindWindowById(armid.DOMAIN_TEXTNAME_ID)
-    typeCtrl = self.notebook.FindWindowById(armid.DOMAIN_COMBOTYPE_ID)
-    givenCtrl = self.notebook.FindWindowById(armid.DOMAIN_CHECKGIVEN_ID)
-    shortCodeCtrl = self.notebook.FindWindowById(armid.DOMAIN_TEXTSHORTCODE_ID)
-    descriptionCtrl = self.notebook.FindWindowById(armid.DOMAIN_TEXTDESCRIPTION_ID)
-    domainsCtrl = self.notebook.FindWindowById(armid.DOMAIN_LISTDOMAINS_ID)
-    buttonCtrl = self.FindWindowById(armid.DOMAIN_BUTTONCOMMIT_ID)
+    nameCtrl = self.FindWindowById(DOMAIN_TEXTNAME_ID)
+    typeCtrl = self.notebook.FindWindowById(DOMAIN_COMBOTYPE_ID)
+    givenCtrl = self.notebook.FindWindowById(DOMAIN_CHECKGIVEN_ID)
+    shortCodeCtrl = self.notebook.FindWindowById(DOMAIN_TEXTSHORTCODE_ID)
+    descriptionCtrl = self.notebook.FindWindowById(DOMAIN_TEXTDESCRIPTION_ID)
+    domainsCtrl = self.notebook.FindWindowById(DOMAIN_LISTDOMAINS_ID)
+    buttonCtrl = self.FindWindowById(DOMAIN_BUTTONCOMMIT_ID)
     buttonCtrl.SetLabel('Edit')
   
     self.theModuleName = reqMod.name()
@@ -82,12 +82,12 @@ class DomainDialog(wx.Dialog):
     
   def onCommit(self,evt):
     commitLabel = self.commitVerb + ' Domain'
-    nameCtrl = self.FindWindowById(armid.DOMAIN_TEXTNAME_ID)
-    typeCtrl = self.notebook.FindWindowById(armid.DOMAIN_COMBOTYPE_ID)
-    givenCtrl = self.notebook.FindWindowById(armid.DOMAIN_CHECKGIVEN_ID)
-    shortCodeCtrl = self.notebook.FindWindowById(armid.DOMAIN_TEXTSHORTCODE_ID)
-    descriptionCtrl = self.notebook.FindWindowById(armid.DOMAIN_TEXTDESCRIPTION_ID)
-    domainsCtrl = self.notebook.FindWindowById(armid.DOMAIN_LISTDOMAINS_ID)
+    nameCtrl = self.FindWindowById(DOMAIN_TEXTNAME_ID)
+    typeCtrl = self.notebook.FindWindowById(DOMAIN_COMBOTYPE_ID)
+    givenCtrl = self.notebook.FindWindowById(DOMAIN_CHECKGIVEN_ID)
+    shortCodeCtrl = self.notebook.FindWindowById(DOMAIN_TEXTSHORTCODE_ID)
+    descriptionCtrl = self.notebook.FindWindowById(DOMAIN_TEXTDESCRIPTION_ID)
+    domainsCtrl = self.notebook.FindWindowById(DOMAIN_LISTDOMAINS_ID)
     
 
     self.theModuleName = nameCtrl.GetValue()
@@ -118,7 +118,7 @@ class DomainDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.DOMAIN_BUTTONCOMMIT_ID)
+      self.EndModal(DOMAIN_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = DomainParameters(self.theModuleName,self.theShortCode,self.theDescription,self.theType,self.isGiven,self.theDomains)

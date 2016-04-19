@@ -19,15 +19,15 @@
 #$URL$ $Id: UseCaseEnvironmentPanel.py 449 2011-03-22 12:40:04Z shaf $
 
 import wx
-import armid
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.Borg import Borg
 from EnvironmentListCtrl import EnvironmentListCtrl
 from UseCaseEnvironmentNotebook import UseCaseEnvironmentNotebook
-from UseCaseEnvironmentProperties import UseCaseEnvironmentProperties
+from cairis.core.UseCaseEnvironmentProperties import UseCaseEnvironmentProperties
 
 class UseCaseEnvironmentPanel(wx.Panel):
   def __init__(self,parent):
-    wx.Panel.__init__(self,parent,armid.USECASE_PANELENVIRONMENT_ID)
+    wx.Panel.__init__(self,parent,USECASE_PANELENVIRONMENT_ID)
     b = Borg()
     self.dbProxy = b.dbProxy
     self.theUseCaseId = None
@@ -39,7 +39,7 @@ class UseCaseEnvironmentPanel(wx.Panel):
     environmentBox = wx.StaticBox(self)
     environmentListSizer = wx.StaticBoxSizer(environmentBox,wx.HORIZONTAL)
     mainSizer.Add(environmentListSizer,0,wx.EXPAND)
-    self.environmentList = EnvironmentListCtrl(self,armid.USECASE_LISTENVIRONMENTS_ID,self.dbProxy)
+    self.environmentList = EnvironmentListCtrl(self,USECASE_LISTENVIRONMENTS_ID,self.dbProxy)
     environmentListSizer.Add(self.environmentList,1,wx.EXPAND)
     environmentDimSizer = wx.BoxSizer(wx.VERTICAL)
     mainSizer.Add(environmentDimSizer,1,wx.EXPAND)
@@ -50,9 +50,9 @@ class UseCaseEnvironmentPanel(wx.Panel):
     self.notebook = UseCaseEnvironmentNotebook(self,self.dbProxy)
     nbBoxSizer.Add(self.notebook,1,wx.EXPAND)
 
-    self.preCondCtrl = self.notebook.FindWindowById(armid.USECASE_TEXTPRECONDITION_ID)
-    self.postCondCtrl = self.notebook.FindWindowById(armid.USECASE_TEXTPOSTCONDITION_ID)
-    self.stepsCtrl = self.notebook.FindWindowById(armid.USECASE_PANELFLOW_ID)
+    self.preCondCtrl = self.notebook.FindWindowById(USECASE_TEXTPRECONDITION_ID)
+    self.postCondCtrl = self.notebook.FindWindowById(USECASE_TEXTPOSTCONDITION_ID)
+    self.stepsCtrl = self.notebook.FindWindowById(USECASE_PANELFLOW_ID)
 
     self.SetSizer(mainSizer)
 

@@ -17,19 +17,19 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from ImpliedProcessDialog import ImpliedProcessDialog
 from DialogClassParameters import DialogClassParameters
-import ARM
+from cairis.core.ARM import *
 from DimensionBaseDialog import DimensionBaseDialog
 
 class ImpliedProcessesDialog(DimensionBaseDialog):
   def __init__(self,parent):
-    DimensionBaseDialog.__init__(self,parent,armid.IMPLIEDPROCESSES_ID,'Implied Processes',(800,300),'code.png')
-    idList = [armid.IMPLIEDPROCESSES_IMPLIEDPROCESSLIST_ID,armid.IMPLIEDPROCESSES_BUTTONADD_ID,armid.IMPLIEDPROCESSES_BUTTONDELETE_ID]
+    DimensionBaseDialog.__init__(self,parent,IMPLIEDPROCESSES_ID,'Implied Processes',(800,300),'code.png')
+    idList = [IMPLIEDPROCESSES_IMPLIEDPROCESSLIST_ID,IMPLIEDPROCESSES_BUTTONADD_ID,IMPLIEDPROCESSES_BUTTONDELETE_ID]
     columnList = ['Name','Persona','Description']
     self.buildControls(idList,columnList,self.dbProxy.getImpliedProcesses,'persona_implied_process')
-    listCtrl = self.FindWindowById(armid.IMPLIEDPROCESSES_IMPLIEDPROCESSLIST_ID)
+    listCtrl = self.FindWindowById(IMPLIEDPROCESSES_IMPLIEDPROCESSLIST_ID)
     listCtrl.SetColumnWidth(0,100)
     listCtrl.SetColumnWidth(1,100)
     listCtrl.SetColumnWidth(2,400)
@@ -42,9 +42,9 @@ class ImpliedProcessesDialog(DimensionBaseDialog):
 
   def onAdd(self,evt):
     try:
-      addParameters = DialogClassParameters(armid.IMPLIEDPROCESS_ID,'Add implied process',ImpliedProcessDialog,armid.IMPLIEDPROCESS_BUTTONCOMMIT_ID,self.dbProxy.addImpliedProcess,True)
+      addParameters = DialogClassParameters(IMPLIEDPROCESS_ID,'Add implied process',ImpliedProcessDialog,IMPLIEDPROCESS_BUTTONCOMMIT_ID,self.dbProxy.addImpliedProcess,True)
       self.addObject(addParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add implied process',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -53,9 +53,9 @@ class ImpliedProcessesDialog(DimensionBaseDialog):
   def onUpdate(self,evt):
     selectedObjt = self.objts[self.selectedLabel]
     try:
-      updateParameters = DialogClassParameters(armid.IMPLIEDPROCESS_ID,'Edit implied process',ImpliedProcessDialog,armid.IMPLIEDPROCESS_BUTTONCOMMIT_ID,self.dbProxy.updateImpliedProcess,False)
+      updateParameters = DialogClassParameters(IMPLIEDPROCESS_ID,'Edit implied process',ImpliedProcessDialog,IMPLIEDPROCESS_BUTTONCOMMIT_ID,self.dbProxy.updateImpliedProcess,False)
       self.updateObject(selectedObjt,updateParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Edit implied process',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -64,7 +64,7 @@ class ImpliedProcessesDialog(DimensionBaseDialog):
   def onDelete(self,evt):
     try:
       self.deleteObject('No implied process','Delete implied process',self.dbProxy.deleteImpliedProcess)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Delete implied process',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()

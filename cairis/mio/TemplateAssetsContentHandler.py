@@ -16,9 +16,9 @@
 #  under the License.
 
 from xml.sax.handler import ContentHandler,EntityResolver
-from ValueTypeParameters import ValueTypeParameters
-from TemplateAssetParameters import TemplateAssetParameters
-from Borg import Borg
+from cairis.core.ValueTypeParameters import ValueTypeParameters
+from cairis.core.TemplateAssetParameters import TemplateAssetParameters
+from cairis.core.Borg import Borg
 
 def a2i(spLabel):
   if spLabel == 'Low':

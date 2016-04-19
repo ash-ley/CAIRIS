@@ -17,8 +17,8 @@
 
 
 import wx
-import armid
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.Borg import Borg
 from WeaknessTargetListCtrl import WeaknessTargetListCtrl
 from PersonaImpactListCtrl import PersonaImpactListCtrl
 from GoalObstacleListCtrl import GoalObstacleListCtrl
@@ -59,13 +59,13 @@ class GoalObstaclePage(wx.Panel):
 
 class WeaknessAnalysisNotebook(wx.Notebook):
   def __init__(self,parent,cvName,envName):
-    wx.Notebook.__init__(self,parent,armid.WEAKNESSANALYSIS_NOTEBOOKWEAKNESS_ID)
+    wx.Notebook.__init__(self,parent,WEAKNESSANALYSIS_NOTEBOOKWEAKNESS_ID)
     b = Borg()
     thrTargets,vulTargets = b.dbProxy.componentViewWeaknesses(cvName,envName)
-    p1 = WeaknessTargetPage(self,armid.WEAKNESSANALYSIS_LISTTHREATS_ID,cvName,thrTargets)
-    p2 = WeaknessTargetPage(self,armid.WEAKNESSANALYSIS_LISTVULNERABILITIES_ID,cvName,vulTargets)
-    p3 = PersonaImpactPage(self,armid.WEAKNESSANALYSIS_LISTPERSONAIMPACT_ID,cvName,envName)
-    p4 = GoalObstaclePage(self,armid.WEAKNESSANALYSIS_LISTGOALOBSTACLE_ID,cvName,envName)
+    p1 = WeaknessTargetPage(self,WEAKNESSANALYSIS_LISTTHREATS_ID,cvName,thrTargets)
+    p2 = WeaknessTargetPage(self,WEAKNESSANALYSIS_LISTVULNERABILITIES_ID,cvName,vulTargets)
+    p3 = PersonaImpactPage(self,WEAKNESSANALYSIS_LISTPERSONAIMPACT_ID,cvName,envName)
+    p4 = GoalObstaclePage(self,WEAKNESSANALYSIS_LISTGOALOBSTACLE_ID,cvName,envName)
 
     self.AddPage(p1,'Threats')
     self.AddPage(p2,'Vulnerabilities')

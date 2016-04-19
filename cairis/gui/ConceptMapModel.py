@@ -17,12 +17,12 @@
 
 
 #$URL$ $Id$
-from Borg import Borg
-import DotTrace
+from cairis.core.Borg import Borg
+import cairis.core.DotTrace
 import pydot
 import wx
 import os
-import ARM
+from cairis.core.ARM import *
 import gtk
 
 class ConceptMapModel:

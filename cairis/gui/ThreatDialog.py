@@ -17,11 +17,11 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
-import ARM
-from Borg import Borg
-from ThreatParameters import ThreatParameters
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
+from cairis.core.ThreatParameters import ThreatParameters
 from ThreatPanel import ThreatPanel
 
 class ThreatDialog(wx.Dialog):
@@ -43,7 +43,7 @@ class ThreatDialog(wx.Dialog):
     self.panel.buildControls(parameters.createFlag())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.THREAT_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,THREAT_BUTTONCOMMIT_ID,self.onCommit)
 
 
   def load(self,threat):
@@ -52,18 +52,18 @@ class ThreatDialog(wx.Dialog):
     self.theCommitVerb = 'Edit'
 
   def onCommit(self,evt):
-    nameCtrl = self.FindWindowById(armid.THREAT_TEXTNAME_ID)
-    tagCtrl = self.FindWindowById(armid.THREAT_TAGS_ID)
-    typeCtrl = self.FindWindowById(armid.THREAT_THREATTYPE_ID)
-    methodCtrl = self.FindWindowById(armid.THREAT_TEXTMETHOD_ID)
-    environmentCtrl = self.FindWindowById(armid.THREAT_PANELENVIRONMENT_ID)
+    nameCtrl = self.FindWindowById(THREAT_TEXTNAME_ID)
+    tagCtrl = self.FindWindowById(THREAT_TAGS_ID)
+    typeCtrl = self.FindWindowById(THREAT_THREATTYPE_ID)
+    methodCtrl = self.FindWindowById(THREAT_TEXTMETHOD_ID)
+    environmentCtrl = self.FindWindowById(THREAT_PANELENVIRONMENT_ID)
 
     self.theThreatName = nameCtrl.GetValue()
     if (self.theCommitVerb == 'Add'):
       b = Borg()
       try:
         b.dbProxy.nameCheck(self.theThreatName,'threat')
-      except ARM.ARMException,errorText:
+      except ARMException,errorText:
         dlg = wx.MessageDialog(self,str(errorText),'Add threat',wx.OK | wx.ICON_ERROR)
         dlg.ShowModal()
         dlg.Destroy()
@@ -117,7 +117,7 @@ class ThreatDialog(wx.Dialog):
           dlg.ShowModal()
           dlg.Destroy()
           return
-      self.EndModal(armid.THREAT_BUTTONCOMMIT_ID)
+      self.EndModal(THREAT_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = ThreatParameters(self.theThreatName,self.theThreatType,self.theThreatMethod,self.theTags,self.theEnvironmentProperties)

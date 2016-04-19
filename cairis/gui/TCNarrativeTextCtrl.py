@@ -17,10 +17,10 @@
 
 
 import wx
-import armid
-from ARM import *
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from BehaviouralCharacteristicsDialog import BehaviouralCharacteristicsDialog
-from Borg import Borg
+from cairis.core.Borg import Borg
 from AssumptionTaskModel import AssumptionTaskModel
 from ATModelViewer import ATModelViewer
 
@@ -28,10 +28,10 @@ class TCNarrativeTextCtrl(wx.TextCtrl):
   def __init__(self, parent, winId):
     wx.TextCtrl.__init__(self,parent,winId,size=(150,100),style=wx.TE_MULTILINE)
     self.ctrlMenu = wx.Menu()
-    self.cmItem = self.ctrlMenu.Append(armid.TCNTC_LISTCHARACTERISTICS_ID,'Characteristics')
-    self.viItem = self.ctrlMenu.Append(armid.TCNTC_VISCHARACTERISTICS_ID,'Visualise')
-    wx.EVT_MENU(self,armid.TCNTC_LISTCHARACTERISTICS_ID,self.onListCharacteristics)
-    wx.EVT_MENU(self,armid.TCNTC_VISCHARACTERISTICS_ID,self.onVisualiseCharacteristics)
+    self.cmItem = self.ctrlMenu.Append(TCNTC_LISTCHARACTERISTICS_ID,'Characteristics')
+    self.viItem = self.ctrlMenu.Append(TCNTC_VISCHARACTERISTICS_ID,'Visualise')
+    wx.EVT_MENU(self,TCNTC_LISTCHARACTERISTICS_ID,self.onListCharacteristics)
+    wx.EVT_MENU(self,TCNTC_VISCHARACTERISTICS_ID,self.onVisualiseCharacteristics)
     self.Bind(wx.EVT_RIGHT_DOWN, self.onRightClick)
 
     self.theTaskName = ''

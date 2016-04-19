@@ -17,20 +17,20 @@
 
 
 import wx
-import armid
-import Obstacle
+from cairis.core.armid import *
+import cairis.core.Obstacle
 from ObstacleDialog import ObstacleDialog
 from DialogClassParameters import DialogClassParameters
-import ARM
+from cairis.core.ARM import *
 from DimensionBaseDialog import DimensionBaseDialog
 
 class ObstaclesDialog(DimensionBaseDialog):
   def __init__(self,parent):
-    DimensionBaseDialog.__init__(self,parent,armid.OBSTACLES_ID,'Obstacles',(930,300),'obstacle.png')
-    idList = [armid.OBSTACLES_OBSTACLELIST_ID,armid.OBSTACLES_BUTTONADD_ID,armid.OBSTACLES_BUTTONDELETE_ID]
+    DimensionBaseDialog.__init__(self,parent,OBSTACLES_ID,'Obstacles',(930,300),'obstacle.png')
+    idList = [OBSTACLES_OBSTACLELIST_ID,OBSTACLES_BUTTONADD_ID,OBSTACLES_BUTTONDELETE_ID]
     columnList = ['Name']
     self.buildControls(idList,columnList,self.dbProxy.getObstacles,'obstacle')
-    listCtrl = self.FindWindowById(armid.OBSTACLES_OBSTACLELIST_ID)
+    listCtrl = self.FindWindowById(OBSTACLES_OBSTACLELIST_ID)
     listCtrl.SetColumnWidth(0,300)
 
 
@@ -40,9 +40,9 @@ class ObstaclesDialog(DimensionBaseDialog):
 
   def onAdd(self,evt):
     try:
-      addParameters = DialogClassParameters(armid.OBSTACLE_ID,'Add obstacle',ObstacleDialog,armid.OBSTACLE_BUTTONCOMMIT_ID,self.dbProxy.addObstacle,True)
+      addParameters = DialogClassParameters(OBSTACLE_ID,'Add obstacle',ObstacleDialog,OBSTACLE_BUTTONCOMMIT_ID,self.dbProxy.addObstacle,True)
       self.addObject(addParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add obstacle',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -51,9 +51,9 @@ class ObstaclesDialog(DimensionBaseDialog):
   def onUpdate(self,evt):
     selectedObjt = self.objts[self.selectedLabel]
     try:
-      updateParameters = DialogClassParameters(armid.OBSTACLE_ID,'Edit obstacle',ObstacleDialog,armid.OBSTACLE_BUTTONCOMMIT_ID,self.dbProxy.updateObstacle,False)
+      updateParameters = DialogClassParameters(OBSTACLE_ID,'Edit obstacle',ObstacleDialog,OBSTACLE_BUTTONCOMMIT_ID,self.dbProxy.updateObstacle,False)
       self.updateObject(selectedObjt,updateParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Edit obstacle',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy
@@ -61,7 +61,7 @@ class ObstaclesDialog(DimensionBaseDialog):
   def onDelete(self,evt):
     try:
       self.deleteObject('No obstacle','Delete obstacle',self.dbProxy.deleteObstacle)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Delete obstacle',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy

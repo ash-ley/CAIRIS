@@ -17,23 +17,22 @@
 
 
 from xml.sax.handler import ContentHandler,EntityResolver
-from AssetParameters import AssetParameters
-import AssetParametersFactory
-from AttackerParameters import AttackerParameters
-from AttackerEnvironmentProperties import AttackerEnvironmentProperties
-from VulnerabilityParameters import VulnerabilityParameters
-from VulnerabilityEnvironmentProperties import VulnerabilityEnvironmentProperties
-from ThreatParameters import ThreatParameters
-from ThreatEnvironmentProperties import ThreatEnvironmentProperties
-from MisuseCaseEnvironmentProperties import MisuseCaseEnvironmentProperties
-from MisuseCase import MisuseCase
-from RiskParameters import RiskParameters
-from TemplateObstacleParameters import TemplateObstacleParameters
-from ObstacleParameters import ObstacleParameters
-from ObstacleEnvironmentProperties import ObstacleEnvironmentProperties
-from GoalAssociationParameters import GoalAssociationParameters
-
-from Borg import Borg
+from cairis.core.AssetParameters import AssetParameters
+import cairis.core.AssetParametersFactory
+from cairis.core.AttackerParameters import AttackerParameters
+from cairis.core.AttackerEnvironmentProperties import AttackerEnvironmentProperties
+from cairis.core.VulnerabilityParameters import VulnerabilityParameters
+from cairis.core.VulnerabilityEnvironmentProperties import VulnerabilityEnvironmentProperties
+from cairis.core.ThreatParameters import ThreatParameters
+from cairis.core.ThreatEnvironmentProperties import ThreatEnvironmentProperties
+from cairis.core.MisuseCaseEnvironmentProperties import MisuseCaseEnvironmentProperties
+from cairis.core.MisuseCase import MisuseCase
+from cairis.core.RiskParameters import RiskParameters
+from cairis.core.TemplateObstacleParameters import TemplateObstacleParameters
+from cairis.core.ObstacleParameters import ObstacleParameters
+from cairis.core.ObstacleEnvironmentProperties import ObstacleEnvironmentProperties
+from cairis.core.GoalAssociationParameters import GoalAssociationParameters
+from cairis.core.Borg import Borg
 
 def a2i(spLabel):
   if spLabel == 'Low':

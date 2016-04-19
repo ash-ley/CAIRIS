@@ -17,21 +17,21 @@
 
 
 import wx
-import armid
-import ExternalDocument
+from cairis.core.armid import *
+import cairis.core.ExternalDocument
 from ExternalDocumentDialog import ExternalDocumentDialog
 from DialogClassParameters import DialogClassParameters
-import ARM
+from cairis.core.ARM import *
 from DimensionBaseDialog import DimensionBaseDialog
 
 class ExternalDocumentsDialog(DimensionBaseDialog):
   def __init__(self,parent):
-    DimensionBaseDialog.__init__(self,parent,armid.EXTERNALDOCUMENTS_ID,'External Documents',(930,300),'persona.png')
+    DimensionBaseDialog.__init__(self,parent,EXTERNALDOCUMENTS_ID,'External Documents',(930,300),'persona.png')
     self.theMainWindow = parent
-    idList = [armid.EXTERNALDOCUMENTS_DOCLIST_ID,armid.EXTERNALDOCUMENTS_BUTTONADD_ID,armid.EXTERNALDOCUMENTS_BUTTONDELETE_ID]
+    idList = [EXTERNALDOCUMENTS_DOCLIST_ID,EXTERNALDOCUMENTS_BUTTONADD_ID,EXTERNALDOCUMENTS_BUTTONDELETE_ID]
     columnList = ['Name']
     self.buildControls(idList,columnList,self.dbProxy.getExternalDocuments,'external_document')
-    listCtrl = self.FindWindowById(armid.EXTERNALDOCUMENTS_DOCLIST_ID)
+    listCtrl = self.FindWindowById(EXTERNALDOCUMENTS_DOCLIST_ID)
     listCtrl.SetColumnWidth(0,300)
 
 
@@ -40,9 +40,9 @@ class ExternalDocumentsDialog(DimensionBaseDialog):
 
   def onAdd(self,evt):
     try:
-      addParameters = DialogClassParameters(armid.EXTERNALDOCUMENT_ID,'Add External Document',ExternalDocumentDialog,armid.EXTERNALDOCUMENT_BUTTONCOMMIT_ID,self.dbProxy.addExternalDocument,True)
+      addParameters = DialogClassParameters(EXTERNALDOCUMENT_ID,'Add External Document',ExternalDocumentDialog,EXTERNALDOCUMENT_BUTTONCOMMIT_ID,self.dbProxy.addExternalDocument,True)
       self.addObject(addParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add external document',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -52,9 +52,9 @@ class ExternalDocumentsDialog(DimensionBaseDialog):
     selectedObjt = self.objts[self.selectedLabel]
     objtId = selectedObjt.id()
     try:
-      updateParameters = DialogClassParameters(armid.EXTERNALDOCUMENT_ID,'Edit External Document',ExternalDocumentDialog,armid.EXTERNALDOCUMENT_BUTTONCOMMIT_ID,self.dbProxy.updateExternalDocument,False)
+      updateParameters = DialogClassParameters(EXTERNALDOCUMENT_ID,'Edit External Document',ExternalDocumentDialog,EXTERNALDOCUMENT_BUTTONCOMMIT_ID,self.dbProxy.updateExternalDocument,False)
       self.updateObject(selectedObjt,updateParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Edit external document',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy
@@ -62,7 +62,7 @@ class ExternalDocumentsDialog(DimensionBaseDialog):
   def onDelete(self,evt):
     try:
       self.deleteObject('No external document','Delete external document',self.dbProxy.deleteExternalDocument)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Delete external document',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy

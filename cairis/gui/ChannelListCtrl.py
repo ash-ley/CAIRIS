@@ -17,8 +17,8 @@
 
 
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from ChannelDialog import ChannelDialog
 
 class ChannelListCtrl(wx.ListCtrl):
@@ -29,15 +29,15 @@ class ChannelListCtrl(wx.ListCtrl):
     self.InsertColumn(1,'Data Type')
     self.SetColumnWidth(1,300)
     self.theDimMenu = wx.Menu()
-    self.theDimMenu.Append(armid.CHANNELLISTCTRL_MENUADD_ID,'Add')
-    self.theDimMenu.Append(armid.CHANNELLISTCTRL_MENUDELETE_ID,'Delete')
+    self.theDimMenu.Append(CHANNELLISTCTRL_MENUADD_ID,'Add')
+    self.theDimMenu.Append(CHANNELLISTCTRL_MENUDELETE_ID,'Delete')
     self.theSelectedValue = ''
     self.theSelectedIdx = -1
     self.Bind(wx.EVT_RIGHT_DOWN,self.OnRightDown)
     self.Bind(wx.EVT_LIST_ITEM_SELECTED,self.OnItemSelected)
     self.Bind(wx.EVT_LIST_ITEM_DESELECTED,self.OnItemDeselected)
-    wx.EVT_MENU(self.theDimMenu,armid.CHANNELLISTCTRL_MENUADD_ID,self.onAddChannel)
-    wx.EVT_MENU(self.theDimMenu,armid.CHANNELLISTCTRL_MENUDELETE_ID,self.onDeleteChannel)
+    wx.EVT_MENU(self.theDimMenu,CHANNELLISTCTRL_MENUADD_ID,self.onAddChannel)
+    wx.EVT_MENU(self.theDimMenu,CHANNELLISTCTRL_MENUDELETE_ID,self.onDeleteChannel)
 
   def OnItemSelected(self,evt):
     self.theSelectedIdx = evt.GetIndex()
@@ -50,7 +50,7 @@ class ChannelListCtrl(wx.ListCtrl):
 
   def onAddChannel(self,evt):
     dlg = ChannelDialog(self)
-    if (dlg.ShowModal() == armid.CHANNEL_BUTTONADD_ID):
+    if (dlg.ShowModal() == CHANNEL_BUTTONADD_ID):
       channelName = dlg.channel()
       dType = dlg.dataType()
       idx = self.GetItemCount()

@@ -16,12 +16,12 @@
 #  under the License.
 
 
-from Borg import Borg
-import DotTrace
+from cairis.core.Borg import Borg
+import cairis.core.DotTrace
 import pydot
 import wx
 import os
-import ARM
+from cairis.core.ARM import *
 
 class CodeNetworkModel:
   def __init__(self,codeNetwork,personaName,graphName = 'codenetwork'):

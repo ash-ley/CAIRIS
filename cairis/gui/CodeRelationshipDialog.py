@@ -17,13 +17,13 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 class CodeRelationshipDialog(wx.Dialog):
   def __init__(self,parent,fromName = '',toName = '',rType = ''):
-    wx.Dialog.__init__(self,parent,armid.CODERELATIONSHIP_ID,'Add Code Relationship',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,200))
+    wx.Dialog.__init__(self,parent,CODERELATIONSHIP_ID,'Add Code Relationship',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,200))
 
     self.rtLookup = {'==':'associated','=>':'implies','<>':'conflict','[]':'part-of'}
     self.lookupRt = {'':'','associated':'==','implies':'=>','conflict':'<>','part-of':'[]'}
@@ -37,27 +37,27 @@ class CodeRelationshipDialog(wx.Dialog):
 
     b = Borg()
     codeList = b.dbProxy.getDimensionNames('code')
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'From',(87,30),armid.CODERELATIONSHIP_COMBOFROMCODE_ID,codeList),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'To',(87,30),armid.CODERELATIONSHIP_COMBOTOCODE_ID,codeList),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'From',(87,30),CODERELATIONSHIP_COMBOFROMCODE_ID,codeList),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'To',(87,30),CODERELATIONSHIP_COMBOTOCODE_ID,codeList),0,wx.EXPAND)
     rtList = ['==','=>','<>','[]']
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Relationship',(87,30),armid.CODERELATIONSHIP_COMBORTTYPE_ID,rtList),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Relationship',(87,30),CODERELATIONSHIP_COMBORTTYPE_ID,rtList),0,wx.EXPAND)
     mainSizer.Add(wx.StaticText(self,-1,''),1,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,armid.CODERELATIONSHIP_BUTTONADD_ID),0,wx.ALIGN_CENTER)
+    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,CODERELATIONSHIP_BUTTONADD_ID),0,wx.ALIGN_CENTER)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.CODERELATIONSHIP_BUTTONADD_ID,self.onCommit)
+    wx.EVT_BUTTON(self,CODERELATIONSHIP_BUTTONADD_ID,self.onCommit)
 
     if self.theFromName != '':
-      fromCtrl = self.FindWindowById(armid.CODERELATIONSHIP_COMBOFROMCODE_ID)
-      toCtrl = self.FindWindowById(armid.CODERELATIONSHIP_COMBOTOCODE_ID)
-      rtCtrl = self.FindWindowById(armid.CODERELATIONSHIP_COMBORTTYPE_ID)
+      fromCtrl = self.FindWindowById(CODERELATIONSHIP_COMBOFROMCODE_ID)
+      toCtrl = self.FindWindowById(CODERELATIONSHIP_COMBOTOCODE_ID)
+      rtCtrl = self.FindWindowById(CODERELATIONSHIP_COMBORTTYPE_ID)
       fromCtrl.SetValue(self.theFromName)
       toCtrl.SetValue(self.theToName)
       rtCtrl.SetValue(self.theRelationship)
 
   def load(self,fromName,toValue,rType):
-    fromCtrl = self.FindWindowById(armid.CODERELATIONSHIP_COMBOFROMCODE_ID)
-    toCtrl = self.FindWindowById(armid.CODERELATIONSHIP_COMBOTOCODE_ID)
-    rtCtrl = self.FindWindowById(armid.CODERELATIONSHIP_COMBORTTYPE_ID)
+    fromCtrl = self.FindWindowById(CODERELATIONSHIP_COMBOFROMCODE_ID)
+    toCtrl = self.FindWindowById(CODERELATIONSHIP_COMBOTOCODE_ID)
+    rtCtrl = self.FindWindowById(CODERELATIONSHIP_COMBORTTYPE_ID)
     commitCtrl.SetLabel('Edit')
     fromCtrl.SetValue(fromName)
     toCtrl.SetValue(toName)
@@ -65,9 +65,9 @@ class CodeRelationshipDialog(wx.Dialog):
     self.commitLabel = 'Edit'
     
   def onCommit(self,evt):
-    fromCtrl = self.FindWindowById(armid.CODERELATIONSHIP_COMBOFROMCODE_ID)
-    toCtrl = self.FindWindowById(armid.CODERELATIONSHIP_COMBOTOCODE_ID)
-    rtCtrl = self.FindWindowById(armid.CODERELATIONSHIP_COMBORTTYPE_ID)
+    fromCtrl = self.FindWindowById(CODERELATIONSHIP_COMBOFROMCODE_ID)
+    toCtrl = self.FindWindowById(CODERELATIONSHIP_COMBOTOCODE_ID)
+    rtCtrl = self.FindWindowById(CODERELATIONSHIP_COMBORTTYPE_ID)
     self.theFromName = fromCtrl.GetValue()
     self.theToName = toCtrl.GetValue()
     self.theRelationship = rtCtrl.GetValue()
@@ -89,7 +89,7 @@ class CodeRelationshipDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.CODERELATIONSHIP_BUTTONADD_ID)
+      self.EndModal(CODERELATIONSHIP_BUTTONADD_ID)
 
   def fromName(self): return self.theFromName
   def toName(self): return self.theToName

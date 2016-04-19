@@ -17,8 +17,8 @@
 
 
 import xdot
-from Borg import Borg
-import ARM
+from cairis.core.Borg import Borg
+from cairis.core.ARM import *
 import gtk
 import math
 import cairo
@@ -307,7 +307,7 @@ class ContextDotWindow(gtk.Window):
         self.canonicalModel = proxy.contextModel(environmentName)
         self.set_xdotcode(self.canonicalModel.graph())
         self.widget.zoom_to_fit()
-      except ARM.ARMException, ex:
+      except ARMException, ex:
         dlg = gtk.MessageDialog(type=gtk.MESSAGE_ERROR,message_format=str(ex),buttons=gtk.BUTTONS_OK)
         dlg.set_title('Context Model Viewer')
         dlg.run()

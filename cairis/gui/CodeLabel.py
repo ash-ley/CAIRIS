@@ -1,5 +1,5 @@
 import wx
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 class CodeLabel(wx.StaticText):
   def __init__(self,parent,winId,lblTxt):

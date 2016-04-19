@@ -17,21 +17,21 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from ThreatDialog import ThreatDialog
 from DialogClassParameters import DialogClassParameters
 from DirectoryDialog import DirectoryDialog
 import DimensionBaseDialog
-import ARM
+from cairis.core.ARM import *
 
 class ThreatsDialog(DimensionBaseDialog.DimensionBaseDialog):
   def __init__(self,parent):
-    DimensionBaseDialog.DimensionBaseDialog.__init__(self,parent,armid.THREATS_ID,'Threats',(800,300),'threat.png')
-    idList = [armid.THREATS_THREATLIST_ID,armid.THREATS_BUTTONADD_ID,armid.THREATS_BUTTONDELETE_ID]
+    DimensionBaseDialog.DimensionBaseDialog.__init__(self,parent,THREATS_ID,'Threats',(800,300),'threat.png')
+    idList = [THREATS_THREATLIST_ID,THREATS_BUTTONADD_ID,THREATS_BUTTONDELETE_ID]
     columnList = ['Name','Type']
     self.buildControls(idList,columnList,self.dbProxy.getThreats,'threat')
-    wx.EVT_BUTTON(self,armid.CC_DIRECTORYIMPORT_ID,self.onImport)
-    listCtrl = self.FindWindowById(armid.THREATS_THREATLIST_ID)
+    wx.EVT_BUTTON(self,CC_DIRECTORYIMPORT_ID,self.onImport)
+    listCtrl = self.FindWindowById(THREATS_THREATLIST_ID)
     listCtrl.SetColumnWidth(0,300)
     listCtrl.SetColumnWidth(1,300)
 
@@ -54,9 +54,9 @@ class ThreatsDialog(DimensionBaseDialog.DimensionBaseDialog):
         dlg.ShowModal()
         dlg.Destroy()
         return
-      addParameters = DialogClassParameters(armid.THREAT_ID,'Add threat',ThreatDialog,armid.THREAT_BUTTONCOMMIT_ID,self.dbProxy.addThreat,True)
+      addParameters = DialogClassParameters(THREAT_ID,'Add threat',ThreatDialog,THREAT_BUTTONCOMMIT_ID,self.dbProxy.addThreat,True)
       self.addObject(addParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add threat',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -71,11 +71,11 @@ class ThreatsDialog(DimensionBaseDialog.DimensionBaseDialog):
         dlg.Destroy()
         return
       dirDlg = DirectoryDialog(self,'threat')
-      if (dirDlg.ShowModal() == armid.DIRECTORYDIALOG_BUTTONIMPORT_ID):
+      if (dirDlg.ShowModal() == DIRECTORYDIALOG_BUTTONIMPORT_ID):
         objt = dirDlg.object()
-        importParameters = DialogClassParameters(armid.THREAT_ID,'Import threat',ThreatDialog,armid.THREAT_BUTTONCOMMIT_ID,self.dbProxy.addThreat,False)
+        importParameters = DialogClassParameters(THREAT_ID,'Import threat',ThreatDialog,THREAT_BUTTONCOMMIT_ID,self.dbProxy.addThreat,False)
         self.importObject(objt,importParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Import threat',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -84,9 +84,9 @@ class ThreatsDialog(DimensionBaseDialog.DimensionBaseDialog):
   def onUpdate(self,evt):
     try:
       selectedObjt = self.objts[self.selectedLabel]
-      updateParameters = DialogClassParameters(armid.THREAT_ID,'Edit threat',ThreatDialog,armid.THREAT_BUTTONCOMMIT_ID,self.dbProxy.updateThreat,False)
+      updateParameters = DialogClassParameters(THREAT_ID,'Edit threat',ThreatDialog,THREAT_BUTTONCOMMIT_ID,self.dbProxy.updateThreat,False)
       self.updateObject(selectedObjt,updateParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Update threat',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy
@@ -94,7 +94,7 @@ class ThreatsDialog(DimensionBaseDialog.DimensionBaseDialog):
   def onDelete(self,evt):
     try:
       self.deleteObject('No threat','Delete threat',self.dbProxy.deleteThreat)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Delete threat',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy

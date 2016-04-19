@@ -17,11 +17,11 @@
 
 
 import wx
-import armid
-import GoalRequirementFactory
-from Borg import Borg
+from cairis.core.armid import *
+import cairis.core.GoalRequirementFactory
+from cairis.core.Borg import Borg
 from DimensionNameDialog import DimensionNameDialog
-from ARM import *
+from cairis.core.ARM import *
 
 class GoalListCtrl(wx.ListCtrl):
 
@@ -29,9 +29,9 @@ class GoalListCtrl(wx.ListCtrl):
     wx.ListCtrl.__init__(self,parent,winId,style=wx.LC_REPORT)
     self.theParentDialog = parent
     self.theTraceMenu = wx.Menu()
-    self.theTraceMenu.Append(armid.TRACE_MENUTRACE_GENERATESPECIFIC_ID,'Generate Requirement')
+    self.theTraceMenu.Append(TRACE_MENUTRACE_GENERATESPECIFIC_ID,'Generate Requirement')
     self.theRequirementGrid = parent.theMainWindow.requirementGrid()
-    wx.EVT_MENU(self,armid.TRACE_MENUTRACE_GENERATESPECIFIC_ID,self.onSelectGenerate)
+    wx.EVT_MENU(self,TRACE_MENUTRACE_GENERATESPECIFIC_ID,self.onSelectGenerate)
     self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK, self.onRightClick)
 
 
@@ -46,7 +46,7 @@ class GoalListCtrl(wx.ListCtrl):
       dbProxy = b.dbProxy
       domains = dbProxy.getDimensionNames('domain',False)
       cDlg = DimensionNameDialog(self,'domain',domains,'Select')
-      if (cDlg.ShowModal() == armid.DIMNAME_BUTTONACTION_ID):
+      if (cDlg.ShowModal() == DIMNAME_BUTTONACTION_ID):
         domainName = cDlg.dimensionName()
         GoalRequirementFactory.build(objt,domainName,self.theParentDialog.theMainWindow)
 # Change domain in panel

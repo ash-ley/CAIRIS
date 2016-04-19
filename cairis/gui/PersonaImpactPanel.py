@@ -17,13 +17,13 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from BasePanel import BasePanel
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 class PersonaImpactPanel(BasePanel):
   def __init__(self,parent,cvName,personaName,envName):
-    BasePanel.__init__(self,parent,armid.PERSONAIMPACT_ID)
+    BasePanel.__init__(self,parent,PERSONAIMPACT_ID)
     b = Borg()
     self.dbProxy = b.dbProxy
     self.theTaskIdx = -1
@@ -39,7 +39,7 @@ class PersonaImpactPanel(BasePanel):
     mainSizer.Add(taskSizer,1,wx.EXPAND)
     mainSizer.Add(ucCompSizer,1,wx.EXPAND)
 
-    self.theTaskList = wx.ListCtrl(self,armid.PERSONAIMPACT_LISTTASKIMPACT_ID,size=wx.DefaultSize,style=wx.LC_REPORT)
+    self.theTaskList = wx.ListCtrl(self,PERSONAIMPACT_LISTTASKIMPACT_ID,size=wx.DefaultSize,style=wx.LC_REPORT)
     self.theTaskList.InsertColumn(0,'Task')
     self.theTaskList.SetColumnWidth(0,150)
     self.theTaskList.InsertColumn(1,'Duration')
@@ -63,11 +63,11 @@ class PersonaImpactPanel(BasePanel):
       self.theTaskList.SetStringItem(idx,4,taskImpact[3]) 
     taskSizer.Add(self.theTaskList,1,wx.EXPAND)
 
-    self.theUcList = wx.ListCtrl(self,armid.PERSONAIMPACT_LISTUSECASES_ID,size=wx.DefaultSize,style=wx.LC_REPORT)
+    self.theUcList = wx.ListCtrl(self,PERSONAIMPACT_LISTUSECASES_ID,size=wx.DefaultSize,style=wx.LC_REPORT)
     self.theUcList.InsertColumn(0,'Use Case')
     self.theUcList.SetColumnWidth(0,150)
 
-    self.theComponentList = wx.ListCtrl(self,armid.PERSONAIMPACT_LISTCOMPONENTS_ID,size=wx.DefaultSize,style=wx.LC_REPORT)
+    self.theComponentList = wx.ListCtrl(self,PERSONAIMPACT_LISTCOMPONENTS_ID,size=wx.DefaultSize,style=wx.LC_REPORT)
     self.theComponentList.InsertColumn(0,'Component')
     self.theComponentList.SetColumnWidth(0,150)
 

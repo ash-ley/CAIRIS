@@ -18,14 +18,14 @@
 
 
 import wx
-import armid
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.Borg import Borg
 from ReferenceListCtrl import ReferenceListCtrl
 from ReferenceDialog import ReferenceDialog
 
 class WarrantListCtrl(ReferenceListCtrl):
   def __init__(self,parent,backingList,isTask = False,pName = ''):
-    ReferenceListCtrl.__init__(self,parent,armid.PERSONACHARACTERISTIC_LISTWARRANT_ID,'warrant')
+    ReferenceListCtrl.__init__(self,parent,PERSONACHARACTERISTIC_LISTWARRANT_ID,'warrant')
     self.thePcId = -1
     self.thePersonaName = pName
     self.theBackingList = backingList
@@ -33,7 +33,7 @@ class WarrantListCtrl(ReferenceListCtrl):
 
   def onAddReference(self,evt):
     dlg = ReferenceDialog(self,self.theCharacteristicType)
-    if (dlg.ShowModal() == armid.CHARACTERISTICREFERENCE_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == CHARACTERISTICREFERENCE_BUTTONCOMMIT_ID):
       self.theSelectedIdx = self.GetItemCount()
       refName = dlg.reference()
       dimName = dlg.dimension()

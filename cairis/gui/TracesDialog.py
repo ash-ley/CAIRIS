@@ -17,20 +17,20 @@
 
 
 import wx
-import ObjectFactory
-import armid
-import Trace
+from cairis.core.ObjectFactory import *
+from cairis.core.armid import *
+import cairis.core.Trace
 import TraceDialog
 import DialogClassParameters
 import TraceDialogParameters
 import DimensionBaseDialog
-import ARM
+from cairis.core.ARM import *
 
 class TracesDialog(DimensionBaseDialog.DimensionBaseDialog):
   def __init__(self,parent):
-    DimensionBaseDialog.DimensionBaseDialog.__init__(self,parent,armid.TRACES_ID,'Traces',(800,300))
+    DimensionBaseDialog.DimensionBaseDialog.__init__(self,parent,TRACES_ID,'Traces',(800,300))
     self.traces = self.dbProxy.riskAnalysisModel()
-    idList = [armid.TRACES_LISTTRACES_ID,armid.TRACES_BUTTONADD_ID,armid.TRACES_BUTTONDELETE_ID]
+    idList = [TRACES_LISTTRACES_ID,TRACES_BUTTONADD_ID,TRACES_BUTTONDELETE_ID]
     columnList = ['From','Description','To','Description']
     self.buildControls(idList,columnList,0,'trace')
 
@@ -42,9 +42,9 @@ class TracesDialog(DimensionBaseDialog.DimensionBaseDialog):
 
   def onAdd(self,evt):
     try:
-      addParameters = DialogClassParameters.DialogClassParameters(armid.TRACE_ID,'Add trace',TraceDialog.TraceDialog,armid.TRACE_BUTTONCOMMIT_ID,self.dbProxy.addTrace,True)
+      addParameters = DialogClassParameters.DialogClassParameters(TRACE_ID,'Add trace',TraceDialog.TraceDialog,TRACE_BUTTONCOMMIT_ID,self.dbProxy.addTrace,True)
       self.addObject(addParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add trace',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -54,9 +54,9 @@ class TracesDialog(DimensionBaseDialog.DimensionBaseDialog):
     selectedIdx = evt.GetIndex()
     selectedObjt = self.traces[selectedIdx]
     try:
-      updateParameters = TraceDialogParameters.TraceDialogParameters(armid.TRACE_ID,'Edit trace',TraceDialog.TraceDialog,armid.TRACE_BUTTONCOMMIT_ID,self.dbProxy.updateTrace,False,selectedObjt.fromObject(),selectedObjt.fromId(),selectedObjt.toObject(),selectedObjt.toId())
+      updateParameters = TraceDialogParameters.TraceDialogParameters(TRACE_ID,'Edit trace',TraceDialog.TraceDialog,TRACE_BUTTONCOMMIT_ID,self.dbProxy.updateTrace,False,selectedObjt.fromObject(),selectedObjt.fromId(),selectedObjt.toObject(),selectedObjt.toId())
       self.updateObject(selectedObjt,updateParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Edit trace',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy
@@ -79,7 +79,7 @@ class TracesDialog(DimensionBaseDialog.DimensionBaseDialog):
   def addObjectToDialog(self,objtId,listId,dialogParameters):
     listCtrl = self.FindWindowById(self.listId)
     listRow = listCtrl.GetItemCount()
-    newObjt = ObjectFactory.build(objtId,dialogParameters)
+    newObjt = cairis.core.ObjectFactory.build(objtId,dialogParameters)
     self.addObjectRow(listCtrl,listRow,newObjt)
     self.traces.append(newObjt)
 
@@ -88,6 +88,6 @@ class TracesDialog(DimensionBaseDialog.DimensionBaseDialog):
     del self.traces[self.selectedIdx]
     listCtrl = self.FindWindowById(self.listId)
     listCtrl.DeleteItem(self.selectedIdx)
-    updatedObjt = ObjectFactory.build(-1,dialogParameters)
+    updatedObjt = cairis.core.ObjectFactory.build(-1,dialogParameters)
     self.addObjectRow(listCtrl,self.selectedIdx,updatedObjt)
     self.traces.insert(self.selectedIdx,updatedObjt)

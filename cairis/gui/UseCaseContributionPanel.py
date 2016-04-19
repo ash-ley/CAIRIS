@@ -18,46 +18,46 @@
 
 #$URL$
 import wx
-import armid
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.Borg import Borg
 from BasePanel import BasePanel
 
 class UseCaseContributionPanel(BasePanel):
   def __init__(self,parent):
-    wx.Panel.__init__(self,parent,armid.USECASECONTRIBUTION_ID)
+    wx.Panel.__init__(self,parent,USECASECONTRIBUTION_ID)
     b = Borg()
     self.dbProxy = b.dbProxy
     mainSizer = wx.BoxSizer(wx.VERTICAL)
     ucs = self.dbProxy.getDimensionNames('usecase')
-    mainSizer.Add(self.buildComboSizerList('Use Case',(87,30),armid.REFERENCECONTRIBUTION_COMBOSOURCE_ID,ucs),0,wx.EXPAND)
+    mainSizer.Add(self.buildComboSizerList('Use Case',(87,30),REFERENCECONTRIBUTION_COMBOSOURCE_ID,ucs),0,wx.EXPAND)
     charSynopses = self.dbProxy.getDimensionNames('characteristic_synopsis')
-    mainSizer.Add(self.buildRadioButtonSizer('Referent',(87,30),[(armid.REFERENCECONTRIBUTION_RADIOREFERENCE_ID,'Reference'),(armid.REFERENCECONTRIBUTION_RADIOCHARACTERISTIC_ID,'Characteristic')]))
+    mainSizer.Add(self.buildRadioButtonSizer('Referent',(87,30),[(REFERENCECONTRIBUTION_RADIOREFERENCE_ID,'Reference'),(REFERENCECONTRIBUTION_RADIOCHARACTERISTIC_ID,'Characteristic')]))
     refs = self.dbProxy.getDimensionNames('reference_synopsis')
-    mainSizer.Add(self.buildComboSizerList('Reference',(87,30),armid.REFERENCECONTRIBUTION_COMBODESTINATION_ID,refs),0,wx.EXPAND)
-    mainSizer.Add(self.buildComboSizerList('Means/End',(87,30),armid.REFERENCECONTRIBUTION_COMBOMEANSEND_ID,['means','end']),0,wx.EXPAND)
+    mainSizer.Add(self.buildComboSizerList('Reference',(87,30),REFERENCECONTRIBUTION_COMBODESTINATION_ID,refs),0,wx.EXPAND)
+    mainSizer.Add(self.buildComboSizerList('Means/End',(87,30),REFERENCECONTRIBUTION_COMBOMEANSEND_ID,['means','end']),0,wx.EXPAND)
     contType = ['Make','SomePositive','Help','Hurt','SomeNegative','Break']
-    mainSizer.Add(self.buildComboSizerList('Contribution',(87,30),armid.REFERENCECONTRIBUTION_COMBOCONTRIBUTION_ID,contType),0,wx.EXPAND)
-    mainSizer.Add(self.buildCommitButtonSizer(armid.REFERENCECONTRIBUTION_BUTTONCOMMIT_ID,True),0,wx.ALIGN_CENTER)
-    wx.EVT_RADIOBUTTON(self,armid.REFERENCECONTRIBUTION_RADIOREFERENCE_ID,self.onReferenceSelected)
-    wx.EVT_RADIOBUTTON(self,armid.REFERENCECONTRIBUTION_RADIOCHARACTERISTIC_ID,self.onCharacteristicSelected)
+    mainSizer.Add(self.buildComboSizerList('Contribution',(87,30),REFERENCECONTRIBUTION_COMBOCONTRIBUTION_ID,contType),0,wx.EXPAND)
+    mainSizer.Add(self.buildCommitButtonSizer(REFERENCECONTRIBUTION_BUTTONCOMMIT_ID,True),0,wx.ALIGN_CENTER)
+    wx.EVT_RADIOBUTTON(self,REFERENCECONTRIBUTION_RADIOREFERENCE_ID,self.onReferenceSelected)
+    wx.EVT_RADIOBUTTON(self,REFERENCECONTRIBUTION_RADIOCHARACTERISTIC_ID,self.onCharacteristicSelected)
     self.SetSizer(mainSizer)
 
 
   def load(self,objt,rType):
-    srcCtrl = self.FindWindowById(armid.REFERENCECONTRIBUTION_COMBOSOURCE_ID)
-    destCtrl = self.FindWindowById(armid.REFERENCECONTRIBUTION_COMBODESTINATION_ID)
-    meCtrl = self.FindWindowById(armid.REFERENCECONTRIBUTION_COMBOMEANSEND_ID)
-    contCtrl = self.FindWindowById(armid.REFERENCECONTRIBUTION_COMBOCONTRIBUTION_ID)
+    srcCtrl = self.FindWindowById(REFERENCECONTRIBUTION_COMBOSOURCE_ID)
+    destCtrl = self.FindWindowById(REFERENCECONTRIBUTION_COMBODESTINATION_ID)
+    meCtrl = self.FindWindowById(REFERENCECONTRIBUTION_COMBOMEANSEND_ID)
+    contCtrl = self.FindWindowById(REFERENCECONTRIBUTION_COMBOCONTRIBUTION_ID)
 
     srcCtrl.SetValue(objt.source())
     if (objt.meansEnd() != ''):
       if (rType == 'characteristic'):
-        charRadio = self.FindWindowById(armid.REFERENCECONTRIBUTION_RADIOCHARACTERISTIC_ID)
+        charRadio = self.FindWindowById(REFERENCECONTRIBUTION_RADIOCHARACTERISTIC_ID)
         charRadio.SetValue(True)
         chars = self.dbProxy.getDimensionNames('characteristic_synopsis')
         destCtrl.SetItems(chars)
       else:
-        refRadio = self.FindWindowById(armid.REFERENCECONTRIBUTION_RADIOCHARACTERISTIC_ID)
+        refRadio = self.FindWindowById(REFERENCECONTRIBUTION_RADIOCHARACTERISTIC_ID)
         refRadio.SetValue(True)
         refs = self.dbProxy.getDimensionNames('reference_synopsis')
         destCtrl.SetItems(refs)
@@ -66,13 +66,13 @@ class UseCaseContributionPanel(BasePanel):
       contCtrl.SetValue(objt.contribution())
 
   def onReferenceSelected(self,evt):
-    refCtrl = self.FindWindowById(armid.REFERENCECONTRIBUTION_COMBODESTINATION_ID)
+    refCtrl = self.FindWindowById(REFERENCECONTRIBUTION_COMBODESTINATION_ID)
     refs = self.dbProxy.getDimensionNames('reference_synopsis')
     refCtrl.SetItems(refs)
     refCtrl.SetValue('')
 
   def onCharacteristicSelected(self,evt):
-    refCtrl = self.FindWindowById(armid.REFERENCECONTRIBUTION_COMBODESTINATION_ID)
+    refCtrl = self.FindWindowById(REFERENCECONTRIBUTION_COMBODESTINATION_ID)
     refs = self.dbProxy.getDimensionNames('characteristic_synopsis')
     refCtrl.SetItems(refs)
     refCtrl.SetValue('')

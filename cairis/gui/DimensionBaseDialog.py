@@ -18,17 +18,17 @@
 
 import wx
 from BaseDialog import BaseDialog
-from Borg import Borg
-import ObjectFactory
-import armid
+from cairis.core.Borg import Borg
+from cairis.core.ObjectFactory import *
+from cairis.core.armid import *
 import DialogClassParameters
-import DimensionNameIdentifier
+import cairis.core.DimensionNameIdentifier
 import DimensionBaseDialog
 import DependentsDialog
 from ExposedCountermeasureDialog import ExposedCountermeasureDialog
 from CharacteristicListCtrl import CharacteristicListCtrl
 import os
-import ARM
+from cairis.core.ARM import *
 
 LIST_POS = 0
 ADD_POS = 1
@@ -62,7 +62,7 @@ class DimensionBaseDialog(BaseDialog):
     BaseDialog.__init__(self,parent,winId,winLabel,initSize)
     b = Borg()
     self.dbProxy = b.dbProxy
-    self.theDimensionName = DimensionNameIdentifier.dimensionName(self.__class__.__name__)
+    self.theDimensionName = cairis.core.DimensionNameIdentifier.dimensionName(self.__class__.__name__)
     self.selectedLabel = ""
     self.selectedIdx = -1
     dimIcon = wx.Icon(b.imageDir + '/' + dimIconFile,wx.BITMAP_TYPE_PNG)
@@ -89,14 +89,14 @@ class DimensionBaseDialog(BaseDialog):
       comboSizer = wx.StaticBoxSizer(tcBox,wx.VERTICAL)
       docs = ['']
       docs += self.dbProxy.getDimensionNames('external_document')
-      self.docCtrl = wx.ComboBox(self,armid.DOCUMENTREFERENCES_COMBOEXTERNALDOCUMENT_ID,"",choices=docs,size=wx.DefaultSize,style=wx.CB_READONLY)
+      self.docCtrl = wx.ComboBox(self,DOCUMENTREFERENCES_COMBOEXTERNALDOCUMENT_ID,"",choices=docs,size=wx.DefaultSize,style=wx.CB_READONLY)
       winSizer.Add(comboSizer,0,wx.EXPAND)
       comboSizer.Add(self.docCtrl,1,wx.EXPAND)
     elif (dimName == 'asset_value'):
       tcBox = wx.StaticBox(self,-1,'Environment')
       comboSizer = wx.StaticBoxSizer(tcBox,wx.VERTICAL)
       environments = self.dbProxy.getDimensionNames('environment')
-      self.environmentCtrl = wx.ComboBox(self,armid.VALUETYPES_COMBOENVIRONMENT_ID,"",choices=environments,size=wx.DefaultSize,style=wx.CB_READONLY)
+      self.environmentCtrl = wx.ComboBox(self,VALUETYPES_COMBOENVIRONMENT_ID,"",choices=environments,size=wx.DefaultSize,style=wx.CB_READONLY)
       winSizer.Add(comboSizer,0,wx.EXPAND)
       comboSizer.Add(self.environmentCtrl,1,wx.EXPAND)
     winSizer.Add(mainSizer,1,wx.EXPAND)
@@ -150,7 +150,7 @@ class DimensionBaseDialog(BaseDialog):
             self.dbProxy.updateCountermeasuresEffectiveness(objtId,dimName,revisedExpCms)
         self.addObjectToDialog(objtId,self.listId,dialogOutParameters)
       dialog.Destroy()
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add ' + dimName,wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -216,7 +216,7 @@ class DimensionBaseDialog(BaseDialog):
 
     listCtrl = self.FindWindowById(self.listId)
     listCtrl.DeleteItem(self.selectedIdx)
-    updatedObjt = ObjectFactory.build(objtId,dialogParameters)
+    updatedObjt = cairis.core.ObjectFactory.build(objtId,dialogParameters)
     self.addObjectRow(listCtrl,self.selectedIdx,updatedObjt)
     if ((updatedObjt.__class__.__name__ == 'ClassAssociation') or (updatedObjt.__class__.__name__ == 'GoalAssociation') or (updatedObjt.__class__.__name__ == 'Dependency') or (updatedObjt.__class__.__name__ == 'PersonaCharacteristic') or (updatedObjt.__class__.__name__ == 'TaskCharacteristic')):
       self.objts[label] = updatedObjt
@@ -226,7 +226,7 @@ class DimensionBaseDialog(BaseDialog):
   def addObjectToDialog(self,objtId,listId,dialogParameters):                                                           
     listCtrl = self.FindWindowById(self.listId)
     listRow = listCtrl.GetItemCount()
-    newObjt = ObjectFactory.build(objtId,dialogParameters)
+    newObjt = cairis.core.ObjectFactory.build(objtId,dialogParameters)
 
     if newObjt.__class__.__name__ == 'DocumentReference':
       selectedDocName = self.docCtrl.GetStringSelection()
@@ -294,7 +294,7 @@ class DimensionBaseDialog(BaseDialog):
         dlg = DependentsDialog.DependentsDialog(self,objtDeps,self.theDimensionName)
         retValue = dlg.ShowModal()
         dlg.Destroy()
-        if (retValue != armid.DEPENDENTS_BUTTONCONFIRM_ID):
+        if (retValue != DEPENDENTS_BUTTONCONFIRM_ID):
           return
         else:
           self.dbProxy.deleteDependencies(objtDeps)

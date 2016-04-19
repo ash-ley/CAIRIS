@@ -17,8 +17,8 @@
 
 
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from CountermeasureTaskPersonaDialog import CountermeasureTaskPersonaDialog
 
 class CountermeasureTaskPersonaListCtrl(wx.ListCtrl):
@@ -60,7 +60,7 @@ class CountermeasureTaskPersonaListCtrl(wx.ListCtrl):
     pGsup = self.GetItem(self.theSelectedIdx,5)
      
     dlg = CountermeasureTaskPersonaDialog(self,task,persona.GetText(),pDur.GetText(),pFreq.GetText(),pDem.GetText(),pGsup.GetText())
-    if (dlg.ShowModal() == armid.COUNTERMEASURETASKPERSONA_BUTTONADD_ID):
+    if (dlg.ShowModal() == COUNTERMEASURETASKPERSONA_BUTTONADD_ID):
       self.SetStringItem(self.theSelectedIdx,2,dlg.duration())
       self.SetStringItem(self.theSelectedIdx,3,dlg.frequency())
       self.SetStringItem(self.theSelectedIdx,4,dlg.demands())

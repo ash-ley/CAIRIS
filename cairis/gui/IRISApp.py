@@ -17,20 +17,20 @@
 
 
 import wx
-import BorgFactory
-from ARM import *
-from RMFrame import RMFrame
+import cairis.core.BorgFactory
+from cairis.core.ARM import *
+from cairis.gui.RMFrame import RMFrame
 
 RMFRAME_ID = 50
 
 class IRISApp(wx.App):
   def OnInit(self):
     try:
-      BorgFactory.initialise()
+      cairis.core.BorgFactory.initialise()
       self.frame = RMFrame(None,RMFRAME_ID,'CAIRIS')
       self.frame.Show()
       self.SetTopWindow(self.frame)
       return True
     except ARMException, e:
-      print 'Error starting iris: ',e
+      print 'Error starting CAIRIS: ',e
       return False

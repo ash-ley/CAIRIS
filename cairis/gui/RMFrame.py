@@ -18,12 +18,12 @@
 
 import wx 
 import os
-from NewEnvironmentDialog import NewEnvironmentDialog
-from Borg import Borg
-import MySQLDatabaseProxy
-from ARM import *
-from Environment import Environment
-import armid
+from cairis.gui.NewEnvironmentDialog import NewEnvironmentDialog
+from cairis.core.Borg import Borg
+import cairis.core.MySQLDatabaseProxy
+from cairis.core.ARM import *
+from cairis.core.Environment import Environment
+from cairis.core.armid import *
 from EnvironmentsDialog import EnvironmentsDialog
 from ArchitecturalPatternsDialog import ArchitecturalPatternsDialog
 from AttackersDialog import AttackersDialog
@@ -46,11 +46,6 @@ from RisksDialog import RisksDialog
 from ResponsesDialog import ResponsesDialog
 from CountermeasuresDialog import CountermeasuresDialog
 from TracesDialog import TracesDialog
-from EnvironmentModelViewer import EnvironmentModelViewer
-from CanonicalModelViewer import CanonicalModelViewer
-from ComponentModelViewer import ComponentModelViewer
-from APModelViewer import APModelViewer
-from ATModelViewer import ATModelViewer
 from EnvironmentModel import EnvironmentModel
 from AssumptionPersonaModel import AssumptionPersonaModel
 from AssumptionTaskModel import AssumptionTaskModel
@@ -72,18 +67,23 @@ from DocumentReferencesDialog import DocumentReferencesDialog
 from ConceptReferencesDialog import ConceptReferencesDialog
 from PersonaCharacteristicsDialog import PersonaCharacteristicsDialog
 from TaskCharacteristicsDialog import TaskCharacteristicsDialog
-from ValueTypeParameters import ValueTypeParameters
-from ModelImport import *
+from cairis.core.ValueTypeParameters import ValueTypeParameters
+from cairis.mio.ModelImport import *
 from SearchDialog import SearchDialog
 from ConceptMapModel import ConceptMapModel
 from ComponentModel import ComponentModel
 from CodeNetworkModel import CodeNetworkModel
 from CodeNetworkViewer import CodeNetworkViewer
 from ImpliedProcessesDialog import ImpliedProcessesDialog
-from ModelExport import exportModel
+from cairis.mio.ModelExport import exportModel
 from LocationModel import LocationModel
 import DocumentBuilder
 from itertools import izip
+from EnvironmentModelViewer import EnvironmentModelViewer
+from CanonicalModelViewer import CanonicalModelViewer
+from ComponentModelViewer import ComponentModelViewer
+from APModelViewer import APModelViewer
+from ATModelViewer import ATModelViewer
 import gtk
 import gtk.gdk
 import xml.sax
@@ -130,321 +130,321 @@ class RMFrame(wx.Frame):
     ucBmp = wx.Image(self.directoryPrefix + 'usecase.png',wx.BITMAP_TYPE_PNG).ConvertToBitmap()
 
 
-    self.toolbar.AddSimpleTool(armid.RMFRAME_TOOL_NEW,pnewBmp,'New project')
+    self.toolbar.AddSimpleTool(RMFRAME_TOOL_NEW,pnewBmp,'New project')
     self.toolbar.AddSeparator()
-    self.toolbar.AddSimpleTool(armid.RMFRAME_TOOL_SETTINGS,settingsBmp,'Edit Project Settings')
-    self.toolbar.AddSimpleTool(armid.RMFRAME_TOOL_CON,environmentBmp,'Edit Environments')
+    self.toolbar.AddSimpleTool(RMFRAME_TOOL_SETTINGS,settingsBmp,'Edit Project Settings')
+    self.toolbar.AddSimpleTool(RMFRAME_TOOL_CON,environmentBmp,'Edit Environments')
     self.toolbar.AddSeparator()
-    self.toolbar.AddSimpleTool(armid.RMFRAME_TOOL_ROLES,roleBmp,'Edit Roles')
-    self.toolbar.AddSimpleTool(armid.RMFRAME_TOOL_PERSONAS,personasBmp,'Edit Personas')
-    self.toolbar.AddSimpleTool(armid.RMFRAME_TOOL_TASKS,taskBmp,'Edit Tasks')
-    self.toolbar.AddSimpleTool(armid.RMFRAME_TOOL_USECASES,ucBmp,'Edit Use Cases')
+    self.toolbar.AddSimpleTool(RMFRAME_TOOL_ROLES,roleBmp,'Edit Roles')
+    self.toolbar.AddSimpleTool(RMFRAME_TOOL_PERSONAS,personasBmp,'Edit Personas')
+    self.toolbar.AddSimpleTool(RMFRAME_TOOL_TASKS,taskBmp,'Edit Tasks')
+    self.toolbar.AddSimpleTool(RMFRAME_TOOL_USECASES,ucBmp,'Edit Use Cases')
     self.toolbar.AddSeparator()
-    self.toolbar.AddSimpleTool(armid.RMFRAME_TOOL_ADD,addBmp,'Add new requirement')
-    self.toolbar.AddSimpleTool(armid.RMFRAME_TOOL_DELETE,deleteBmp,'Delete requirement')
-    self.toolbar.AddSimpleTool(armid.RMFRAME_TOOL_COMMITREQUIREMENTS,saveBmp,'Commit latest requirement changes')
+    self.toolbar.AddSimpleTool(RMFRAME_TOOL_ADD,addBmp,'Add new requirement')
+    self.toolbar.AddSimpleTool(RMFRAME_TOOL_DELETE,deleteBmp,'Delete requirement')
+    self.toolbar.AddSimpleTool(RMFRAME_TOOL_COMMITREQUIREMENTS,saveBmp,'Commit latest requirement changes')
     self.toolbar.AddSeparator()
-    self.toolbar.AddSimpleTool(armid.RMFRAME_TOOL_DOMAINPROPERTIES,domainPropertiesBmp,'Edit Domain Properties')
-    self.toolbar.AddSimpleTool(armid.RMFRAME_TOOL_GOALS,goalsBmp,'Edit Goals')
-    self.toolbar.AddSimpleTool(armid.RMFRAME_TOOL_OBSTACLES,obstaclesBmp,'Edit Obstacles')
+    self.toolbar.AddSimpleTool(RMFRAME_TOOL_DOMAINPROPERTIES,domainPropertiesBmp,'Edit Domain Properties')
+    self.toolbar.AddSimpleTool(RMFRAME_TOOL_GOALS,goalsBmp,'Edit Goals')
+    self.toolbar.AddSimpleTool(RMFRAME_TOOL_OBSTACLES,obstaclesBmp,'Edit Obstacles')
     self.toolbar.AddSeparator()
-    self.toolbar.AddSimpleTool(armid.RMFRAME_TOOL_ASSETS,assetsBmp,'Edit Assets')
-    self.toolbar.AddSimpleTool(armid.RMFRAME_TOOL_VULNERABILITIES,vulnerabilitiesBmp,'Edit Vulnerabilities')
-    self.toolbar.AddSimpleTool(armid.RMFRAME_TOOL_ATTACKERS,attackersBmp,'Edit Attackers')
-    self.toolbar.AddSimpleTool(armid.RMFRAME_TOOL_THREATS,threatsBmp,'Edit Threats')
-    self.toolbar.AddSimpleTool(armid.RMFRAME_TOOL_RISKS,risksBmp,'Edit Risks')
-    self.toolbar.AddSimpleTool(armid.RMFRAME_TOOL_RESPONSES,responsesBmp,'Edit Responses')
-    self.toolbar.AddSimpleTool(armid.RMFRAME_TOOL_COUNTERMEASURES,countermeasuresBmp,'Edit Countermeasures')
+    self.toolbar.AddSimpleTool(RMFRAME_TOOL_ASSETS,assetsBmp,'Edit Assets')
+    self.toolbar.AddSimpleTool(RMFRAME_TOOL_VULNERABILITIES,vulnerabilitiesBmp,'Edit Vulnerabilities')
+    self.toolbar.AddSimpleTool(RMFRAME_TOOL_ATTACKERS,attackersBmp,'Edit Attackers')
+    self.toolbar.AddSimpleTool(RMFRAME_TOOL_THREATS,threatsBmp,'Edit Threats')
+    self.toolbar.AddSimpleTool(RMFRAME_TOOL_RISKS,risksBmp,'Edit Risks')
+    self.toolbar.AddSimpleTool(RMFRAME_TOOL_RESPONSES,responsesBmp,'Edit Responses')
+    self.toolbar.AddSimpleTool(RMFRAME_TOOL_COUNTERMEASURES,countermeasuresBmp,'Edit Countermeasures')
     self.toolbar.AddSeparator()
-    self.toolbar.AddSimpleTool(armid.RMFRAME_TOOL_COM,componentBmp,'Edit Architectural Patterns')
+    self.toolbar.AddSimpleTool(RMFRAME_TOOL_COM,componentBmp,'Edit Architectural Patterns')
     self.toolbar.AddSeparator()
-    self.toolbar.AddSimpleTool(armid.RMFRAME_TOOL_FIND,findBmp,'Find object')
+    self.toolbar.AddSimpleTool(RMFRAME_TOOL_FIND,findBmp,'Find object')
 
     self.toolbar.Realize()
 
     menubar = wx.MenuBar()
     file = wx.Menu()
-    file.Append(armid.RMFRAME_MENU_NEW,'New','New project')
+    file.Append(RMFRAME_MENU_NEW,'New','New project')
 
     exportMenu = wx.Menu()
-    exportMenu.Append(armid.RMFRAME_MENU_EXPORTMODEL,'Model','Export XML model')
+    exportMenu.Append(RMFRAME_MENU_EXPORTMODEL,'Model','Export XML model')
     exportMenu.AppendSeparator()
-    exportMenu.Append(armid.RMFRAME_MENU_EXPORTPROJECT,'Project data','Export project data')
-    exportMenu.Append(armid.RMFRAME_MENU_REMAN_EXPORT,'Requirements','Export Requirements')
-    exportMenu.Append(armid.RMFRAME_MENU_RIMAN_EXPORTRA,'Risk Analysis', 'Export Risk Analysis data')
-    exportMenu.Append(armid.RMFRAME_MENU_IRIS_EXPORTUD,'Usability', 'Export usability data ')
-    exportMenu.Append(armid.RMFRAME_MENU_IRIS_EXPORTPERSONA,'Persona', 'Export Persona data ')
-    exportMenu.Append(armid.RMFRAME_MENU_IRIS_EXPORTASSOCIATIONS,'Associations', 'Export association data ')
-    exportMenu.Append(armid.RMFRAME_MENU_OPTIONS_EXPORTTVTYPES,'Threat and Vulnerability Types','Export Threat and Vulnerability Types')
-    exportMenu.Append(armid.RMFRAME_MENU_OPTIONS_EXPORTDOMAINVALUES,'Domain Values','Export Domain Values')
-    exportMenu.Append(armid.RMFRAME_MENU_OPTIONS_EXPORTPROCESSES,'Processes','Export Processes')
+    exportMenu.Append(RMFRAME_MENU_EXPORTPROJECT,'Project data','Export project data')
+    exportMenu.Append(RMFRAME_MENU_REMAN_EXPORT,'Requirements','Export Requirements')
+    exportMenu.Append(RMFRAME_MENU_RIMAN_EXPORTRA,'Risk Analysis', 'Export Risk Analysis data')
+    exportMenu.Append(RMFRAME_MENU_IRIS_EXPORTUD,'Usability', 'Export usability data ')
+    exportMenu.Append(RMFRAME_MENU_IRIS_EXPORTPERSONA,'Persona', 'Export Persona data ')
+    exportMenu.Append(RMFRAME_MENU_IRIS_EXPORTASSOCIATIONS,'Associations', 'Export association data ')
+    exportMenu.Append(RMFRAME_MENU_OPTIONS_EXPORTTVTYPES,'Threat and Vulnerability Types','Export Threat and Vulnerability Types')
+    exportMenu.Append(RMFRAME_MENU_OPTIONS_EXPORTDOMAINVALUES,'Domain Values','Export Domain Values')
+    exportMenu.Append(RMFRAME_MENU_OPTIONS_EXPORTPROCESSES,'Processes','Export Processes')
     exportMenu.AppendSeparator()
-    exportMenu.Append(armid.RMFRAME_MENU_OPTIONS_EXPORTIMPLIEDSPEC,'Implied Specification','Export Implied Specification')
-    file.AppendMenu(armid.RMFRAME_MENU_EXPORT,'Export',exportMenu)
+    exportMenu.Append(RMFRAME_MENU_OPTIONS_EXPORTIMPLIEDSPEC,'Implied Specification','Export Implied Specification')
+    file.AppendMenu(RMFRAME_MENU_EXPORT,'Export',exportMenu)
     
     importMenu = wx.Menu()
-    importMenu.Append(armid.RMFRAME_MENU_IMPORTMODEL,'Model','Import XML model')
+    importMenu.Append(RMFRAME_MENU_IMPORTMODEL,'Model','Import XML model')
     importMenu.AppendSeparator()
-    importMenu.Append(armid.RMFRAME_MENU_IMPORTPROJECT,'Project data','Import project data')
-    importMenu.Append(armid.RMFRAME_MENU_REMAN_IMPORT,'Requirements','Import Requirements')
-    importMenu.Append(armid.RMFRAME_MENU_RIMAN_IMPORTRA,'Risk Analysis', 'Import')
-    importMenu.Append(armid.RMFRAME_MENU_IRIS_IMPORTUD,'Usability', 'Import usability data')
-    importMenu.Append(armid.RMFRAME_MENU_IRIS_IMPORTASSOCIATIONS,'Associations', 'Import association data')
-    importMenu.Append(armid.RMFRAME_MENU_OPTIONS_IMPORTTVTYPES,'Threat and Vulnerability Types','Import Threat and Vulnerability Types')
-    importMenu.Append(armid.RMFRAME_MENU_OPTIONS_IMPORTDOMAINVALUES,'Domain Values','Import Domain Values')
-    importMenu.Append(armid.RMFRAME_MENU_OPTIONS_IMPORTDIRECTORIES,'Threat and Vulnerability Directory','Import Threat and Vulnerability Directory')
-    importMenu.Append(armid.RMFRAME_MENU_OPTIONS_IMPORTSECURITYPATTERNS,'Security Pattern','Import Security Pattern')
-    importMenu.Append(armid.RMFRAME_MENU_OPTIONS_IMPORTCOMPONENTVIEW,'Architectural Pattern','Import Architectural Pattern')
-    importMenu.Append(armid.RMFRAME_MENU_OPTIONS_IMPORTATTACKPATTERN,'Attack Pattern','Import Attack Pattern')
-    importMenu.Append(armid.RMFRAME_MENU_OPTIONS_IMPORTSYNOPSES,'Synopses','Import Synopses and Contributions')
-    importMenu.Append(armid.RMFRAME_MENU_OPTIONS_IMPORTASSETS,'Assets','Import Template Assets')
-    importMenu.Append(armid.RMFRAME_MENU_OPTIONS_IMPORTPROCESSES,'Processes','Import Processes')
-    file.AppendMenu(armid.RMFRAME_MENU_IMPORT,'Import',importMenu)
+    importMenu.Append(RMFRAME_MENU_IMPORTPROJECT,'Project data','Import project data')
+    importMenu.Append(RMFRAME_MENU_REMAN_IMPORT,'Requirements','Import Requirements')
+    importMenu.Append(RMFRAME_MENU_RIMAN_IMPORTRA,'Risk Analysis', 'Import')
+    importMenu.Append(RMFRAME_MENU_IRIS_IMPORTUD,'Usability', 'Import usability data')
+    importMenu.Append(RMFRAME_MENU_IRIS_IMPORTASSOCIATIONS,'Associations', 'Import association data')
+    importMenu.Append(RMFRAME_MENU_OPTIONS_IMPORTTVTYPES,'Threat and Vulnerability Types','Import Threat and Vulnerability Types')
+    importMenu.Append(RMFRAME_MENU_OPTIONS_IMPORTDOMAINVALUES,'Domain Values','Import Domain Values')
+    importMenu.Append(RMFRAME_MENU_OPTIONS_IMPORTDIRECTORIES,'Threat and Vulnerability Directory','Import Threat and Vulnerability Directory')
+    importMenu.Append(RMFRAME_MENU_OPTIONS_IMPORTSECURITYPATTERNS,'Security Pattern','Import Security Pattern')
+    importMenu.Append(RMFRAME_MENU_OPTIONS_IMPORTCOMPONENTVIEW,'Architectural Pattern','Import Architectural Pattern')
+    importMenu.Append(RMFRAME_MENU_OPTIONS_IMPORTATTACKPATTERN,'Attack Pattern','Import Attack Pattern')
+    importMenu.Append(RMFRAME_MENU_OPTIONS_IMPORTSYNOPSES,'Synopses','Import Synopses and Contributions')
+    importMenu.Append(RMFRAME_MENU_OPTIONS_IMPORTASSETS,'Assets','Import Template Assets')
+    importMenu.Append(RMFRAME_MENU_OPTIONS_IMPORTPROCESSES,'Processes','Import Processes')
+    file.AppendMenu(RMFRAME_MENU_IMPORT,'Import',importMenu)
 
 
-    file.Append(armid.RMFRAME_TOOL_DOCUMENTATION,'Documentation','Generate Documentation')
-    file.Append(armid.RMFRAME_MENU_EXIT,'Quit', 'Quit application')
+    file.Append(RMFRAME_TOOL_DOCUMENTATION,'Documentation','Generate Documentation')
+    file.Append(RMFRAME_MENU_EXIT,'Quit', 'Quit application')
     menubar.Append(file,'&File')
 
     reman = wx.Menu()
-    reman.Append(armid.RMFRAME_MENU_REMAN_SAVE,'Commit','Commit latest requirements changes')
-    reman.Append(armid.RMFRAME_MENU_REMAN_ADD,'Add','Add Requirement')
-    reman.Append(armid.RMFRAME_MENU_REMAN_DELETE,'Delete','Delete Requirement')
+    reman.Append(RMFRAME_MENU_REMAN_SAVE,'Commit','Commit latest requirements changes')
+    reman.Append(RMFRAME_MENU_REMAN_ADD,'Add','Add Requirement')
+    reman.Append(RMFRAME_MENU_REMAN_DELETE,'Delete','Delete Requirement')
     reman.AppendSeparator()
-    reman.Append(armid.RMFRAME_MENU_IRIS_DOMAINPROPERTIES,'Domain Properties', 'Edit Domain Properties')
-    reman.Append(armid.RMFRAME_MENU_IRIS_GOALS,'Goals', 'Edit Goals')
-    reman.Append(armid.RMFRAME_MENU_IRIS_OBSTACLES,'Obstacles', 'Edit Obstacles')
+    reman.Append(RMFRAME_MENU_IRIS_DOMAINPROPERTIES,'Domain Properties', 'Edit Domain Properties')
+    reman.Append(RMFRAME_MENU_IRIS_GOALS,'Goals', 'Edit Goals')
+    reman.Append(RMFRAME_MENU_IRIS_OBSTACLES,'Obstacles', 'Edit Obstacles')
     menubar.Append(reman,'&Requirement Management')
 
     riman = wx.Menu()
-    riman.Append(armid.RMFRAME_MENU_IRIS_ROLES,'Roles', 'Edit Roles')
-    riman.Append(armid.RMFRAME_MENU_RIMAN_ASSETS,'Assets', 'Edit Assets')
-    riman.Append(armid.RMFRAME_MENU_RIMAN_ASSETS,'Class Associations', 'Edit Class Associations')
-    riman.Append(armid.RMFRAME_MENU_RIMAN_ATTACKERS,'Attackers', 'Edit Attackers')
-    riman.Append(armid.RMFRAME_MENU_RIMAN_THREATS,'Threats', 'Edit Threats')
-    riman.Append(armid.RMFRAME_MENU_RIMAN_VULNERABILITIES,'Vulnerabilities', 'Edit Vulnerabilities')
-    riman.Append(armid.RMFRAME_MENU_RIMAN_RISKS,'Risks', 'Edit Risks')
-    riman.Append(armid.RMFRAME_MENU_RIMAN_RESPONSES,'Responses', 'Edit Responses')
-    riman.Append(armid.RMFRAME_MENU_RIMAN_COUNTERMEASURES,'Countermeasures', 'Edit Countermeasures')
+    riman.Append(RMFRAME_MENU_IRIS_ROLES,'Roles', 'Edit Roles')
+    riman.Append(RMFRAME_MENU_RIMAN_ASSETS,'Assets', 'Edit Assets')
+    riman.Append(RMFRAME_MENU_RIMAN_ASSETS,'Class Associations', 'Edit Class Associations')
+    riman.Append(RMFRAME_MENU_RIMAN_ATTACKERS,'Attackers', 'Edit Attackers')
+    riman.Append(RMFRAME_MENU_RIMAN_THREATS,'Threats', 'Edit Threats')
+    riman.Append(RMFRAME_MENU_RIMAN_VULNERABILITIES,'Vulnerabilities', 'Edit Vulnerabilities')
+    riman.Append(RMFRAME_MENU_RIMAN_RISKS,'Risks', 'Edit Risks')
+    riman.Append(RMFRAME_MENU_RIMAN_RESPONSES,'Responses', 'Edit Responses')
+    riman.Append(RMFRAME_MENU_RIMAN_COUNTERMEASURES,'Countermeasures', 'Edit Countermeasures')
     riman.AppendSeparator()
-    riman.Append(armid.RMFRAME_MENU_OPTIONS_SECURITYPATTERNS,'Security Patterns','Edit Security Patterns')
+    riman.Append(RMFRAME_MENU_OPTIONS_SECURITYPATTERNS,'Security Patterns','Edit Security Patterns')
     menubar.Append(riman,'&Risk Management')
 
     iris = wx.Menu()
-    iris.Append(armid.RMFRAME_MENU_IRIS_FIND,'Find','Search model')
+    iris.Append(RMFRAME_MENU_IRIS_FIND,'Find','Search model')
     iris.AppendSeparator()
-    iris.Append(armid.RMFRAME_MENU_IRIS_NEWENVIRONMENT,'Environments','Edit Environments')
-    iris.Append(armid.RMFRAME_MENU_IRIS_PERSONAS,'Personas', 'Edit Personas')
-    iris.Append(armid.RMFRAME_MENU_IRIS_TASKS,'Tasks', 'Edit Tasks')
+    iris.Append(RMFRAME_MENU_IRIS_NEWENVIRONMENT,'Environments','Edit Environments')
+    iris.Append(RMFRAME_MENU_IRIS_PERSONAS,'Personas', 'Edit Personas')
+    iris.Append(RMFRAME_MENU_IRIS_TASKS,'Tasks', 'Edit Tasks')
     iris.AppendSeparator()
-    iris.Append(armid.RMFRAME_MENU_OPTIONS_EXTERNALDOCUMENTS,'External Documents','Edit External Documents')
-    iris.Append(armid.RMFRAME_MENU_OPTIONS_DOCUMENTREFERENCES,'Document References','Edit Document References')
-    iris.Append(armid.RMFRAME_MENU_OPTIONS_CONCEPTREFERENCES,'Concept References','Edit Concept References')
-    iris.Append(armid.RMFRAME_MENU_OPTIONS_PERSONACHARACTERISTICS,'Persona Characteristics','Edit Persona Characteristics')
-    iris.Append(armid.RMFRAME_MENU_OPTIONS_TASKCHARACTERISTICS,'Task Characteristics','Edit Task Characteristics')
+    iris.Append(RMFRAME_MENU_OPTIONS_EXTERNALDOCUMENTS,'External Documents','Edit External Documents')
+    iris.Append(RMFRAME_MENU_OPTIONS_DOCUMENTREFERENCES,'Document References','Edit Document References')
+    iris.Append(RMFRAME_MENU_OPTIONS_CONCEPTREFERENCES,'Concept References','Edit Concept References')
+    iris.Append(RMFRAME_MENU_OPTIONS_PERSONACHARACTERISTICS,'Persona Characteristics','Edit Persona Characteristics')
+    iris.Append(RMFRAME_MENU_OPTIONS_TASKCHARACTERISTICS,'Task Characteristics','Edit Task Characteristics')
     menubar.Append(iris,'&IRIS')
 
     eustace = wx.Menu()
-    eustace.Append(armid.RMFRAME_MENU_EUSTACE_INTERNALDOCUMENTS,'Internal Documents','Edit Internal Documents')
-    eustace.Append(armid.RMFRAME_MENU_EUSTACE_CODES,'Codes','Edit Codes')
-    eustace.Append(armid.RMFRAME_MENU_EUSTACE_QUOTATIONS,'Quotations','Edit Quotations')
+    eustace.Append(RMFRAME_MENU_EUSTACE_INTERNALDOCUMENTS,'Internal Documents','Edit Internal Documents')
+    eustace.Append(RMFRAME_MENU_EUSTACE_CODES,'Codes','Edit Codes')
+    eustace.Append(RMFRAME_MENU_EUSTACE_QUOTATIONS,'Quotations','Edit Quotations')
     eustace.AppendSeparator()
-    eustace.Append(armid.RMFRAME_MENU_EUSTACE_CODENETWORK,'Code Network','View code network')
+    eustace.Append(RMFRAME_MENU_EUSTACE_CODENETWORK,'Code Network','View code network')
     eustace.AppendSeparator()
-    eustace.Append(armid.RMFRAME_MENU_EUSTACE_IMPLIEDPROCESSES,'Implied Processes','View implied processes')
+    eustace.Append(RMFRAME_MENU_EUSTACE_IMPLIEDPROCESSES,'Implied Processes','View implied processes')
     menubar.Append(eustace,'&EUSTACE')
 
     optionm = wx.Menu()
-    optionm.Append(armid.RMFRAME_MENU_OPTIONS_ASSETS,'Asset values','Edit Asset values')
-    optionm.Append(armid.RMFRAME_MENU_OPTIONS_ASSETTYPES,'Asset Types','Edit Asset Types')
+    optionm.Append(RMFRAME_MENU_OPTIONS_ASSETS,'Asset values','Edit Asset values')
+    optionm.Append(RMFRAME_MENU_OPTIONS_ASSETTYPES,'Asset Types','Edit Asset Types')
     optionm.AppendSeparator()
-    optionm.Append(armid.RMFRAME_MENU_OPTIONS_ACCESSRIGHTS,'Access rights','Edit Access rights')
-    optionm.Append(armid.RMFRAME_MENU_OPTIONS_PROTOCOLS,'Protocols','Edit Protocols')
-    optionm.Append(armid.RMFRAME_MENU_OPTIONS_PRIVILEGES,'Privileges','Edit Privileges')
-    optionm.Append(armid.RMFRAME_MENU_OPTIONS_SURFACETYPES,'Surface types','Edit Surface types')
+    optionm.Append(RMFRAME_MENU_OPTIONS_ACCESSRIGHTS,'Access rights','Edit Access rights')
+    optionm.Append(RMFRAME_MENU_OPTIONS_PROTOCOLS,'Protocols','Edit Protocols')
+    optionm.Append(RMFRAME_MENU_OPTIONS_PRIVILEGES,'Privileges','Edit Privileges')
+    optionm.Append(RMFRAME_MENU_OPTIONS_SURFACETYPES,'Surface types','Edit Surface types')
     optionm.AppendSeparator()
-    optionm.Append(armid.RMFRAME_MENU_OPTIONS_VULNERABILITYTYPES,'Vulnerability Types','Edit Vulnerability Types')
-    optionm.Append(armid.RMFRAME_MENU_OPTIONS_SEVERITIES,'Vulnerability Severities','Edit Vulnerability Severities')
-    optionm.Append(armid.RMFRAME_MENU_OPTIONS_CAPABILITIES,'Capabilities','Edit Attacker Capabilities')
-    optionm.Append(armid.RMFRAME_MENU_OPTIONS_MOTIVATIONS,'Motivations','Edit Attacker Motivations')
-    optionm.Append(armid.RMFRAME_MENU_OPTIONS_THREATTYPES,'Threat Types','Edit Threat Types')
-    optionm.Append(armid.RMFRAME_MENU_OPTIONS_LIKELIHOODS,'Threat Likelihoods','Edit Threat Likelihoods')
-    optionm.Append(armid.RMFRAME_MENU_OPTIONS_THREATS,'Threat values','Edit Threat values')
-    optionm.Append(armid.RMFRAME_MENU_OPTIONS_RISKS,'Risk values','Edit Risk values')
+    optionm.Append(RMFRAME_MENU_OPTIONS_VULNERABILITYTYPES,'Vulnerability Types','Edit Vulnerability Types')
+    optionm.Append(RMFRAME_MENU_OPTIONS_SEVERITIES,'Vulnerability Severities','Edit Vulnerability Severities')
+    optionm.Append(RMFRAME_MENU_OPTIONS_CAPABILITIES,'Capabilities','Edit Attacker Capabilities')
+    optionm.Append(RMFRAME_MENU_OPTIONS_MOTIVATIONS,'Motivations','Edit Attacker Motivations')
+    optionm.Append(RMFRAME_MENU_OPTIONS_THREATTYPES,'Threat Types','Edit Threat Types')
+    optionm.Append(RMFRAME_MENU_OPTIONS_LIKELIHOODS,'Threat Likelihoods','Edit Threat Likelihoods')
+    optionm.Append(RMFRAME_MENU_OPTIONS_THREATS,'Threat values','Edit Threat values')
+    optionm.Append(RMFRAME_MENU_OPTIONS_RISKS,'Risk values','Edit Risk values')
     optionm.AppendSeparator()
-    optionm.Append(armid.RMFRAME_MENU_OPTIONS_TEMPLATEASSETS,'Template Assets','Edit Template Assets')
-    optionm.Append(armid.RMFRAME_MENU_OPTIONS_TEMPLATEREQUIREMENTS,'Template Requirements','Edit Template Requirements')
-    optionm.Append(armid.RMFRAME_MENU_OPTIONS_COUNTERMEASURES,'Countermeasure values','Edit Countermeasure values')
+    optionm.Append(RMFRAME_MENU_OPTIONS_TEMPLATEASSETS,'Template Assets','Edit Template Assets')
+    optionm.Append(RMFRAME_MENU_OPTIONS_TEMPLATEREQUIREMENTS,'Template Requirements','Edit Template Requirements')
+    optionm.Append(RMFRAME_MENU_OPTIONS_COUNTERMEASURES,'Countermeasure values','Edit Countermeasure values')
     menubar.Append(optionm,'&Options')
 
     viewm = wx.Menu()
-    viewm.Append(armid.RMFRAME_MENU_VIEW_ENVIRONMENT,'Risk Analysis','View risk analysis model')
-    viewm.Append(armid.RMFRAME_MENU_VIEW_ASSETMODEL,'Asset Model','View asset model')
-    viewm.Append(armid.RMFRAME_MENU_VIEW_GOALMODEL,'Goal Model','View goal model')
-    viewm.Append(armid.RMFRAME_MENU_VIEW_OBSTACLEMODEL,'Obstacle Model','View obstacle model')
-    viewm.Append(armid.RMFRAME_MENU_VIEW_RESPONSIBILITYMODEL,'Responsibility Model','View responsibility model')
-    viewm.Append(armid.RMFRAME_MENU_VIEW_TASKMODEL,'Task Model','View task model')
-    viewm.Append(armid.RMFRAME_MENU_VIEW_APMODEL,'Assumption Persona Model','View assumption persona model')
-    viewm.Append(armid.RMFRAME_MENU_VIEW_ATMODEL,'Assumption Task Model','View assumption task model')
-    viewm.Append(armid.RMFRAME_MENU_VIEW_TRACEABILITY,'Traceability','View Traceability relations')
+    viewm.Append(RMFRAME_MENU_VIEW_ENVIRONMENT,'Risk Analysis','View risk analysis model')
+    viewm.Append(RMFRAME_MENU_VIEW_ASSETMODEL,'Asset Model','View asset model')
+    viewm.Append(RMFRAME_MENU_VIEW_GOALMODEL,'Goal Model','View goal model')
+    viewm.Append(RMFRAME_MENU_VIEW_OBSTACLEMODEL,'Obstacle Model','View obstacle model')
+    viewm.Append(RMFRAME_MENU_VIEW_RESPONSIBILITYMODEL,'Responsibility Model','View responsibility model')
+    viewm.Append(RMFRAME_MENU_VIEW_TASKMODEL,'Task Model','View task model')
+    viewm.Append(RMFRAME_MENU_VIEW_APMODEL,'Assumption Persona Model','View assumption persona model')
+    viewm.Append(RMFRAME_MENU_VIEW_ATMODEL,'Assumption Task Model','View assumption task model')
+    viewm.Append(RMFRAME_MENU_VIEW_TRACEABILITY,'Traceability','View Traceability relations')
     menubar.Append(viewm,'&View')
   
     gridm = wx.Menu()
-    gridm.Append(armid.RMFRAME_MENU_GRID_REQUIREMENTS,'Requirements','Requirements editor')
-    gridm.Append(armid.RMFRAME_MENU_GRID_GOALS,'Goals','Goals editor')
-    gridm.Append(armid.RMFRAME_MENU_GRID_OBSTACLES,'Obstacles','Obstacles editor')
+    gridm.Append(RMFRAME_MENU_GRID_REQUIREMENTS,'Requirements','Requirements editor')
+    gridm.Append(RMFRAME_MENU_GRID_GOALS,'Goals','Goals editor')
+    gridm.Append(RMFRAME_MENU_GRID_OBSTACLES,'Obstacles','Obstacles editor')
     self.toolbar.AddSeparator()
-    gridm.Append(armid.RMFRAME_MENU_RELABEL_OBJECTS,'Relabel objects','')
+    gridm.Append(RMFRAME_MENU_RELABEL_OBJECTS,'Relabel objects','')
 
     menubar.Append(gridm,'&Grid')
     
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_VIEW_ENVIRONMENT,self.OnViewEnvironment)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_VIEW_ASSETMODEL,self.OnViewAssets)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_VIEW_GOALMODEL,self.OnViewGoals)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_VIEW_OBSTACLEMODEL,self.OnViewObstacles)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_VIEW_RESPONSIBILITYMODEL,self.OnViewResponsibilities)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_VIEW_TASKMODEL,self.OnViewTasks)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_VIEW_APMODEL,self.OnViewAPModel)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_VIEW_ATMODEL,self.OnViewATModel)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_EUSTACE_CODENETWORK,self.OnViewCodeNetwork)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_EUSTACE_IMPLIEDPROCESSES,self.OnImpliedProcesses)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_VIEW_TRACEABILITY,self.OnViewTraceability)
+    wx.EVT_MENU(self,RMFRAME_MENU_VIEW_ENVIRONMENT,self.OnViewEnvironment)
+    wx.EVT_MENU(self,RMFRAME_MENU_VIEW_ASSETMODEL,self.OnViewAssets)
+    wx.EVT_MENU(self,RMFRAME_MENU_VIEW_GOALMODEL,self.OnViewGoals)
+    wx.EVT_MENU(self,RMFRAME_MENU_VIEW_OBSTACLEMODEL,self.OnViewObstacles)
+    wx.EVT_MENU(self,RMFRAME_MENU_VIEW_RESPONSIBILITYMODEL,self.OnViewResponsibilities)
+    wx.EVT_MENU(self,RMFRAME_MENU_VIEW_TASKMODEL,self.OnViewTasks)
+    wx.EVT_MENU(self,RMFRAME_MENU_VIEW_APMODEL,self.OnViewAPModel)
+    wx.EVT_MENU(self,RMFRAME_MENU_VIEW_ATMODEL,self.OnViewATModel)
+    wx.EVT_MENU(self,RMFRAME_MENU_EUSTACE_CODENETWORK,self.OnViewCodeNetwork)
+    wx.EVT_MENU(self,RMFRAME_MENU_EUSTACE_IMPLIEDPROCESSES,self.OnImpliedProcesses)
+    wx.EVT_MENU(self,RMFRAME_MENU_VIEW_TRACEABILITY,self.OnViewTraceability)
 
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_GRID_REQUIREMENTS,self.OnGridRequirements)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_GRID_GOALS,self.OnGridGoals)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_GRID_OBSTACLES,self.OnGridObstacles)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_RELABEL_OBJECTS,self.OnRelabelObjects)
+    wx.EVT_MENU(self,RMFRAME_MENU_GRID_REQUIREMENTS,self.OnGridRequirements)
+    wx.EVT_MENU(self,RMFRAME_MENU_GRID_GOALS,self.OnGridGoals)
+    wx.EVT_MENU(self,RMFRAME_MENU_GRID_OBSTACLES,self.OnGridObstacles)
+    wx.EVT_MENU(self,RMFRAME_MENU_RELABEL_OBJECTS,self.OnRelabelObjects)
 
     helpm = wx.Menu()
-    helpm.Append(armid.RMFRAME_MENU_HELP_ABOUT,'About','About CAIRIS')
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_HELP_ABOUT,self.OnAbout)
+    helpm.Append(RMFRAME_MENU_HELP_ABOUT,'About','About CAIRIS')
+    wx.EVT_MENU(self,RMFRAME_MENU_HELP_ABOUT,self.OnAbout)
     menubar.Append(helpm,'&Help')
 
 
     self.SetMenuBar(menubar)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_NEW,self.OnNewProject)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_COMMITREQUIREMENTS,self.OnCommitEditorObjects)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_ADD,self.OnAddEditorObject)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_DELETE,self.OnDeleteEditorObject)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_CON,self.OnEnvironments)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_COM,self.OnComponents)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_SETTINGS,self.OnSettings)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_ENVIRONMENTMODEL,self.OnViewEnvironment)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_ASSETMODEL,self.OnViewAssets)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_GOALMODEL,self.OnViewGoals)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_OBSTACLEMODEL,self.OnViewObstacles)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_RESPONSIBILITYMODEL,self.OnViewResponsibilities)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_TASKMODEL,self.OnViewTasks)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_APMODEL,self.OnViewAPModel)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_ATMODEL,self.OnViewATModel)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_CMMODEL,self.OnViewCMModel)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_COMPONENTMODEL,self.OnViewComponentModel)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_LOCATIONMODEL,self.OnViewLocationModel)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_FIND,self.OnSearchModel)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_DOMAINPROPERTIES,self.OnDomainProperties)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_GOALS,self.OnGoals)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_OBSTACLES,self.OnObstacles)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_ASSETS,self.OnAssets)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_CLASSASSOCIATIONS,self.OnClassAssociations)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_GOALASSOCIATIONS,self.OnGoalAssociations)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_DEPENDENCIES,self.OnDependencies)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_ATTACKERS,self.OnAttackers)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_THREATS,self.OnThreats)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_VULNERABILITIES,self.OnVulnerabilities)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_RISKS,self.OnRisks)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_RESPONSES,self.OnResponses)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_COUNTERMEASURES,self.OnCountermeasures)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_PERSONAS,self.OnPersonas)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_ROLES,self.OnRoles)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_TASKS,self.OnTasks)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_USECASES,self.OnUseCases)
-    wx.EVT_MENU(self,armid.RMFRAME_TOOL_DOCUMENTATION,self.OnDocumentation)
+    wx.EVT_MENU(self,RMFRAME_TOOL_NEW,self.OnNewProject)
+    wx.EVT_MENU(self,RMFRAME_TOOL_COMMITREQUIREMENTS,self.OnCommitEditorObjects)
+    wx.EVT_MENU(self,RMFRAME_TOOL_ADD,self.OnAddEditorObject)
+    wx.EVT_MENU(self,RMFRAME_TOOL_DELETE,self.OnDeleteEditorObject)
+    wx.EVT_MENU(self,RMFRAME_TOOL_CON,self.OnEnvironments)
+    wx.EVT_MENU(self,RMFRAME_TOOL_COM,self.OnComponents)
+    wx.EVT_MENU(self,RMFRAME_TOOL_SETTINGS,self.OnSettings)
+    wx.EVT_MENU(self,RMFRAME_TOOL_ENVIRONMENTMODEL,self.OnViewEnvironment)
+    wx.EVT_MENU(self,RMFRAME_TOOL_ASSETMODEL,self.OnViewAssets)
+    wx.EVT_MENU(self,RMFRAME_TOOL_GOALMODEL,self.OnViewGoals)
+    wx.EVT_MENU(self,RMFRAME_TOOL_OBSTACLEMODEL,self.OnViewObstacles)
+    wx.EVT_MENU(self,RMFRAME_TOOL_RESPONSIBILITYMODEL,self.OnViewResponsibilities)
+    wx.EVT_MENU(self,RMFRAME_TOOL_TASKMODEL,self.OnViewTasks)
+    wx.EVT_MENU(self,RMFRAME_TOOL_APMODEL,self.OnViewAPModel)
+    wx.EVT_MENU(self,RMFRAME_TOOL_ATMODEL,self.OnViewATModel)
+    wx.EVT_MENU(self,RMFRAME_TOOL_CMMODEL,self.OnViewCMModel)
+    wx.EVT_MENU(self,RMFRAME_TOOL_COMPONENTMODEL,self.OnViewComponentModel)
+    wx.EVT_MENU(self,RMFRAME_TOOL_LOCATIONMODEL,self.OnViewLocationModel)
+    wx.EVT_MENU(self,RMFRAME_TOOL_FIND,self.OnSearchModel)
+    wx.EVT_MENU(self,RMFRAME_TOOL_DOMAINPROPERTIES,self.OnDomainProperties)
+    wx.EVT_MENU(self,RMFRAME_TOOL_GOALS,self.OnGoals)
+    wx.EVT_MENU(self,RMFRAME_TOOL_OBSTACLES,self.OnObstacles)
+    wx.EVT_MENU(self,RMFRAME_TOOL_ASSETS,self.OnAssets)
+    wx.EVT_MENU(self,RMFRAME_TOOL_CLASSASSOCIATIONS,self.OnClassAssociations)
+    wx.EVT_MENU(self,RMFRAME_TOOL_GOALASSOCIATIONS,self.OnGoalAssociations)
+    wx.EVT_MENU(self,RMFRAME_TOOL_DEPENDENCIES,self.OnDependencies)
+    wx.EVT_MENU(self,RMFRAME_TOOL_ATTACKERS,self.OnAttackers)
+    wx.EVT_MENU(self,RMFRAME_TOOL_THREATS,self.OnThreats)
+    wx.EVT_MENU(self,RMFRAME_TOOL_VULNERABILITIES,self.OnVulnerabilities)
+    wx.EVT_MENU(self,RMFRAME_TOOL_RISKS,self.OnRisks)
+    wx.EVT_MENU(self,RMFRAME_TOOL_RESPONSES,self.OnResponses)
+    wx.EVT_MENU(self,RMFRAME_TOOL_COUNTERMEASURES,self.OnCountermeasures)
+    wx.EVT_MENU(self,RMFRAME_TOOL_PERSONAS,self.OnPersonas)
+    wx.EVT_MENU(self,RMFRAME_TOOL_ROLES,self.OnRoles)
+    wx.EVT_MENU(self,RMFRAME_TOOL_TASKS,self.OnTasks)
+    wx.EVT_MENU(self,RMFRAME_TOOL_USECASES,self.OnUseCases)
+    wx.EVT_MENU(self,RMFRAME_TOOL_DOCUMENTATION,self.OnDocumentation)
 
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_EXPORTMODEL,self.OnExportModel)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_IMPORTMODEL,self.OnImportModel)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_EXPORTPROJECT,self.OnExportProject)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_IMPORTPROJECT,self.OnImportProject)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_EXIT,self.OnQuit)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_REMAN_SAVE,self.OnCommitEditorObjects)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_REMAN_ADD,self.OnAddEditorObject)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_REMAN_DELETE,self.OnDeleteEditorObject)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_IRIS_FIND,self.OnSearchModel)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_REMAN_IMPORT,self.OnImportRequirements)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_REMAN_EXPORT,self.OnExportRequirements)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_RIMAN_ATTACKERS,self.OnAttackers)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_IRIS_DOMAINPROPERTIES,self.OnDomainProperties)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_IRIS_GOALS,self.OnGoals)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_IRIS_OBSTACLES,self.OnObstacles)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_IRIS_EXPORTUD,self.OnExportUsability)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_IRIS_EXPORTPERSONA,self.OnExportPersona)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_IRIS_IMPORTUD,self.OnImportUsability)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_IRIS_EXPORTASSOCIATIONS,self.OnExportAssociations)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_IRIS_IMPORTASSOCIATIONS,self.OnImportAssociations)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_RIMAN_ASSETS,self.OnAssets)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_RIMAN_CLASSASSOCIATIONS,self.OnClassAssociations)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_RIMAN_GOALASSOCIATIONS,self.OnGoalAssociations)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_RIMAN_THREATS,self.OnThreats)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_RIMAN_VULNERABILITIES,self.OnVulnerabilities)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_RIMAN_RISKS,self.OnRisks)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_RIMAN_RESPONSES,self.OnResponses)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_RIMAN_EXPORTRA,self.OnExportRiskAnalysis)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_RIMAN_IMPORTRA,self.OnImportRiskAnalysis)
+    wx.EVT_MENU(self,RMFRAME_MENU_EXPORTMODEL,self.OnExportModel)
+    wx.EVT_MENU(self,RMFRAME_MENU_IMPORTMODEL,self.OnImportModel)
+    wx.EVT_MENU(self,RMFRAME_MENU_EXPORTPROJECT,self.OnExportProject)
+    wx.EVT_MENU(self,RMFRAME_MENU_IMPORTPROJECT,self.OnImportProject)
+    wx.EVT_MENU(self,RMFRAME_MENU_EXIT,self.OnQuit)
+    wx.EVT_MENU(self,RMFRAME_MENU_REMAN_SAVE,self.OnCommitEditorObjects)
+    wx.EVT_MENU(self,RMFRAME_MENU_REMAN_ADD,self.OnAddEditorObject)
+    wx.EVT_MENU(self,RMFRAME_MENU_REMAN_DELETE,self.OnDeleteEditorObject)
+    wx.EVT_MENU(self,RMFRAME_MENU_IRIS_FIND,self.OnSearchModel)
+    wx.EVT_MENU(self,RMFRAME_MENU_REMAN_IMPORT,self.OnImportRequirements)
+    wx.EVT_MENU(self,RMFRAME_MENU_REMAN_EXPORT,self.OnExportRequirements)
+    wx.EVT_MENU(self,RMFRAME_MENU_RIMAN_ATTACKERS,self.OnAttackers)
+    wx.EVT_MENU(self,RMFRAME_MENU_IRIS_DOMAINPROPERTIES,self.OnDomainProperties)
+    wx.EVT_MENU(self,RMFRAME_MENU_IRIS_GOALS,self.OnGoals)
+    wx.EVT_MENU(self,RMFRAME_MENU_IRIS_OBSTACLES,self.OnObstacles)
+    wx.EVT_MENU(self,RMFRAME_MENU_IRIS_EXPORTUD,self.OnExportUsability)
+    wx.EVT_MENU(self,RMFRAME_MENU_IRIS_EXPORTPERSONA,self.OnExportPersona)
+    wx.EVT_MENU(self,RMFRAME_MENU_IRIS_IMPORTUD,self.OnImportUsability)
+    wx.EVT_MENU(self,RMFRAME_MENU_IRIS_EXPORTASSOCIATIONS,self.OnExportAssociations)
+    wx.EVT_MENU(self,RMFRAME_MENU_IRIS_IMPORTASSOCIATIONS,self.OnImportAssociations)
+    wx.EVT_MENU(self,RMFRAME_MENU_RIMAN_ASSETS,self.OnAssets)
+    wx.EVT_MENU(self,RMFRAME_MENU_RIMAN_CLASSASSOCIATIONS,self.OnClassAssociations)
+    wx.EVT_MENU(self,RMFRAME_MENU_RIMAN_GOALASSOCIATIONS,self.OnGoalAssociations)
+    wx.EVT_MENU(self,RMFRAME_MENU_RIMAN_THREATS,self.OnThreats)
+    wx.EVT_MENU(self,RMFRAME_MENU_RIMAN_VULNERABILITIES,self.OnVulnerabilities)
+    wx.EVT_MENU(self,RMFRAME_MENU_RIMAN_RISKS,self.OnRisks)
+    wx.EVT_MENU(self,RMFRAME_MENU_RIMAN_RESPONSES,self.OnResponses)
+    wx.EVT_MENU(self,RMFRAME_MENU_RIMAN_EXPORTRA,self.OnExportRiskAnalysis)
+    wx.EVT_MENU(self,RMFRAME_MENU_RIMAN_IMPORTRA,self.OnImportRiskAnalysis)
 
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_IRIS_NEWENVIRONMENT,self.OnEnvironments)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_IRIS_PERSONAS,self.OnPersonas)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_IRIS_ROLES,self.OnRoles)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_IRIS_TASKS,self.OnTasks)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_IRIS_USECASES,self.OnUseCases)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_ASSETS,self.OnAssetOptions)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_THREATS,self.OnThreatOptions)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_RISKS,self.OnRiskOptions)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_COUNTERMEASURES,self.OnCountermeasureOptions)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_CAPABILITIES,self.OnCapabilityOptions)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_MOTIVATIONS,self.OnMotivationOptions)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_ASSETTYPES,self.OnAssetTypeOptions)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_ACCESSRIGHTS,self.OnAccessRightOptions)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_PROTOCOLS,self.OnProtocolOptions)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_PRIVILEGES,self.OnPrivilegeOptions)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_SURFACETYPES,self.OnSurfaceTypeOptions)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_VULNERABILITYTYPES,self.OnVulnerabilityTypeOptions)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_THREATTYPES,self.OnThreatTypeOptions)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_IMPORTTVTYPES,self.OnImportTVTypes)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_EXPORTTVTYPES,self.OnExportTVTypes)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_IMPORTDOMAINVALUES,self.OnImportDomainValues)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_EXPORTDOMAINVALUES,self.OnExportDomainValues)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_IMPORTPROCESSES,self.OnImportProcesses)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_EXPORTPROCESSES,self.OnExportProcesses)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_EXPORTIMPLIEDSPEC,self.OnExportImpliedSpec)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_SEVERITIES,self.OnSeverityOptions)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_LIKELIHOODS,self.OnLikelihoodOptions)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_TEMPLATEASSETS,self.OnTemplateAssets)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_TEMPLATEREQUIREMENTS,self.OnTemplateRequirements)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_SECURITYPATTERNS,self.OnSecurityPatterns)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_EXTERNALDOCUMENTS,self.OnExternalDocuments)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_EUSTACE_INTERNALDOCUMENTS,self.OnInternalDocuments)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_EUSTACE_CODES,self.OnCodes)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_EUSTACE_QUOTATIONS,self.OnQuotations)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_DOCUMENTREFERENCES,self.OnDocumentReferences)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_CONCEPTREFERENCES,self.OnConceptReferences)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_PERSONACHARACTERISTICS,self.OnPersonaCharacteristics)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_TASKCHARACTERISTICS,self.OnTaskCharacteristics)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_IMPORTDIRECTORIES,self.OnImportDirectories)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_IMPORTSECURITYPATTERNS,self.OnImportSecurityPatterns)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_IMPORTCOMPONENTVIEW,self.OnImportComponentView)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_IMPORTATTACKPATTERN,self.OnImportAttackPattern)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_IMPORTSYNOPSES,self.OnImportSynopses)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_OPTIONS_IMPORTASSETS,self.OnImportAssets)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_VIEW_ENVIRONMENT,self.OnViewEnvironment)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_VIEW_ASSETMODEL,self.OnViewAssets)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_VIEW_GOALMODEL,self.OnViewGoals)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_VIEW_OBSTACLEMODEL,self.OnViewObstacles)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_VIEW_RESPONSIBILITYMODEL,self.OnViewResponsibilities)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_VIEW_TASKMODEL,self.OnViewTasks)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_VIEW_APMODEL,self.OnViewAPModel)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_VIEW_ATMODEL,self.OnViewATModel)
-    wx.EVT_MENU(self,armid.RMFRAME_MENU_VIEW_TRACEABILITY,self.OnViewTraceability)
+    wx.EVT_MENU(self,RMFRAME_MENU_IRIS_NEWENVIRONMENT,self.OnEnvironments)
+    wx.EVT_MENU(self,RMFRAME_MENU_IRIS_PERSONAS,self.OnPersonas)
+    wx.EVT_MENU(self,RMFRAME_MENU_IRIS_ROLES,self.OnRoles)
+    wx.EVT_MENU(self,RMFRAME_MENU_IRIS_TASKS,self.OnTasks)
+    wx.EVT_MENU(self,RMFRAME_MENU_IRIS_USECASES,self.OnUseCases)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_ASSETS,self.OnAssetOptions)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_THREATS,self.OnThreatOptions)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_RISKS,self.OnRiskOptions)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_COUNTERMEASURES,self.OnCountermeasureOptions)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_CAPABILITIES,self.OnCapabilityOptions)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_MOTIVATIONS,self.OnMotivationOptions)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_ASSETTYPES,self.OnAssetTypeOptions)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_ACCESSRIGHTS,self.OnAccessRightOptions)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_PROTOCOLS,self.OnProtocolOptions)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_PRIVILEGES,self.OnPrivilegeOptions)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_SURFACETYPES,self.OnSurfaceTypeOptions)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_VULNERABILITYTYPES,self.OnVulnerabilityTypeOptions)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_THREATTYPES,self.OnThreatTypeOptions)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_IMPORTTVTYPES,self.OnImportTVTypes)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_EXPORTTVTYPES,self.OnExportTVTypes)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_IMPORTDOMAINVALUES,self.OnImportDomainValues)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_EXPORTDOMAINVALUES,self.OnExportDomainValues)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_IMPORTPROCESSES,self.OnImportProcesses)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_EXPORTPROCESSES,self.OnExportProcesses)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_EXPORTIMPLIEDSPEC,self.OnExportImpliedSpec)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_SEVERITIES,self.OnSeverityOptions)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_LIKELIHOODS,self.OnLikelihoodOptions)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_TEMPLATEASSETS,self.OnTemplateAssets)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_TEMPLATEREQUIREMENTS,self.OnTemplateRequirements)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_SECURITYPATTERNS,self.OnSecurityPatterns)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_EXTERNALDOCUMENTS,self.OnExternalDocuments)
+    wx.EVT_MENU(self,RMFRAME_MENU_EUSTACE_INTERNALDOCUMENTS,self.OnInternalDocuments)
+    wx.EVT_MENU(self,RMFRAME_MENU_EUSTACE_CODES,self.OnCodes)
+    wx.EVT_MENU(self,RMFRAME_MENU_EUSTACE_QUOTATIONS,self.OnQuotations)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_DOCUMENTREFERENCES,self.OnDocumentReferences)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_CONCEPTREFERENCES,self.OnConceptReferences)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_PERSONACHARACTERISTICS,self.OnPersonaCharacteristics)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_TASKCHARACTERISTICS,self.OnTaskCharacteristics)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_IMPORTDIRECTORIES,self.OnImportDirectories)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_IMPORTSECURITYPATTERNS,self.OnImportSecurityPatterns)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_IMPORTCOMPONENTVIEW,self.OnImportComponentView)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_IMPORTATTACKPATTERN,self.OnImportAttackPattern)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_IMPORTSYNOPSES,self.OnImportSynopses)
+    wx.EVT_MENU(self,RMFRAME_MENU_OPTIONS_IMPORTASSETS,self.OnImportAssets)
+    wx.EVT_MENU(self,RMFRAME_MENU_VIEW_ENVIRONMENT,self.OnViewEnvironment)
+    wx.EVT_MENU(self,RMFRAME_MENU_VIEW_ASSETMODEL,self.OnViewAssets)
+    wx.EVT_MENU(self,RMFRAME_MENU_VIEW_GOALMODEL,self.OnViewGoals)
+    wx.EVT_MENU(self,RMFRAME_MENU_VIEW_OBSTACLEMODEL,self.OnViewObstacles)
+    wx.EVT_MENU(self,RMFRAME_MENU_VIEW_RESPONSIBILITYMODEL,self.OnViewResponsibilities)
+    wx.EVT_MENU(self,RMFRAME_MENU_VIEW_TASKMODEL,self.OnViewTasks)
+    wx.EVT_MENU(self,RMFRAME_MENU_VIEW_APMODEL,self.OnViewAPModel)
+    wx.EVT_MENU(self,RMFRAME_MENU_VIEW_ATMODEL,self.OnViewATModel)
+    wx.EVT_MENU(self,RMFRAME_MENU_VIEW_TRACEABILITY,self.OnViewTraceability)
 
-    self.panel = RMPanel(self,armid.RMPANEL_ID)
+    self.panel = RMPanel(self,RMPANEL_ID)
     self.mainSizer = wx.BoxSizer(wx.VERTICAL)
     self.situatePanel()
 
@@ -459,7 +459,7 @@ class RMFrame(wx.Frame):
     self.Close()
 
   def OnCommitEditorObjects(self,event):
-    grid = self.FindWindowById(armid.ID_REQGRID)
+    grid = self.FindWindowById(ID_REQGRID)
     try:
       grid.commitChanges()
     except ARMException,errorText:
@@ -477,7 +477,7 @@ class RMFrame(wx.Frame):
 
   def OnDeleteEditorObject(self,event):
     try:
-      grid = self.FindWindowById(armid.ID_REQGRID)
+      grid = self.FindWindowById(ID_REQGRID)
       pos = grid.GetGridCursorRow()
       if (pos >= 0):
         om = grid.GetTable().om
@@ -489,7 +489,7 @@ class RMFrame(wx.Frame):
           dlg = DependentsDialog(self,eoDeps,eoDim)
           retValue = dlg.ShowModal()
           dlg.Destroy()
-          if (retValue != armid.DEPENDENTS_BUTTONCONFIRM_ID):
+          if (retValue != DEPENDENTS_BUTTONCONFIRM_ID):
             return
           else:
             self.dbProxy.deleteDependencies(eoDeps)
@@ -698,7 +698,7 @@ class RMFrame(wx.Frame):
       return
 
   def requirementGrid(self):
-    grid = self.FindWindowById(armid.ID_REQGRID)
+    grid = self.FindWindowById(ID_REQGRID)
     return grid
 
   def OnViewEnvironment(self,event):
@@ -707,7 +707,7 @@ class RMFrame(wx.Frame):
       proxy = self.b.dbProxy
       environments = proxy.getDimensionNames('environment',False)
       cDlg = DimensionNameDialog(self,'environment',environments,'Select')
-      if (cDlg.ShowModal() == armid.DIMNAME_BUTTONACTION_ID):
+      if (cDlg.ShowModal() == DIMNAME_BUTTONACTION_ID):
         environmentName = cDlg.dimensionName()
         tLinks = EnvironmentModel(proxy.riskAnalysisModel(environmentName),environmentName,proxy)
         cDlg.Destroy() 
@@ -734,7 +734,7 @@ class RMFrame(wx.Frame):
       proxy = self.b.dbProxy
       environments = proxy.getDimensionNames('environment',False)
       cDlg = DimensionNameDialog(self,'environment',environments,'Select')
-      if (cDlg.ShowModal() == armid.DIMNAME_BUTTONACTION_ID):
+      if (cDlg.ShowModal() == DIMNAME_BUTTONACTION_ID):
         environmentName = cDlg.dimensionName()
         associationDictionary = proxy.classModel(environmentName)
         associations = AssetModel(associationDictionary.values(),environmentName)
@@ -763,7 +763,7 @@ class RMFrame(wx.Frame):
       proxy = self.b.dbProxy
       environments = proxy.getDimensionNames('environment',False)
       cDlg = DimensionNameDialog(self,'environment',environments,'Select')
-      if (cDlg.ShowModal() == armid.DIMNAME_BUTTONACTION_ID):
+      if (cDlg.ShowModal() == DIMNAME_BUTTONACTION_ID):
         environmentName = cDlg.dimensionName()
         cDlg.Destroy() 
 
@@ -802,7 +802,7 @@ class RMFrame(wx.Frame):
       proxy = self.b.dbProxy
       personas = proxy.getDimensionNames('persona')
       cDlg = DimensionNameDialog(self,'persona',personas,'Select')
-      if (cDlg.ShowModal() == armid.DIMNAME_BUTTONACTION_ID):
+      if (cDlg.ShowModal() == DIMNAME_BUTTONACTION_ID):
         personaName = cDlg.dimensionName()
         cDlg.Destroy() 
 
@@ -884,7 +884,7 @@ class RMFrame(wx.Frame):
     try:
       defaultDocDir = os.environ['HOME']
       gdDlg = GenerateDocumentationDialog(self)
-      if (gdDlg.ShowModal() == armid.GENDOCPANEL_BUTTONGENERATE_ID):
+      if (gdDlg.ShowModal() == GENDOCPANEL_BUTTONGENERATE_ID):
         docType = gdDlg.documentType()
         sectionFlags = gdDlg.sectionFlags()
         typeFlags = gdDlg.typeFlags()
@@ -921,7 +921,7 @@ class RMFrame(wx.Frame):
       contributors = self.dbProxy.getContributors()
       revisions = self.dbProxy.getRevisions()
       dlg = ProjectSettingsDialog(self,pSettings,pDict,contributors,revisions)
-      if (dlg.ShowModal() == armid.PROJECTSETTINGS_BUTTONCOMMIT_ID):
+      if (dlg.ShowModal() == PROJECTSETTINGS_BUTTONCOMMIT_ID):
         self.dbProxy.updateSettings(dlg.name(),dlg.background(),dlg.goals(),dlg.scope(),dlg.definitions(),dlg.contributors(),dlg.revisions(),dlg.richPicture(),self.b.fontSize,self.b.fontName)
       dlg.Destroy()
     except ARMException,errorText:
@@ -1606,7 +1606,7 @@ class RMFrame(wx.Frame):
       proxy = self.b.dbProxy
       tasks = proxy.getDimensionNames('misusability_case')
       cDlg = DimensionNameDialog(self,'misusability_case',tasks,'Select')
-      if (cDlg.ShowModal() == armid.DIMNAME_BUTTONACTION_ID):
+      if (cDlg.ShowModal() == DIMNAME_BUTTONACTION_ID):
         taskName = cDlg.dimensionName()
         cDlg.Destroy() 
 
@@ -1647,7 +1647,7 @@ class RMFrame(wx.Frame):
       proxy = self.b.dbProxy
       personas = proxy.getDimensionNames('persona')
       cDlg = DimensionNameDialog(self,'persona',personas,'Select')
-      if (cDlg.ShowModal() == armid.DIMNAME_BUTTONACTION_ID):
+      if (cDlg.ShowModal() == DIMNAME_BUTTONACTION_ID):
         personaName = cDlg.dimensionName()
         defaultBackupDir = './sql'
         dlg = wx.FileDialog(self,message='Export persona',defaultDir=defaultBackupDir,style=wx.SAVE | wx.OVERWRITE_PROMPT)
@@ -1669,17 +1669,17 @@ class RMFrame(wx.Frame):
 
   def OnGridRequirements(self,event):
     self.mainSizer.Clear(True)
-    self.panel = RMPanel(self,armid.RMPANEL_ID)
+    self.panel = RMPanel(self,RMPANEL_ID)
     self.situatePanel()
 
   def OnGridGoals(self,event):
     self.mainSizer.Clear(True)
-    self.panel = GMPanel(self,armid.RMPANEL_ID)
+    self.panel = GMPanel(self,RMPANEL_ID)
     self.situatePanel()
 
   def OnGridObstacles(self,event):
     self.mainSizer.Clear(True)
-    self.panel = OMPanel(self,armid.RMPANEL_ID)
+    self.panel = OMPanel(self,RMPANEL_ID)
     self.situatePanel()
 
   def situatePanel(self):
@@ -1773,7 +1773,7 @@ class RMFrame(wx.Frame):
       proxy = self.b.dbProxy
       environments = proxy.getDimensionNames('environment',False)
       cDlg = DimensionNameDialog(self,'environment',environments,'Select')
-      if (cDlg.ShowModal() == armid.DIMNAME_BUTTONACTION_ID):
+      if (cDlg.ShowModal() == DIMNAME_BUTTONACTION_ID):
         environmentName = cDlg.dimensionName()
         associationDictionary = proxy.conceptMapModel(environmentName)
         associations = ConceptMapModel(associationDictionary.values(),environmentName)
@@ -1802,7 +1802,7 @@ class RMFrame(wx.Frame):
       cvs = ['ALL']
       cvs += proxy.getDimensionNames('component_view',False)
       cDlg = DimensionNameDialog(self,'component_view',cvs,'Select')
-      if (cDlg.ShowModal() == armid.DIMNAME_BUTTONACTION_ID):
+      if (cDlg.ShowModal() == DIMNAME_BUTTONACTION_ID):
         cvName = cDlg.dimensionName()
         interfaces,connectors = self.dbProxy.componentView(cvName)
         if (len(interfaces) == 0):
@@ -1828,7 +1828,7 @@ class RMFrame(wx.Frame):
       proxy = self.b.dbProxy
       personas = proxy.getDimensionNames('persona')
       cDlg = DimensionNameDialog(self,'persona',personas,'Select')
-      if (cDlg.ShowModal() == armid.DIMNAME_BUTTONACTION_ID):
+      if (cDlg.ShowModal() == DIMNAME_BUTTONACTION_ID):
         personaName = cDlg.dimensionName()
         codeNet = CodeNetworkModel(proxy.personaCodeNetwork(personaName),personaName)
         codeNet.graph()
@@ -1864,7 +1864,7 @@ class RMFrame(wx.Frame):
       environments = proxy.getDimensionNames('persona_implied_process',False)
       cDlg = DimensionNameDialog(self,'persona_implied_process',environments,'Select')
       ipName = None
-      if (cDlg.ShowModal() == armid.DIMNAME_BUTTONACTION_ID):
+      if (cDlg.ShowModal() == DIMNAME_BUTTONACTION_ID):
         ipName = cDlg.dimensionName()
       cDlg.Destroy() 
       if ipName != None:
@@ -1903,12 +1903,12 @@ class RMFrame(wx.Frame):
       cDlg = DimensionNameDialog(self,'locations',locs,'Select')
       locsName = ''
       envName = ''
-      if (cDlg.ShowModal() == armid.DIMNAME_BUTTONACTION_ID):
+      if (cDlg.ShowModal() == DIMNAME_BUTTONACTION_ID):
         locsName = cDlg.dimensionName()
 
       environments = proxy.getDimensionNames('environment',False)
       cDlg = DimensionNameDialog(self,'environment',environments,'Select')
-      if (cDlg.ShowModal() == armid.DIMNAME_BUTTONACTION_ID):
+      if (cDlg.ShowModal() == DIMNAME_BUTTONACTION_ID):
         envName = cDlg.dimensionName()
 
       riskOverlay = proxy.locationsRiskModel(locsName,envName)

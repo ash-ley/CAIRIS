@@ -18,10 +18,10 @@
 
 import sys
 import gtk
-from Borg import Borg
-import RequirementFactory
-from Requirement import Requirement
-from GoalAssociationParameters import GoalAssociationParameters
+from cairis.core.Borg import Borg
+import cairis.core.RequirementFactory
+from cairis.core.Requirement import Requirement
+from cairis.core.GoalAssociationParameters import GoalAssociationParameters
 from NDImplementationDecorator import NDImplementationDecorator
 
 class NewRequirementNodeDialog:

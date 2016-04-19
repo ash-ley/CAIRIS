@@ -17,8 +17,8 @@
 
 
 import wx
-import armid
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.Borg import Borg
 from BasePanel import BasePanel
 from SummaryDetailsNotebook import SummaryDetailsNotebook
 from PersonaEnvironmentPanel import PersonaEnvironmentPanel
@@ -26,23 +26,23 @@ from PersonalImageView import PersonalImageView
 
 class PersonaPanel(BasePanel):
   def __init__(self,parent):
-    BasePanel.__init__(self,parent,armid.PERSONA_ID)
+    BasePanel.__init__(self,parent,PERSONA_ID)
     b = Borg()
     self.dbProxy = b.dbProxy
  
   def buildControls(self,isCreate,isUpdateable = True):
     mainSizer = wx.BoxSizer(wx.VERTICAL)
-    mainSizer.Add(self.buildTextSizer('Name',(87,30),armid.PERSONA_TEXTNAME_ID),0,wx.EXPAND)
-    mainSizer.Add(self.buildTagCtrlSizer((87,30),armid.PERSONA_TAGS_ID),0,wx.EXPAND)
+    mainSizer.Add(self.buildTextSizer('Name',(87,30),PERSONA_TEXTNAME_ID),0,wx.EXPAND)
+    mainSizer.Add(self.buildTagCtrlSizer((87,30),PERSONA_TAGS_ID),0,wx.EXPAND)
 
 
     pTypes = self.dbProxy.getDimensionNames('persona_type')
-    mainSizer.Add(self.buildComboSizerList('Type',(87,30),armid.PERSONA_COMBOTYPE_ID,pTypes),0,wx.EXPAND)
+    mainSizer.Add(self.buildComboSizerList('Type',(87,30),PERSONA_COMBOTYPE_ID,pTypes),0,wx.EXPAND)
 
     directBox = wx.StaticBox(self,-1,'Assumption Persona')
     directSizer = wx.StaticBoxSizer(directBox,wx.HORIZONTAL)
     mainSizer.Add(directSizer,0,wx.EXPAND)
-    self.directCtrl = wx.CheckBox(self,armid.PERSONA_CHECKASSUMPTION_ID)
+    self.directCtrl = wx.CheckBox(self,PERSONA_CHECKASSUMPTION_ID)
     self.directCtrl.SetValue(False)
     directSizer.Add(self.directCtrl,0,wx.EXPAND)
 
@@ -54,30 +54,30 @@ class PersonaPanel(BasePanel):
     iBox = wx.StaticBox(self,-1)
     iSizer = wx.StaticBoxSizer(iBox,wx.HORIZONTAL)
     sdSizer.Add(iSizer,1,wx.EXPAND)
-    imagePanel = PersonalImageView(self,armid.PERSONA_IMAGEPERSONAIMAGE_ID)
+    imagePanel = PersonalImageView(self,PERSONA_IMAGEPERSONAIMAGE_ID)
     iSizer.Add(imagePanel,1,wx.EXPAND)
 
     self.environmentPanel = PersonaEnvironmentPanel(self,self.dbProxy)
     mainSizer.Add(self.environmentPanel,1,wx.EXPAND)
 
-    mainSizer.Add(self.buildCommitButtonSizer(armid.PERSONA_BUTTONCOMMIT_ID,isCreate),0,wx.ALIGN_CENTER)
+    mainSizer.Add(self.buildCommitButtonSizer(PERSONA_BUTTONCOMMIT_ID,isCreate),0,wx.ALIGN_CENTER)
     self.SetSizer(mainSizer)
 
   def loadControls(self,persona):
-    nameCtrl = self.FindWindowById(armid.PERSONA_TEXTNAME_ID)
-    tagsCtrl = self.FindWindowById(armid.PERSONA_TAGS_ID)
+    nameCtrl = self.FindWindowById(PERSONA_TEXTNAME_ID)
+    tagsCtrl = self.FindWindowById(PERSONA_TAGS_ID)
     tagsCtrl.set(persona.tags())
 
-    typeCtrl = self.FindWindowById(armid.PERSONA_COMBOTYPE_ID)
-    assumptionCtrl = self.FindWindowById(armid.PERSONA_CHECKASSUMPTION_ID)
-    activitiesCtrl = self.nb.FindWindowById(armid.PERSONA_TEXTACTIVITIES_ID)
-    attitudesCtrl = self.nb.FindWindowById(armid.PERSONA_TEXTATTITUDES_ID)
-    aptitudesCtrl = self.nb.FindWindowById(armid.PERSONA_TEXTAPTITUDES_ID)
-    motivationsCtrl = self.nb.FindWindowById(armid.PERSONA_TEXTMOTIVATIONS_ID)
-    skillsCtrl = self.nb.FindWindowById(armid.PERSONA_TEXTSKILLS_ID)
-    intrinsicCtrl = self.nb.FindWindowById(armid.PERSONA_TEXTINTRINSIC_ID)
-    contextualCtrl = self.nb.FindWindowById(armid.PERSONA_TEXTCONTEXTUAL_ID)
-    imageCtrl = self.FindWindowById(armid.PERSONA_IMAGEPERSONAIMAGE_ID)
+    typeCtrl = self.FindWindowById(PERSONA_COMBOTYPE_ID)
+    assumptionCtrl = self.FindWindowById(PERSONA_CHECKASSUMPTION_ID)
+    activitiesCtrl = self.nb.FindWindowById(PERSONA_TEXTACTIVITIES_ID)
+    attitudesCtrl = self.nb.FindWindowById(PERSONA_TEXTATTITUDES_ID)
+    aptitudesCtrl = self.nb.FindWindowById(PERSONA_TEXTAPTITUDES_ID)
+    motivationsCtrl = self.nb.FindWindowById(PERSONA_TEXTMOTIVATIONS_ID)
+    skillsCtrl = self.nb.FindWindowById(PERSONA_TEXTSKILLS_ID)
+    intrinsicCtrl = self.nb.FindWindowById(PERSONA_TEXTINTRINSIC_ID)
+    contextualCtrl = self.nb.FindWindowById(PERSONA_TEXTCONTEXTUAL_ID)
+    imageCtrl = self.FindWindowById(PERSONA_IMAGEPERSONAIMAGE_ID)
     nameCtrl.SetValue(persona.name())
     typeCtrl.SetValue(persona.type())
     assumptionCtrl.SetValue(persona.assumption())

@@ -17,15 +17,15 @@
 
 
 import wx
-import armid
-import ARM
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
 from ReqToGoalPanel import ReqToGoalPanel
-from GoalParameters import GoalParameters
+from cairis.core.GoalParameters import GoalParameters
 
 class ReqToGoalDialog(wx.Dialog):
   def __init__(self,parent,goalName,goalDef,goalCat,goalPri,goalFc,goalIssue,goalOrig,goalAssets,envName):
-    wx.Dialog.__init__(self,parent,armid.GOAL_ID,'Convert Requirement to Goal',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(600,400))
+    wx.Dialog.__init__(self,parent,GOAL_ID,'Convert Requirement to Goal',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(600,400))
     self.theGoalId = -1
     self.theGoalName = goalName
     self.theGoalOriginator = goalOrig
@@ -42,12 +42,12 @@ class ReqToGoalDialog(wx.Dialog):
     self.panel = ReqToGoalPanel(self,goalName,goalDef,goalCat,goalPri,goalFc,goalIssue,goalOrig,goalAssets,envName)
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.GOAL_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,GOAL_BUTTONCOMMIT_ID,self.onCommit)
 
   def onCommit(self,evt):
-    nameCtrl = self.FindWindowById(armid.GOAL_TEXTNAME_ID)
-    origCtrl = self.FindWindowById(armid.GOAL_TEXTORIGINATOR_ID)
-    environmentCtrl = self.FindWindowById(armid.GOAL_PANELENVIRONMENT_ID)
+    nameCtrl = self.FindWindowById(GOAL_TEXTNAME_ID)
+    origCtrl = self.FindWindowById(GOAL_TEXTORIGINATOR_ID)
+    environmentCtrl = self.FindWindowById(GOAL_PANELENVIRONMENT_ID)
 
     self.theGoalName = nameCtrl.GetValue()
     self.theGoalOriginator = origCtrl.GetValue()
@@ -55,7 +55,7 @@ class ReqToGoalDialog(wx.Dialog):
     b = Borg()
     try:
       b.dbProxy.nameCheck(self.theGoalName,'goal')
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add goal',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -79,7 +79,7 @@ class ReqToGoalDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.GOAL_BUTTONCOMMIT_ID)
+      self.EndModal(GOAL_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = GoalParameters(self.theGoalName,self.theGoalOriginator,[],self.theEnvironmentProperties)

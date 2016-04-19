@@ -17,8 +17,8 @@
 
 
 import wx
-import armid
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.Borg import Borg
 from BasePanel import BasePanel
 from ChannelListCtrl import ChannelListCtrl
 from CodeNetworkView import CodeNetworkView
@@ -26,41 +26,41 @@ from CodeNetworkModel import CodeNetworkModel
 
 class SummaryPage(wx.Panel):
   def __init__(self,parent):
-    wx.Panel.__init__(self,parent,armid.IMPLIEDPROCESS_PAGESUMMARY_ID)
+    wx.Panel.__init__(self,parent,IMPLIEDPROCESS_PAGESUMMARY_ID)
     topSizer = wx.BoxSizer(wx.VERTICAL)
 
     nameBox = wx.StaticBox(self,-1,'Name')
     nameBoxSizer = wx.StaticBoxSizer(nameBox,wx.HORIZONTAL)
     topSizer.Add(nameBoxSizer,0,wx.EXPAND)
-    nameBoxSizer.Add(wx.TextCtrl(self,armid.IMPLIEDPROCESS_TEXTNAME_ID,''),1,wx.EXPAND)
+    nameBoxSizer.Add(wx.TextCtrl(self,IMPLIEDPROCESS_TEXTNAME_ID,''),1,wx.EXPAND)
 
     descBox = wx.StaticBox(self,-1,'Description')
     descBoxSizer = wx.StaticBoxSizer(descBox,wx.HORIZONTAL)
     topSizer.Add(descBoxSizer,1,wx.EXPAND)
-    descBoxSizer.Add(wx.TextCtrl(self,armid.IMPLIEDPROCESS_TEXTDESCRIPTION_ID,'None',style=wx.TE_MULTILINE),1,wx.EXPAND)
+    descBoxSizer.Add(wx.TextCtrl(self,IMPLIEDPROCESS_TEXTDESCRIPTION_ID,'None',style=wx.TE_MULTILINE),1,wx.EXPAND)
     self.SetSizer(topSizer)
 
 class SpecificationPage(wx.Panel):
   def __init__(self,parent):
-    wx.Panel.__init__(self,parent,armid.IMPLIEDPROCESS_PAGESPECIFICATION_ID)
+    wx.Panel.__init__(self,parent,IMPLIEDPROCESS_PAGESPECIFICATION_ID)
     topSizer = wx.BoxSizer(wx.VERTICAL)
-    self.channelList = ChannelListCtrl(self,armid.IMPLIEDPROCESS_LISTCHANNELS_ID)
+    self.channelList = ChannelListCtrl(self,IMPLIEDPROCESS_LISTCHANNELS_ID)
     topSizer.Add(self.channelList,1,wx.EXPAND)
     specBox = wx.StaticBox(self,-1)
     specBoxSizer = wx.StaticBoxSizer(specBox,wx.HORIZONTAL)
     topSizer.Add(specBoxSizer,1,wx.EXPAND)
-    self.specificationCtrl = wx.TextCtrl(self,armid.IMPLIEDPROCESS_TEXTSPECIFICATION_ID,'None',style=wx.TE_MULTILINE)
+    self.specificationCtrl = wx.TextCtrl(self,IMPLIEDPROCESS_TEXTSPECIFICATION_ID,'None',style=wx.TE_MULTILINE)
     specBoxSizer.Add(self.specificationCtrl,1,wx.EXPAND)
     self.SetSizer(topSizer)
 
 class RelationshipPage(wx.Panel):
   def __init__(self,parent):
-    wx.Panel.__init__(self,parent,armid.IMPLIEDPROCESS_PAGERELATIONSHIP_ID)
+    wx.Panel.__init__(self,parent,IMPLIEDPROCESS_PAGERELATIONSHIP_ID)
     topSizer = wx.BoxSizer(wx.VERTICAL)
     rshipBox = wx.StaticBox(self,-1)
     rshipBoxSizer = wx.StaticBoxSizer(rshipBox,wx.HORIZONTAL)
     topSizer.Add(rshipBoxSizer,1,wx.EXPAND)
-    self.codeRelationships = wx.ListCtrl(self,armid.IMPLIEDPROCESS_LISTRELATIONSHIPS_ID,size=wx.DefaultSize,style=wx.LC_REPORT)
+    self.codeRelationships = wx.ListCtrl(self,IMPLIEDPROCESS_LISTRELATIONSHIPS_ID,size=wx.DefaultSize,style=wx.LC_REPORT)
     self.codeRelationships.InsertColumn(0,'From')
     self.codeRelationships.SetColumnWidth(0,150)
     self.codeRelationships.InsertColumn(1,'Type')
@@ -102,7 +102,7 @@ class RelationshipPage(wx.Panel):
 
 class ImpliedProcessNotebook(wx.Notebook):
   def __init__(self,parent):
-    wx.Notebook.__init__(self,parent,armid.IMPLIEDPROCESS_NOTEBOOKSPECIFICATION_ID)
+    wx.Notebook.__init__(self,parent,IMPLIEDPROCESS_NOTEBOOKSPECIFICATION_ID)
     p1 = SummaryPage(self)
     p2 = RelationshipPage(self)
     p3 = SpecificationPage(self)
@@ -113,7 +113,7 @@ class ImpliedProcessNotebook(wx.Notebook):
 
 class ImpliedProcessPanel(BasePanel):
   def __init__(self,parent,isCreate):
-    BasePanel.__init__(self,parent,armid.IMPLIEDPROCESS_ID)
+    BasePanel.__init__(self,parent,IMPLIEDPROCESS_ID)
     b = Borg()
     self.dbProxy = b.dbProxy
     self.theSelectedSet = set([])
@@ -121,12 +121,12 @@ class ImpliedProcessPanel(BasePanel):
 
     mainSizer = wx.BoxSizer(wx.VERTICAL)
     personas = self.dbProxy.getDimensionNames('persona')
-    mainSizer.Add(self.buildComboSizerList('Persona',(87,30),armid.IMPLIEDPROCESS_COMBOPERSONA_ID,personas),0,wx.EXPAND)
+    mainSizer.Add(self.buildComboSizerList('Persona',(87,30),IMPLIEDPROCESS_COMBOPERSONA_ID,personas),0,wx.EXPAND)
 
     cnBox = wx.StaticBox(self,-1,'Code Network')
     cnSizer = wx.StaticBoxSizer(cnBox,wx.HORIZONTAL)
     mainSizer.Add(cnSizer,1,wx.EXPAND)
-    self.codeNetView = CodeNetworkView(self,armid.IMPLIEDPROCESS_IMAGENETWORK_ID,self.theGraphName)
+    self.codeNetView = CodeNetworkView(self,IMPLIEDPROCESS_IMAGENETWORK_ID,self.theGraphName)
 
     cnSizer.Add(self.codeNetView,1,wx.EXPAND)
 
@@ -134,22 +134,22 @@ class ImpliedProcessPanel(BasePanel):
     mainSizer.Add(idnSizer,1,wx.EXPAND)
     idnSizer.Add(ImpliedProcessNotebook(self),1,wx.EXPAND)
 
-    self.codeRelationships = self.FindWindowById(armid.IMPLIEDPROCESS_LISTRELATIONSHIPS_ID)
+    self.codeRelationships = self.FindWindowById(IMPLIEDPROCESS_LISTRELATIONSHIPS_ID)
     self.codeRelationships.Bind(wx.EVT_LIST_ITEM_SELECTED,self.onRelationshipAdded)
     self.codeRelationships.Bind(wx.EVT_LIST_ITEM_DESELECTED,self.onRelationshipRemoved)
 
-    self.personaCtrl = self.FindWindowById(armid.IMPLIEDPROCESS_COMBOPERSONA_ID)
+    self.personaCtrl = self.FindWindowById(IMPLIEDPROCESS_COMBOPERSONA_ID)
     self.personaCtrl.Bind(wx.EVT_COMBOBOX,self.onPersonaChange)
 
-    mainSizer.Add(self.buildCommitButtonSizer(armid.IMPLIEDPROCESS_BUTTONCOMMIT_ID,isCreate),0,wx.ALIGN_CENTER)
+    mainSizer.Add(self.buildCommitButtonSizer(IMPLIEDPROCESS_BUTTONCOMMIT_ID,isCreate),0,wx.ALIGN_CENTER)
 
     self.SetSizer(mainSizer)
 
   def loadControls(self,implProc):
-    nameCtrl = self.FindWindowById(armid.IMPLIEDPROCESS_TEXTNAME_ID)
-    descCtrl = self.FindWindowById(armid.IMPLIEDPROCESS_TEXTDESCRIPTION_ID)
-    specCtrl = self.FindWindowById(armid.IMPLIEDPROCESS_TEXTSPECIFICATION_ID)
-    channelCtrl = self.FindWindowById(armid.IMPLIEDPROCESS_LISTCHANNELS_ID)
+    nameCtrl = self.FindWindowById(IMPLIEDPROCESS_TEXTNAME_ID)
+    descCtrl = self.FindWindowById(IMPLIEDPROCESS_TEXTDESCRIPTION_ID)
+    specCtrl = self.FindWindowById(IMPLIEDPROCESS_TEXTSPECIFICATION_ID)
+    channelCtrl = self.FindWindowById(IMPLIEDPROCESS_LISTCHANNELS_ID)
     nameCtrl.SetValue(implProc.name())
     descCtrl.SetValue(implProc.description())
     channelCtrl.load(implProc.channels())
@@ -157,7 +157,7 @@ class ImpliedProcessPanel(BasePanel):
     self.personaCtrl.SetValue(personaName)
     self.theSelectedSet = set(implProc.network())
 
-    relationshipPage = self.FindWindowById(armid.IMPLIEDPROCESS_PAGERELATIONSHIP_ID)
+    relationshipPage = self.FindWindowById(IMPLIEDPROCESS_PAGERELATIONSHIP_ID)
     relationshipPage.buildList(personaName)
     relationshipPage.highlightSet(self.theSelectedSet)
     self.regenerateView(personaName)
@@ -190,7 +190,7 @@ class ImpliedProcessPanel(BasePanel):
   def onPersonaChange(self,evt):
     personaName = self.personaCtrl.GetValue()
     self.theSelectedSet = set([])
-    self.rshipPage = self.FindWindowById(armid.IMPLIEDPROCESS_PAGERELATIONSHIP_ID)
+    self.rshipPage = self.FindWindowById(IMPLIEDPROCESS_PAGERELATIONSHIP_ID)
     self.rshipPage.buildList(personaName)
     self.regenerateView(personaName)
 

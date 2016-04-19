@@ -17,15 +17,15 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from PropertiesListCtrl import PropertiesListCtrl
-from AssetEnvironmentProperties import AssetEnvironmentProperties
+from cairis.core.AssetEnvironmentProperties import AssetEnvironmentProperties
 from EnvironmentListCtrl import EnvironmentListCtrl
 from AssetEnvironmentNotebook import AssetEnvironmentNotebook
 
 class AssetEnvironmentPanel(wx.Panel):
   def __init__(self,parent,dp):
-    wx.Panel.__init__(self,parent,armid.ASSET_PANELENVIRONMENT_ID)
+    wx.Panel.__init__(self,parent,ASSET_PANELENVIRONMENT_ID)
     self.dbProxy = dp
     self.theAssetId = None
     self.theEnvironmentDictionary = {}
@@ -35,7 +35,7 @@ class AssetEnvironmentPanel(wx.Panel):
     environmentBox = wx.StaticBox(self)
     environmentListSizer = wx.StaticBoxSizer(environmentBox,wx.HORIZONTAL)
     mainSizer.Add(environmentListSizer,0,wx.EXPAND)
-    self.environmentList = EnvironmentListCtrl(self,armid.ASSETENVIRONMENT_LISTENVIRONMENTS_ID,self.dbProxy)
+    self.environmentList = EnvironmentListCtrl(self,ASSETENVIRONMENT_LISTENVIRONMENTS_ID,self.dbProxy)
     environmentListSizer.Add(self.environmentList,1,wx.EXPAND)
     dimBox = wx.StaticBox(self)
     environmentDimSizer = wx.StaticBoxSizer(dimBox,wx.VERTICAL)
@@ -47,8 +47,8 @@ class AssetEnvironmentPanel(wx.Panel):
     self.notebook = AssetEnvironmentNotebook(self,self.dbProxy)
     nbSizer.Add(self.notebook,1,wx.EXPAND)
 
-    self.propertiesList = self.notebook.FindWindowById(armid.ASSETENVIRONMENT_LISTPROPERTIES_ID)
-    self.associationCtrl = self.notebook.FindWindowById(armid.ASSET_LISTASSOCIATIONS_ID)
+    self.propertiesList = self.notebook.FindWindowById(ASSETENVIRONMENT_LISTPROPERTIES_ID)
+    self.associationCtrl = self.notebook.FindWindowById(ASSET_LISTASSOCIATIONS_ID)
 
     self.SetSizer(mainSizer)
     self.environmentList.Bind(wx.EVT_LIST_INSERT_ITEM,self.OnAddEnvironment)

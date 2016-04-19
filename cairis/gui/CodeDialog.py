@@ -17,9 +17,9 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from CodePanel import CodePanel
-from CodeParameters import CodeParameters
+from cairis.core.CodeParameters import CodeParameters
 import DialogClassParameters
 
 class CodeDialog(wx.Dialog):
@@ -41,7 +41,7 @@ class CodeDialog(wx.Dialog):
     self.panel.buildControls(parameters.createFlag(),parameters.label())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.CODE_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,CODE_BUTTONCOMMIT_ID,self.onCommit)
     wx.EVT_BUTTON(self,wx.ID_CLOSE,self.onClose)
 
   def onClose(self,evt):
@@ -54,11 +54,11 @@ class CodeDialog(wx.Dialog):
 
   def onCommit(self,evt):
     commitLabel = self.commitVerb + ' code'
-    nameCtrl = self.FindWindowById(armid.CODE_TEXTNAME_ID)
-    typeCtrl = self.FindWindowById(armid.CODE_COMBOTYPE_ID)
-    descCtrl = self.FindWindowById(armid.CODE_TEXTDESCRIPTION_ID)
-    incCritCtrl = self.FindWindowById(armid.CODE_TEXTINCLUSIONCRITERIA_ID)
-    codeEgCtrl = self.FindWindowById(armid.CODE_TEXTEXAMPLE_ID)
+    nameCtrl = self.FindWindowById(CODE_TEXTNAME_ID)
+    typeCtrl = self.FindWindowById(CODE_COMBOTYPE_ID)
+    descCtrl = self.FindWindowById(CODE_TEXTDESCRIPTION_ID)
+    incCritCtrl = self.FindWindowById(CODE_TEXTINCLUSIONCRITERIA_ID)
+    codeEgCtrl = self.FindWindowById(CODE_TEXTEXAMPLE_ID)
     self.theName = nameCtrl.GetValue()
     self.theType = typeCtrl.GetValue()
     self.theDescription = descCtrl.GetValue()
@@ -91,7 +91,7 @@ class CodeDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.CODE_BUTTONCOMMIT_ID)
+      self.EndModal(CODE_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = CodeParameters(self.theName,self.theType,self.theDescription,self.theInclusionCriteria,self.theExample)

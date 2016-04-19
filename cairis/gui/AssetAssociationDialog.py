@@ -17,13 +17,13 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
-import MySQLDatabaseProxy
+import cairis.core.MySQLDatabaseProxy
 
 class AssetAssociationDialog(wx.Dialog):
   def __init__(self,parent,dp,envName,assetProperties,headNav = 0,headAdornment = '',headNry = '',headRole='',tailRole='',tailNry='',tailAdornment='',tailNav = 0,tailName = ''):
-    wx.Dialog.__init__(self,parent,armid.ASSETASSOCIATION_ID,'Add Asset Association',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,500))
+    wx.Dialog.__init__(self,parent,ASSETASSOCIATION_ID,'Add Asset Association',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,500))
     self.dbProxy = dp
     self.theAssetProperties = assetProperties
     self.theCurrentEnvironment = envName
@@ -42,56 +42,56 @@ class AssetAssociationDialog(wx.Dialog):
     multiplicityTypes = ['1','*','1..*']
     navs = ['0','1','-1']
 
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Navigation',(87,30),armid.ASSETASSOCIATION_COMBOHEADNAV_ID,navs),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Adornment',(87,30),armid.ASSETASSOCIATION_COMBOHEADTYPE_ID,associationTypes),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'nry',(87,30),armid.ASSETASSOCIATION_COMBOHEADMULTIPLICITY_ID,multiplicityTypes),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Role',(87,30),armid.ASSETASSOCIATION_TEXTHEADROLE_ID),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Role',(87,30),armid.ASSETASSOCIATION_TEXTTAILROLE_ID),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'nry',(87,30),armid.ASSETASSOCIATION_COMBOTAILMULTIPLICITY_ID,multiplicityTypes),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Adornment',(87,30),armid.ASSETASSOCIATION_COMBOTAILTYPE_ID,associationTypes),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Navigation',(87,30),armid.ASSETASSOCIATION_COMBOTAILNAV_ID,navs),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Tail',(87,30),armid.ASSETASSOCIATION_COMBOTAILASSET_ID,assets),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Navigation',(87,30),ASSETASSOCIATION_COMBOHEADNAV_ID,navs),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Adornment',(87,30),ASSETASSOCIATION_COMBOHEADTYPE_ID,associationTypes),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'nry',(87,30),ASSETASSOCIATION_COMBOHEADMULTIPLICITY_ID,multiplicityTypes),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Role',(87,30),ASSETASSOCIATION_TEXTHEADROLE_ID),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Role',(87,30),ASSETASSOCIATION_TEXTTAILROLE_ID),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'nry',(87,30),ASSETASSOCIATION_COMBOTAILMULTIPLICITY_ID,multiplicityTypes),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Adornment',(87,30),ASSETASSOCIATION_COMBOTAILTYPE_ID,associationTypes),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Navigation',(87,30),ASSETASSOCIATION_COMBOTAILNAV_ID,navs),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Tail',(87,30),ASSETASSOCIATION_COMBOTAILASSET_ID,assets),0,wx.EXPAND)
 
-    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,armid.ASSETASSOCIATION_BUTTONCOMMIT_ID),0,wx.ALIGN_CENTER)
+    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,ASSETASSOCIATION_BUTTONCOMMIT_ID),0,wx.ALIGN_CENTER)
     self.SetSizer(mainSizer)
 
-    wx.EVT_BUTTON(self,armid.ASSETASSOCIATION_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,ASSETASSOCIATION_BUTTONCOMMIT_ID,self.onCommit)
     self.commitLabel = 'Add'
     if (len(self.theTailName) > 0):
       self.commitLabel = 'Edit'
       self.SetLabel('Edit Asset Association')
-      headNavCtrl = self.FindWindowById(armid.ASSETASSOCIATION_COMBOHEADNAV_ID)
+      headNavCtrl = self.FindWindowById(ASSETASSOCIATION_COMBOHEADNAV_ID)
       headNavCtrl.SetValue(str(self.theHeadNav))
-      headTypeCtrl = self.FindWindowById(armid.ASSETASSOCIATION_COMBOHEADTYPE_ID)
+      headTypeCtrl = self.FindWindowById(ASSETASSOCIATION_COMBOHEADTYPE_ID)
       headTypeCtrl.SetValue(self.theHeadAdornment)
-      headNryCtrl = self.FindWindowById(armid.ASSETASSOCIATION_COMBOHEADMULTIPLICITY_ID)
+      headNryCtrl = self.FindWindowById(ASSETASSOCIATION_COMBOHEADMULTIPLICITY_ID)
       headNryCtrl.SetValue(self.theHeadNry)
-      headRoleCtrl = self.FindWindowById(armid.ASSETASSOCIATION_TEXTHEADROLE_ID)
+      headRoleCtrl = self.FindWindowById(ASSETASSOCIATION_TEXTHEADROLE_ID)
       headRoleCtrl.SetValue(self.theHeadRole)
-      tailRoleCtrl = self.FindWindowById(armid.ASSETASSOCIATION_TEXTTAILROLE_ID)
+      tailRoleCtrl = self.FindWindowById(ASSETASSOCIATION_TEXTTAILROLE_ID)
       tailRoleCtrl.SetValue(self.theTailRole)
-      tailNryCtrl = self.FindWindowById(armid.ASSETASSOCIATION_COMBOTAILMULTIPLICITY_ID)
+      tailNryCtrl = self.FindWindowById(ASSETASSOCIATION_COMBOTAILMULTIPLICITY_ID)
       tailNryCtrl.SetValue(self.theTailNry)
-      tailTypeCtrl = self.FindWindowById(armid.ASSETASSOCIATION_COMBOTAILTYPE_ID)
+      tailTypeCtrl = self.FindWindowById(ASSETASSOCIATION_COMBOTAILTYPE_ID)
       tailTypeCtrl.SetValue(self.theTailAdornment)
-      tailNavCtrl = self.FindWindowById(armid.ASSETASSOCIATION_COMBOTAILNAV_ID)
+      tailNavCtrl = self.FindWindowById(ASSETASSOCIATION_COMBOTAILNAV_ID)
       tailNavCtrl.SetValue(str(self.theTailNav))
-      tailCtrl = self.FindWindowById(armid.ASSETASSOCIATION_COMBOTAILASSET_ID)
+      tailCtrl = self.FindWindowById(ASSETASSOCIATION_COMBOTAILASSET_ID)
       tailCtrl.SetValue(self.theTailName)
-      buttonCtrl = self.FindWindowById(armid.ASSETASSOCIATION_BUTTONCOMMIT_ID)
+      buttonCtrl = self.FindWindowById(ASSETASSOCIATION_BUTTONCOMMIT_ID)
       buttonCtrl.SetLabel('Edit')
       
 
   def onCommit(self,evt):
-    headNavCtrl = self.FindWindowById(armid.ASSETASSOCIATION_COMBOHEADNAV_ID)
-    headTypeCtrl = self.FindWindowById(armid.ASSETASSOCIATION_COMBOHEADTYPE_ID)
-    headNryCtrl = self.FindWindowById(armid.ASSETASSOCIATION_COMBOHEADMULTIPLICITY_ID)
-    headRoleCtrl = self.FindWindowById(armid.ASSETASSOCIATION_TEXTHEADROLE_ID)
-    tailRoleCtrl = self.FindWindowById(armid.ASSETASSOCIATION_TEXTTAILROLE_ID)
-    tailNryCtrl = self.FindWindowById(armid.ASSETASSOCIATION_COMBOTAILMULTIPLICITY_ID)
-    tailTypeCtrl = self.FindWindowById(armid.ASSETASSOCIATION_COMBOTAILTYPE_ID)
-    tailNavCtrl = self.FindWindowById(armid.ASSETASSOCIATION_COMBOTAILNAV_ID)
-    tailCtrl = self.FindWindowById(armid.ASSETASSOCIATION_COMBOTAILASSET_ID)
+    headNavCtrl = self.FindWindowById(ASSETASSOCIATION_COMBOHEADNAV_ID)
+    headTypeCtrl = self.FindWindowById(ASSETASSOCIATION_COMBOHEADTYPE_ID)
+    headNryCtrl = self.FindWindowById(ASSETASSOCIATION_COMBOHEADMULTIPLICITY_ID)
+    headRoleCtrl = self.FindWindowById(ASSETASSOCIATION_TEXTHEADROLE_ID)
+    tailRoleCtrl = self.FindWindowById(ASSETASSOCIATION_TEXTTAILROLE_ID)
+    tailNryCtrl = self.FindWindowById(ASSETASSOCIATION_COMBOTAILMULTIPLICITY_ID)
+    tailTypeCtrl = self.FindWindowById(ASSETASSOCIATION_COMBOTAILTYPE_ID)
+    tailNavCtrl = self.FindWindowById(ASSETASSOCIATION_COMBOTAILNAV_ID)
+    tailCtrl = self.FindWindowById(ASSETASSOCIATION_COMBOTAILASSET_ID)
 
     self.theHeadNav = int(headNavCtrl.GetValue())
     self.theHeadAdornment = headTypeCtrl.GetValue()
@@ -142,7 +142,7 @@ class AssetAssociationDialog(wx.Dialog):
           return
         else:
           incDlg.Destroy()
-      self.EndModal(armid.ASSETASSOCIATION_BUTTONCOMMIT_ID)
+      self.EndModal(ASSETASSOCIATION_BUTTONCOMMIT_ID)
 
   def headAdornment(self): return self.theHeadAdornment
   def headNavigation(self): return self.theHeadNav

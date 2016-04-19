@@ -17,27 +17,27 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from BasePanel import BasePanel
 from TemplateRequirementNotebook import TemplateRequirementNotebook
 
 class TemplateRequirementPanel(BasePanel):
   def __init__(self,parent):
-    wx.Panel.__init__(self,parent,armid.TEMPLATEREQUIREMENT_ID)
+    wx.Panel.__init__(self,parent,TEMPLATEREQUIREMENT_ID)
 
   def buildControls(self,isCreate,isUpdateable=True):
     mainSizer = wx.BoxSizer(wx.VERTICAL)
     mainSizer.Add(TemplateRequirementNotebook(self),1,wx.EXPAND)
-    mainSizer.Add(self.buildCommitButtonSizer(armid.TEMPLATEREQUIREMENT_BUTTONCOMMIT_ID,isCreate),0,wx.CENTER)
+    mainSizer.Add(self.buildCommitButtonSizer(TEMPLATEREQUIREMENT_BUTTONCOMMIT_ID,isCreate),0,wx.CENTER)
     self.SetSizer(mainSizer)
 
   def loadControls(self,req):
-    nameCtrl = self.FindWindowById(armid.TEMPLATEREQUIREMENT_TEXTNAME_ID)
-    assetCtrl = self.FindWindowById(armid.TEMPLATEREQUIREMENT_COMBOASSET_ID)
-    descCtrl = self.FindWindowById(armid.TEMPLATEREQUIREMENT_TEXTDESCRIPTION_ID)
-    typeCtrl = self.FindWindowById(armid.TEMPLATEREQUIREMENT_COMBOTYPE_ID)
-    ratCtrl = self.FindWindowById(armid.TEMPLATEREQUIREMENT_TEXTRATIONALE_ID)
-    fcCtrl = self.FindWindowById(armid.TEMPLATEREQUIREMENT_TEXTFITCRITERION_ID)
+    nameCtrl = self.FindWindowById(TEMPLATEREQUIREMENT_TEXTNAME_ID)
+    assetCtrl = self.FindWindowById(TEMPLATEREQUIREMENT_COMBOASSET_ID)
+    descCtrl = self.FindWindowById(TEMPLATEREQUIREMENT_TEXTDESCRIPTION_ID)
+    typeCtrl = self.FindWindowById(TEMPLATEREQUIREMENT_COMBOTYPE_ID)
+    ratCtrl = self.FindWindowById(TEMPLATEREQUIREMENT_TEXTRATIONALE_ID)
+    fcCtrl = self.FindWindowById(TEMPLATEREQUIREMENT_TEXTFITCRITERION_ID)
 
     nameCtrl.SetValue(req.name())
     assetCtrl.SetValue(req.asset())

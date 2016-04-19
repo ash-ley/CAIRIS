@@ -17,12 +17,12 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from InterfaceListPanel import InterfaceListPanel
 
 class InterfaceListDialog(wx.Dialog):
   def __init__(self,parent,ifName = '',ifType = '',arName = '',pName = ''):
-    wx.Dialog.__init__(self,parent,armid.INTERFACELISTDIALOG_ID,'Add Interface',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(300,200))
+    wx.Dialog.__init__(self,parent,INTERFACELISTDIALOG_ID,'Add Interface',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(300,200))
     self.theInterfaceName = ifName
     self.theInterfaceType = ifType
     self.theAccessRight = arName
@@ -42,10 +42,10 @@ class InterfaceListDialog(wx.Dialog):
 
 
   def onCommit(self,evt):
-    nameCtrl = self.FindWindowById(armid.INTERFACELISTDIALOG_COMBONAME_ID)
-    typeCtrl = self.FindWindowById(armid.INTERFACELISTDIALOG_COMBOTYPE_ID)
-    arCtrl = self.FindWindowById(armid.INTERFACELISTDIALOG_COMBOACCESSRIGHT_ID)
-    pCtrl = self.FindWindowById(armid.INTERFACELISTDIALOG_COMBOPRIVILEGE_ID)
+    nameCtrl = self.FindWindowById(INTERFACELISTDIALOG_COMBONAME_ID)
+    typeCtrl = self.FindWindowById(INTERFACELISTDIALOG_COMBOTYPE_ID)
+    arCtrl = self.FindWindowById(INTERFACELISTDIALOG_COMBOACCESSRIGHT_ID)
+    pCtrl = self.FindWindowById(INTERFACELISTDIALOG_COMBOPRIVILEGE_ID)
 
     self.theInterfaceName = nameCtrl.GetValue()
     self.theInterfaceType = typeCtrl.GetValue()

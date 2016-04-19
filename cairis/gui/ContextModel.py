@@ -16,12 +16,12 @@
 #  under the License.
 
 
-from Borg import Borg
-import DotTrace
+from cairis.core.Borg import Borg
+import cairis.core.DotTrace
 import pydot
 import wx
 import os
-import ARM
+from cairis.core.ARM import *
 import gtk
 
 class ContextModel:
@@ -77,4 +77,4 @@ class ContextModel:
           self.theGraph.add_edge(edge3)
       return self.layout()
     except ARM.DatabaseProxyException, errTxt:
-      raise ARM.ARMException(errTxt)
+      raise ARMException(errTxt)

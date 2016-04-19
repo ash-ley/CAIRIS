@@ -44,7 +44,7 @@ from DomainPropertyNodeDialog import DomainPropertyNodeDialog
 from AssignResponsibilityNodeDialog import AssignResponsibilityNodeDialog
 from ComponentNodeDialog import ComponentNodeDialog
 
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 
 def buildComponentModelNode(url):
@@ -52,7 +52,7 @@ def buildComponentModelNode(url):
   b = Borg()
   proxy = b.dbProxy
   builder = gtk.Builder()
-  gladeFile = './config/imvnodes/imvnodes.xml'
+  gladeFile = b.configDir + '/imvnodes/imvnodes.xml'
   builder.add_from_file(gladeFile)
 
   dlg = 0
@@ -71,7 +71,7 @@ def build(url,environmentName,newNode = False,objtName = None,assocType = None,g
   proxy = b.dbProxy
   builder = gtk.Builder()
   
-  gladeFile = './config/imvnodes/imvnodes.xml'
+  gladeFile = b.configDir + '/imvnodes/imvnodes.xml'
   builder.add_from_file(gladeFile)
 
   objt = None

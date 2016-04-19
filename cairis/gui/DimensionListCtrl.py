@@ -17,7 +17,7 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 
 class DimensionListCtrl(wx.ListCtrl):
   def __init__(self,parent,winId,boxSize,columnLabel,dimensionTable,dp,toolTipTxt='',listStyle=wx.LC_REPORT):
@@ -28,11 +28,11 @@ class DimensionListCtrl(wx.ListCtrl):
     self.InsertColumn(0,columnLabel)
     self.SetColumnWidth(0,150)
     self.theDimMenu = wx.Menu()
-    self.theDimMenu.Append(armid.DIMLIST_MENUADD_ID,'Add')
-    self.theDimMenu.Append(armid.DIMLIST_MENUDELETE_ID,'Delete')
+    self.theDimMenu.Append(DIMLIST_MENUADD_ID,'Add')
+    self.theDimMenu.Append(DIMLIST_MENUDELETE_ID,'Delete')
     self.Bind(wx.EVT_RIGHT_DOWN,self.OnRightDown)
-    wx.EVT_MENU(self.theDimMenu,armid.DIMLIST_MENUADD_ID,self.onAddDimension)
-    wx.EVT_MENU(self.theDimMenu,armid.DIMLIST_MENUDELETE_ID,self.onDeleteDimension)
+    wx.EVT_MENU(self.theDimMenu,DIMLIST_MENUADD_ID,self.onAddDimension)
+    wx.EVT_MENU(self.theDimMenu,DIMLIST_MENUDELETE_ID,self.onDeleteDimension)
    
     if (toolTipTxt != ''):
       self.SetToolTip(wx.ToolTip(toolTipTxt))
@@ -52,7 +52,7 @@ class DimensionListCtrl(wx.ListCtrl):
     remainingDimensions = [x for x in dimensions if x not in currentDimensions]
     from DimensionNameDialog import DimensionNameDialog
     dlg = DimensionNameDialog(self,self.theDimensionTable,remainingDimensions,'Add')
-    if (dlg.ShowModal() == armid.DIMNAME_BUTTONACTION_ID):
+    if (dlg.ShowModal() == DIMNAME_BUTTONACTION_ID):
       for additionalDimension in dlg.dimensionNames():
         idx = self.GetItemCount()
         self.InsertStringItem(idx,additionalDimension)

@@ -21,7 +21,7 @@ import gtk.gdk
 import contextxdot
 import ContextNodeDialogFactory
 import os
-from Borg import *
+from cairis.core.Borg import *
 
 class ContextModelViewer(contextxdot.ContextDotWindow):
   def __init__(self,environmentName,dp):

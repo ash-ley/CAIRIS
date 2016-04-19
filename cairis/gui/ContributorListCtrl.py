@@ -17,12 +17,12 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from ContributorEntryDialog import ContributorEntryDialog
 
 class ContributorListCtrl(wx.ListCtrl):
   def __init__(self,parent):
-    wx.ListCtrl.__init__(self,parent,armid.PROJECTSETTINGS_LISTCONTRIBUTORS_ID,size=wx.DefaultSize,style=wx.LC_REPORT | wx.LC_SORT_ASCENDING)
+    wx.ListCtrl.__init__(self,parent,PROJECTSETTINGS_LISTCONTRIBUTORS_ID,size=wx.DefaultSize,style=wx.LC_REPORT | wx.LC_SORT_ASCENDING)
     self.InsertColumn(0,'Firstname')
     self.SetColumnWidth(0,100)
     self.InsertColumn(1,'Surname')
@@ -33,14 +33,14 @@ class ContributorListCtrl(wx.ListCtrl):
     self.SetColumnWidth(3,100)
     self.theSelectedIdx = -1
     self.theMenu = wx.Menu()
-    self.theMenu.Append(armid.CONTRIBUTORLISTCTRL_MENUADD_ID,'Add')
-    self.theMenu.Append(armid.CONTRIBUTORLISTCTRL_MENUDELETE_ID,'Delete')
+    self.theMenu.Append(CONTRIBUTORLISTCTRL_MENUADD_ID,'Add')
+    self.theMenu.Append(CONTRIBUTORLISTCTRL_MENUDELETE_ID,'Delete')
     self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK,self.OnRightDown)
     self.Bind(wx.EVT_LIST_ITEM_SELECTED,self.OnItemSelected)
     self.Bind(wx.EVT_LIST_ITEM_DESELECTED,self.OnItemDeselected)
     self.Bind(wx.EVT_LIST_ITEM_ACTIVATED,self.onEntryActivated)
-    wx.EVT_MENU(self.theMenu,armid.CONTRIBUTORLISTCTRL_MENUADD_ID,self.onAddEntry)
-    wx.EVT_MENU(self.theMenu,armid.CONTRIBUTORLISTCTRL_MENUDELETE_ID,self.onDeleteEntry)
+    wx.EVT_MENU(self.theMenu,CONTRIBUTORLISTCTRL_MENUADD_ID,self.onAddEntry)
+    wx.EVT_MENU(self.theMenu,CONTRIBUTORLISTCTRL_MENUDELETE_ID,self.onDeleteEntry)
 
   def OnItemSelected(self,evt):
     self.theSelectedIdx = evt.GetIndex()
@@ -53,7 +53,7 @@ class ContributorListCtrl(wx.ListCtrl):
 
   def onAddEntry(self,evt):
     dlg = ContributorEntryDialog(self)
-    if (dlg.ShowModal() == armid.CONTRIBUTORENTRY_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == CONTRIBUTORENTRY_BUTTONCOMMIT_ID):
       firstName = dlg.firstName()
       surname = dlg.surname()
       affiliation = dlg.affiliation()
@@ -83,7 +83,7 @@ class ContributorListCtrl(wx.ListCtrl):
     role = self.GetItem(self.theSelectedIdx,3)
      
     dlg = ContributorEntryDialog(self,firstName,surname.GetText(),affiliation.GetText(),role.GetText())
-    if (dlg.ShowModal() == armid.CONTRIBUTORENTRY_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == CONTRIBUTORENTRY_BUTTONCOMMIT_ID):
       self.SetStringItem(self.theSelectedIdx,0,dlg.firstName())
       self.SetStringItem(self.theSelectedIdx,1,dlg.surname())
       self.SetStringItem(self.theSelectedIdx,2,dlg.affiliation())

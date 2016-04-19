@@ -17,13 +17,13 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
 from RequirementNotebook import RequirementNotebook
 
 class RequirementDialog(wx.Dialog):
   def __init__(self,parent,assets,reqName= '',reqDesc = '',reqType = '',reqRationale = '',reqFC ='',reqAsset =''):
-    wx.Dialog.__init__(self,parent,armid.PATTERNREQUIREMENT_ID,'Add Pattern Requirement',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,475))
+    wx.Dialog.__init__(self,parent,PATTERNREQUIREMENT_ID,'Add Pattern Requirement',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,475))
     self.theTemplateAssets = assets
     self.theRequirementName = reqName
     self.theRequirementDescription = reqDesc
@@ -34,37 +34,37 @@ class RequirementDialog(wx.Dialog):
     mainSizer = wx.BoxSizer(wx.VERTICAL)
     
     mainSizer.Add(RequirementNotebook(self,self.theTemplateAssets),1,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,armid.PATTERNREQUIREMENT_BUTTONCOMMIT_ID),0,wx.ALIGN_CENTER)
+    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,PATTERNREQUIREMENT_BUTTONCOMMIT_ID),0,wx.ALIGN_CENTER)
     self.SetSizer(mainSizer)
 
-    wx.EVT_BUTTON(self,armid.PATTERNREQUIREMENT_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,PATTERNREQUIREMENT_BUTTONCOMMIT_ID,self.onCommit)
     self.commitLabel = 'Add'
     if (len(self.theRequirementDescription) > 0):
       self.commitLabel = 'Edit'
       self.SetLabel('Edit Requirement')
-      typeCtrl = self.FindWindowById(armid.PATTERNREQUIREMENT_COMBOTYPE_ID)
+      typeCtrl = self.FindWindowById(PATTERNREQUIREMENT_COMBOTYPE_ID)
       typeCtrl.SetStringSelection(self.theRequirementType)
-      assetCtrl = self.FindWindowById(armid.PATTERNREQUIREMENT_COMBOASSET_ID)
+      assetCtrl = self.FindWindowById(PATTERNREQUIREMENT_COMBOASSET_ID)
       assetCtrl.SetStringSelection(self.theRequirementAsset)
-      nameCtrl = self.FindWindowById(armid.PATTERNREQUIREMENT_TEXTNAME_ID)
+      nameCtrl = self.FindWindowById(PATTERNREQUIREMENT_TEXTNAME_ID)
       nameCtrl.SetValue(self.theRequirementName)
-      descCtrl = self.FindWindowById(armid.PATTERNREQUIREMENT_TEXTDESCRIPTION_ID)
+      descCtrl = self.FindWindowById(PATTERNREQUIREMENT_TEXTDESCRIPTION_ID)
       descCtrl.SetValue(self.theRequirementDescription)
-      rationaleCtrl = self.FindWindowById(armid.PATTERNREQUIREMENT_TEXTRATIONALE_ID)
+      rationaleCtrl = self.FindWindowById(PATTERNREQUIREMENT_TEXTRATIONALE_ID)
       rationaleCtrl.SetValue(self.theRequirementRationale)
-      fcCtrl = self.FindWindowById(armid.PATTERNREQUIREMENT_TEXTFITCRITERION_ID)
+      fcCtrl = self.FindWindowById(PATTERNREQUIREMENT_TEXTFITCRITERION_ID)
       fcCtrl.SetValue(self.theRequirementFitCriterion)
-      buttonCtrl = self.FindWindowById(armid.PATTERNREQUIREMENT_BUTTONCOMMIT_ID)
+      buttonCtrl = self.FindWindowById(PATTERNREQUIREMENT_BUTTONCOMMIT_ID)
       buttonCtrl.SetLabel('Edit')
       
 
   def onCommit(self,evt):
-    typeCtrl = self.FindWindowById(armid.PATTERNREQUIREMENT_COMBOTYPE_ID)
-    assetCtrl = self.FindWindowById(armid.PATTERNREQUIREMENT_COMBOASSET_ID)
-    nameCtrl = self.FindWindowById(armid.PATTERNREQUIREMENT_TEXTNAME_ID)
-    descCtrl = self.FindWindowById(armid.PATTERNREQUIREMENT_TEXTDESCRIPTION_ID)
-    rationaleCtrl = self.FindWindowById(armid.PATTERNREQUIREMENT_TEXTRATIONALE_ID)
-    fcCtrl = self.FindWindowById(armid.PATTERNREQUIREMENT_TEXTFITCRITERION_ID)
+    typeCtrl = self.FindWindowById(PATTERNREQUIREMENT_COMBOTYPE_ID)
+    assetCtrl = self.FindWindowById(PATTERNREQUIREMENT_COMBOASSET_ID)
+    nameCtrl = self.FindWindowById(PATTERNREQUIREMENT_TEXTNAME_ID)
+    descCtrl = self.FindWindowById(PATTERNREQUIREMENT_TEXTDESCRIPTION_ID)
+    rationaleCtrl = self.FindWindowById(PATTERNREQUIREMENT_TEXTRATIONALE_ID)
+    fcCtrl = self.FindWindowById(PATTERNREQUIREMENT_TEXTFITCRITERION_ID)
 
     self.theRequirementType = typeCtrl.GetStringSelection()
     self.theRequirementAsset = assetCtrl.GetStringSelection()
@@ -104,7 +104,7 @@ class RequirementDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.PATTERNREQUIREMENT_BUTTONCOMMIT_ID)
+      self.EndModal(PATTERNREQUIREMENT_BUTTONCOMMIT_ID)
 
   def type(self): return self.theRequirementType
   def asset(self): return self.theRequirementAsset

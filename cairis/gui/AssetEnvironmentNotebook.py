@@ -17,8 +17,8 @@
 
 
 import wx
-import armid
-from ValueDictionary import ValueDictionary
+from cairis.core.armid import *
+from cairis.core.ValueDictionary import ValueDictionary
 from PropertiesListCtrl import PropertiesListCtrl
 from AssetAssociationListCtrl import AssetAssociationListCtrl
 
@@ -31,7 +31,7 @@ class PropertiesPage(wx.Panel):
     topSizer.Add(pBoxSizer,1,wx.EXPAND)
     values = ['None','Low','Medium','High']
     valueLookup = ValueDictionary(values)
-    self.propertiesList = PropertiesListCtrl(self,armid.ASSETENVIRONMENT_LISTPROPERTIES_ID,valueLookup)
+    self.propertiesList = PropertiesListCtrl(self,ASSETENVIRONMENT_LISTPROPERTIES_ID,valueLookup)
     pBoxSizer.Add(self.propertiesList,1,wx.EXPAND)
 
     self.SetSizer(topSizer)
@@ -51,8 +51,8 @@ class AssociationsPage(wx.Panel):
 
 class AssetEnvironmentNotebook(wx.Notebook):
   def __init__(self,parent,dp):
-    wx.Notebook.__init__(self,parent,armid.ASSET_NOTEBOOKENVIRONMENT_ID)
+    wx.Notebook.__init__(self,parent,ASSET_NOTEBOOKENVIRONMENT_ID)
     p1 = PropertiesPage(self,dp)
-    p2 = AssociationsPage(self,armid.ASSET_LISTASSOCIATIONS_ID,dp,p1)
+    p2 = AssociationsPage(self,ASSET_LISTASSOCIATIONS_ID,dp,p1)
     self.AddPage(p1,'Properties')
     self.AddPage(p2,'Associations')

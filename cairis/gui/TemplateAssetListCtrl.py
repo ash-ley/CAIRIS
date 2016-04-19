@@ -17,12 +17,12 @@
 
 
 import wx
-import armid
-import AssetParametersFactory
-from Borg import Borg
+from cairis.core.armid import *
+import cairis.core.AssetParametersFactory
+from cairis.core.Borg import Borg
 from DimensionNameDialog import DimensionNameDialog
 
-from ARM import *
+from cairis.core.ARM import *
 
 class TemplateAssetListCtrl(wx.ListCtrl):
 
@@ -30,9 +30,9 @@ class TemplateAssetListCtrl(wx.ListCtrl):
     wx.ListCtrl.__init__(self,parent,winId,style=wx.LC_REPORT)
     self.theParentDialog = parent
     self.theTraceMenu = wx.Menu()
-    self.theTraceMenu.Append(armid.TRACE_MENUTRACE_GENERATESPECIFIC_ID,'Situate')
+    self.theTraceMenu.Append(TRACE_MENUTRACE_GENERATESPECIFIC_ID,'Situate')
     self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK, self.onRightClick)
-    wx.EVT_MENU(self,armid.TRACE_MENUTRACE_GENERATESPECIFIC_ID,self.onSituate)
+    wx.EVT_MENU(self,TRACE_MENUTRACE_GENERATESPECIFIC_ID,self.onSituate)
 
 
   def onRightClick(self,evt):
@@ -47,9 +47,9 @@ class TemplateAssetListCtrl(wx.ListCtrl):
       dbProxy = b.dbProxy
       envs = dbProxy.getEnvironmentNames()
       cDlg = DimensionNameDialog(self,'environment',envs,'Select')
-      if (cDlg.ShowModal() == armid.DIMNAME_BUTTONACTION_ID):
+      if (cDlg.ShowModal() == DIMNAME_BUTTONACTION_ID):
         sitEnvs = cDlg.dimensionNames()
-        assetId = dbProxy.addAsset(AssetParametersFactory.buildFromTemplate(taName,sitEnvs))
+        assetId = dbProxy.addAsset(cairis.core.AssetParametersFactory.buildFromTemplate(taName,sitEnvs))
 # NB: we don't add anything to asset_template_asset, as we only use this table when the derived asset is part of a situated pattern
         cDlg.Destroy()
     except ARMException,errorText:

@@ -17,39 +17,39 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from BasePanel import BasePanel
-import SecurityPattern
-from Borg import Borg
+import cairis.core.SecurityPattern
+from cairis.core.Borg import Borg
 from SecurityPatternNotebook import SecurityPatternNotebook
 
 class SecurityPatternPanel(BasePanel):
   def __init__(self,parent):
-    BasePanel.__init__(self,parent,armid.SECURITYPATTERN_ID)
+    BasePanel.__init__(self,parent,SECURITYPATTERN_ID)
     self.thePatternId = None
     b = Borg()
     self.dbProxy = b.dbProxy
     
   def buildControls(self,isCreate,isUpdateable=True):
     mainSizer = wx.BoxSizer(wx.VERTICAL)
-    mainSizer.Add(self.buildTextSizer('Name',(87,30),armid.SECURITYPATTERN_TEXTNAME_ID),0,wx.EXPAND)
+    mainSizer.Add(self.buildTextSizer('Name',(87,30),SECURITYPATTERN_TEXTNAME_ID),0,wx.EXPAND)
 
     nbBox = wx.StaticBox(self,-1)
     nbSizer = wx.StaticBoxSizer(nbBox,wx.VERTICAL)
     mainSizer.Add(nbSizer,1,wx.EXPAND)
     nbSizer.Add(SecurityPatternNotebook(self),1,wx.EXPAND)
 
-    mainSizer.Add(self.buildCommitButtonSizer(armid.SECURITYPATTERN_BUTTONCOMMIT_ID,isCreate),0,wx.CENTER)
+    mainSizer.Add(self.buildCommitButtonSizer(SECURITYPATTERN_BUTTONCOMMIT_ID,isCreate),0,wx.CENTER)
     self.SetSizer(mainSizer)
 
   def loadControls(self,pattern,isReadOnly=False):
     self.thePatternId = pattern.id()
-    nameCtrl = self.FindWindowById(armid.SECURITYPATTERN_TEXTNAME_ID)
-    contextCtrl = self.FindWindowById(armid.SECURITYPATTERN_TEXTCONTEXT_ID)
-    problemCtrl = self.FindWindowById(armid.SECURITYPATTERN_TEXTPROBLEM_ID)
-    solutionCtrl = self.FindWindowById(armid.SECURITYPATTERN_TEXTSOLUTION_ID)
-    concernsCtrl = self.FindWindowById(armid.SECURITYPATTERN_LISTPATTERNSTRUCTURE_ID)
-    reqsCtrl = self.FindWindowById(armid.SECURITYPATTERN_LISTREQUIREMENTS_ID)
+    nameCtrl = self.FindWindowById(SECURITYPATTERN_TEXTNAME_ID)
+    contextCtrl = self.FindWindowById(SECURITYPATTERN_TEXTCONTEXT_ID)
+    problemCtrl = self.FindWindowById(SECURITYPATTERN_TEXTPROBLEM_ID)
+    solutionCtrl = self.FindWindowById(SECURITYPATTERN_TEXTSOLUTION_ID)
+    concernsCtrl = self.FindWindowById(SECURITYPATTERN_LISTPATTERNSTRUCTURE_ID)
+    reqsCtrl = self.FindWindowById(SECURITYPATTERN_LISTREQUIREMENTS_ID)
 
     nameCtrl.SetValue(pattern.name())
     contextCtrl.SetValue(pattern.context())

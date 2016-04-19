@@ -17,13 +17,13 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 class TargetDialog(wx.Dialog):
   def __init__(self,parent,reqList,setTargets,envName):
-    wx.Dialog.__init__(self,parent,armid.PROPERTY_ID,'Add Target',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,250))
+    wx.Dialog.__init__(self,parent,PROPERTY_ID,'Add Target',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,250))
     b = Borg()
     self.dbProxy = b.dbProxy
     self.theTarget = ''
@@ -34,18 +34,18 @@ class TargetDialog(wx.Dialog):
     self.theTargetDictionary = self.dbProxy.targetNames(reqList,envName)
     defaultTargets = set(self.theTargetDictionary.keys())
     targetList = list(defaultTargets.difference(setTargets))
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Target',(87,30),armid.TARGET_COMBOTARGET_ID,targetList),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Effectiveness',(87,30),armid.TARGET_COMBOEFFECTIVENESS_ID,['None','Low','Medium','High']),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildMLTextSizer(self,'Rationale',(87,60),armid.TARGET_TEXTRATIONALE_ID),1,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,armid.TARGET_BUTTONCOMMIT_ID),0,wx.ALIGN_CENTER)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Target',(87,30),TARGET_COMBOTARGET_ID,targetList),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Effectiveness',(87,30),TARGET_COMBOEFFECTIVENESS_ID,['None','Low','Medium','High']),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildMLTextSizer(self,'Rationale',(87,60),TARGET_TEXTRATIONALE_ID),1,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,TARGET_BUTTONCOMMIT_ID),0,wx.ALIGN_CENTER)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.TARGET_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,TARGET_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,tName,eValue,tRationale):
-    targetCtrl = self.FindWindowById(armid.TARGET_COMBOTARGET_ID)
-    effectivenessCtrl = self.FindWindowById(armid.TARGET_COMBOEFFECTIVENESS_ID)
-    ratCtrl = self.FindWindowById(armid.TARGET_TEXTRATIONALE_ID)
-    commitCtrl = self.FindWindowById(armid.TARGET_BUTTONCOMMIT_ID)
+    targetCtrl = self.FindWindowById(TARGET_COMBOTARGET_ID)
+    effectivenessCtrl = self.FindWindowById(TARGET_COMBOEFFECTIVENESS_ID)
+    ratCtrl = self.FindWindowById(TARGET_TEXTRATIONALE_ID)
+    commitCtrl = self.FindWindowById(TARGET_BUTTONCOMMIT_ID)
     commitCtrl.SetLabel('Edit')
     targetCtrl.SetValue(tName)
     effectivenessCtrl.SetValue(eValue)
@@ -54,9 +54,9 @@ class TargetDialog(wx.Dialog):
 
 
   def onCommit(self,evt):
-    targetCtrl = self.FindWindowById(armid.TARGET_COMBOTARGET_ID)
-    effectivenessCtrl = self.FindWindowById(armid.TARGET_COMBOEFFECTIVENESS_ID)
-    ratCtrl = self.FindWindowById(armid.TARGET_TEXTRATIONALE_ID)
+    targetCtrl = self.FindWindowById(TARGET_COMBOTARGET_ID)
+    effectivenessCtrl = self.FindWindowById(TARGET_COMBOEFFECTIVENESS_ID)
+    ratCtrl = self.FindWindowById(TARGET_TEXTRATIONALE_ID)
     self.theTarget = targetCtrl.GetValue()
     self.theEffectiveness = effectivenessCtrl.GetValue()
     self.theRationale = ratCtrl.GetValue()
@@ -78,7 +78,7 @@ class TargetDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.TARGET_BUTTONCOMMIT_ID)
+      self.EndModal(TARGET_BUTTONCOMMIT_ID)
 
 #  def target(self): return (self.theTarget,self.theTargetDictionary[self.theTarget])
   def target(self): return self.theTarget

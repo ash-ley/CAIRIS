@@ -16,10 +16,10 @@
 #  under the License.
 
 
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 import wx
-from Borg import Borg
+from cairis.core.Borg import Borg
 from TraceExplorer import TraceExplorer
 
 class Traceable:
@@ -27,10 +27,10 @@ class Traceable:
     b = Borg()
     self.dbProxy = b.dbProxy
     self.theTraceMenu = wx.Menu()
-    self.theTraceMenu.Append(armid.TRACE_MENUTRACE_TO_ID,'Supported by')
-    self.theTraceMenu.Append(armid.TRACE_MENUTRACE_FROM_ID,'Contributes to')
-    wx.EVT_MENU(self,armid.TRACE_MENUTRACE_FROM_ID,self.onAddContributionLink)
-    wx.EVT_MENU(self,armid.TRACE_MENUTRACE_TO_ID,self.onAddSupportLink)
+    self.theTraceMenu.Append(TRACE_MENUTRACE_TO_ID,'Supported by')
+    self.theTraceMenu.Append(TRACE_MENUTRACE_FROM_ID,'Contributes to')
+    wx.EVT_MENU(self,TRACE_MENUTRACE_FROM_ID,self.onAddContributionLink)
+    wx.EVT_MENU(self,TRACE_MENUTRACE_TO_ID,self.onAddSupportLink)
 
   def onRightClick(self,evt):
     self.PopupMenu(self.theTraceMenu)
@@ -43,7 +43,7 @@ class Traceable:
 
   def onTrace(self,dimensionName,fromId,isFrom,envName):
     dlg = TraceExplorer(self,dimensionName,isFrom,envName)
-    if (dlg.ShowModal() == armid.TRACE_BUTTONADD_ID):
+    if (dlg.ShowModal() == TRACE_BUTTONADD_ID):
       if (isFrom):
         traceDimension = dlg.fromDimension()
         traceLabel = dlg.label()

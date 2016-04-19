@@ -17,9 +17,9 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from ExternalDocumentPanel import ExternalDocumentPanel
-from ExternalDocumentParameters import ExternalDocumentParameters
+from cairis.core.ExternalDocumentParameters import ExternalDocumentParameters
 import DialogClassParameters
 
 class ExternalDocumentDialog(wx.Dialog):
@@ -41,7 +41,7 @@ class ExternalDocumentDialog(wx.Dialog):
     self.panel.buildControls(parameters.createFlag())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.EXTERNALDOCUMENT_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,EXTERNALDOCUMENT_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,objt):
     self.theId = objt.id()
@@ -50,11 +50,11 @@ class ExternalDocumentDialog(wx.Dialog):
 
   def onCommit(self,evt):
     commitLabel = self.commitVerb + ' external document'
-    nameCtrl = self.FindWindowById(armid.EXTERNALDOCUMENT_TEXTNAME_ID)
-    versionCtrl = self.FindWindowById(armid.EXTERNALDOCUMENT_TEXTVERSION_ID)
-    dateCtrl = self.FindWindowById(armid.EXTERNALDOCUMENT_TEXTDATE_ID)
-    authorsCtrl = self.FindWindowById(armid.EXTERNALDOCUMENT_TEXTAUTHORS_ID)
-    descCtrl = self.FindWindowById(armid.EXTERNALDOCUMENT_TEXTDESCRIPTION_ID)
+    nameCtrl = self.FindWindowById(EXTERNALDOCUMENT_TEXTNAME_ID)
+    versionCtrl = self.FindWindowById(EXTERNALDOCUMENT_TEXTVERSION_ID)
+    dateCtrl = self.FindWindowById(EXTERNALDOCUMENT_TEXTDATE_ID)
+    authorsCtrl = self.FindWindowById(EXTERNALDOCUMENT_TEXTAUTHORS_ID)
+    descCtrl = self.FindWindowById(EXTERNALDOCUMENT_TEXTDESCRIPTION_ID)
     self.theName = nameCtrl.GetValue()
     self.theVersion = versionCtrl.GetValue()
     self.theDate = dateCtrl.GetValue()
@@ -87,7 +87,7 @@ class ExternalDocumentDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.EXTERNALDOCUMENT_BUTTONCOMMIT_ID)
+      self.EndModal(EXTERNALDOCUMENT_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = ExternalDocumentParameters(self.theName,self.theVersion,self.theDate,self.theAuthors,self.theDescription)

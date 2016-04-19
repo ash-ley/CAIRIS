@@ -17,10 +17,10 @@
 
 
 import wx
-import armid
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.Borg import Borg
 
-from ARM import *
+from cairis.core.ARM import *
 
 class ReferencedCharacteristicsListCtrl(wx.ListCtrl):
 
@@ -29,8 +29,8 @@ class ReferencedCharacteristicsListCtrl(wx.ListCtrl):
     self.theParentDialog = parent
     self.theTraceMenu = wx.Menu()
     self.theDimensionName = dimName
-    self.theTraceMenu.Append(armid.DRLC_MENU_REFERENCEDCHARACTERISTICS_ID,'Referenced Characteristics')
-    wx.EVT_MENU(self,armid.DRLC_MENU_REFERENCEDCHARACTERISTICS_ID,self.onReferencedCharacteristics)
+    self.theTraceMenu.Append(DRLC_MENU_REFERENCEDCHARACTERISTICS_ID,'Referenced Characteristics')
+    wx.EVT_MENU(self,DRLC_MENU_REFERENCEDCHARACTERISTICS_ID,self.onReferencedCharacteristics)
     self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK, self.onRightClick)
 
 

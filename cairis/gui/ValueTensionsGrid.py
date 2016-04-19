@@ -19,9 +19,9 @@
 #$URL$ $Id: StepGrid.py 391 2011-01-04 17:00:43Z shaf $
 import wx
 import wx.grid
-from ARM import *
-import armid
-from Borg import Borg
+from cairis.core.ARM import *
+from cairis.core.armid import *
+from cairis.core.Borg import Borg
 
 AN_POS = 0
 PAN_POS = 1
@@ -96,7 +96,7 @@ class ValueTensionsTable(wx.grid.PyGridTableBase):
    
 class ValueTensionsGrid(wx.grid.Grid):
   def __init__(self,parent):
-    wx.grid.Grid.__init__(self,parent,armid.ENVIRONMENT_GRIDVALUETENSIONS_ID,wx.DefaultPosition,wx.Size(150,135))
+    wx.grid.Grid.__init__(self,parent,ENVIRONMENT_GRIDVALUETENSIONS_ID,wx.DefaultPosition,wx.Size(150,135))
     b = Borg()
     self.dbProxy = b.dbProxy
     self.rationaleCtrl = None

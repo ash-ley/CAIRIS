@@ -17,9 +17,9 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 class ExposedCountermeasurePanel(wx.Panel):
   def __init__(self,parent,exposedCMs):
@@ -51,7 +51,7 @@ class ExposedCountermeasurePanel(wx.Panel):
           rb.SetValue(False)
           isFirst = False
       isFirst = True
-    mainSizer.Add(WidgetFactory.buildCommitButtonSizer(self,armid.EXPOSEDCOUNTERMEASURE_BUTTONCOMMIT_ID,True),0,wx.CENTER)
+    mainSizer.Add(WidgetFactory.buildCommitButtonSizer(self,EXPOSEDCOUNTERMEASURE_BUTTONCOMMIT_ID,True),0,wx.CENTER)
     self.SetSizer(mainSizer)
 
   def countermeasureEffectiveness(self):

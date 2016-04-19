@@ -17,7 +17,7 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
 from DomainListCtrl import DomainListCtrl
 
@@ -30,17 +30,17 @@ class DetailsPage(wx.Panel):
     givenBox = wx.StaticBox(self,-1,'Given Domain')
     givenSizer = wx.StaticBoxSizer(givenBox,wx.HORIZONTAL)
     topSizer.Add(givenSizer,0,wx.EXPAND)
-    self.givenCtrl = wx.CheckBox(self,armid.DOMAIN_CHECKGIVEN_ID)
+    self.givenCtrl = wx.CheckBox(self,DOMAIN_CHECKGIVEN_ID)
     self.givenCtrl.SetValue(True)
     givenSizer.Add(self.givenCtrl,0,wx.EXPAND)
-    topSizer.Add(WidgetFactory.buildComboSizerList(self,'Type',(87,30),armid.DOMAIN_COMBOTYPE_ID,typeList),0,wx.EXPAND)
-    topSizer.Add(WidgetFactory.buildTextSizer(self,'Short Code',(87,30),armid.DOMAIN_TEXTSHORTCODE_ID),0,wx.EXPAND)
-    topSizer.Add(WidgetFactory.buildMLTextSizer(self,'Description',(87,30),armid.DOMAIN_TEXTDESCRIPTION_ID),1,wx.EXPAND)
+    topSizer.Add(WidgetFactory.buildComboSizerList(self,'Type',(87,30),DOMAIN_COMBOTYPE_ID,typeList),0,wx.EXPAND)
+    topSizer.Add(WidgetFactory.buildTextSizer(self,'Short Code',(87,30),DOMAIN_TEXTSHORTCODE_ID),0,wx.EXPAND)
+    topSizer.Add(WidgetFactory.buildMLTextSizer(self,'Description',(87,30),DOMAIN_TEXTDESCRIPTION_ID),1,wx.EXPAND)
     self.SetSizer(topSizer)
-    self.Bind(wx.EVT_COMBOBOX, self.onDomainTypeChange,id = armid.DOMAIN_COMBOTYPE_ID)
+    self.Bind(wx.EVT_COMBOBOX, self.onDomainTypeChange,id = DOMAIN_COMBOTYPE_ID)
 
   def onDomainTypeChange(self,evt):
-    typeCtrl = self.FindWindowById(armid.DOMAIN_COMBOTYPE_ID)
+    typeCtrl = self.FindWindowById(DOMAIN_COMBOTYPE_ID)
     dType = typeCtrl.GetValue()
     if (dType == 'Biddable'):
       self.givenCtrl.SetValue(True)
@@ -56,13 +56,13 @@ class DomainAssociationPage(wx.Panel):
     dBox = wx.StaticBox(self,-1)
     dBoxSizer = wx.StaticBoxSizer(dBox,wx.HORIZONTAL)
     topSizer.Add(dBoxSizer,1,wx.EXPAND)
-    self.domainCtrl = DomainListCtrl(self,armid.DOMAIN_LISTDOMAINS_ID)
+    self.domainCtrl = DomainListCtrl(self,DOMAIN_LISTDOMAINS_ID)
     dBoxSizer.Add(self.domainCtrl,1,wx.EXPAND)
     self.SetSizer(topSizer)
 
 class DomainNotebook(wx.Notebook):
   def __init__(self,parent):
-    wx.Notebook.__init__(self,parent,armid.DOMAIN_NOTEBOOKDOMAIN_ID)
+    wx.Notebook.__init__(self,parent,DOMAIN_NOTEBOOKDOMAIN_ID)
     p1 = DetailsPage(self)
     p2 = DomainAssociationPage(self)
     self.AddPage(p1,'Details')

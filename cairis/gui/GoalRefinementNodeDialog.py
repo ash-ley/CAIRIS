@@ -18,8 +18,8 @@
 
 import sys
 import gtk
-from Borg import Borg
-from GoalAssociationParameters import GoalAssociationParameters
+from cairis.core.Borg import Borg
+from cairis.core.GoalAssociationParameters import GoalAssociationParameters
 from NDImplementationDecorator import NDImplementationDecorator
 
 class GoalRefinementNodeDialog:

@@ -16,11 +16,11 @@
 #  under the License.
 
 
-import armid
+from cairis.core.armid import *
 import wx
-from Borg import Borg
+from cairis.core.Borg import Borg
 from TraceExplorer import TraceExplorer
-from ARM import *
+from cairis.core.ARM import *
 
 class TraceableList(wx.ListCtrl):
 
@@ -29,16 +29,16 @@ class TraceableList(wx.ListCtrl):
     b = Borg()
     self.dbProxy = b.dbProxy
     self.theTraceMenu = wx.Menu()
-    self.theTraceMenu.Append(armid.TRACE_MENUTRACE_TO_ID,'Supported by')
-    self.theTraceMenu.Append(armid.TRACE_MENUTRACE_FROM_ID,'Contributes to')
-    wx.EVT_MENU(self,armid.TRACE_MENUTRACE_FROM_ID,self.onAddContributionLink)
-    wx.EVT_MENU(self,armid.TRACE_MENUTRACE_TO_ID,self.onAddSupportLink)
+    self.theTraceMenu.Append(TRACE_MENUTRACE_TO_ID,'Supported by')
+    self.theTraceMenu.Append(TRACE_MENUTRACE_FROM_ID,'Contributes to')
+    wx.EVT_MENU(self,TRACE_MENUTRACE_FROM_ID,self.onAddContributionLink)
+    wx.EVT_MENU(self,TRACE_MENUTRACE_TO_ID,self.onAddSupportLink)
     self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK, self.onRightClick)
     self.theDimensionName = dimensionName
     self.theParentDialog = parent
 
   def onRightClick(self,evt):
-    selectItem = self.theTraceMenu.FindItemById(armid.TRACE_MENUTRACE_FROM_ID)
+    selectItem = self.theTraceMenu.FindItemById(TRACE_MENUTRACE_FROM_ID)
     if (evt.GetIndex() == -1):
       selectItem.Enable(False)  
     else:
@@ -69,7 +69,7 @@ class TraceableList(wx.ListCtrl):
     if (fromId != -1):
       try:
         dlg = TraceExplorer(self,self.theDimensionName,True)
-        if (dlg.ShowModal() == armid.TRACE_BUTTONADD_ID):
+        if (dlg.ShowModal() == TRACE_BUTTONADD_ID):
           traceToDimension = dlg.toDimension()
           linkTable = self.theDimensionName + '_' + traceToDimension
           toId = dlg.toId()
@@ -86,7 +86,7 @@ class TraceableList(wx.ListCtrl):
     if (toId != -1):
       try:
         dlg = TraceExplorer(self,self.theDimensionName,False)
-        if (dlg.ShowModal() == armid.TRACE_BUTTONADD_ID):
+        if (dlg.ShowModal() == TRACE_BUTTONADD_ID):
           traceFromDimension = dlg.toDimension()
           linkTable = traceFromDimension + '_' + self.theDimensionName
           fromId = dlg.toId()

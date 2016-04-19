@@ -16,7 +16,7 @@
 #  under the License.
 
 
-import ARM
+from ARM import *
 import RequirementFactory
 from Borg import Borg
 
@@ -74,14 +74,14 @@ class RequirementManager:
       if (str(r.id()) == str(id)):
         return (idx,r)
     exceptionText = 'Parent requirement ' + str(id) + ' does not exist'
-    raise ARM.RequirementDoesNotExist(exceptionText)
+    raise RequirementDoesNotExist(exceptionText)
  
   def posByRequirement(self,id):
     for idx,r in enumerate(self.reqs):
       if (str(r.id()) == str(id)):
         return idx
     exceptionText = 'Requirement ' + str(id) + ' does not exist'
-    raise ARM.RequirementDoesNotExist(exceptionText)
+    raise RequirementDoesNotExist(exceptionText)
 
   def requirementByLabel(self,label):
     for idx,r in enumerate(self.reqs):

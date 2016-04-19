@@ -17,12 +17,12 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from DimensionListCtrl import DimensionListCtrl
 
 class CountermeasureRoleListCtrl(DimensionListCtrl):
   def __init__(self,parent,dp,personaList):
-    DimensionListCtrl.__init__(self,parent,armid.COUNTERMEASURE_LISTROLES_ID,wx.DefaultSize,'Role','role',dp,listStyle=wx.LC_REPORT | wx.LC_SINGLE_SEL)
+    DimensionListCtrl.__init__(self,parent,COUNTERMEASURE_LISTROLES_ID,wx.DefaultSize,'Role','role',dp,listStyle=wx.LC_REPORT | wx.LC_SINGLE_SEL)
     self.thePersonaList = personaList
 
   def setEnvironment(self,environmentName):
@@ -32,7 +32,7 @@ class CountermeasureRoleListCtrl(DimensionListCtrl):
     dimensions = self.dbProxy.getDimensionNames(self.theDimensionTable,self.theCurrentEnvironment)
     from DimensionNameDialog import DimensionNameDialog
     dlg = DimensionNameDialog(self,self.theDimensionTable,dimensions,'Add')
-    if (dlg.ShowModal() == armid.DIMNAME_BUTTONACTION_ID):
+    if (dlg.ShowModal() == DIMNAME_BUTTONACTION_ID):
       newRoles = dlg.dimensionNames()
       for additionalDimension in newRoles:
         idx = self.GetItemCount()

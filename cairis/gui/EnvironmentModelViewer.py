@@ -19,7 +19,7 @@
 import gtk
 import gtk.gdk
 from envxdot import EnvironmentDotWindow
-from ARM import *
+from cairis.core.ARM import *
 import NodeDialogFactory
 
 class EnvironmentModelViewer(EnvironmentDotWindow):

@@ -17,20 +17,20 @@
 
 
 import wx
-import armid
-import ClassAssociation
+from cairis.core.armid import *
+import cairis.core.ClassAssociation
 from ClassAssociationDialog import ClassAssociationDialog
 from DialogClassParameters import DialogClassParameters
-import ARM
+from cairis.core.ARM import *
 from DimensionBaseDialog import DimensionBaseDialog
 
 class ClassAssociationsDialog(DimensionBaseDialog):
   def __init__(self,parent):
-    DimensionBaseDialog.__init__(self,parent,armid.CLASSASSOCIATIONS_ID,'ClassAssociations',(930,300),'classassociations.png')
-    idList = [armid.CLASSASSOCIATIONS_CLASSASSOCIATIONLIST_ID,armid.CLASSASSOCIATIONS_BUTTONADD_ID,armid.CLASSASSOCIATIONS_BUTTONDELETE_ID]
+    DimensionBaseDialog.__init__(self,parent,CLASSASSOCIATIONS_ID,'ClassAssociations',(930,300),'classassociations.png')
+    idList = [CLASSASSOCIATIONS_CLASSASSOCIATIONLIST_ID,CLASSASSOCIATIONS_BUTTONADD_ID,CLASSASSOCIATIONS_BUTTONDELETE_ID]
     columnList = ['Environment/Head/Tail','Type','nry','Role','Role','nry','Type']
     self.buildControls(idList,columnList,self.dbProxy.getClassAssociations,'classassociation')
-    listCtrl = self.FindWindowById(armid.CLASSASSOCIATIONS_CLASSASSOCIATIONLIST_ID)
+    listCtrl = self.FindWindowById(CLASSASSOCIATIONS_CLASSASSOCIATIONLIST_ID)
     listCtrl.SetColumnWidth(0,200)
     listCtrl.SetColumnWidth(1,100)
     listCtrl.SetColumnWidth(2,50)
@@ -52,9 +52,9 @@ class ClassAssociationsDialog(DimensionBaseDialog):
 
   def onAdd(self,evt):
     try:
-      addParameters = DialogClassParameters(armid.CLASSASSOCIATION_ID,'Add class association',ClassAssociationDialog,armid.CLASSASSOCIATION_BUTTONCOMMIT_ID,self.dbProxy.addClassAssociation,True)
+      addParameters = DialogClassParameters(CLASSASSOCIATION_ID,'Add class association',ClassAssociationDialog,CLASSASSOCIATION_BUTTONCOMMIT_ID,self.dbProxy.addClassAssociation,True)
       self.addObject(addParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add class association',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -64,9 +64,9 @@ class ClassAssociationsDialog(DimensionBaseDialog):
     selectedObjt = self.objts[self.selectedLabel]
     assetId = selectedObjt.id()
     try:
-      updateParameters = DialogClassParameters(armid.CLASSASSOCIATION_ID,'Edit class association',ClassAssociationDialog,armid.CLASSASSOCIATION_BUTTONCOMMIT_ID,self.dbProxy.updateClassAssociation,False)
+      updateParameters = DialogClassParameters(CLASSASSOCIATION_ID,'Edit class association',ClassAssociationDialog,CLASSASSOCIATION_BUTTONCOMMIT_ID,self.dbProxy.updateClassAssociation,False)
       self.updateObject(selectedObjt,updateParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Edit class association',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy
@@ -74,7 +74,7 @@ class ClassAssociationsDialog(DimensionBaseDialog):
   def onDelete(self,evt):
     try:
       self.deleteObject('No class association','Delete class association',self.dbProxy.deleteClassAssociation)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Delete class association',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy

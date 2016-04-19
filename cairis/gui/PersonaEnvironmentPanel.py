@@ -17,14 +17,14 @@
 
 
 import wx
-import armid
-from PersonaEnvironmentProperties import PersonaEnvironmentProperties
+from cairis.core.armid import *
+from cairis.core.PersonaEnvironmentProperties import PersonaEnvironmentProperties
 from PersonaEnvironmentNotebook import PersonaEnvironmentNotebook
 from EnvironmentListCtrl import EnvironmentListCtrl
 
 class PersonaEnvironmentPanel(wx.Panel):
   def __init__(self,parent,dp):
-    wx.Panel.__init__(self,parent,armid.PERSONA_PANELENVIRONMENT_ID)
+    wx.Panel.__init__(self,parent,PERSONA_PANELENVIRONMENT_ID)
     self.dbProxy = dp
     self.theEnvironmentDictionary = {}
     self.theSelectedIdx = -1
@@ -34,7 +34,7 @@ class PersonaEnvironmentPanel(wx.Panel):
     environmentBox = wx.StaticBox(self)
     environmentListSizer = wx.StaticBoxSizer(environmentBox,wx.HORIZONTAL)
     mainSizer.Add(environmentListSizer,0,wx.EXPAND)
-    self.environmentList = EnvironmentListCtrl(self,armid.PERSONA_LISTENVIRONMENTS_ID,self.dbProxy)
+    self.environmentList = EnvironmentListCtrl(self,PERSONA_LISTENVIRONMENTS_ID,self.dbProxy)
     environmentListSizer.Add(self.environmentList,1,wx.EXPAND)
     environmentDimSizer = wx.BoxSizer(wx.VERTICAL)
     mainSizer.Add(environmentDimSizer,1,wx.EXPAND)
@@ -49,9 +49,9 @@ class PersonaEnvironmentPanel(wx.Panel):
     self.environmentList.Bind(wx.EVT_LIST_INSERT_ITEM,self.OnAddEnvironment)
     self.environmentList.Bind(wx.EVT_LIST_DELETE_ITEM,self.OnDeleteEnvironment)
 
-    self.directCtrl = self.notebook.FindWindowById(armid.PERSONA_CHECKDIRECT_ID)
-    self.roleList = self.notebook.FindWindowById(armid.PERSONA_LISTROLES_ID)
-    self.descriptionCtrl = self.notebook.FindWindowById(armid.PERSONA_TEXTNARRATIVE_ID)
+    self.directCtrl = self.notebook.FindWindowById(PERSONA_CHECKDIRECT_ID)
+    self.roleList = self.notebook.FindWindowById(PERSONA_LISTROLES_ID)
+    self.descriptionCtrl = self.notebook.FindWindowById(PERSONA_TEXTNARRATIVE_ID)
     self.directCtrl.Disable()
     self.descriptionCtrl.Disable()
     self.roleList.Disable() 

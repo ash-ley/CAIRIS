@@ -17,13 +17,13 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 class PatternStructureDialog(wx.Dialog):
   def __init__(self,parent,headName = '',headAdornment = '',headNav = '',headNry = '',headRole='',tailRole='',tailNry='',tailNav = '',tailAdornment='',tailName = ''):
-    wx.Dialog.__init__(self,parent,armid.PATTERNSTRUCTURE_ID,'Add Structure',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,575))
+    wx.Dialog.__init__(self,parent,PATTERNSTRUCTURE_ID,'Add Structure',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,575))
     b = Borg()
     self.dbProxy = b.dbProxy
     self.theHeadName = headName
@@ -42,60 +42,60 @@ class PatternStructureDialog(wx.Dialog):
     multiplicityTypes = ['1','*','1..*']
     navTypes = ['1','0']
 
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Head',(87,30),armid.PATTERNSTRUCTURE_COMBOHEADASSET_ID,assets),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Adornment',(87,30),armid.PATTERNSTRUCTURE_COMBOHEADTYPE_ID,associationTypes),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Nav',(87,30),armid.PATTERNSTRUCTURE_COMBOHEADNAV_ID,navTypes),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'nry',(87,30),armid.PATTERNSTRUCTURE_COMBOHEADMULTIPLICITY_ID,multiplicityTypes),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Role',(87,30),armid.PATTERNSTRUCTURE_TEXTHEADROLE_ID),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Role',(87,30),armid.PATTERNSTRUCTURE_TEXTTAILROLE_ID),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'nry',(87,30),armid.PATTERNSTRUCTURE_COMBOTAILMULTIPLICITY_ID,multiplicityTypes),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Nav',(87,30),armid.PATTERNSTRUCTURE_COMBOTAILNAV_ID,navTypes),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Adornment',(87,30),armid.PATTERNSTRUCTURE_COMBOTAILTYPE_ID,associationTypes),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Tail',(87,30),armid.PATTERNSTRUCTURE_COMBOTAILASSET_ID,assets),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Head',(87,30),PATTERNSTRUCTURE_COMBOHEADASSET_ID,assets),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Adornment',(87,30),PATTERNSTRUCTURE_COMBOHEADTYPE_ID,associationTypes),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Nav',(87,30),PATTERNSTRUCTURE_COMBOHEADNAV_ID,navTypes),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'nry',(87,30),PATTERNSTRUCTURE_COMBOHEADMULTIPLICITY_ID,multiplicityTypes),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Role',(87,30),PATTERNSTRUCTURE_TEXTHEADROLE_ID),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Role',(87,30),PATTERNSTRUCTURE_TEXTTAILROLE_ID),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'nry',(87,30),PATTERNSTRUCTURE_COMBOTAILMULTIPLICITY_ID,multiplicityTypes),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Nav',(87,30),PATTERNSTRUCTURE_COMBOTAILNAV_ID,navTypes),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Adornment',(87,30),PATTERNSTRUCTURE_COMBOTAILTYPE_ID,associationTypes),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Tail',(87,30),PATTERNSTRUCTURE_COMBOTAILASSET_ID,assets),0,wx.EXPAND)
 
-    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,armid.PATTERNSTRUCTURE_BUTTONCOMMIT_ID),0,wx.ALIGN_CENTER)
+    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,PATTERNSTRUCTURE_BUTTONCOMMIT_ID),0,wx.ALIGN_CENTER)
     self.SetSizer(mainSizer)
 
-    wx.EVT_BUTTON(self,armid.PATTERNSTRUCTURE_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,PATTERNSTRUCTURE_BUTTONCOMMIT_ID,self.onCommit)
     self.commitLabel = 'Add'
     if (len(self.theTailName) > 0):
       self.commitLabel = 'Edit'
       self.SetLabel('Edit Asset Association')
-      headCtrl = self.FindWindowById(armid.PATTERNSTRUCTURE_COMBOHEADASSET_ID)
+      headCtrl = self.FindWindowById(PATTERNSTRUCTURE_COMBOHEADASSET_ID)
       headCtrl.SetStringSelection(self.theHeadName)
-      headTypeCtrl = self.FindWindowById(armid.PATTERNSTRUCTURE_COMBOHEADTYPE_ID)
+      headTypeCtrl = self.FindWindowById(PATTERNSTRUCTURE_COMBOHEADTYPE_ID)
       headTypeCtrl.SetStringSelection(self.theTailAdornment)
-      headNavCtrl = self.FindWindowById(armid.PATTERNSTRUCTURE_COMBOHEADNAV_ID)
+      headNavCtrl = self.FindWindowById(PATTERNSTRUCTURE_COMBOHEADNAV_ID)
       headNavCtrl.SetStringSelection(self.theTailNav)
-      headNryCtrl = self.FindWindowById(armid.PATTERNSTRUCTURE_COMBOHEADMULTIPLICITY_ID)
+      headNryCtrl = self.FindWindowById(PATTERNSTRUCTURE_COMBOHEADMULTIPLICITY_ID)
       headNryCtrl.SetStringSelection(self.theTailNry)
-      headRoleCtrl = self.FindWindowById(armid.PATTERNSTRUCTURE_TEXTHEADROLE_ID)
+      headRoleCtrl = self.FindWindowById(PATTERNSTRUCTURE_TEXTHEADROLE_ID)
       headRoleCtrl.SetValue(self.theTailRole)
-      tailRoleCtrl = self.FindWindowById(armid.PATTERNSTRUCTURE_TEXTTAILROLE_ID)
+      tailRoleCtrl = self.FindWindowById(PATTERNSTRUCTURE_TEXTTAILROLE_ID)
       tailRoleCtrl.SetValue(self.theHeadRole)
-      tailNryCtrl = self.FindWindowById(armid.PATTERNSTRUCTURE_COMBOTAILMULTIPLICITY_ID)
+      tailNryCtrl = self.FindWindowById(PATTERNSTRUCTURE_COMBOTAILMULTIPLICITY_ID)
       tailNryCtrl.SetStringSelection(self.theHeadNry)
-      tailNavCtrl = self.FindWindowById(armid.PATTERNSTRUCTURE_COMBOTAILNAV_ID)
+      tailNavCtrl = self.FindWindowById(PATTERNSTRUCTURE_COMBOTAILNAV_ID)
       tailNavCtrl.SetStringSelection(self.theHeadNav)
-      tailTypeCtrl = self.FindWindowById(armid.PATTERNSTRUCTURE_COMBOTAILTYPE_ID)
+      tailTypeCtrl = self.FindWindowById(PATTERNSTRUCTURE_COMBOTAILTYPE_ID)
       tailTypeCtrl.SetStringSelection(self.theHeadAdornment)
-      tailCtrl = self.FindWindowById(armid.PATTERNSTRUCTURE_COMBOTAILASSET_ID)
+      tailCtrl = self.FindWindowById(PATTERNSTRUCTURE_COMBOTAILASSET_ID)
       tailCtrl.SetStringSelection(self.theTailName)
-      buttonCtrl = self.FindWindowById(armid.PATTERNSTRUCTURE_BUTTONCOMMIT_ID)
+      buttonCtrl = self.FindWindowById(PATTERNSTRUCTURE_BUTTONCOMMIT_ID)
       buttonCtrl.SetLabel('Edit')
       
 
   def onCommit(self,evt):
-    headCtrl = self.FindWindowById(armid.PATTERNSTRUCTURE_COMBOHEADASSET_ID)
-    headTypeCtrl = self.FindWindowById(armid.PATTERNSTRUCTURE_COMBOHEADTYPE_ID)
-    headNavCtrl = self.FindWindowById(armid.PATTERNSTRUCTURE_COMBOHEADNAV_ID)
-    headNryCtrl = self.FindWindowById(armid.PATTERNSTRUCTURE_COMBOHEADMULTIPLICITY_ID)
-    headRoleCtrl = self.FindWindowById(armid.PATTERNSTRUCTURE_TEXTHEADROLE_ID)
-    tailRoleCtrl = self.FindWindowById(armid.PATTERNSTRUCTURE_TEXTTAILROLE_ID)
-    tailNryCtrl = self.FindWindowById(armid.PATTERNSTRUCTURE_COMBOTAILMULTIPLICITY_ID)
-    tailNavCtrl = self.FindWindowById(armid.PATTERNSTRUCTURE_COMBOTAILNAV_ID)
-    tailTypeCtrl = self.FindWindowById(armid.PATTERNSTRUCTURE_COMBOTAILTYPE_ID)
-    tailCtrl = self.FindWindowById(armid.PATTERNSTRUCTURE_COMBOTAILASSET_ID)
+    headCtrl = self.FindWindowById(PATTERNSTRUCTURE_COMBOHEADASSET_ID)
+    headTypeCtrl = self.FindWindowById(PATTERNSTRUCTURE_COMBOHEADTYPE_ID)
+    headNavCtrl = self.FindWindowById(PATTERNSTRUCTURE_COMBOHEADNAV_ID)
+    headNryCtrl = self.FindWindowById(PATTERNSTRUCTURE_COMBOHEADMULTIPLICITY_ID)
+    headRoleCtrl = self.FindWindowById(PATTERNSTRUCTURE_TEXTHEADROLE_ID)
+    tailRoleCtrl = self.FindWindowById(PATTERNSTRUCTURE_TEXTTAILROLE_ID)
+    tailNryCtrl = self.FindWindowById(PATTERNSTRUCTURE_COMBOTAILMULTIPLICITY_ID)
+    tailNavCtrl = self.FindWindowById(PATTERNSTRUCTURE_COMBOTAILNAV_ID)
+    tailTypeCtrl = self.FindWindowById(PATTERNSTRUCTURE_COMBOTAILTYPE_ID)
+    tailCtrl = self.FindWindowById(PATTERNSTRUCTURE_COMBOTAILASSET_ID)
 
     self.theHeadName = headCtrl.GetStringSelection()
     self.theTailAdornment = headTypeCtrl.GetStringSelection()
@@ -149,7 +149,7 @@ class PatternStructureDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.PATTERNSTRUCTURE_BUTTONCOMMIT_ID)
+      self.EndModal(PATTERNSTRUCTURE_BUTTONCOMMIT_ID)
 
   def headAsset(self): return self.theHeadName
   def headAdornment(self): return self.theHeadAdornment

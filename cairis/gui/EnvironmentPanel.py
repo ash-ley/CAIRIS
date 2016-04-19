@@ -17,14 +17,14 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from BasePanel import BasePanel
-from Borg import Borg
+from cairis.core.Borg import Borg
 from EnvironmentNotebook import EnvironmentNotebook
 
 class EnvironmentPanel(BasePanel):
   def __init__(self,parent):
-    BasePanel.__init__(self,parent,armid.ENVIRONMENT_ID)
+    BasePanel.__init__(self,parent,ENVIRONMENT_ID)
     b = Borg()
     self.dbProxy = b.dbProxy
     self.environmentName = ''
@@ -32,19 +32,19 @@ class EnvironmentPanel(BasePanel):
 
   def buildControls(self,isCreate,isUpdateable=True):
     mainSizer = wx.BoxSizer(wx.VERTICAL)
-    mainSizer.Add(self.buildTextSizer('Name',(87,30),armid.ENVIRONMENT_TEXTNAME_ID),0,wx.EXPAND)
+    mainSizer.Add(self.buildTextSizer('Name',(87,30),ENVIRONMENT_TEXTNAME_ID),0,wx.EXPAND)
     self.envNotebook = EnvironmentNotebook(self,self.dbProxy)
     mainSizer.Add(self.envNotebook,1,wx.EXPAND)
-    mainSizer.Add(self.buildCommitButtonSizer(armid.ENVIRONMENT_BUTTONCOMMIT_ID,isCreate),0,wx.CENTER)
+    mainSizer.Add(self.buildCommitButtonSizer(ENVIRONMENT_BUTTONCOMMIT_ID,isCreate),0,wx.CENTER)
     self.SetSizer(mainSizer)
 
 
   def loadControls(self,environment):
-    nameCtrl = self.FindWindowById(armid.ENVIRONMENT_TEXTNAME_ID)
-    shortCodeCtrl = self.envNotebook.FindWindowById(armid.ENVIRONMENT_TEXTSHORTCODE_ID)
-    valueCtrl = self.envNotebook.FindWindowById(armid.ENVIRONMENT_TEXTDESCRIPTION_ID)
-    environmentCtrl = self.envNotebook.FindWindowById(armid.ENVIRONMENT_PANELENVIRONMENTPROPERTIES_ID)
-    tensionCtrl = self.envNotebook.FindWindowById(armid.ENVIRONMENT_GRIDVALUETENSIONS_ID)
+    nameCtrl = self.FindWindowById(ENVIRONMENT_TEXTNAME_ID)
+    shortCodeCtrl = self.envNotebook.FindWindowById(ENVIRONMENT_TEXTSHORTCODE_ID)
+    valueCtrl = self.envNotebook.FindWindowById(ENVIRONMENT_TEXTDESCRIPTION_ID)
+    environmentCtrl = self.envNotebook.FindWindowById(ENVIRONMENT_PANELENVIRONMENTPROPERTIES_ID)
+    tensionCtrl = self.envNotebook.FindWindowById(ENVIRONMENT_GRIDVALUETENSIONS_ID)
     nameCtrl.SetValue(environment.name())
     shortCodeCtrl.SetValue(environment.shortCode())
     valueCtrl.SetValue(environment.description())

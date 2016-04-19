@@ -17,25 +17,25 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
 
 class ChannelDialog(wx.Dialog):
   def __init__(self,parent):
-    wx.Dialog.__init__(self,parent,armid.CHANNEL_ID,'Add Channel',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,150))
+    wx.Dialog.__init__(self,parent,CHANNEL_ID,'Add Channel',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,150))
     self.theChannelName = ''
     self.theDataType = ''
     mainSizer = wx.BoxSizer(wx.VERTICAL)
-    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Channel',(87,30),armid.CHANNEL_TEXTCHANNEL_ID),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Data Type',(87,30),armid.CHANNEL_TEXTDATATYPE_ID),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,armid.CHANNEL_BUTTONADD_ID),0,wx.ALIGN_CENTER)
+    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Channel',(87,30),CHANNEL_TEXTCHANNEL_ID),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Data Type',(87,30),CHANNEL_TEXTDATATYPE_ID),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,CHANNEL_BUTTONADD_ID),0,wx.ALIGN_CENTER)
     self.SetSizer(mainSizer)
 
-    wx.EVT_BUTTON(self,armid.CHANNEL_BUTTONADD_ID,self.onAdd)
+    wx.EVT_BUTTON(self,CHANNEL_BUTTONADD_ID,self.onAdd)
 
   def onAdd(self,evt):
-    cCtrl = self.FindWindowById(armid.CHANNEL_TEXTCHANNEL_ID)
-    dtCtrl = self.FindWindowById(armid.CHANNEL_TEXTDATATYPE_ID)
+    cCtrl = self.FindWindowById(CHANNEL_TEXTCHANNEL_ID)
+    dtCtrl = self.FindWindowById(CHANNEL_TEXTDATATYPE_ID)
     self.theChannelName = cCtrl.GetValue()
     self.theDataType = dtCtrl.GetValue()
 
@@ -50,7 +50,7 @@ class ChannelDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.CHANNEL_BUTTONADD_ID)
+      self.EndModal(CHANNEL_BUTTONADD_ID)
 
   def channel(self): return self.theChannelName
   def dataType(self): return self.theDataType

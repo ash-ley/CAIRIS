@@ -17,7 +17,7 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from ResponseListCtrl import ResponseListCtrl
 from CountermeasureListCtrl import CountermeasureListCtrl
 from SecurityPatternListCtrl import SecurityPatternListCtrl
@@ -121,7 +121,7 @@ class BaseDialog(wx.Dialog):
     addButton = wx.Button(parent,addId,"Add")
     buttonSizer.Add(addButton)
     if (parent.__class__.__name__ == 'VulnerabilitiesDialog' or parent.__class__.__name__ == 'ThreatsDialog'):
-      importButton = wx.Button(parent,armid.CC_DIRECTORYIMPORT_ID,'Import')
+      importButton = wx.Button(parent,CC_DIRECTORYIMPORT_ID,'Import')
       buttonSizer.Add(importButton)
     deleteButton = wx.Button(parent,deleteId,"Delete")
     buttonSizer.Add(deleteButton)
@@ -134,7 +134,7 @@ class BaseDialog(wx.Dialog):
     addButton = wx.Button(parent,addId,"Add")
     buttonSizer.Add(addButton)
     if (parent.__class__.__name__ == 'VulnerabilitiesDialog' or parent.__class__.__name__ == 'ThreatsDialog'):
-      importButton = wx.Button(parent,armid.CC_DIRECTORYIMPORT_ID,'Import')
+      importButton = wx.Button(parent,CC_DIRECTORYIMPORT_ID,'Import')
       buttonSizer.Add(importButton)
     deleteButton = wx.Button(parent,deleteId,"Delete")
     buttonSizer.Add(deleteButton)

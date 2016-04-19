@@ -17,13 +17,13 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from datetime import datetime
 from RevisionEntryDialog import RevisionEntryDialog
 
 class RevisionListCtrl(wx.ListCtrl):
   def __init__(self,parent):
-    wx.ListCtrl.__init__(self,parent,armid.PROJECTSETTINGS_LISTREVISIONS_ID,size=wx.DefaultSize,style=wx.LC_REPORT | wx.LC_SORT_ASCENDING)
+    wx.ListCtrl.__init__(self,parent,PROJECTSETTINGS_LISTREVISIONS_ID,size=wx.DefaultSize,style=wx.LC_REPORT | wx.LC_SORT_ASCENDING)
     self.InsertColumn(0,'No')
     self.SetColumnWidth(0,100)
     self.InsertColumn(1,'Date')
@@ -33,11 +33,11 @@ class RevisionListCtrl(wx.ListCtrl):
     self.theSelectedIdx = -1
     self.theLastRevision = 0
     self.theMenu = wx.Menu()
-    self.theMenu.Append(armid.CONTRIBUTORLISTCTRL_MENUADD_ID,'Add')
+    self.theMenu.Append(CONTRIBUTORLISTCTRL_MENUADD_ID,'Add')
     self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK,self.OnRightDown)
     self.Bind(wx.EVT_LIST_ITEM_SELECTED,self.OnItemSelected)
     self.Bind(wx.EVT_LIST_ITEM_DESELECTED,self.OnItemDeselected)
-    wx.EVT_MENU(self.theMenu,armid.CONTRIBUTORLISTCTRL_MENUADD_ID,self.onAddEntry)
+    wx.EVT_MENU(self.theMenu,CONTRIBUTORLISTCTRL_MENUADD_ID,self.onAddEntry)
 
   def OnItemSelected(self,evt):
     self.theSelectedIdx = evt.GetIndex()
@@ -50,7 +50,7 @@ class RevisionListCtrl(wx.ListCtrl):
 
   def onAddEntry(self,evt):
     dlg = RevisionEntryDialog(self)
-    if (dlg.ShowModal() == armid.REVISIONENTRY_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == REVISIONENTRY_BUTTONCOMMIT_ID):
       revRemarks = dlg.remarks()
       self.theLastRevision += 1
       revNo = self.theLastRevision

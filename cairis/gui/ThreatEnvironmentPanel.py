@@ -17,17 +17,17 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from DimensionListCtrl import DimensionListCtrl
 from EnvironmentListCtrl import EnvironmentListCtrl
 from PropertiesListCtrl import PropertiesListCtrl
-from ThreatEnvironmentProperties import ThreatEnvironmentProperties
-from ValueDictionary import ValueDictionary
+from cairis.core.ThreatEnvironmentProperties import ThreatEnvironmentProperties
+from cairis.core.ValueDictionary import ValueDictionary
 
 
 class ThreatEnvironmentPanel(wx.Panel):
   def __init__(self,parent,dp):
-    wx.Panel.__init__(self,parent,armid.THREAT_PANELENVIRONMENT_ID)
+    wx.Panel.__init__(self,parent,THREAT_PANELENVIRONMENT_ID)
     self.dbProxy = dp
     self.theThreatId = None
     self.theEnvironmentDictionary = {}
@@ -37,7 +37,7 @@ class ThreatEnvironmentPanel(wx.Panel):
     environmentBox = wx.StaticBox(self)
     environmentListSizer = wx.StaticBoxSizer(environmentBox,wx.HORIZONTAL)
     mainSizer.Add(environmentListSizer,0,wx.EXPAND)
-    self.environmentList = EnvironmentListCtrl(self,armid.THREATENVIRONMENT_LISTENVIRONMENTS_ID,self.dbProxy)
+    self.environmentList = EnvironmentListCtrl(self,THREATENVIRONMENT_LISTENVIRONMENTS_ID,self.dbProxy)
     environmentListSizer.Add(self.environmentList,1,wx.EXPAND)
 
     environmentDimSizer = wx.BoxSizer(wx.VERTICAL)
@@ -48,18 +48,18 @@ class ThreatEnvironmentPanel(wx.Panel):
     environmentDimSizer.Add(lhoodSizer,0,wx.EXPAND)
     lhoodSizer.Add(wx.StaticText(self,-1,'Likelihood'))
     lhoodList = ['Incredible','Improbable','Remote','Occasional','Probable','Frequent']
-    self.lhoodCtrl = wx.ComboBox(self,armid.THREATENVIRONMENT_COMBOLIKELIHOOD_ID,choices=lhoodList,size=wx.DefaultSize,style=wx.CB_READONLY)
+    self.lhoodCtrl = wx.ComboBox(self,THREATENVIRONMENT_COMBOLIKELIHOOD_ID,choices=lhoodList,size=wx.DefaultSize,style=wx.CB_READONLY)
     lhoodSizer.Add(self.lhoodCtrl,1,wx.EXPAND) 
 
     aaSizer = wx.BoxSizer(wx.HORIZONTAL)
     environmentDimSizer.Add(aaSizer,1,wx.EXPAND)
-    self.attackerList = DimensionListCtrl(self,armid.THREATENVIRONMENT_LISTATTACKERS_ID,wx.DefaultSize,'Attacker','attacker',self.dbProxy)
+    self.attackerList = DimensionListCtrl(self,THREATENVIRONMENT_LISTATTACKERS_ID,wx.DefaultSize,'Attacker','attacker',self.dbProxy)
     attackerBox = wx.StaticBox(self)
     attackerSizer = wx.StaticBoxSizer(attackerBox,wx.HORIZONTAL)
     attackerSizer.Add(self.attackerList,1,wx.EXPAND)
     aaSizer.Add(attackerSizer,1,wx.EXPAND)
 
-    self.assetList = DimensionListCtrl(self,armid.THREATENVIRONMENT_LISTASSETS_ID,wx.DefaultSize,'Asset','asset',self.dbProxy)
+    self.assetList = DimensionListCtrl(self,THREATENVIRONMENT_LISTASSETS_ID,wx.DefaultSize,'Asset','asset',self.dbProxy)
     assetBox = wx.StaticBox(self)
     assetSizer = wx.StaticBoxSizer(assetBox,wx.HORIZONTAL)
     assetSizer.Add(self.assetList,1,wx.EXPAND)
@@ -70,7 +70,7 @@ class ThreatEnvironmentPanel(wx.Panel):
     environmentDimSizer.Add(propertiesSizer,1,wx.EXPAND)
     values = self.dbProxy.getDimensionNames('threat_value')
     valueLookup = ValueDictionary(values)
-    self.propertiesList = PropertiesListCtrl(self,armid.THREATENVIRONMENT_LISTPROPERTIES_ID,valueLookup)
+    self.propertiesList = PropertiesListCtrl(self,THREATENVIRONMENT_LISTPROPERTIES_ID,valueLookup)
     propertiesSizer.Add(self.propertiesList,1,wx.EXPAND)
     self.SetSizer(mainSizer)
     self.environmentList.Bind(wx.EVT_LIST_INSERT_ITEM,self.OnAddEnvironment)

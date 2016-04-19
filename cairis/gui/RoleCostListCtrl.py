@@ -17,8 +17,8 @@
 
 
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from RoleCostDialog import RoleCostDialog
 
 class RoleCostListCtrl(wx.ListCtrl):
@@ -29,14 +29,14 @@ class RoleCostListCtrl(wx.ListCtrl):
     self.InsertColumn(1,'Cost')
     self.SetColumnWidth(1,300)
     self.theDimMenu = wx.Menu()
-    self.theDimMenu.Append(armid.COSTLISTCTRL_MENUADD_ID,'Add')
-    self.theDimMenu.Append(armid.COSTLISTCTRL_MENUDELETE_ID,'Delete')
+    self.theDimMenu.Append(COSTLISTCTRL_MENUADD_ID,'Add')
+    self.theDimMenu.Append(COSTLISTCTRL_MENUDELETE_ID,'Delete')
     self.theSelectedIdx = -1
     self.Bind(wx.EVT_RIGHT_DOWN,self.OnRightDown)
     self.Bind(wx.EVT_LIST_ITEM_SELECTED,self.OnItemSelected)
     self.Bind(wx.EVT_LIST_ITEM_DESELECTED,self.OnItemDeselected)
-    wx.EVT_MENU(self.theDimMenu,armid.COSTLISTCTRL_MENUADD_ID,self.onAddProperty)
-    wx.EVT_MENU(self.theDimMenu,armid.COSTLISTCTRL_MENUDELETE_ID,self.onDeleteProperty)
+    wx.EVT_MENU(self.theDimMenu,COSTLISTCTRL_MENUADD_ID,self.onAddProperty)
+    wx.EVT_MENU(self.theDimMenu,COSTLISTCTRL_MENUDELETE_ID,self.onDeleteProperty)
 
   def setEnvironment(self,environmentName):
     pass
@@ -52,7 +52,7 @@ class RoleCostListCtrl(wx.ListCtrl):
 
   def onAddProperty(self,evt):
     dlg = RoleCostDialog(self)
-    if (dlg.ShowModal() == armid.ROLECOST_BUTTONADD_ID):
+    if (dlg.ShowModal() == ROLECOST_BUTTONADD_ID):
       roleName = dlg.role()
       roleCost = dlg.cost()
       idx = self.GetItemCount()

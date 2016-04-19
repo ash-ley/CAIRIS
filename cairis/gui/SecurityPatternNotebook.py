@@ -17,7 +17,7 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from PatternStructureListCtrl import PatternStructureListCtrl
 from RequirementListCtrl import RequirementListCtrl
 
@@ -57,10 +57,10 @@ class RequirementsPage(wx.Panel):
 
 class SecurityPatternNotebook(wx.Notebook):
   def __init__(self,parent):
-    wx.Notebook.__init__(self,parent,armid.SECURITYPATTERN_NOTEBOOKPATTERN_ID)
-    p1 = MLTextPage(self,armid.SECURITYPATTERN_TEXTCONTEXT_ID)
-    p2 = MLTextPage(self,armid.SECURITYPATTERN_TEXTPROBLEM_ID)
-    p3 = MLTextPage(self,armid.SECURITYPATTERN_TEXTSOLUTION_ID)
+    wx.Notebook.__init__(self,parent,SECURITYPATTERN_NOTEBOOKPATTERN_ID)
+    p1 = MLTextPage(self,SECURITYPATTERN_TEXTCONTEXT_ID)
+    p2 = MLTextPage(self,SECURITYPATTERN_TEXTPROBLEM_ID)
+    p3 = MLTextPage(self,SECURITYPATTERN_TEXTSOLUTION_ID)
     p4 = StructurePage(self)
     p5 = RequirementsPage(self,p4)
     self.AddPage(p1,'Context')

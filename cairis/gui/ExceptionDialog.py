@@ -18,15 +18,15 @@
 
 #$URL$ $Id: ExceptionDialog.py 334 2010-11-07 19:44:00Z shaf $
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 import WidgetFactory
 from ExceptionPanel import ExceptionPanel
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 class ExceptionDialog(wx.Dialog):
   def __init__(self,parent,envName,eName = '', eDimType = 'goal', eDimName = '', eCat = '', eDef = ''):
-    wx.Dialog.__init__(self,parent,armid.EXCEPTION_ID,'Add Flow Exception',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,500))
+    wx.Dialog.__init__(self,parent,EXCEPTION_ID,'Add Flow Exception',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,500))
     self.theEnvironmentName = envName
     self.theName = eName
     self.theDimensionType = eDimType
@@ -46,20 +46,20 @@ class ExceptionDialog(wx.Dialog):
       isCreate = False
     else:
       self.commitVerb = 'Add'
-    mainSizer.Add(WidgetFactory.buildCommitButtonSizer(self,armid.EXCEPTION_BUTTONCOMMIT_ID,isCreate),0,wx.CENTER)
+    mainSizer.Add(WidgetFactory.buildCommitButtonSizer(self,EXCEPTION_BUTTONCOMMIT_ID,isCreate),0,wx.CENTER)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.EXCEPTION_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,EXCEPTION_BUTTONCOMMIT_ID,self.onCommit)
 
     
 
   def onCommit(self,evt):
     commitLabel = self.commitVerb + ' Flow Exception'
 
-    nameCtrl = self.FindWindowById(armid.EXCEPTION_TEXTNAME_ID)
-    goalCtrl = self.FindWindowById(armid.EXCEPTION_COMBOGOALS_ID)
-    typeCtrl = self.FindWindowById(armid.EXCEPTION_RADIOGOAL_ID)
-    catCtrl = self.FindWindowById(armid.EXCEPTION_COMBOCATEGORY_ID)
-    defCtrl = self.FindWindowById(armid.EXCEPTION_TEXTDEFINITION_ID)
+    nameCtrl = self.FindWindowById(EXCEPTION_TEXTNAME_ID)
+    goalCtrl = self.FindWindowById(EXCEPTION_COMBOGOALS_ID)
+    typeCtrl = self.FindWindowById(EXCEPTION_RADIOGOAL_ID)
+    catCtrl = self.FindWindowById(EXCEPTION_COMBOCATEGORY_ID)
+    defCtrl = self.FindWindowById(EXCEPTION_TEXTDEFINITION_ID)
 
 
     self.theName = nameCtrl.GetValue()
@@ -92,7 +92,7 @@ class ExceptionDialog(wx.Dialog):
       dlg.ShowModal()
       dlg.Destroy()
       return
-    self.EndModal(armid.EXCEPTION_BUTTONCOMMIT_ID)
+    self.EndModal(EXCEPTION_BUTTONCOMMIT_ID)
 
   def parameters(self):
     return (self.theName,self.theDimensionType,self.theDimensionName,self.theCategory,self.theDefinition)

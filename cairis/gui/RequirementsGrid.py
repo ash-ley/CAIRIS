@@ -19,11 +19,11 @@
 import wx
 import wx.grid
 import wx.lib.gridmovers as gridmovers
-from RequirementManager import RequirementManager
-import Requirement
-from ARM import *
-import armid
-from Borg import Borg
+from cairis.core.RequirementManager import RequirementManager
+import cairis.core.Requirement
+from cairis.core.ARM import *
+from cairis.core.armid import *
+from cairis.core.Borg import Borg
 from Traceable import Traceable
 from DimensionNameDialog import DimensionNameDialog
 from ReqToGoalDialog import ReqToGoalDialog
@@ -282,11 +282,11 @@ class RequirementsCellEditor(wx.grid.GridCellAutoWrapStringEditor):
 
 class RequirementsGrid(wx.grid.Grid,Traceable):
   def __init__(self,parent,modCombo,envCombo):
-    wx.grid.Grid.__init__(self,parent,armid.ID_REQGRID)
+    wx.grid.Grid.__init__(self,parent,ID_REQGRID)
     Traceable.__init__(self)
-    self.theTraceMenu.Append(armid.TRACE_MENUTRACE_HISTORY_ID,'History')
-    self.theTraceMenu.Append(armid.TRACE_MENUTRACE_REASSOCIATE_ID,'Asset re-association')
-    self.theTraceMenu.Append(armid.TRACE_MENUTRACE_TURNTOGOAL_ID,'Turn to goal')
+    self.theTraceMenu.Append(TRACE_MENUTRACE_HISTORY_ID,'History')
+    self.theTraceMenu.Append(TRACE_MENUTRACE_REASSOCIATE_ID,'Asset re-association')
+    self.theTraceMenu.Append(TRACE_MENUTRACE_TURNTOGOAL_ID,'Turn to goal')
     self.thePanel = parent
     wx.lib.gridmovers.GridRowMover(self)
     self.modCombo = modCombo
@@ -294,9 +294,9 @@ class RequirementsGrid(wx.grid.Grid,Traceable):
     self.Bind(wx.lib.gridmovers.EVT_GRID_ROW_MOVE, self.OnRowMove, self)
     self.editIndicator = False
     self.setTable(self.modCombo,self.envCombo)
-    wx.EVT_MENU(self,armid.TRACE_MENUTRACE_REASSOCIATE_ID,self.onReassociate)
-    wx.EVT_MENU(self,armid.TRACE_MENUTRACE_TURNTOGOAL_ID,self.onTurnToGoal)
-    wx.EVT_MENU(self,armid.TRACE_MENUTRACE_HISTORY_ID,self.onHistory)
+    wx.EVT_MENU(self,TRACE_MENUTRACE_REASSOCIATE_ID,self.onReassociate)
+    wx.EVT_MENU(self,TRACE_MENUTRACE_TURNTOGOAL_ID,self.onTurnToGoal)
+    wx.EVT_MENU(self,TRACE_MENUTRACE_HISTORY_ID,self.onHistory)
     self.Bind(wx.grid.EVT_GRID_CELL_RIGHT_CLICK, self.onRightClick)
 
 
@@ -399,7 +399,7 @@ class RequirementsGrid(wx.grid.Grid,Traceable):
     p = b.dbProxy
     dimensions = p.getDimensionNames('asset')
     dlg = DimensionNameDialog(self,'asset',dimensions,'Select')
-    if (dlg.ShowModal() == armid.DIMNAME_BUTTONACTION_ID):
+    if (dlg.ShowModal() == DIMNAME_BUTTONACTION_ID):
       selectedAsset = dlg.dimensionName()
       reqTable = self.GetTable()
       selectedReq = reqTable.om.reqs[self.GetGridCursorRow()]
@@ -415,7 +415,7 @@ class RequirementsGrid(wx.grid.Grid,Traceable):
     p = b.dbProxy
     environments = p.getDimensionNames('environment',False)
     cDlg = DimensionNameDialog(self,'environment',environments,'Select')
-    if (cDlg.ShowModal() == armid.DIMNAME_BUTTONACTION_ID):
+    if (cDlg.ShowModal() == DIMNAME_BUTTONACTION_ID):
       environmentName = cDlg.dimensionName()
       pos = self.GetGridCursorRow() 
       table = self.GetTable()
@@ -428,7 +428,7 @@ class RequirementsGrid(wx.grid.Grid,Traceable):
       goalOrig = table.GetValue(pos,ORIGINATOR_POS)
       goalAssets = [self.modCombo.GetValue()]
       dlg = ReqToGoalDialog(self,goalName,goalDef,goalCat,goalPri,goalFc,goalIssue,goalOrig,goalAssets,environmentName)
-      if (dlg.ShowModal() == armid.GOAL_BUTTONCOMMIT_ID):
+      if (dlg.ShowModal() == GOAL_BUTTONCOMMIT_ID):
         b = Borg()
         p = b.dbProxy
         p.addGoal(dlg.parameters())

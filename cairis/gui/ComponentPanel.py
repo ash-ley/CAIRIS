@@ -17,39 +17,39 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from BasePanel import BasePanel
-import Component
-from Borg import Borg
+import cairis.core.Component
+from cairis.core.Borg import Borg
 from ComponentNotebook import ComponentNotebook
 
 class ComponentPanel(BasePanel):
   def __init__(self,parent):
-    BasePanel.__init__(self,parent,armid.COMPONENT_ID)
+    BasePanel.__init__(self,parent,COMPONENT_ID)
     self.theComponentId = None
     b = Borg()
     self.dbProxy = b.dbProxy
     
   def buildControls(self):
     mainSizer = wx.BoxSizer(wx.VERTICAL)
-    mainSizer.Add(self.buildTextSizer('Name',(87,30),armid.COMPONENT_TEXTNAME_ID),0,wx.EXPAND)
+    mainSizer.Add(self.buildTextSizer('Name',(87,30),COMPONENT_TEXTNAME_ID),0,wx.EXPAND)
 
     nbBox = wx.StaticBox(self,-1)
     nbSizer = wx.StaticBoxSizer(nbBox,wx.VERTICAL)
     mainSizer.Add(nbSizer,1,wx.EXPAND)
     nbSizer.Add(ComponentNotebook(self),1,wx.EXPAND)
 
-    mainSizer.Add(self.buildCommitButtonSizer(armid.COMPONENT_BUTTONCOMMIT_ID,True),0,wx.CENTER)
+    mainSizer.Add(self.buildCommitButtonSizer(COMPONENT_BUTTONCOMMIT_ID,True),0,wx.CENTER)
     self.SetSizer(mainSizer)
 
   def loadControls(self,component,isReadOnly=False):
     self.theComponentId = component.id()
-    nameCtrl = self.FindWindowById(armid.COMPONENT_TEXTNAME_ID)
-    descCtrl = self.FindWindowById(armid.COMPONENT_TEXTDESCRIPTION_ID)
-    ifCtrl = self.FindWindowById(armid.COMPONENT_LISTINTERFACES_ID)
-    structCtrl = self.FindWindowById(armid.COMPONENT_LISTSTRUCTURE_ID)
-    reqsCtrl = self.FindWindowById(armid.COMPONENT_LISTREQUIREMENTS_ID)
-    goalsCtrl = self.FindWindowById(armid.COMPONENT_LISTGOALS_ID)
+    nameCtrl = self.FindWindowById(COMPONENT_TEXTNAME_ID)
+    descCtrl = self.FindWindowById(COMPONENT_TEXTDESCRIPTION_ID)
+    ifCtrl = self.FindWindowById(COMPONENT_LISTINTERFACES_ID)
+    structCtrl = self.FindWindowById(COMPONENT_LISTSTRUCTURE_ID)
+    reqsCtrl = self.FindWindowById(COMPONENT_LISTREQUIREMENTS_ID)
+    goalsCtrl = self.FindWindowById(COMPONENT_LISTGOALS_ID)
 
     nameCtrl.SetValue(component.name())
     descCtrl.SetValue(component.description())

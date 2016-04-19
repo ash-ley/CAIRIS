@@ -17,19 +17,19 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from SecurityPatternEnvironmentPanel import SecurityPatternEnvironmentPanel
 
 class SecurityPatternEnvironmentDialog(wx.Dialog):
   def __init__(self,parent,patternId,cmEnvs = []):
-    wx.Dialog.__init__(self,parent,armid.SPENVIRONMENT_ID,'Situate pattern',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,500))
+    wx.Dialog.__init__(self,parent,SPENVIRONMENT_ID,'Situate pattern',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,500))
     
     mainSizer = wx.BoxSizer(wx.VERTICAL)
     self.assetEnvs = []
     self.panel = SecurityPatternEnvironmentPanel(self,patternId,cmEnvs)
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizerAndFit(mainSizer)
-    wx.EVT_BUTTON(self,armid.SPENVIRONMENT_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,SPENVIRONMENT_BUTTONCOMMIT_ID,self.onCommit)
 
 
   def onCommit(self,evt):
@@ -40,6 +40,6 @@ class SecurityPatternEnvironmentDialog(wx.Dialog):
         dlg.ShowModal() 
         dlg.Destroy()
         return
-    self.EndModal(armid.SPENVIRONMENT_BUTTONCOMMIT_ID)
+    self.EndModal(SPENVIRONMENT_BUTTONCOMMIT_ID)
 
   def assetEnvironments(self): return self.assetEnvs

@@ -16,12 +16,12 @@
 #  under the License.
 
 
-import DotTrace
+import cairis.core.DotTrace
 import pydot
 import wx
 import os
-import ARM
-from Borg import Borg
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
 
 class AssumptionPersonaModel:
   def __init__(self,tlinks):

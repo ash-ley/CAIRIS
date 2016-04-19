@@ -23,7 +23,7 @@ import os
 from DocumentReferenceNodeDialog import DocumentReferenceNodeDialog
 from ConceptReferenceNodeDialog import ConceptReferenceNodeDialog
 
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 def build(url,isApModel = True):
   dim,objtName = url.split('#')
@@ -31,7 +31,7 @@ def build(url,isApModel = True):
   proxy = b.dbProxy
   builder = gtk.Builder()
   
-  gladeFile = './config/imvnodes/imvnodes.xml'
+  gladeFile = b.configDir + '/imvnodes/imvnodes.xml'
   builder.add_from_file(gladeFile)
 
   

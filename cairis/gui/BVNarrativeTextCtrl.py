@@ -18,10 +18,10 @@
 
 import wx
 from CodingTextCtrl import CodingTextCtrl
-import armid
-from ARM import *
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from BehaviouralCharacteristicsDialog import BehaviouralCharacteristicsDialog
-from Borg import Borg
+from cairis.core.Borg import Borg
 from AssumptionPersonaModel import AssumptionPersonaModel
 from APModelViewer import APModelViewer
 
@@ -29,14 +29,14 @@ class BVNarrativeTextCtrl(CodingTextCtrl):
   def __init__(self, parent, winId):
     CodingTextCtrl.__init__(self,parent,winId)
     self.ctrlMenu = wx.Menu()
-    self.cmItem = self.ctrlMenu.Append(armid.BVNTC_LISTCHARACTERISTICS_ID,'Characteristics')
-    self.viItem = self.ctrlMenu.Append(armid.BVNTC_VISCHARACTERISTICS_ID,'Visualise')
-    self.ctrlMenu.AppendMenu(armid.BVNTC_MENU_CODING,'Coding',self.codingMenu)
+    self.cmItem = self.ctrlMenu.Append(BVNTC_LISTCHARACTERISTICS_ID,'Characteristics')
+    self.viItem = self.ctrlMenu.Append(BVNTC_VISCHARACTERISTICS_ID,'Visualise')
+    self.ctrlMenu.AppendMenu(BVNTC_MENU_CODING,'Coding',self.codingMenu)
 
-    wx.EVT_MENU(self,armid.BVNTC_LISTCHARACTERISTICS_ID,self.onListCharacteristics)
-    wx.EVT_MENU(self,armid.BVNTC_VISCHARACTERISTICS_ID,self.onVisualiseCharacteristics)
-    wx.EVT_MENU(self,armid.BVNTC_TEXTOPENCODING_ID,self.onOpenCoding)
-    wx.EVT_MENU(self,armid.BVNTC_LISTALPHABET_ID,self.onListAlphabet)
+    wx.EVT_MENU(self,BVNTC_LISTCHARACTERISTICS_ID,self.onListCharacteristics)
+    wx.EVT_MENU(self,BVNTC_VISCHARACTERISTICS_ID,self.onVisualiseCharacteristics)
+    wx.EVT_MENU(self,BVNTC_TEXTOPENCODING_ID,self.onOpenCoding)
+    wx.EVT_MENU(self,BVNTC_LISTALPHABET_ID,self.onListAlphabet)
     self.Bind(wx.EVT_RIGHT_DOWN, self.onRightClick)
 
     self.thePersonaName = ''

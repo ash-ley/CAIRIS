@@ -17,30 +17,30 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 
 class PersonasDocumentationPanel(wx.Panel):
   def __init__(self,parent):
-    wx.Panel.__init__(self,parent,armid.PERDOCPANEL_ID)
+    wx.Panel.__init__(self,parent,PERDOCPANEL_ID)
     checkSizer = wx.BoxSizer(wx.VERTICAL)
 
-    self.projectPurposeCheck = wx.CheckBox(self,armid.PERDOCPANEL_CHECKPROJECTPURPOSE_ID,'Project Purpose')
+    self.projectPurposeCheck = wx.CheckBox(self,PERDOCPANEL_CHECKPROJECTPURPOSE_ID,'Project Purpose')
     self.projectPurposeCheck.SetValue(True)
     checkSizer.Add(self.projectPurposeCheck,0,wx.EXPAND)
 
-    self.projectScopeCheck = wx.CheckBox(self,armid.PERDOCPANEL_CHECKPROJECTSCOPE_ID,'Project Scope')
+    self.projectScopeCheck = wx.CheckBox(self,PERDOCPANEL_CHECKPROJECTSCOPE_ID,'Project Scope')
     self.projectScopeCheck.SetValue(True)
     checkSizer.Add(self.projectScopeCheck,0,wx.EXPAND)
 
-    self.environmentsCheck = wx.CheckBox(self,armid.PERDOCPANEL_CHECKENVIRONMENTS_ID,'Environments')
+    self.environmentsCheck = wx.CheckBox(self,PERDOCPANEL_CHECKENVIRONMENTS_ID,'Environments')
     self.environmentsCheck.SetValue(True)
     checkSizer.Add(self.environmentsCheck,0,wx.EXPAND)
 
-    self.stakeholdersCheck = wx.CheckBox(self,armid.PERDOCPANEL_CHECKSTAKEHOLDERS_ID,'Personas')
+    self.stakeholdersCheck = wx.CheckBox(self,PERDOCPANEL_CHECKSTAKEHOLDERS_ID,'Personas')
     self.stakeholdersCheck.SetValue(True)
     checkSizer.Add(self.stakeholdersCheck,0,wx.EXPAND)
 
-    self.tasksCheck = wx.CheckBox(self,armid.PERDOCPANEL_CHECKTASKS_ID,'Tasks')
+    self.tasksCheck = wx.CheckBox(self,PERDOCPANEL_CHECKTASKS_ID,'Tasks')
     self.tasksCheck.SetValue(True)
     checkSizer.Add(self.tasksCheck,0,wx.EXPAND)
 

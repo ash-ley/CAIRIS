@@ -17,7 +17,7 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from DomainEntryDialog import DomainEntryDialog
 
 class DomainListCtrl(wx.ListCtrl):
@@ -31,13 +31,13 @@ class DomainListCtrl(wx.ListCtrl):
     self.SetColumnWidth(2,100)
     self.theSelectedIdx = -1
     self.theMenu = wx.Menu()
-    self.theMenu.Append(armid.DOMAINLISTCTRL_MENUADD_ID,'Add')
-    self.theMenu.Append(armid.DOMAINLISTCTRL_MENUDELETE_ID,'Delete')
+    self.theMenu.Append(DOMAINLISTCTRL_MENUADD_ID,'Add')
+    self.theMenu.Append(DOMAINLISTCTRL_MENUDELETE_ID,'Delete')
     self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK,self.OnRightDown)
     self.Bind(wx.EVT_LIST_ITEM_SELECTED,self.OnItemSelected)
     self.Bind(wx.EVT_LIST_ITEM_DESELECTED,self.OnItemDeselected)
-    wx.EVT_MENU(self.theMenu,armid.DOMAINLISTCTRL_MENUADD_ID,self.onAddEntry)
-    wx.EVT_MENU(self.theMenu,armid.DOMAINLISTCTRL_MENUDELETE_ID,self.onDeleteEntry)
+    wx.EVT_MENU(self.theMenu,DOMAINLISTCTRL_MENUADD_ID,self.onAddEntry)
+    wx.EVT_MENU(self.theMenu,DOMAINLISTCTRL_MENUDELETE_ID,self.onDeleteEntry)
 
   def OnItemSelected(self,evt):
     self.theSelectedIdx = evt.GetIndex()
@@ -50,7 +50,7 @@ class DomainListCtrl(wx.ListCtrl):
 
   def onAddEntry(self,evt):
     dlg = DomainEntryDialog(self)
-    if (dlg.ShowModal() == armid.DOMAINENTRY_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == DOMAINENTRY_BUTTONCOMMIT_ID):
       domainName = dlg.domain()
       domainPhenomena = dlg.phenomena()
       connectionDomain = dlg.connectionDomain()

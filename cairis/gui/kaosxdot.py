@@ -17,13 +17,13 @@
 
 
 import xdot
-from Borg import Borg
-import ARM
+from cairis.core.Borg import Borg
+from cairis.core.ARM import *
 import gtk
 import math
 import cairo
 import pangocairo
-import armid
+from cairis.core.armid import *
 from KaosModel import KaosModel
 from AssetModel import AssetModel
 from ConceptMapModel import ConceptMapModel
@@ -41,7 +41,7 @@ class KaosTextShape(xdot.TextShape):
           self.y = y + 22
 
     def draw(self, cr, highlight=False,zoom_ratio=-1):
-        if (((self.fromDim == 'task' and self.toDim == 'asset') or (self.fromDim == 'usecase' and self.toDim == 'asset') or (self.fromDim == 'misusecase' and self.toDim == 'asset') or (self.theModelType == 'task' and self.fromDim == 'asset') or (self.fromDim == 'comment') or (self.fromDim == 'goalconcern') or (self.fromDim == 'obstacleconcern') or (self.fromDim == 'taskconcern')) and (zoom_ratio < armid.MEDKAOS_ZOOM_RATIO)) or (self.fromDim == 'task' and self.toDim == 'misusecase' and zoom_ratio < armid.LOWKAOS_ZOOM_RATIO) :
+        if (((self.fromDim == 'task' and self.toDim == 'asset') or (self.fromDim == 'usecase' and self.toDim == 'asset') or (self.fromDim == 'misusecase' and self.toDim == 'asset') or (self.theModelType == 'task' and self.fromDim == 'asset') or (self.fromDim == 'comment') or (self.fromDim == 'goalconcern') or (self.fromDim == 'obstacleconcern') or (self.fromDim == 'taskconcern')) and (zoom_ratio < MEDKAOS_ZOOM_RATIO)) or (self.fromDim == 'task' and self.toDim == 'misusecase' and zoom_ratio < LOWKAOS_ZOOM_RATIO) :
           pass
         else:
           xdot.TextShape.draw(self,cr,highlight,-1)
@@ -59,7 +59,7 @@ class KaosLineShape(xdot.LineShape):
         self.assocType = assocType
 
     def draw(self,cr,highlight=False,zoom_ratio=-1): 
-        if (((self.fromDim == 'comment') or (self.fromDim == 'goalconcern') or (self.fromDim == 'obstacleconcern') or (self.fromDim == 'taskconcern') ) and (zoom_ratio < armid.MEDKAOS_ZOOM_RATIO)) :
+        if (((self.fromDim == 'comment') or (self.fromDim == 'goalconcern') or (self.fromDim == 'obstacleconcern') or (self.fromDim == 'taskconcern') ) and (zoom_ratio < MEDKAOS_ZOOM_RATIO)) :
           pass
         else:
           xdot.LineShape.draw(self,cr,highlight,-1)
@@ -77,7 +77,7 @@ class KaosBezierShape(xdot.BezierShape):
         self.assocType = assocType
 
     def draw(self, cr, highlight=False,zoom_ratio=-1):
-        if (((self.fromDim == 'task' and self.toDim == 'asset') or (self.fromDim == 'misusecase' and self.toDim == 'asset') or (self.fromDim == 'comment') or (self.fromDim == 'goalconcern') or (self.fromDim == 'obstacleconcern') or (self.fromDim == 'taskconcern')) and (zoom_ratio < armid.MEDKAOS_ZOOM_RATIO)) or (self.fromDim == 'task' and self.toDim == 'misusecase' and zoom_ratio < armid.LOWKAOS_ZOOM_RATIO) :
+        if (((self.fromDim == 'task' and self.toDim == 'asset') or (self.fromDim == 'misusecase' and self.toDim == 'asset') or (self.fromDim == 'comment') or (self.fromDim == 'goalconcern') or (self.fromDim == 'obstacleconcern') or (self.fromDim == 'taskconcern')) and (zoom_ratio < MEDKAOS_ZOOM_RATIO)) or (self.fromDim == 'task' and self.toDim == 'misusecase' and zoom_ratio < LOWKAOS_ZOOM_RATIO) :
           pass
         else:
           xdot.BezierShape.draw(self,cr,highlight,-1)
@@ -216,7 +216,7 @@ class KaosPolygonShape(xdot.PolygonShape):
       self.theModelType = modelType
 
     def draw(self,cr,highlight=False,zoom_ratio=-1):
-      if (((self.theModelType == 'task' and self.dim == 'asset') or (self.theModelType == 'class' and self.dim == 'comment') or (self.theModelType == 'class' and self.dim == 'goalconcern') or (self.theModelType == 'class' and self.dim == 'obstacleconcern') or (self.theModelType == 'class' and self.dim == 'taskconcern') ) and (zoom_ratio < armid.MEDKAOS_ZOOM_RATIO)) or (self.assocType in ('taskmisusecasethreat_association','taskmisusecasevulnerability_association','taskmisusecasemitigation_association') and zoom_ratio < armid.LOWKAOS_ZOOM_RATIO) or (self.assocType in ('misusecasethreatasset_association','misusecasevulnerabilityasset_association','misusecasethreatmitigation_association','misusecasevulnerabilitymitigation_association','taskasset_association') and zoom_ratio < armid.MEDKAOS_ZOOM_RATIO) :
+      if (((self.theModelType == 'task' and self.dim == 'asset') or (self.theModelType == 'class' and self.dim == 'comment') or (self.theModelType == 'class' and self.dim == 'goalconcern') or (self.theModelType == 'class' and self.dim == 'obstacleconcern') or (self.theModelType == 'class' and self.dim == 'taskconcern') ) and (zoom_ratio < MEDKAOS_ZOOM_RATIO)) or (self.assocType in ('taskmisusecasethreat_association','taskmisusecasevulnerability_association','taskmisusecasemitigation_association') and zoom_ratio < LOWKAOS_ZOOM_RATIO) or (self.assocType in ('misusecasethreatasset_association','misusecasevulnerabilityasset_association','misusecasethreatmitigation_association','misusecasevulnerabilitymitigation_association','taskasset_association') and zoom_ratio < MEDKAOS_ZOOM_RATIO) :
         pass
       else:
         xdot.PolygonShape.draw(self,cr,highlight,-1)
@@ -851,7 +851,7 @@ class KaosDotWindow(gtk.Window):
         self.set_xdotcode(self.canonicalModel.graph())
         self.widget.zoom_to_fit()
         self.set_title(environmentName)
-      except ARM.ARMException, ex:
+      except ARMException, ex:
         dlg = gtk.MessageDialog(type=gtk.MESSAGE_ERROR,message_format=str(ex),buttons=gtk.BUTTONS_OK)
         dlg.set_title('Model Viewer')
         dlg.run()

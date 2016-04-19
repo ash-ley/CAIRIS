@@ -17,15 +17,15 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from BasePanel import BasePanel
 from QuotationNotebook import QuotationNotebook
-import Memo
+import cairis.core.Memo
 
 class QuotationPanel(BasePanel):
   def __init__(self,parent):
-    BasePanel.__init__(self,parent,armid.QUOTATION_ID)
+    BasePanel.__init__(self,parent,QUOTATION_ID)
     mainSizer = wx.BoxSizer(wx.VERTICAL)
     mainSizer.Add(QuotationNotebook(self),1,wx.EXPAND)
-    mainSizer.Add(self.buildCommitButtonSizer(armid.QUOTATION_BUTTONCOMMIT_ID,False),0,wx.ALIGN_CENTER)
+    mainSizer.Add(self.buildCommitButtonSizer(QUOTATION_BUTTONCOMMIT_ID,False),0,wx.ALIGN_CENTER)
     self.SetSizer(mainSizer)

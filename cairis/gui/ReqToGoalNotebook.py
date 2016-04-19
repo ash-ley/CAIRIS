@@ -17,13 +17,13 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from GoalPage import GoalPage
 
 class ReqToGoalNotebook(wx.Notebook):
   def __init__(self,parent,dp):
-    wx.Notebook.__init__(self,parent,armid.GOAL_NOTEBOOKENVIRONMENT_ID)
-    p1 = GoalPage(self,armid.GOAL_LISTGOALREFINEMENTS_ID,True,dp)
-    p2 = GoalPage(self,armid.GOAL_LISTSUBGOALREFINEMENTS_ID,False,dp)
+    wx.Notebook.__init__(self,parent,GOAL_NOTEBOOKENVIRONMENT_ID)
+    p1 = GoalPage(self,GOAL_LISTGOALREFINEMENTS_ID,True,dp)
+    p2 = GoalPage(self,GOAL_LISTSUBGOALREFINEMENTS_ID,False,dp)
     self.AddPage(p1,'Goals')
     self.AddPage(p2,'Sub-Goals')

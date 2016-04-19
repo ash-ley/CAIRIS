@@ -17,11 +17,11 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 
 class DependentsDialog(wx.Dialog):
   def __init__(self,parent,dependents,dimName):
-    wx.Dialog.__init__(self,parent,armid.DEPENDENTS_ID,'Delete ' + dimName,style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,300))
+    wx.Dialog.__init__(self,parent,DEPENDENTS_ID,'Delete ' + dimName,style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,300))
     mainSizer = wx.BoxSizer(wx.VERTICAL)
     labelTxt = 'The following artifacts are dependent on this ' + dimName + ', and removing it also removes them.\n  Do you want to continue?'
     mainSizer.Add(wx.StaticText(self,-1,labelTxt),0,wx.EXPAND)
@@ -39,12 +39,12 @@ class DependentsDialog(wx.Dialog):
     mainSizer.Add(dependentsListCtrl,1,wx.EXPAND)
     buttonSizer = wx.BoxSizer(wx.HORIZONTAL)
     mainSizer.Add(buttonSizer,0,wx.CENTER)
-    yesButton = wx.Button(self,armid.DEPENDENTS_BUTTONCONFIRM_ID,"Yes")
+    yesButton = wx.Button(self,DEPENDENTS_BUTTONCONFIRM_ID,"Yes")
     buttonSizer.Add(yesButton)
     cancelButton = wx.Button(self,wx.ID_CANCEL,"Cancel")
     buttonSizer.Add(cancelButton)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.DEPENDENTS_BUTTONCONFIRM_ID,self.onConfirm)
+    wx.EVT_BUTTON(self,DEPENDENTS_BUTTONCONFIRM_ID,self.onConfirm)
 
   def onConfirm(self,evt):
-    self.EndModal(armid.DEPENDENTS_BUTTONCONFIRM_ID)
+    self.EndModal(DEPENDENTS_BUTTONCONFIRM_ID)

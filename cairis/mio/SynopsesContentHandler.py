@@ -17,9 +17,9 @@
 
 
 from xml.sax.handler import ContentHandler,EntityResolver
-from ReferenceSynopsis import ReferenceSynopsis
-from ReferenceContribution import ReferenceContribution
-from Borg import Borg
+from cairis.core.ReferenceSynopsis import ReferenceSynopsis
+from cairis.core.ReferenceContribution import ReferenceContribution
+from cairis.core.Borg import Borg
 
 class SynopsesContentHandler(ContentHandler,EntityResolver):
   def __init__(self):

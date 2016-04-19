@@ -17,12 +17,12 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from ProjectSettingsNotebook import ProjectSettingsNotebook
 
 class ProjectSettingsPanel(wx.Panel):
   def __init__(self,parent,projName,background,goals,scope,definitions,contributors,revisions,richPicture):
-    wx.Panel.__init__(self,parent,armid.PROJECTSETTINGS_PANELSETTINGS_ID)
+    wx.Panel.__init__(self,parent,PROJECTSETTINGS_PANELSETTINGS_ID)
     mainSizer = wx.BoxSizer(wx.VERTICAL)
 
     nbBox = wx.StaticBox(self,-1)
@@ -31,27 +31,27 @@ class ProjectSettingsPanel(wx.Panel):
     self.notebook = ProjectSettingsNotebook(self)
     nbSizer.Add(self.notebook,1,wx.EXPAND)
 
-    self.nameCtrl = self.notebook.FindWindowById(armid.PROJECTSETTINGS_TEXTPROJECTNAME_ID)
+    self.nameCtrl = self.notebook.FindWindowById(PROJECTSETTINGS_TEXTPROJECTNAME_ID)
     self.nameCtrl.SetValue(projName)
-    self.backgroundCtrl = self.notebook.FindWindowById(armid.PROJECTSETTINGS_TEXTBACKGROUND_ID)
+    self.backgroundCtrl = self.notebook.FindWindowById(PROJECTSETTINGS_TEXTBACKGROUND_ID)
     self.backgroundCtrl.SetValue(background)
-    self.goalsCtrl = self.notebook.FindWindowById(armid.PROJECTSETTINGS_TEXTGOALS_ID)
+    self.goalsCtrl = self.notebook.FindWindowById(PROJECTSETTINGS_TEXTGOALS_ID)
     self.goalsCtrl.SetValue(goals)
-    self.scopeCtrl = self.notebook.FindWindowById(armid.PROJECTSETTINGS_TEXTSCOPE_ID)
+    self.scopeCtrl = self.notebook.FindWindowById(PROJECTSETTINGS_TEXTSCOPE_ID)
     self.scopeCtrl.SetValue(scope)
-    self.definitionCtrl = self.notebook.FindWindowById(armid.PROJECTSETTINGS_LISTDICTIONARY_ID)
+    self.definitionCtrl = self.notebook.FindWindowById(PROJECTSETTINGS_LISTDICTIONARY_ID)
     self.definitionCtrl.load(definitions)
-    self.contributorsCtrl = self.notebook.FindWindowById(armid.PROJECTSETTINGS_LISTCONTRIBUTORS_ID)
+    self.contributorsCtrl = self.notebook.FindWindowById(PROJECTSETTINGS_LISTCONTRIBUTORS_ID)
     self.contributorsCtrl.load(contributors)
-    self.revisionsCtrl = self.notebook.FindWindowById(armid.PROJECTSETTINGS_LISTREVISIONS_ID)
+    self.revisionsCtrl = self.notebook.FindWindowById(PROJECTSETTINGS_LISTREVISIONS_ID)
     self.revisionsCtrl.load(revisions)
-    self.richPictureCtrl = self.notebook.FindWindowById(armid.PROJECTSETTINGS_IMAGERICHPICTURE_ID)
+    self.richPictureCtrl = self.notebook.FindWindowById(PROJECTSETTINGS_IMAGERICHPICTURE_ID)
     self.richPictureCtrl.loadImage(richPicture)
 
     buttonSizer = wx.BoxSizer(wx.HORIZONTAL)
     mainSizer.Add(buttonSizer,0,wx.ALIGN_CENTER)
 
-    buttonSizer.Add(wx.Button(self,armid.PROJECTSETTINGS_BUTTONCOMMIT_ID,'Update'))
+    buttonSizer.Add(wx.Button(self,PROJECTSETTINGS_BUTTONCOMMIT_ID,'Update'))
     buttonSizer.Add(wx.Button(self,wx.ID_CANCEL,'Cancel'))
 
     self.SetSizer(mainSizer)

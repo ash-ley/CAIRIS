@@ -17,8 +17,8 @@
 
 
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from WeaknessTreatmentPanel import WeaknessTreatmentPanel
 
 class WeaknessTreatmentDialog(wx.Dialog):
@@ -33,16 +33,16 @@ class WeaknessTreatmentDialog(wx.Dialog):
     self.panel = WeaknessTreatmentPanel(self,cvName)
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.WEAKNESSTREATMENT_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,WEAKNESSTREATMENT_BUTTONCOMMIT_ID,self.onCommit)
 
     if reqName != '':
       self.panel.loadControls(reqName,assetName,effValue)
 
   def onCommit(self,evt):
-    reqCtrl = self.FindWindowById(armid.WEAKNESSTREATMENT_COMBOREQGOAL_ID)
-    assetCtrl = self.FindWindowById(armid.WEAKNESSTREATMENT_COMBOASSET_ID)
-    effCtrl = self.FindWindowById(armid.WEAKNESSTREATMENT_COMBOEFFECTIVENESS_ID)
-    ratCtrl = self.FindWindowById(armid.WEAKNESSTREATMENT_TEXTRATIONALE_ID)
+    reqCtrl = self.FindWindowById(WEAKNESSTREATMENT_COMBOREQGOAL_ID)
+    assetCtrl = self.FindWindowById(WEAKNESSTREATMENT_COMBOASSET_ID)
+    effCtrl = self.FindWindowById(WEAKNESSTREATMENT_COMBOEFFECTIVENESS_ID)
+    ratCtrl = self.FindWindowById(WEAKNESSTREATMENT_TEXTRATIONALE_ID)
 
     self.theRequirementName = reqCtrl.GetValue()
     self.theAssetName = assetCtrl.GetValue()
@@ -71,7 +71,7 @@ class WeaknessTreatmentDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.WEAKNESSTREATMENT_BUTTONCOMMIT_ID)
+      self.EndModal(WEAKNESSTREATMENT_BUTTONCOMMIT_ID)
 
   def requirement(self): return self.theRequirementName
   def asset(self): return self.theAssetName

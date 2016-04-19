@@ -17,15 +17,15 @@
 
 
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from RiskEnvironmentListCtrl import RiskEnvironmentListCtrl
-from AcceptEnvironmentProperties import AcceptEnvironmentProperties
+from cairis.core.AcceptEnvironmentProperties import AcceptEnvironmentProperties
 
 
 class AcceptEnvironmentPanel(wx.Panel):
   def __init__(self,parent,dp):
-    wx.Panel.__init__(self,parent,armid.ACCEPT_PANELENVIRONMENT_ID)
+    wx.Panel.__init__(self,parent,ACCEPT_PANELENVIRONMENT_ID)
     self.dbProxy = dp
     self.theEnvironmentDictionary = {}
     self.theSelectedIdx = -1
@@ -34,7 +34,7 @@ class AcceptEnvironmentPanel(wx.Panel):
     environmentBox = wx.StaticBox(self)
     environmentListSizer = wx.StaticBoxSizer(environmentBox,wx.HORIZONTAL)
     mainSizer.Add(environmentListSizer,0,wx.EXPAND)
-    self.environmentList = RiskEnvironmentListCtrl(self,armid.ACCEPT_LISTENVIRONMENTS_ID,self.dbProxy)
+    self.environmentList = RiskEnvironmentListCtrl(self,ACCEPT_LISTENVIRONMENTS_ID,self.dbProxy)
     environmentListSizer.Add(self.environmentList,1,wx.EXPAND)
     environmentDimSizer = wx.BoxSizer(wx.VERTICAL)
     mainSizer.Add(environmentDimSizer,1,wx.EXPAND)
@@ -42,13 +42,13 @@ class AcceptEnvironmentPanel(wx.Panel):
     costBox = wx.StaticBox(self,-1,'Cost')
     costBoxSizer = wx.StaticBoxSizer(costBox,wx.HORIZONTAL)
     environmentDimSizer.Add(costBoxSizer,0,wx.EXPAND)
-    self.costCombo = wx.ComboBox(self,armid.ACCEPT_COMBOCOST_ID,"",choices=['Low','Medium','High'],style=wx.CB_READONLY)
+    self.costCombo = wx.ComboBox(self,ACCEPT_COMBOCOST_ID,"",choices=['Low','Medium','High'],style=wx.CB_READONLY)
     costBoxSizer.Add(self.costCombo,0,wx.EXPAND)
    
     rationaleBox = wx.StaticBox(self,-1,'Rationale')
     rationaleBoxSizer = wx.StaticBoxSizer(rationaleBox,wx.HORIZONTAL)
     environmentDimSizer.Add(rationaleBoxSizer,1,wx.EXPAND)
-    self.rationaleCtrl = wx.TextCtrl(self,armid.ACCEPT_TEXTRATIONALE_ID,'',style=wx.TE_MULTILINE)
+    self.rationaleCtrl = wx.TextCtrl(self,ACCEPT_TEXTRATIONALE_ID,'',style=wx.TE_MULTILINE)
     rationaleBoxSizer.Add(self.rationaleCtrl,1,wx.EXPAND)
     self.costCombo.Disable() 
     self.rationaleCtrl.Disable()

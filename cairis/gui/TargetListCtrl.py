@@ -17,9 +17,9 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from TargetDialog import TargetDialog
-from Target import Target
+from cairis.core.Target import Target
 
 class TargetListCtrl(wx.ListCtrl):
   def __init__(self,parent,winId,boxSize=wx.DefaultSize):
@@ -32,8 +32,8 @@ class TargetListCtrl(wx.ListCtrl):
     self.InsertColumn(2,'Rationale')
     self.SetColumnWidth(1,300)
     self.theDimMenu = wx.Menu()
-    self.theDimMenu.Append(armid.TARGETLISTCTRL_MENUADD_ID,'Add')
-    self.theDimMenu.Append(armid.TARGETLISTCTRL_MENUDELETE_ID,'Delete')
+    self.theDimMenu.Append(TARGETLISTCTRL_MENUADD_ID,'Add')
+    self.theDimMenu.Append(TARGETLISTCTRL_MENUDELETE_ID,'Delete')
     self.theSelectedValue = ''
     self.theSelectedIdx = -1
     self.setTargets = {}
@@ -41,8 +41,8 @@ class TargetListCtrl(wx.ListCtrl):
     self.Bind(wx.EVT_LIST_ITEM_SELECTED,self.OnItemSelected)
     self.Bind(wx.EVT_LIST_ITEM_DESELECTED,self.OnItemDeselected)
     self.Bind(wx.EVT_LIST_ITEM_ACTIVATED,self.onItemActivated)
-    wx.EVT_MENU(self.theDimMenu,armid.TARGETLISTCTRL_MENUADD_ID,self.onAddTarget)
-    wx.EVT_MENU(self.theDimMenu,armid.TARGETLISTCTRL_MENUDELETE_ID,self.onDeleteTarget)
+    wx.EVT_MENU(self.theDimMenu,TARGETLISTCTRL_MENUADD_ID,self.onAddTarget)
+    wx.EVT_MENU(self.theDimMenu,TARGETLISTCTRL_MENUDELETE_ID,self.onDeleteTarget)
 
   def setEnvironment(self,environmentName):
     self.theCurrentEnvironment = environmentName
@@ -63,11 +63,11 @@ class TargetListCtrl(wx.ListCtrl):
     targetName = self.GetItemText(x)
     targetEffectiveness = self.GetItem(x,1).GetText()
     eRationale = self.GetItem(x,2).GetText()
-    reqCtrl = self.theParentWindow.FindWindowById(armid.COUNTERMEASURE_LISTREQUIREMENTS_ID)
+    reqCtrl = self.theParentWindow.FindWindowById(COUNTERMEASURE_LISTREQUIREMENTS_ID)
     reqList = reqCtrl.dimensions()
     dlg = TargetDialog(self,reqList,self.setTargets[self.theCurrentEnvironment],self.theCurrentEnvironment)
     dlg.load(targetName,targetEffectiveness,eRationale)
-    if (dlg.ShowModal() == armid.TARGET_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == TARGET_BUTTONCOMMIT_ID):
       targetName = dlg.target()
       effectivenessValue = dlg.effectiveness()
       eRat = dlg.rationale()
@@ -77,7 +77,7 @@ class TargetListCtrl(wx.ListCtrl):
       (self.setTargets[self.theCurrentEnvironment]).add(targetName)
 
   def onAddTarget(self,evt):
-    reqCtrl = self.theParentWindow.FindWindowById(armid.COUNTERMEASURE_LISTREQUIREMENTS_ID)
+    reqCtrl = self.theParentWindow.FindWindowById(COUNTERMEASURE_LISTREQUIREMENTS_ID)
     reqList = reqCtrl.dimensions()
     if (len(reqList) == 0):
       dlg = wx.MessageDialog(self,'Add target','No requirements selected',wx.OK | wx.ICON_EXCLAMATION)
@@ -85,7 +85,7 @@ class TargetListCtrl(wx.ListCtrl):
       dlg.Destroy()
       return
     dlg = TargetDialog(self,reqList,self.setTargets[self.theCurrentEnvironment],self.theCurrentEnvironment)
-    if (dlg.ShowModal() == armid.TARGET_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == TARGET_BUTTONCOMMIT_ID):
       targetName = dlg.target()
       effectivenessValue = dlg.effectiveness()
       eRat = dlg.rationale()

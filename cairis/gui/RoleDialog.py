@@ -17,11 +17,11 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
-import ARM
-from Borg import Borg
-from RoleParameters import RoleParameters
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
+from cairis.core.RoleParameters import RoleParameters
 from RolePanel import RolePanel
 
 class RoleDialog(wx.Dialog):
@@ -42,7 +42,7 @@ class RoleDialog(wx.Dialog):
     self.panel.buildControls(parameters.createFlag())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.ROLE_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,ROLE_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,role):
     self.theRoleId = role.id()
@@ -51,17 +51,17 @@ class RoleDialog(wx.Dialog):
    
 
   def onCommit(self,evt):
-    nameCtrl = self.FindWindowById(armid.ROLE_TEXTNAME_ID)
-    typeCtrl = self.FindWindowById(armid.ROLE_COMBOTYPE_ID)
-    scCtrl = self.FindWindowById(armid.ROLE_TEXTSHORTCODE_ID)
-    descCtrl = self.FindWindowById(armid.ROLE_TEXTDESCRIPTION_ID)
+    nameCtrl = self.FindWindowById(ROLE_TEXTNAME_ID)
+    typeCtrl = self.FindWindowById(ROLE_COMBOTYPE_ID)
+    scCtrl = self.FindWindowById(ROLE_TEXTSHORTCODE_ID)
+    descCtrl = self.FindWindowById(ROLE_TEXTDESCRIPTION_ID)
 
     self.theName = nameCtrl.GetValue()
     if (self.theCommitVerb == 'Create'):
       b = Borg()
       try:
         b.dbProxy.nameCheck(self.theName,'role')
-      except ARM.ARMException,errorText:
+      except ARMException,errorText:
         dlg = wx.MessageDialog(self,str(errorText),'Add role',wx.OK | wx.ICON_ERROR)
         dlg.ShowModal()
         dlg.Destroy()
@@ -94,7 +94,7 @@ class RoleDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.ROLE_BUTTONCOMMIT_ID)
+      self.EndModal(ROLE_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = RoleParameters(self.theName,self.theType,self.theShortCode,self.theDescription,[])

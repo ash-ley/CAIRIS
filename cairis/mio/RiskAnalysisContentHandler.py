@@ -17,24 +17,24 @@
 
 import os
 from xml.sax.handler import ContentHandler,EntityResolver
-from RoleParameters import RoleParameters
-from AssetParameters import AssetParameters
-from VulnerabilityParameters import VulnerabilityParameters
-from AttackerParameters import AttackerParameters
-from ThreatParameters import ThreatParameters
-from RiskParameters import RiskParameters
-from ResponseParameters import ResponseParameters
-from AssetEnvironmentProperties import AssetEnvironmentProperties
-from VulnerabilityEnvironmentProperties import VulnerabilityEnvironmentProperties
-from AttackerEnvironmentProperties import AttackerEnvironmentProperties
-from ThreatEnvironmentProperties import ThreatEnvironmentProperties
-from MisuseCaseEnvironmentProperties import MisuseCaseEnvironmentProperties
-from AcceptEnvironmentProperties import AcceptEnvironmentProperties
-from TransferEnvironmentProperties import TransferEnvironmentProperties
-from MitigateEnvironmentProperties import MitigateEnvironmentProperties
-from MisuseCase import MisuseCase
-from ClassAssociationParameters import ClassAssociationParameters
-from Borg import Borg
+from cairis.core.RoleParameters import RoleParameters
+from cairis.core.AssetParameters import AssetParameters
+from cairis.core.VulnerabilityParameters import VulnerabilityParameters
+from cairis.core.AttackerParameters import AttackerParameters
+from cairis.core.ThreatParameters import ThreatParameters
+from cairis.core.RiskParameters import RiskParameters
+from cairis.core.ResponseParameters import ResponseParameters
+from cairis.core.AssetEnvironmentProperties import AssetEnvironmentProperties
+from cairis.core.VulnerabilityEnvironmentProperties import VulnerabilityEnvironmentProperties
+from cairis.core.AttackerEnvironmentProperties import AttackerEnvironmentProperties
+from cairis.core.ThreatEnvironmentProperties import ThreatEnvironmentProperties
+from cairis.core.MisuseCaseEnvironmentProperties import MisuseCaseEnvironmentProperties
+from cairis.core.AcceptEnvironmentProperties import AcceptEnvironmentProperties
+from cairis.core.TransferEnvironmentProperties import TransferEnvironmentProperties
+from cairis.core.MitigateEnvironmentProperties import MitigateEnvironmentProperties
+from cairis.core.MisuseCase import MisuseCase
+from cairis.core.ClassAssociationParameters import ClassAssociationParameters
+from cairis.core.Borg import Borg
 
 def a2i(spLabel):
   if spLabel == 'Low':

@@ -17,8 +17,8 @@
 
 
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from DimensionListBox import DimensionListBox
 
 class ResponsibilityListBox(DimensionListBox):

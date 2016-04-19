@@ -17,9 +17,9 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from ComponentViewPanel import ComponentViewPanel
-from ComponentViewParameters import ComponentViewParameters
+from cairis.core.ComponentViewParameters import ComponentViewParameters
 import DialogClassParameters
 
 class ComponentViewDialog(wx.Dialog):
@@ -40,7 +40,7 @@ class ComponentViewDialog(wx.Dialog):
     self.panel.buildControls(parameters.createFlag())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.COMPONENTVIEW_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,COMPONENTVIEW_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,cv):
     self.theComponentViewId = cv.id()
@@ -49,10 +49,10 @@ class ComponentViewDialog(wx.Dialog):
 
   def onCommit(self,evt):
     commitLabel = self.commitVerb + ' component view'
-    nameCtrl = self.FindWindowById(armid.COMPONENTVIEW_TEXTNAME_ID)
-    synCtrl = self.FindWindowById(armid.COMPONENTVIEW_TEXTSYNOPSIS_ID)
-    comCtrl = self.FindWindowById(armid.COMPONENTVIEW_LISTCOMPONENTS_ID)
-    conCtrl = self.FindWindowById(armid.COMPONENTVIEW_LISTCONNECTORS_ID)
+    nameCtrl = self.FindWindowById(COMPONENTVIEW_TEXTNAME_ID)
+    synCtrl = self.FindWindowById(COMPONENTVIEW_TEXTSYNOPSIS_ID)
+    comCtrl = self.FindWindowById(COMPONENTVIEW_LISTCOMPONENTS_ID)
+    conCtrl = self.FindWindowById(COMPONENTVIEW_LISTCONNECTORS_ID)
     self.theName = nameCtrl.GetValue()
     self.theSynopsis = synCtrl.GetValue()
     self.theComponents = comCtrl.dimensions()
@@ -74,7 +74,7 @@ class ComponentViewDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.COMPONENTVIEW_BUTTONCOMMIT_ID)
+      self.EndModal(COMPONENTVIEW_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = ComponentViewParameters(self.theName,self.theSynopsis,[],[],[],[],[],self.theComponents,self.theConnectors)

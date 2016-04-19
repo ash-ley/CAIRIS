@@ -17,9 +17,9 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from TemplateAssetPanel import TemplateAssetPanel
-from TemplateAssetParameters import TemplateAssetParameters
+from cairis.core.TemplateAssetParameters import TemplateAssetParameters
 import DialogClassParameters
 
 class TemplateAssetDialog(wx.Dialog):
@@ -46,7 +46,7 @@ class TemplateAssetDialog(wx.Dialog):
     self.panel.buildControls(parameters.createFlag())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.TEMPLATEASSET_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,TEMPLATEASSET_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,asset):
     self.theAssetId = asset.id()
@@ -55,16 +55,16 @@ class TemplateAssetDialog(wx.Dialog):
 
   def onCommit(self,evt):
     commitLabel = self.commitVerb + ' template asset'
-    nameCtrl = self.FindWindowById(armid.ASSET_TEXTNAME_ID)
-    tagCtrl = self.FindWindowById(armid.ASSET_TAGS_ID)
-    shortCodeCtrl = self.FindWindowById(armid.ASSET_TEXTSHORTCODE_ID)
-    descriptionCtrl = self.FindWindowById(armid.ASSET_TEXTDESCRIPTION_ID)
-    sigCtrl = self.FindWindowById(armid.ASSET_TEXTSIGNIFICANCE_ID)
-    typeCtrl = self.FindWindowById(armid.ASSET_COMBOTYPE_ID)
-    stCtrl = self.FindWindowById(armid.ASSET_COMBOSURFACETYPE_ID)
-    arCtrl = self.FindWindowById(armid.ASSET_COMBOACCESSRIGHT_ID)
-    propertiesCtrl = self.FindWindowById(armid.TEMPLATEASSET_LISTPROPERTIES_ID)
-    ifCtrl = self.FindWindowById(armid.ASSET_PAGEINTERFACE_ID)
+    nameCtrl = self.FindWindowById(ASSET_TEXTNAME_ID)
+    tagCtrl = self.FindWindowById(ASSET_TAGS_ID)
+    shortCodeCtrl = self.FindWindowById(ASSET_TEXTSHORTCODE_ID)
+    descriptionCtrl = self.FindWindowById(ASSET_TEXTDESCRIPTION_ID)
+    sigCtrl = self.FindWindowById(ASSET_TEXTSIGNIFICANCE_ID)
+    typeCtrl = self.FindWindowById(ASSET_COMBOTYPE_ID)
+    stCtrl = self.FindWindowById(ASSET_COMBOSURFACETYPE_ID)
+    arCtrl = self.FindWindowById(ASSET_COMBOACCESSRIGHT_ID)
+    propertiesCtrl = self.FindWindowById(TEMPLATEASSET_LISTPROPERTIES_ID)
+    ifCtrl = self.FindWindowById(ASSET_PAGEINTERFACE_ID)
     self.theAssetName = nameCtrl.GetValue()
     self.theTags = tagCtrl.tags()
     self.theShortCode = shortCodeCtrl.GetValue()
@@ -112,7 +112,7 @@ class TemplateAssetDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.TEMPLATEASSET_BUTTONCOMMIT_ID)
+      self.EndModal(TEMPLATEASSET_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = TemplateAssetParameters(self.theAssetName,self.theShortCode,self.theAssetDescription,self.theAssetSignificance,self.theType,self.theSurfaceType,self.theAccessRight,self.theSecurityProperties,self.theTags,self.theInterfaces)

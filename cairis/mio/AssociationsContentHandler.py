@@ -17,10 +17,10 @@
 
 
 from xml.sax.handler import ContentHandler,EntityResolver
-from GoalAssociationParameters import GoalAssociationParameters
-from DependencyParameters import DependencyParameters
-from Borg import Borg
-from ARM import *
+from cairis.core.GoalAssociationParameters import GoalAssociationParameters
+from cairis.core.DependencyParameters import DependencyParameters
+from cairis.core.Borg import Borg
+from cairis.core.ARM import *
 
 def a2s(aStr):
   if aStr == 'a':

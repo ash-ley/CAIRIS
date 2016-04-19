@@ -16,16 +16,16 @@
 #  under the License.
 
 
-import armid
+from cairis.core.armid import *
 import wx
-from Borg import Borg
-from VulnerabilityParameters import VulnerabilityParameters
+from cairis.core.Borg import Borg
+from cairis.core.VulnerabilityParameters import VulnerabilityParameters
 
 #import DimensionPanelFactory
 
 class TraceExplorer(wx.Dialog):
   def __init__(self,parent,traceDimension,isFrom,envName=''):
-    wx.Dialog.__init__(self,parent,armid.TRACE_ID,'Contributions',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(800,300))
+    wx.Dialog.__init__(self,parent,TRACE_ID,'Contributions',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(800,300))
     b = Borg()
     self.dbProxy = b.dbProxy
     self.theTraceDimension = traceDimension
@@ -44,34 +44,34 @@ class TraceExplorer(wx.Dialog):
     dimensionLabel = wx.StaticText(self,-1,'Dimension:')
     dimensionSizer.Add(dimensionLabel)
     dimensions = self.dbProxy.getTraceDimensions(self.theTraceDimension,self.isFromIndicator)
-    self.dimensionList = wx.ListBox(self,armid.TRACE_LISTDIM_ID,choices=dimensions,style=wx.LB_SINGLE)
+    self.dimensionList = wx.ListBox(self,TRACE_LISTDIM_ID,choices=dimensions,style=wx.LB_SINGLE)
     dimensionSizer.Add(self.dimensionList,1,wx.EXPAND)
 
     valueSizer = wx.BoxSizer(wx.VERTICAL)
     frameSizer.Add(valueSizer,1,wx.EXPAND)
     valueLabel = wx.StaticText(self,-1,'Value:')
     valueSizer.Add(valueLabel)
-    self.valueList = wx.ListBox(self,armid.TRACE_LISTVALUES_ID,style=wx.LB_SINGLE)
+    self.valueList = wx.ListBox(self,TRACE_LISTVALUES_ID,style=wx.LB_SINGLE)
     valueSizer.Add(self.valueList,1,wx.EXPAND)
     
     labelBox = wx.StaticBox(self,-1,'Label')
     labelBoxSizer = wx.StaticBoxSizer(labelBox,wx.HORIZONTAL)
     mainSizer.Add(labelBoxSizer,0,wx.EXPAND)
-    self.labelCtrl = wx.TextCtrl(self,armid.TRACE_TEXTLABEL_ID,'')
+    self.labelCtrl = wx.TextCtrl(self,TRACE_TEXTLABEL_ID,'')
     labelBoxSizer.Add(self.labelCtrl,1,wx.EXPAND)
     self.labelCtrl.Disable()
 
     buttonSizer = wx.BoxSizer(wx.HORIZONTAL)
     mainSizer.Add(buttonSizer,0,wx.ALIGN_CENTER)
-    addButton = wx.Button(self,armid.TRACE_BUTTONADD_ID,"Add")
+    addButton = wx.Button(self,TRACE_BUTTONADD_ID,"Add")
     buttonSizer.Add(addButton)
     cancelButton = wx.Button(self,wx.ID_CANCEL,"Cancel")
     buttonSizer.Add(cancelButton)
     self.SetSizer(mainSizer)
 
-    wx.EVT_LISTBOX(self.dimensionList,armid.TRACE_LISTDIM_ID,self.onDimItemSelected)
-    wx.EVT_LISTBOX(self.valueList,armid.TRACE_LISTVALUES_ID,self.onValueItemSelected)
-    wx.EVT_BUTTON(self,armid.TRACE_BUTTONADD_ID,self.onAdd)
+    wx.EVT_LISTBOX(self.dimensionList,TRACE_LISTDIM_ID,self.onDimItemSelected)
+    wx.EVT_LISTBOX(self.valueList,TRACE_LISTVALUES_ID,self.onValueItemSelected)
+    wx.EVT_BUTTON(self,TRACE_BUTTONADD_ID,self.onAdd)
     wx.EVT_BUTTON(self,wx.ID_CANCEL,self.onClose)
 
   def onDimItemSelected(self,evt):
@@ -119,7 +119,7 @@ class TraceExplorer(wx.Dialog):
       self.dimensionList.Deselect(idx)
       idx = self.valueList.GetSelection()
       self.valueList.Deselect(idx)
-      self.EndModal(armid.TRACE_BUTTONADD_ID)
+      self.EndModal(TRACE_BUTTONADD_ID)
 
   def onClose(self,evt):
     idx = self.dimensionList.GetSelection()

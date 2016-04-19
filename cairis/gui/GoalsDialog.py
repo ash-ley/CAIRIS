@@ -17,21 +17,21 @@
 
 
 import wx
-import armid
-import Goal
+from cairis.core.armid import *
+import cairis.core.Goal
 from GoalDialog import GoalDialog
 from DialogClassParameters import DialogClassParameters
-import ARM
+from cairis.core.ARM import *
 from DimensionBaseDialog import DimensionBaseDialog
 
 class GoalsDialog(DimensionBaseDialog):
   def __init__(self,parent):
-    DimensionBaseDialog.__init__(self,parent,armid.GOALS_ID,'Goals',(930,300),'goal.png')
+    DimensionBaseDialog.__init__(self,parent,GOALS_ID,'Goals',(930,300),'goal.png')
     self.theMainWindow = parent
-    idList = [armid.GOALS_GOALLIST_ID,armid.GOALS_BUTTONADD_ID,armid.GOALS_BUTTONDELETE_ID]
+    idList = [GOALS_GOALLIST_ID,GOALS_BUTTONADD_ID,GOALS_BUTTONDELETE_ID]
     columnList = ['Name','Originator','Status']
     self.buildControls(idList,columnList,self.dbProxy.getColouredGoals,'goal')
-    listCtrl = self.FindWindowById(armid.GOALS_GOALLIST_ID)
+    listCtrl = self.FindWindowById(GOALS_GOALLIST_ID)
     listCtrl.SetColumnWidth(0,300)
 
 
@@ -47,9 +47,9 @@ class GoalsDialog(DimensionBaseDialog):
 
   def onAdd(self,evt):
     try:
-      addParameters = DialogClassParameters(armid.GOAL_ID,'Add goal',GoalDialog,armid.GOAL_BUTTONCOMMIT_ID,self.dbProxy.addGoal,True)
+      addParameters = DialogClassParameters(GOAL_ID,'Add goal',GoalDialog,GOAL_BUTTONCOMMIT_ID,self.dbProxy.addGoal,True)
       self.addObject(addParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add goal',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -58,9 +58,9 @@ class GoalsDialog(DimensionBaseDialog):
   def onUpdate(self,evt):
     selectedObjt = self.objts[self.selectedLabel]
     try:
-      updateParameters = DialogClassParameters(armid.GOAL_ID,'Edit goal',GoalDialog,armid.GOAL_BUTTONCOMMIT_ID,self.dbProxy.updateGoal,False)
+      updateParameters = DialogClassParameters(GOAL_ID,'Edit goal',GoalDialog,GOAL_BUTTONCOMMIT_ID,self.dbProxy.updateGoal,False)
       self.updateObject(selectedObjt,updateParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Edit goal',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy
@@ -68,7 +68,7 @@ class GoalsDialog(DimensionBaseDialog):
   def onDelete(self,evt):
     try:
       self.deleteObject('No goal','Delete goal',self.dbProxy.deleteGoal)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Delete goal',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy

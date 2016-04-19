@@ -17,14 +17,14 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from CodeRelationshipListCtrl import CodeRelationshipListCtrl
 from CodeNetworkModel import CodeNetworkModel
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 class CodeRelationshipEditor(wx.Dialog):
   def __init__(self,parent,personaName):
-    wx.Dialog.__init__(self,parent,armid.CODERELATIONSHIPEDITOR_ID,'Code Relationships',style=wx.DEFAULT_DIALOG_STYLE | wx.MAXIMIZE_BOX | wx.THICK_FRAME | wx.RESIZE_BORDER, size=(400,200))
+    wx.Dialog.__init__(self,parent,CODERELATIONSHIPEDITOR_ID,'Code Relationships',style=wx.DEFAULT_DIALOG_STYLE | wx.MAXIMIZE_BOX | wx.THICK_FRAME | wx.RESIZE_BORDER, size=(400,200))
     b = Borg()
     self.dbProxy = b.dbProxy
     self.thePersonaName = personaName
@@ -34,7 +34,7 @@ class CodeRelationshipEditor(wx.Dialog):
 
     buttonSizer = wx.BoxSizer(wx.HORIZONTAL)
     mainSizer.Add(buttonSizer,0,wx.EXPAND | wx.ALIGN_CENTER)
-    commitButton = wx.Button(self,armid.CODERELATIONSHIP_BUTTONCOMMIT_ID,"Commit")
+    commitButton = wx.Button(self,CODERELATIONSHIP_BUTTONCOMMIT_ID,"Commit")
     buttonSizer.Add(commitButton)
     closeButton = wx.Button(self,wx.ID_CLOSE,"Close")
     buttonSizer.Add(closeButton)
@@ -42,7 +42,7 @@ class CodeRelationshipEditor(wx.Dialog):
     self.SetSizer(mainSizer)
 
     self.selectedIdx = -1
-    wx.EVT_BUTTON(self,armid.CODERELATIONSHIP_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,CODERELATIONSHIP_BUTTONCOMMIT_ID,self.onCommit)
     wx.EVT_BUTTON(self,wx.ID_CLOSE,self.onClose)
 
   def onCommit(self,evt):
@@ -50,7 +50,7 @@ class CodeRelationshipEditor(wx.Dialog):
     self.dbProxy.updateCodeNetwork(self.thePersonaName,relationships)
     model = CodeNetworkModel(relationships,self.thePersonaName)
     model.graph()
-    self.EndModal(armid.CODERELATIONSHIP_BUTTONCOMMIT_ID)
+    self.EndModal(CODERELATIONSHIP_BUTTONCOMMIT_ID)
 
 
   def onClose(self,evt):

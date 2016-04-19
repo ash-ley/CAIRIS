@@ -17,8 +17,8 @@
 
 
 import wx
-import armid
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.Borg import Borg
 from CharacteristicReferenceTypeDialog import CharacteristicReferenceTypeDialog
 
 class ImpliedCharacteristicElementsListCtrl(wx.ListCtrl):
@@ -51,10 +51,10 @@ class ImpliedCharacteristicElementsListCtrl(wx.ListCtrl):
   def onItemActivated(self,evt):
     elName = self.GetItem(self.theSelectedIdx,0)
     elType = self.GetItem(self.theSelectedIdx,1)
-    intCtrl = self.theParentDialog.FindWindowById(armid.IMPLIEDCHARACTERISTIC_TEXTINTENTION_ID)
+    intCtrl = self.theParentDialog.FindWindowById(IMPLIEDCHARACTERISTIC_TEXTINTENTION_ID)
     intName = intCtrl.GetValue()
     dlg = CharacteristicReferenceTypeDialog(self,intName,elName.GetText(),elType.GetText())
-    if (dlg.ShowModal() == armid.CHARACTERISTICREFERENCETYPE_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == CHARACTERISTICREFERENCETYPE_BUTTONCOMMIT_ID):
       modElType = dlg.value()
       self.SetStringItem(self.theSelectedIdx,1,modElType)
 

@@ -17,14 +17,14 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from BasePanel import BasePanel
 from TaskEnvironmentPanel import TaskEnvironmentPanel
 from TCNarrativeTextCtrl import TCNarrativeTextCtrl
 
 class TaskPanel(BasePanel):
   def __init__(self,parent,dp):
-    BasePanel.__init__(self,parent,armid.TASK_ID)
+    BasePanel.__init__(self,parent,TASK_ID)
     self.dbProxy = dp
  
   def buildControls(self,isCreate,isUpdateable = True):
@@ -32,33 +32,33 @@ class TaskPanel(BasePanel):
 
     summBoxSizer = wx.BoxSizer(wx.HORIZONTAL)
     mainSizer.Add(summBoxSizer,0,wx.EXPAND)
-    summBoxSizer.Add(self.buildTextSizer('Name',(87,30),armid.TASK_TEXTNAME_ID),1,wx.EXPAND)
-    summBoxSizer.Add(self.buildTextSizer('Code',(87,30),armid.TASK_TEXTSHORTCODE_ID),1,wx.EXPAND)
-    mainSizer.Add(self.buildTagCtrlSizer((87,30),armid.TASK_TAGS_ID),0,wx.EXPAND)
-    mainSizer.Add(self.buildTextSizer('Author',(87,30),armid.TASK_TEXTAUTHOR_ID),0,wx.EXPAND)
-    mainSizer.Add(self.buildCheckSizer('Assumption Task',armid.TASK_CHECKASSUMPTION_ID,False),0,wx.EXPAND)
+    summBoxSizer.Add(self.buildTextSizer('Name',(87,30),TASK_TEXTNAME_ID),1,wx.EXPAND)
+    summBoxSizer.Add(self.buildTextSizer('Code',(87,30),TASK_TEXTSHORTCODE_ID),1,wx.EXPAND)
+    mainSizer.Add(self.buildTagCtrlSizer((87,30),TASK_TAGS_ID),0,wx.EXPAND)
+    mainSizer.Add(self.buildTextSizer('Author',(87,30),TASK_TEXTAUTHOR_ID),0,wx.EXPAND)
+    mainSizer.Add(self.buildCheckSizer('Assumption Task',TASK_CHECKASSUMPTION_ID,False),0,wx.EXPAND)
 
     oBox = wx.StaticBox(self,-1,'Objective')
     oSizer = wx.StaticBoxSizer(oBox,wx.HORIZONTAL)
-    oSizer.Add(TCNarrativeTextCtrl(self,armid.TASK_TEXTOBJECTIVE_ID),1,wx.EXPAND)
+    oSizer.Add(TCNarrativeTextCtrl(self,TASK_TEXTOBJECTIVE_ID),1,wx.EXPAND)
     mainSizer.Add(oSizer,0,wx.EXPAND)
 
     self.environmentPanel = TaskEnvironmentPanel(self,self.dbProxy)
     mainSizer.Add(self.environmentPanel,1,wx.EXPAND)
-    mainSizer.Add(self.buildCommitButtonSizer(armid.TASK_BUTTONCOMMIT_ID,isCreate),0,wx.ALIGN_CENTER)
+    mainSizer.Add(self.buildCommitButtonSizer(TASK_BUTTONCOMMIT_ID,isCreate),0,wx.ALIGN_CENTER)
     self.SetSizer(mainSizer)
 
   def loadControls(self,task,isReadOnly=False):
-    nameCtrl = self.FindWindowById(armid.TASK_TEXTNAME_ID)
+    nameCtrl = self.FindWindowById(TASK_TEXTNAME_ID)
     nameCtrl.SetValue(task.name())
-    tagsCtrl = self.FindWindowById(armid.TASK_TAGS_ID)
+    tagsCtrl = self.FindWindowById(TASK_TAGS_ID)
     tagsCtrl.set(task.tags())
-    shortCodeCtrl = self.FindWindowById(armid.TASK_TEXTSHORTCODE_ID)
+    shortCodeCtrl = self.FindWindowById(TASK_TEXTSHORTCODE_ID)
     shortCodeCtrl.SetValue(task.shortCode())
-    authorCtrl = self.FindWindowById(armid.TASK_TEXTAUTHOR_ID)
+    authorCtrl = self.FindWindowById(TASK_TEXTAUTHOR_ID)
     authorCtrl.SetValue(task.author())
-    assumptionCtrl = self.FindWindowById(armid.TASK_CHECKASSUMPTION_ID)
+    assumptionCtrl = self.FindWindowById(TASK_CHECKASSUMPTION_ID)
     assumptionCtrl.SetValue(task.assumption())
-    objectiveCtrl = self.FindWindowById(armid.TASK_TEXTOBJECTIVE_ID)
+    objectiveCtrl = self.FindWindowById(TASK_TEXTOBJECTIVE_ID)
     objectiveCtrl.Set(task.name(),task.objective())
     self.environmentPanel.loadControls(task)

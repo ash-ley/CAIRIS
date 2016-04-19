@@ -17,11 +17,11 @@
 
 
 import wx
-import armid
-import ARM
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
 from GoalPanel import GoalPanel
-from GoalParameters import GoalParameters
+from cairis.core.GoalParameters import GoalParameters
 import DialogClassParameters
 
 class GoalDialog(wx.Dialog):
@@ -42,7 +42,7 @@ class GoalDialog(wx.Dialog):
     self.panel.buildControls(parameters.createFlag())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.GOAL_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,GOAL_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,goal):
     self.theGoalId = goal.id()
@@ -50,10 +50,10 @@ class GoalDialog(wx.Dialog):
     self.commitVerb = 'Edit'
 
   def onCommit(self,evt):
-    nameCtrl = self.FindWindowById(armid.GOAL_TEXTNAME_ID)
-    tagsCtrl = self.FindWindowById(armid.GOAL_TAGS_ID)
-    origCtrl = self.FindWindowById(armid.GOAL_TEXTORIGINATOR_ID)
-    environmentCtrl = self.FindWindowById(armid.GOAL_PANELENVIRONMENT_ID)
+    nameCtrl = self.FindWindowById(GOAL_TEXTNAME_ID)
+    tagsCtrl = self.FindWindowById(GOAL_TAGS_ID)
+    origCtrl = self.FindWindowById(GOAL_TEXTORIGINATOR_ID)
+    environmentCtrl = self.FindWindowById(GOAL_PANELENVIRONMENT_ID)
 
     self.theGoalName = nameCtrl.GetValue()
     self.theTags = tagsCtrl.tags()
@@ -63,7 +63,7 @@ class GoalDialog(wx.Dialog):
       b = Borg()
       try:
         b.dbProxy.nameCheck(self.theGoalName,'goal')
-      except ARM.ARMException,errorText:
+      except ARMException,errorText:
         dlg = wx.MessageDialog(self,str(errorText),'Add goal',wx.OK | wx.ICON_ERROR)
         dlg.ShowModal()
         dlg.Destroy()
@@ -118,7 +118,7 @@ class GoalDialog(wx.Dialog):
           dlg.ShowModal()
           dlg.Destroy()
           return
-      self.EndModal(armid.GOAL_BUTTONCOMMIT_ID)
+      self.EndModal(GOAL_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = GoalParameters(self.theGoalName,self.theGoalOriginator,self.theTags,self.theEnvironmentProperties)

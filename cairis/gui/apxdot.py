@@ -17,13 +17,13 @@
 
 
 import xdot
-from Borg import Borg
-import ARM
+from cairis.core.Borg import Borg
+from cairis.core.ARM import *
 import gtk
 import math
 import cairo
 import pangocairo
-import armid
+from cairis.core.armid import *
 from AssumptionPersonaModel import AssumptionPersonaModel
 
 class APTextShape(xdot.TextShape):
@@ -558,7 +558,7 @@ class APDotWindow(gtk.Window):
         self.widget.zoom_to_fit()
         titleTxt = personaName + ' argumentation model'
         self.set_title(titleTxt)
-      except ARM.ARMException, ex:
+      except ARMException, ex:
         dlg = gtk.MessageDialog(type=gtk.MESSAGE_ERROR,message_format=str(ex),buttons=gtk.BUTTONS_OK)
         dlg.set_title('Model Viewer')
         dlg.run()

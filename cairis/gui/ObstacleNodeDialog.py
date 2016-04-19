@@ -18,10 +18,10 @@
 
 import sys
 import gtk
-from Borg import Borg
-from ObstacleParameters import ObstacleParameters
-from GoalAssociationParameters import GoalAssociationParameters
-from ObstacleEnvironmentProperties import ObstacleEnvironmentProperties
+from cairis.core.Borg import Borg
+from cairis.core.ObstacleParameters import ObstacleParameters
+from cairis.core.GoalAssociationParameters import GoalAssociationParameters
+from cairis.core.ObstacleEnvironmentProperties import ObstacleEnvironmentProperties
 from NDImplementationDecorator import NDImplementationDecorator
 
 class ObstacleNodeDialog:

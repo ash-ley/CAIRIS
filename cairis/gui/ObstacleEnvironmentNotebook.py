@@ -17,7 +17,7 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from DimensionListCtrl import DimensionListCtrl
 from GoalAssociationListCtrl import GoalAssociationListCtrl
 
@@ -32,7 +32,7 @@ class SummaryPage(wx.Panel):
     lblBox = wx.StaticBox(self,-1,'Label')
     lblBoxSizer = wx.StaticBoxSizer(lblBox,wx.VERTICAL)
     topRowSizer.Add(lblBoxSizer,0,wx.EXPAND)
-    self.labelCtrl = wx.TextCtrl(self,armid.OBSTACLE_TEXTLABEL_ID,"",pos=wx.DefaultPosition,size=wx.Size(150,30),style=wx.TE_READONLY)
+    self.labelCtrl = wx.TextCtrl(self,OBSTACLE_TEXTLABEL_ID,"",pos=wx.DefaultPosition,size=wx.Size(150,30),style=wx.TE_READONLY)
     self.labelCtrl.Disable()
     lblBoxSizer.Add(self.labelCtrl,1,wx.EXPAND)
     
@@ -40,19 +40,19 @@ class SummaryPage(wx.Panel):
     catBoxSizer = wx.StaticBoxSizer(catBox,wx.VERTICAL)
     topRowSizer.Add(catBoxSizer,0,wx.EXPAND)
     catList = ['Confidentiality Threat','Integrity Threat','Availability Threat','Accountability Threat','Anonymity Threat','Pseudonymity Threat','Unlinkability Threat','Unobservability Threat','Vulnerability','Duration','Frequency','Demands','Goal Support']
-    self.categoryCtrl = wx.ComboBox(self,armid.OBSTACLE_COMBOCATEGORY_ID,choices=catList,size=wx.DefaultSize,style= wx.CB_READONLY)
+    self.categoryCtrl = wx.ComboBox(self,OBSTACLE_COMBOCATEGORY_ID,choices=catList,size=wx.DefaultSize,style= wx.CB_READONLY)
     catBoxSizer.Add(self.categoryCtrl,1,wx.EXPAND)
 
     defBox = wx.StaticBox(self,-1,'Definition')
     defBoxSizer = wx.StaticBoxSizer(defBox,wx.VERTICAL)
     topSizer.Add(defBoxSizer,1,wx.EXPAND)
-    self.definitionCtrl = wx.TextCtrl(self,armid.OBSTACLE_TEXTDEFINITION_ID,'',style= wx.TE_MULTILINE)
+    self.definitionCtrl = wx.TextCtrl(self,OBSTACLE_TEXTDEFINITION_ID,'',style= wx.TE_MULTILINE)
     defBoxSizer.Add(self.definitionCtrl,1,wx.EXPAND)
 
     probBox = wx.StaticBox(self,-1,'Probability')
     probBoxSizer = wx.StaticBoxSizer(probBox,wx.VERTICAL)
     topRowSizer.Add(probBoxSizer,0,wx.EXPAND)
-    self.probCtrl = wx.TextCtrl(self,armid.OBSTACLE_TEXTPROBABILITY_ID,"",pos=wx.DefaultPosition,size=wx.Size(150,30),style=wx.TE_READONLY)
+    self.probCtrl = wx.TextCtrl(self,OBSTACLE_TEXTPROBABILITY_ID,"",pos=wx.DefaultPosition,size=wx.Size(150,30),style=wx.TE_READONLY)
     self.probCtrl.Disable()
     probBoxSizer.Add(self.probCtrl,1,wx.EXPAND)
 
@@ -84,11 +84,11 @@ class ConcernPage(wx.Panel):
 
 class ObstacleEnvironmentNotebook(wx.Notebook):
   def __init__(self,parent,dp):
-    wx.Notebook.__init__(self,parent,armid.OBSTACLE_NOTEBOOKENVIRONMENT_ID)
+    wx.Notebook.__init__(self,parent,OBSTACLE_NOTEBOOKENVIRONMENT_ID)
     p1 = SummaryPage(self)
-    p2 = GoalPage(self,armid.OBSTACLE_LISTGOALS_ID,True,dp)
-    p3 = GoalPage(self,armid.OBSTACLE_LISTSUBGOALS_ID,False,dp)
-    p4 = ConcernPage(self,armid.OBSTACLE_LISTCONCERNS_ID,dp)
+    p2 = GoalPage(self,OBSTACLE_LISTGOALS_ID,True,dp)
+    p3 = GoalPage(self,OBSTACLE_LISTSUBGOALS_ID,False,dp)
+    p4 = ConcernPage(self,OBSTACLE_LISTCONCERNS_ID,dp)
     self.AddPage(p1,'Definition')
     self.AddPage(p2,'Goals')
     self.AddPage(p3,'Sub-Goals')

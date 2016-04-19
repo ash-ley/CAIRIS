@@ -17,27 +17,27 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from BasePanel import BasePanel 
 
 class ValueTypePanel(BasePanel):
   def __init__(self,parent):
-    BasePanel.__init__(self,parent,armid.VALUETYPE_ID)
+    BasePanel.__init__(self,parent,VALUETYPE_ID)
 
   def buildControls(self,isCreate):
     mainSizer = wx.BoxSizer(wx.VERTICAL)
-    mainSizer.Add(self.buildTextSizer('Name',(87,30),armid.VALUETYPE_TEXTNAME_ID),0,wx.EXPAND)
-    mainSizer.Add(self.buildTextSizer('Score',(87,30),armid.VALUETYPE_TEXTSCORE_ID),0,wx.EXPAND)
-    mainSizer.Add(self.buildMLTextSizer('Description',(87,80),armid.VALUETYPE_TEXTDESCRIPTION_ID),1,wx.EXPAND)
-    mainSizer.Add(self.buildMLTextSizer('Rationale',(87,80),armid.VALUETYPE_TEXTRATIONALE_ID),1,wx.EXPAND)
-    mainSizer.Add(self.buildCommitButtonSizer(armid.VALUETYPE_BUTTONCOMMIT_ID,isCreate),0,wx.ALIGN_CENTER)
+    mainSizer.Add(self.buildTextSizer('Name',(87,30),VALUETYPE_TEXTNAME_ID),0,wx.EXPAND)
+    mainSizer.Add(self.buildTextSizer('Score',(87,30),VALUETYPE_TEXTSCORE_ID),0,wx.EXPAND)
+    mainSizer.Add(self.buildMLTextSizer('Description',(87,80),VALUETYPE_TEXTDESCRIPTION_ID),1,wx.EXPAND)
+    mainSizer.Add(self.buildMLTextSizer('Rationale',(87,80),VALUETYPE_TEXTRATIONALE_ID),1,wx.EXPAND)
+    mainSizer.Add(self.buildCommitButtonSizer(VALUETYPE_BUTTONCOMMIT_ID,isCreate),0,wx.ALIGN_CENTER)
     self.SetSizer(mainSizer)
 
   def loadControls(self,objt):
-    nameCtrl = self.FindWindowById(armid.VALUETYPE_TEXTNAME_ID)
-    scoreCtrl = self.FindWindowById(armid.VALUETYPE_TEXTSCORE_ID)
-    descCtrl = self.FindWindowById(armid.VALUETYPE_TEXTDESCRIPTION_ID)
-    ratCtrl = self.FindWindowById(armid.VALUETYPE_TEXTRATIONALE_ID)
+    nameCtrl = self.FindWindowById(VALUETYPE_TEXTNAME_ID)
+    scoreCtrl = self.FindWindowById(VALUETYPE_TEXTSCORE_ID)
+    descCtrl = self.FindWindowById(VALUETYPE_TEXTDESCRIPTION_ID)
+    ratCtrl = self.FindWindowById(VALUETYPE_TEXTRATIONALE_ID)
     nameCtrl.SetValue(objt.name())
     scoreCtrl.SetValue(objt.score())
     descCtrl.SetValue(objt.description())

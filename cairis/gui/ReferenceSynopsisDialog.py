@@ -17,10 +17,10 @@
 
 
 import wx
-import armid
-import ARM
-from Borg import Borg
-from ReferenceSynopsis import ReferenceSynopsis
+from cairis.core.armid import *
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
+from cairis.core.ReferenceSynopsis import ReferenceSynopsis
 from ReferenceSynopsisPanel import ReferenceSynopsisPanel
 
 class ReferenceSynopsisDialog(wx.Dialog):
@@ -36,7 +36,7 @@ class ReferenceSynopsisDialog(wx.Dialog):
     self.panel = ReferenceSynopsisPanel(self)
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.REFERENCESYNOPSIS_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,REFERENCESYNOPSIS_BUTTONCOMMIT_ID,self.onCommit)
 
     if (objt.id() == -1):
       self.theCommitVerb = 'Create'
@@ -64,11 +64,11 @@ class ReferenceSynopsisDialog(wx.Dialog):
    
 
   def onCommit(self,evt):
-    refCtrl = self.FindWindowById(armid.REFERENCESYNOPSIS_TEXTREFNAME_ID)
-    synCtrl = self.FindWindowById(armid.REFERENCESYNOPSIS_TEXTSYNOPSIS_ID)
-    dimCtrl = self.FindWindowById(armid.REFERENCESYNOPSIS_COMBODIMENSION_ID)
-    atCtrl = self.FindWindowById(armid.REFERENCESYNOPSIS_COMBOACTORTYPE_ID)
-    actorCtrl = self.FindWindowById(armid.REFERENCESYNOPSIS_COMBOACTORNAME_ID)
+    refCtrl = self.FindWindowById(REFERENCESYNOPSIS_TEXTREFNAME_ID)
+    synCtrl = self.FindWindowById(REFERENCESYNOPSIS_TEXTSYNOPSIS_ID)
+    dimCtrl = self.FindWindowById(REFERENCESYNOPSIS_COMBODIMENSION_ID)
+    atCtrl = self.FindWindowById(REFERENCESYNOPSIS_COMBOACTORTYPE_ID)
+    actorCtrl = self.FindWindowById(REFERENCESYNOPSIS_COMBOACTORNAME_ID)
 
     self.theReference = refCtrl.GetValue()
     self.theSynopsis = synCtrl.GetValue()
@@ -105,7 +105,7 @@ class ReferenceSynopsisDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.REFERENCESYNOPSIS_BUTTONCOMMIT_ID)
+      self.EndModal(REFERENCESYNOPSIS_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = ReferenceSynopsis(self.theId,self.theReference,self.theSynopsis,self.theDimension,self.theActorType,self.theActor)

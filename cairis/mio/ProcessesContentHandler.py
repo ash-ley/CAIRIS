@@ -17,12 +17,12 @@
 
 
 from xml.sax.handler import ContentHandler,EntityResolver
-from InternalDocumentParameters import InternalDocumentParameters
-from CodeParameters import CodeParameters
-from MemoParameters import MemoParameters
-from ImpliedProcessParameters import ImpliedProcessParameters
-from ImpliedCharacteristicParameters import ImpliedCharacteristicParameters
-from Borg import Borg
+from cairis.core.InternalDocumentParameters import InternalDocumentParameters
+from cairis.core.CodeParameters import CodeParameters
+from cairis.core.MemoParameters import MemoParameters
+from cairis.core.ImpliedProcessParameters import ImpliedProcessParameters
+from cairis.core.ImpliedCharacteristicParameters import ImpliedCharacteristicParameters
+from cairis.core.Borg import Borg
 
 class ProcessesContentHandler(ContentHandler,EntityResolver):
   def __init__(self):

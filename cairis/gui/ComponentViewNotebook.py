@@ -17,7 +17,7 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from ComponentListCtrl import ComponentListCtrl
 from ConnectorListCtrl import ConnectorListCtrl
 
@@ -57,16 +57,16 @@ class ConnectorPage(wx.Panel):
 
 class ComponentViewNotebook(wx.Notebook):
   def __init__(self,parent):
-    wx.Notebook.__init__(self,parent,armid.COMPONENTVIEW_NOTEBOOKCOMPONENTVIEW_ID)
-    p1 = MLTextPage(self,armid.COMPONENTVIEW_TEXTSYNOPSIS_ID)
-    p2 = ComponentPage(self,armid.COMPONENTVIEW_LISTCOMPONENTS_ID)
-    p3 = ConnectorPage(self,armid.COMPONENTVIEW_LISTCONNECTORS_ID)
+    wx.Notebook.__init__(self,parent,COMPONENTVIEW_NOTEBOOKCOMPONENTVIEW_ID)
+    p1 = MLTextPage(self,COMPONENTVIEW_TEXTSYNOPSIS_ID)
+    p2 = ComponentPage(self,COMPONENTVIEW_LISTCOMPONENTS_ID)
+    p3 = ConnectorPage(self,COMPONENTVIEW_LISTCONNECTORS_ID)
     self.AddPage(p1,'Synopsis')
     self.AddPage(p2,'Components')
     self.AddPage(p3,'Connectors')
 
   def setView(self,cvName):
-    componentList = self.FindWindowById(armid.COMPONENTVIEW_LISTCOMPONENTS_ID)
-    connectorList = self.FindWindowById(armid.COMPONENTVIEW_LISTCONNECTORS_ID)
+    componentList = self.FindWindowById(COMPONENTVIEW_LISTCOMPONENTS_ID)
+    connectorList = self.FindWindowById(COMPONENTVIEW_LISTCONNECTORS_ID)
     componentList.setView(cvName)
     connectorList.setView(cvName)

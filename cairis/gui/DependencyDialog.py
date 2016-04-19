@@ -17,14 +17,14 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
-from Borg import Borg
-from DependencyParameters import DependencyParameters
+from cairis.core.Borg import Borg
+from cairis.core.DependencyParameters import DependencyParameters
 
 class DependencyDialog(wx.Dialog):
   def __init__(self,parent,parameters):
-    wx.Dialog.__init__(self,parent,armid.DEPENDENCY_ID,'Dependency',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(900,400))
+    wx.Dialog.__init__(self,parent,DEPENDENCY_ID,'Dependency',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(900,400))
     b = Borg()
     self.dbProxy = b.dbProxy
     self.theId = (-1,-1)
@@ -45,28 +45,28 @@ class DependencyDialog(wx.Dialog):
     roles = self.dbProxy.getDimensionNames('role')
     self.dependencyTypes = ['goal','task','asset']
     self.dependencies = []
-    associationSizer.Add(WidgetFactory.buildComboSizerList(self,'Environment',(150,30),armid.DEPENDENCY_COMBOENVIRONMENT_ID,environments),0,wx.EXPAND)
-    associationSizer.Add(WidgetFactory.buildComboSizerList(self,'Depender',(200,30),armid.DEPENDENCY_COMBODEPENDER_ID,roles),0,wx.EXPAND)
-    associationSizer.Add(WidgetFactory.buildComboSizerList(self,'Dependee',(200,30),armid.DEPENDENCY_COMBODEPENDEE_ID,roles),0,wx.EXPAND)
-    associationSizer.Add(WidgetFactory.buildComboSizerList(self,'Type',(87,30),armid.DEPENDENCY_COMBODTYPE_ID,self.dependencyTypes),0,wx.EXPAND)
-    associationSizer.Add(WidgetFactory.buildComboSizerList(self,'Dependency',(200,30),armid.DEPENDENCY_COMBODEPENDENCY_ID,self.dependencies),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildMLTextSizer(self,'Rationale',(87,60),armid.DEPENDENCY_TEXTRATIONALE_ID),1,wx.EXPAND,1,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,armid.DEPENDENCY_BUTTONCOMMIT_ID),0,wx.ALIGN_CENTER)
+    associationSizer.Add(WidgetFactory.buildComboSizerList(self,'Environment',(150,30),DEPENDENCY_COMBOENVIRONMENT_ID,environments),0,wx.EXPAND)
+    associationSizer.Add(WidgetFactory.buildComboSizerList(self,'Depender',(200,30),DEPENDENCY_COMBODEPENDER_ID,roles),0,wx.EXPAND)
+    associationSizer.Add(WidgetFactory.buildComboSizerList(self,'Dependee',(200,30),DEPENDENCY_COMBODEPENDEE_ID,roles),0,wx.EXPAND)
+    associationSizer.Add(WidgetFactory.buildComboSizerList(self,'Type',(87,30),DEPENDENCY_COMBODTYPE_ID,self.dependencyTypes),0,wx.EXPAND)
+    associationSizer.Add(WidgetFactory.buildComboSizerList(self,'Dependency',(200,30),DEPENDENCY_COMBODEPENDENCY_ID,self.dependencies),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildMLTextSizer(self,'Rationale',(87,60),DEPENDENCY_TEXTRATIONALE_ID),1,wx.EXPAND,1,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,DEPENDENCY_BUTTONCOMMIT_ID),0,wx.ALIGN_CENTER)
     self.SetSizer(mainSizer)
 
-    wx.EVT_BUTTON(self,armid.DEPENDENCY_BUTTONCOMMIT_ID,self.onCommit)
-    wx.EVT_COMBOBOX(self,armid.DEPENDENCY_COMBOENVIRONMENT_ID,self.onEnvironmentChange)
-    wx.EVT_COMBOBOX(self,armid.DEPENDENCY_COMBODTYPE_ID,self.onDependencyTypeChange)
+    wx.EVT_BUTTON(self,DEPENDENCY_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_COMBOBOX(self,DEPENDENCY_COMBOENVIRONMENT_ID,self.onEnvironmentChange)
+    wx.EVT_COMBOBOX(self,DEPENDENCY_COMBODTYPE_ID,self.onDependencyTypeChange)
 
   def load(self,dependency):
     self.theId = dependency.id()
-    envCtrl = self.FindWindowById(armid.DEPENDENCY_COMBOENVIRONMENT_ID)
-    dependerCtrl = self.FindWindowById(armid.DEPENDENCY_COMBODEPENDER_ID)
-    dependeeCtrl = self.FindWindowById(armid.DEPENDENCY_COMBODEPENDEE_ID)
-    dTypeCtrl = self.FindWindowById(armid.DEPENDENCY_COMBODTYPE_ID)
-    dependencyCtrl = self.FindWindowById(armid.DEPENDENCY_COMBODEPENDENCY_ID)
-    rationaleCtrl = self.FindWindowById(armid.DEPENDENCY_TEXTRATIONALE_ID)
-    buttonCtrl = self.FindWindowById(armid.DEPENDENCY_BUTTONCOMMIT_ID)
+    envCtrl = self.FindWindowById(DEPENDENCY_COMBOENVIRONMENT_ID)
+    dependerCtrl = self.FindWindowById(DEPENDENCY_COMBODEPENDER_ID)
+    dependeeCtrl = self.FindWindowById(DEPENDENCY_COMBODEPENDEE_ID)
+    dTypeCtrl = self.FindWindowById(DEPENDENCY_COMBODTYPE_ID)
+    dependencyCtrl = self.FindWindowById(DEPENDENCY_COMBODEPENDENCY_ID)
+    rationaleCtrl = self.FindWindowById(DEPENDENCY_TEXTRATIONALE_ID)
+    buttonCtrl = self.FindWindowById(DEPENDENCY_BUTTONCOMMIT_ID)
     buttonCtrl.SetLabel('Edit')
   
     self.theEnvironmentName = dependency.environment()
@@ -87,12 +87,12 @@ class DependencyDialog(wx.Dialog):
     
   def onCommit(self,evt):
     commitLabel = self.commitVerb + ' association'
-    envCtrl = self.FindWindowById(armid.DEPENDENCY_COMBOENVIRONMENT_ID)
-    dependerCtrl = self.FindWindowById(armid.DEPENDENCY_COMBODEPENDER_ID)
-    dependeeCtrl = self.FindWindowById(armid.DEPENDENCY_COMBODEPENDEE_ID)
-    dTypeCtrl = self.FindWindowById(armid.DEPENDENCY_COMBODTYPE_ID)
-    dependencyCtrl = self.FindWindowById(armid.DEPENDENCY_COMBODEPENDENCY_ID)
-    rationaleCtrl = self.FindWindowById(armid.DEPENDENCY_TEXTRATIONALE_ID)
+    envCtrl = self.FindWindowById(DEPENDENCY_COMBOENVIRONMENT_ID)
+    dependerCtrl = self.FindWindowById(DEPENDENCY_COMBODEPENDER_ID)
+    dependeeCtrl = self.FindWindowById(DEPENDENCY_COMBODEPENDEE_ID)
+    dTypeCtrl = self.FindWindowById(DEPENDENCY_COMBODTYPE_ID)
+    dependencyCtrl = self.FindWindowById(DEPENDENCY_COMBODEPENDENCY_ID)
+    rationaleCtrl = self.FindWindowById(DEPENDENCY_TEXTRATIONALE_ID)
 
     self.theEnvironmentName = envCtrl.GetValue()
     self.theDepender = dependerCtrl.GetValue()
@@ -132,12 +132,12 @@ class DependencyDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.DEPENDENCY_BUTTONCOMMIT_ID)
+      self.EndModal(DEPENDENCY_BUTTONCOMMIT_ID)
 
   def onEnvironmentChange(self,evt):
-    envCtrl = self.FindWindowById(armid.DEPENDENCY_COMBOENVIRONMENT_ID)
-    dTypeCtrl = self.FindWindowById(armid.DEPENDENCY_COMBODTYPE_ID)
-    dependencyCtrl = self.FindWindowById(armid.DEPENDENCY_COMBODEPENDENCY_ID)
+    envCtrl = self.FindWindowById(DEPENDENCY_COMBOENVIRONMENT_ID)
+    dTypeCtrl = self.FindWindowById(DEPENDENCY_COMBODTYPE_ID)
+    dependencyCtrl = self.FindWindowById(DEPENDENCY_COMBODEPENDENCY_ID)
     dependencyCtrl.SetItems([])
     dependencyCtrl.SetValue('')
     self.theEnvironmentName = envCtrl.GetStringSelection()
@@ -148,8 +148,8 @@ class DependencyDialog(wx.Dialog):
       dependencyCtrl.SetItems(self.dbProxy.getDimensionNames(depType,self.theEnvironmentName))
 
   def onDependencyTypeChange(self,evt):
-    dependencyCtrl = self.FindWindowById(armid.DEPENDENCY_COMBODEPENDENCY_ID)
-    dTypeCtrl = self.FindWindowById(armid.DEPENDENCY_COMBODTYPE_ID)
+    dependencyCtrl = self.FindWindowById(DEPENDENCY_COMBODEPENDENCY_ID)
+    dTypeCtrl = self.FindWindowById(DEPENDENCY_COMBODTYPE_ID)
 
     depType = dTypeCtrl.GetValue()
     if (depType != ''):

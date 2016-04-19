@@ -17,11 +17,11 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from PatternStructureListCtrl import PatternStructureListCtrl
 from DimensionListCtrl import DimensionListCtrl
 from InterfacePage import InterfacePage
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 class MLTextPage(wx.Panel):
   def __init__(self,parent,winId):
@@ -54,7 +54,7 @@ class RequirementsPage(wx.Panel):
     asBoxSizer = wx.StaticBoxSizer(asBox,wx.HORIZONTAL)
     topSizer.Add(asBoxSizer,1,wx.EXPAND)
     b = Borg()
-    self.requirementList = DimensionListCtrl(self,armid.COMPONENT_LISTREQUIREMENTS_ID,wx.DefaultSize,'Requirement','template_requirement',b.dbProxy)
+    self.requirementList = DimensionListCtrl(self,COMPONENT_LISTREQUIREMENTS_ID,wx.DefaultSize,'Requirement','template_requirement',b.dbProxy)
     asBoxSizer.Add(self.requirementList,1,wx.EXPAND)
     self.SetSizer(topSizer)
 
@@ -66,16 +66,16 @@ class GoalsPage(wx.Panel):
     asBoxSizer = wx.StaticBoxSizer(asBox,wx.HORIZONTAL)
     topSizer.Add(asBoxSizer,1,wx.EXPAND)
     b = Borg()
-    self.goalList = DimensionListCtrl(self,armid.COMPONENT_LISTGOALS_ID,wx.DefaultSize,'Goal','template_goal',b.dbProxy)
+    self.goalList = DimensionListCtrl(self,COMPONENT_LISTGOALS_ID,wx.DefaultSize,'Goal','template_goal',b.dbProxy)
     asBoxSizer.Add(self.goalList,1,wx.EXPAND)
     self.SetSizer(topSizer)
 
 class ComponentNotebook(wx.Notebook):
   def __init__(self,parent):
-    wx.Notebook.__init__(self,parent,armid.SECURITYPATTERN_NOTEBOOKPATTERN_ID)
-    p1 = MLTextPage(self,armid.COMPONENT_TEXTDESCRIPTION_ID)
-    p2 = InterfacePage(self,armid.COMPONENT_LISTINTERFACES_ID)
-    p3 = StructurePage(self,armid.COMPONENT_LISTSTRUCTURE_ID)
+    wx.Notebook.__init__(self,parent,SECURITYPATTERN_NOTEBOOKPATTERN_ID)
+    p1 = MLTextPage(self,COMPONENT_TEXTDESCRIPTION_ID)
+    p2 = InterfacePage(self,COMPONENT_LISTINTERFACES_ID)
+    p3 = StructurePage(self,COMPONENT_LISTSTRUCTURE_ID)
     p4 = RequirementsPage(self,p3)
     p5 = GoalsPage(self)
     self.AddPage(p1,'Description')

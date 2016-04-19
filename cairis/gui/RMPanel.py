@@ -18,7 +18,7 @@
 
 import wx
 import os
-import armid
+from cairis.core.armid import *
 from EditorBase import EditorBase
 from RequirementsGrid import RequirementsGrid
 
@@ -40,8 +40,8 @@ class RMPanel(EditorBase):
     self.resizeColumns()
     self.SetSizeHints(1225,400)
     self.SetSizer(self.sizer)
-    self.Bind(wx.EVT_COMBOBOX, self.onObjectChange,id = armid.RMFRAME_TOOL_COMBOOBJECT)
-    self.Bind(wx.EVT_COMBOBOX, self.onEnvironmentChange,id = armid.RMFRAME_TOOL_COMBOENVIRONMENT)
+    self.Bind(wx.EVT_COMBOBOX, self.onObjectChange,id = RMFRAME_TOOL_COMBOOBJECT)
+    self.Bind(wx.EVT_COMBOBOX, self.onEnvironmentChange,id = RMFRAME_TOOL_COMBOENVIRONMENT)
 
   def onObjectChange(self,evt):
     self.envCombo.SetValue('')
@@ -66,7 +66,7 @@ class RMPanel(EditorBase):
     pass
 
   def addObject(self):
-    grid = self.FindWindowById(armid.ID_REQGRID)
+    grid = self.FindWindowById(ID_REQGRID)
     pos = grid.GetGridCursorRow()
     grid.InsertRows(pos)
 

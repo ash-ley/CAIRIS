@@ -17,8 +17,8 @@
 
 
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from GoalObstaclePanel import GoalObstaclePanel
 
 class GoalObstacleDialog(wx.Dialog):
@@ -30,15 +30,15 @@ class GoalObstacleDialog(wx.Dialog):
     self.theIgnoreFlag = True
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.GOALOBSTACLE_BUTTONADD_ID,self.onAdd)
-    wx.EVT_BUTTON(self,armid.GOALOBSTACLE_BUTTONIGNORE_ID,self.onIgnore)
+    wx.EVT_BUTTON(self,GOALOBSTACLE_BUTTONADD_ID,self.onAdd)
+    wx.EVT_BUTTON(self,GOALOBSTACLE_BUTTONIGNORE_ID,self.onIgnore)
 
   def onAdd(self,evt):
     self.theIgnoreFlag = False
-    self.EndModal(armid.GOALOBSTACLE_BUTTONCOMMIT_ID)
+    self.EndModal(GOALOBSTACLE_BUTTONCOMMIT_ID)
 
   def onIgnore(self,evt):
     self.theIgnoreFlag = True
-    self.EndModal(armid.GOALOBSTACLE_BUTTONCOMMIT_ID)
+    self.EndModal(GOALOBSTACLE_BUTTONCOMMIT_ID)
  
   def ignore(self): return self.theIgnoreFlag

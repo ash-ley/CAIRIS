@@ -18,8 +18,8 @@
 
 import sys
 import gtk
-from Borg import Borg
-from ClassAssociationParameters import ClassAssociationParameters
+from cairis.core.Borg import Borg
+from cairis.core.ClassAssociationParameters import ClassAssociationParameters
 from NDImplementationDecorator import NDImplementationDecorator
 
 class AssetAssociationNodeDialog:

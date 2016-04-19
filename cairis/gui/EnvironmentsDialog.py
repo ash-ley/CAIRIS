@@ -17,22 +17,22 @@
 
 
 import wx
-import armid
-import ARM
-from Environment import Environment
+from cairis.core.armid import *
+from cairis.core.ARM import *
+from cairis.core.Environment import Environment
 from EnvironmentDialog import EnvironmentDialog
 from DialogClassParameters import DialogClassParameters
-from EnvironmentParameters import EnvironmentParameters
+from cairis.core.EnvironmentParameters import EnvironmentParameters
 from DimensionBaseDialog import DimensionBaseDialog
 
 class EnvironmentsDialog(DimensionBaseDialog):
   def __init__(self,parent):
-    DimensionBaseDialog.__init__(self,parent,armid.ENVIRONMENTS_ID,'Environments',(930,300),'environment.png')
+    DimensionBaseDialog.__init__(self,parent,ENVIRONMENTS_ID,'Environments',(930,300),'environment.png')
     self.rmFrame = parent
-    idList = [armid.ENVIRONMENTS_LISTENVIRONMENTS_ID,armid.ENVIRONMENTS_BUTTONADD_ID,armid.ENVIRONMENTS_BUTTONDELETE_ID]
+    idList = [ENVIRONMENTS_LISTENVIRONMENTS_ID,ENVIRONMENTS_BUTTONADD_ID,ENVIRONMENTS_BUTTONDELETE_ID]
     columnList = ['Name','Description']
     self.buildControls(idList,columnList,self.dbProxy.getEnvironments,'environment')
-    listCtrl = self.FindWindowById(armid.ENVIRONMENTS_LISTENVIRONMENTS_ID)
+    listCtrl = self.FindWindowById(ENVIRONMENTS_LISTENVIRONMENTS_ID)
     listCtrl.SetColumnWidth(0,150)
     listCtrl.SetColumnWidth(1,600)
 
@@ -42,10 +42,10 @@ class EnvironmentsDialog(DimensionBaseDialog):
 
   def onAdd(self,evt):
     try:
-      addParameters = DialogClassParameters(armid.ENVIRONMENT_ID,'Add environment',EnvironmentDialog,armid.ENVIRONMENT_BUTTONCOMMIT_ID,self.dbProxy.addEnvironment,True)
+      addParameters = DialogClassParameters(ENVIRONMENT_ID,'Add environment',EnvironmentDialog,ENVIRONMENT_BUTTONCOMMIT_ID,self.dbProxy.addEnvironment,True)
       self.addObject(addParameters)
       self.rmFrame.updateEnvironmentSelection(self.selectedLabel)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add environment',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -54,9 +54,9 @@ class EnvironmentsDialog(DimensionBaseDialog):
   def onUpdate(self,evt):
     selectedObjt = self.objts[self.selectedLabel]
     try:
-      updateParameters = DialogClassParameters(armid.ENVIRONMENT_ID,'Edit environment',EnvironmentDialog,armid.ENVIRONMENT_BUTTONCOMMIT_ID,self.dbProxy.updateEnvironment,False)
+      updateParameters = DialogClassParameters(ENVIRONMENT_ID,'Edit environment',EnvironmentDialog,ENVIRONMENT_BUTTONCOMMIT_ID,self.dbProxy.updateEnvironment,False)
       self.updateObject(selectedObjt,updateParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Edit environment',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy
@@ -65,7 +65,7 @@ class EnvironmentsDialog(DimensionBaseDialog):
     try:
       self.deleteObject('No environment','Delete environment',self.dbProxy.deleteEnvironment)
       self.rmFrame.updateEnvironmentSelection()
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Delete environment',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy

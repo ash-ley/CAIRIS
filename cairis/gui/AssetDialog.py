@@ -17,11 +17,11 @@
 
 
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 import AssetPanel
-from AssetParameters import AssetParameters
-from Borg import Borg
+from cairis.core.AssetParameters import AssetParameters
+from cairis.core.Borg import Borg
 import DialogClassParameters
 
 class AssetDialog(wx.Dialog):
@@ -48,7 +48,7 @@ class AssetDialog(wx.Dialog):
     self.panel.buildControls(parameters.createFlag())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.ASSET_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,ASSET_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,asset):
     self.theAssetId = asset.id()
@@ -57,22 +57,22 @@ class AssetDialog(wx.Dialog):
 
   def onCommit(self,evt):
     commitLabel = self.commitVerb + ' asset'
-    nameCtrl = self.FindWindowById(armid.ASSET_TEXTNAME_ID)
-    tagCtrl = self.FindWindowById(armid.ASSET_TAGS_ID)
-    shortCodeCtrl = self.FindWindowById(armid.ASSET_TEXTSHORTCODE_ID)
-    descriptionCtrl = self.FindWindowById(armid.ASSET_TEXTDESCRIPTION_ID)
-    sigCtrl = self.FindWindowById(armid.ASSET_TEXTSIGNIFICANCE_ID)
-    typeCtrl = self.FindWindowById(armid.ASSET_COMBOTYPE_ID)
-    criticalCtrl = self.FindWindowById(armid.ASSET_CHECKCRITICAL_ID)
-    criticalRationaleCtrl = self.FindWindowById(armid.ASSET_TEXTCRITICALRATIONALE_ID)
-    interfacesCtrl = self.FindWindowById(armid.ASSET_PAGEINTERFACE_ID)
-    environmentCtrl = self.FindWindowById(armid.ASSET_PANELENVIRONMENT_ID)
+    nameCtrl = self.FindWindowById(ASSET_TEXTNAME_ID)
+    tagCtrl = self.FindWindowById(ASSET_TAGS_ID)
+    shortCodeCtrl = self.FindWindowById(ASSET_TEXTSHORTCODE_ID)
+    descriptionCtrl = self.FindWindowById(ASSET_TEXTDESCRIPTION_ID)
+    sigCtrl = self.FindWindowById(ASSET_TEXTSIGNIFICANCE_ID)
+    typeCtrl = self.FindWindowById(ASSET_COMBOTYPE_ID)
+    criticalCtrl = self.FindWindowById(ASSET_CHECKCRITICAL_ID)
+    criticalRationaleCtrl = self.FindWindowById(ASSET_TEXTCRITICALRATIONALE_ID)
+    interfacesCtrl = self.FindWindowById(ASSET_PAGEINTERFACE_ID)
+    environmentCtrl = self.FindWindowById(ASSET_PANELENVIRONMENT_ID)
     self.theAssetName = nameCtrl.GetValue()
     if (self.commitVerb == 'Add'):
       b = Borg()
       try:
         b.dbProxy.nameCheck(self.theAssetName,'asset')
-      except ARM.ARMException,errorText:
+      except ARMException,errorText:
         dlg = wx.MessageDialog(self,str(errorText),'Add asset',wx.OK | wx.ICON_ERROR)
         dlg.ShowModal()
         dlg.Destroy()
@@ -120,7 +120,7 @@ class AssetDialog(wx.Dialog):
           dlg.ShowModal()
           dlg.Destroy()
           return
-      self.EndModal(armid.ASSET_BUTTONCOMMIT_ID)
+      self.EndModal(ASSET_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = AssetParameters(self.theAssetName,self.theShortCode,self.theAssetDescription,self.theAssetSignificance,self.theType,self.theCriticalIndicator,self.theCriticalRationale,self.theTags,self.theInterfaces,self.theEnvironmentProperties)

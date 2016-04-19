@@ -18,10 +18,10 @@
 
 import sys
 import gtk
-from Borg import Borg
-from GoalParameters import GoalParameters
-from GoalAssociationParameters import GoalAssociationParameters
-from GoalEnvironmentProperties import GoalEnvironmentProperties
+from cairis.core.Borg import Borg
+from cairis.core.GoalParameters import GoalParameters
+from cairis.core.GoalAssociationParameters import GoalAssociationParameters
+from cairis.core.GoalEnvironmentProperties import GoalEnvironmentProperties
 from NDImplementationDecorator import NDImplementationDecorator
 
 class GoalNodeDialog:

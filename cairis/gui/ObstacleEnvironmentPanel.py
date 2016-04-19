@@ -17,14 +17,14 @@
 
 
 import wx
-import armid
-from ObstacleEnvironmentProperties import ObstacleEnvironmentProperties
+from cairis.core.armid import *
+from cairis.core.ObstacleEnvironmentProperties import ObstacleEnvironmentProperties
 from ObstacleEnvironmentNotebook import ObstacleEnvironmentNotebook
 from EnvironmentListCtrl import EnvironmentListCtrl
 
 class ObstacleEnvironmentPanel(wx.Panel):
   def __init__(self,parent,dp):
-    wx.Panel.__init__(self,parent,armid.OBSTACLE_PANELENVIRONMENT_ID)
+    wx.Panel.__init__(self,parent,OBSTACLE_PANELENVIRONMENT_ID)
     self.dbProxy = dp
     self.theObstacleId = None
     self.theEnvironmentDictionary = {}
@@ -34,7 +34,7 @@ class ObstacleEnvironmentPanel(wx.Panel):
     environmentBox = wx.StaticBox(self)
     environmentListSizer = wx.StaticBoxSizer(environmentBox,wx.HORIZONTAL)
     mainSizer.Add(environmentListSizer,0,wx.EXPAND)
-    self.environmentList = EnvironmentListCtrl(self,armid.OBSTACLE_LISTENVIRONMENTS_ID,self.dbProxy)
+    self.environmentList = EnvironmentListCtrl(self,OBSTACLE_LISTENVIRONMENTS_ID,self.dbProxy)
     environmentListSizer.Add(self.environmentList,1,wx.EXPAND)
     environmentDimSizer = wx.BoxSizer(wx.VERTICAL)
     mainSizer.Add(environmentDimSizer,1,wx.EXPAND)
@@ -45,13 +45,13 @@ class ObstacleEnvironmentPanel(wx.Panel):
     self.notebook = ObstacleEnvironmentNotebook(self,self.dbProxy)
     nbSizer.Add(self.notebook,1,wx.EXPAND)
 
-    self.labelCtrl = self.notebook.FindWindowById(armid.OBSTACLE_TEXTLABEL_ID)
-    self.probCtrl = self.notebook.FindWindowById(armid.OBSTACLE_TEXTPROBABILITY_ID)
-    self.categoryCtrl = self.notebook.FindWindowById(armid.OBSTACLE_COMBOCATEGORY_ID)
-    self.definitionCtrl = self.notebook.FindWindowById(armid.OBSTACLE_TEXTDEFINITION_ID)
-    self.goalAssociationCtrl = self.notebook.FindWindowById(armid.OBSTACLE_LISTGOALS_ID)
-    self.subGoalAssociationCtrl = self.notebook.FindWindowById(armid.OBSTACLE_LISTSUBGOALS_ID)
-    self.concernsCtrl = self.notebook.FindWindowById(armid.OBSTACLE_LISTCONCERNS_ID)
+    self.labelCtrl = self.notebook.FindWindowById(OBSTACLE_TEXTLABEL_ID)
+    self.probCtrl = self.notebook.FindWindowById(OBSTACLE_TEXTPROBABILITY_ID)
+    self.categoryCtrl = self.notebook.FindWindowById(OBSTACLE_COMBOCATEGORY_ID)
+    self.definitionCtrl = self.notebook.FindWindowById(OBSTACLE_TEXTDEFINITION_ID)
+    self.goalAssociationCtrl = self.notebook.FindWindowById(OBSTACLE_LISTGOALS_ID)
+    self.subGoalAssociationCtrl = self.notebook.FindWindowById(OBSTACLE_LISTSUBGOALS_ID)
+    self.concernsCtrl = self.notebook.FindWindowById(OBSTACLE_LISTCONCERNS_ID)
 
     self.SetSizer(mainSizer)
     self.environmentList.Bind(wx.EVT_LIST_INSERT_ITEM,self.OnAddEnvironment)

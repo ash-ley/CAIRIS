@@ -16,13 +16,13 @@
 #  under the License.
 
 
-from Borg import Borg
-import DotTrace
+from cairis.core.Borg import Borg
+import cairis.core.DotTrace
 import pydot
 import os
 import gtk
-from colourcodes import threatColourCode
-from colourcodes import riskTextColourCode
+from cairis.core.colourcodes import threatColourCode
+from cairis.core.colourcodes import riskTextColourCode
 
 class LocationModel:
   def __init__(self,locsName,envName,riskOverlay):

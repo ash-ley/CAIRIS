@@ -17,8 +17,8 @@
 
 
 import wx
-import armid
-from ResponseParameters import ResponseParameters
+from cairis.core.armid import *
+from cairis.core.ResponseParameters import ResponseParameters
 from ResponsePanel import ResponsePanel
 
 class ResponseDialog(wx.Dialog):
@@ -35,7 +35,7 @@ class ResponseDialog(wx.Dialog):
     self.panel.buildControls(parameters.createFlag())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.RESPONSE_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,RESPONSE_BUTTONCOMMIT_ID,self.onCommit)
 
 
   def load(self,response):
@@ -44,7 +44,7 @@ class ResponseDialog(wx.Dialog):
 
   def onCommit(self,evt):
     if (self.panel.commit() != -1):
-      self.EndModal(armid.RESPONSE_BUTTONCOMMIT_ID)
+      self.EndModal(RESPONSE_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = self.panel.parameters()

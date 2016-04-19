@@ -19,11 +19,11 @@
 #$URL$
 
 import wx
-import armid
+from cairis.core.armid import *
 from BaseDialog import BaseDialog
-import ARM
-from Borg import Borg
-from ReferenceContribution import ReferenceContribution
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
+from cairis.core.ReferenceContribution import ReferenceContribution
 from ReferenceContributionPanel import ReferenceContributionPanel
 
 class ReferenceContributionDialog(BaseDialog):
@@ -37,7 +37,7 @@ class ReferenceContributionDialog(BaseDialog):
     self.panel = ReferenceContributionPanel(self)
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.REFERENCECONTRIBUTION_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,REFERENCECONTRIBUTION_BUTTONCOMMIT_ID,self.onCommit)
 
     if (objt.meansEnd() != ''):
       self.theCommitVerb = 'Create'
@@ -48,10 +48,10 @@ class ReferenceContributionDialog(BaseDialog):
    
 
   def onCommit(self,evt):
-    srcCtrl = self.FindWindowById(armid.REFERENCECONTRIBUTION_COMBOSOURCE_ID)
-    destCtrl = self.FindWindowById(armid.REFERENCECONTRIBUTION_COMBODESTINATION_ID)
-    meCtrl = self.FindWindowById(armid.REFERENCECONTRIBUTION_COMBOMEANSEND_ID)
-    contCtrl = self.FindWindowById(armid.REFERENCECONTRIBUTION_COMBOCONTRIBUTION_ID)
+    srcCtrl = self.FindWindowById(REFERENCECONTRIBUTION_COMBOSOURCE_ID)
+    destCtrl = self.FindWindowById(REFERENCECONTRIBUTION_COMBODESTINATION_ID)
+    meCtrl = self.FindWindowById(REFERENCECONTRIBUTION_COMBOMEANSEND_ID)
+    contCtrl = self.FindWindowById(REFERENCECONTRIBUTION_COMBOCONTRIBUTION_ID)
 
     self.theSource = srcCtrl.GetValue()
     self.theDestination = destCtrl.GetValue()
@@ -82,7 +82,7 @@ class ReferenceContributionDialog(BaseDialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.REFERENCECONTRIBUTION_BUTTONCOMMIT_ID)
+      self.EndModal(REFERENCECONTRIBUTION_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = ReferenceContribution(self.theSource,self.theDestination,self.theMeansEnd,self.theContribution)

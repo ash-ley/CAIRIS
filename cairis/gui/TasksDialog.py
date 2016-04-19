@@ -17,19 +17,19 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from TaskDialog import TaskDialog
-import ARM
+from cairis.core.ARM import *
 from DimensionBaseDialog import DimensionBaseDialog
 from TaskDialogParameters import TaskDialogParameters
 
 class TasksDialog(DimensionBaseDialog):
   def __init__(self,parent):
-    DimensionBaseDialog.__init__(self,parent,armid.TASKS_ID,'Tasks',(400,350),'task.png')
-    idList = [armid.TASKS_TASKLIST_ID,armid.TASKS_BUTTONADD_ID,armid.TASKS_BUTTONDELETE_ID]
+    DimensionBaseDialog.__init__(self,parent,TASKS_ID,'Tasks',(400,350),'task.png')
+    idList = [TASKS_TASKLIST_ID,TASKS_BUTTONADD_ID,TASKS_BUTTONDELETE_ID]
     columnList = ['Name']
     self.buildControls(idList,columnList,self.dbProxy.getTasks,'task')
-    listCtrl = self.FindWindowById(armid.TASKS_TASKLIST_ID)
+    listCtrl = self.FindWindowById(TASKS_TASKLIST_ID)
     listCtrl.SetColumnWidth(0,300)
 
 
@@ -39,9 +39,9 @@ class TasksDialog(DimensionBaseDialog):
   def onAdd(self,evt):
     try:
       addLabel = 'Add Task' 
-      addParameters = TaskDialogParameters(armid.TASK_ID,addLabel,TaskDialog,armid.TASK_BUTTONCOMMIT_ID,self.dbProxy.addTask,True,self.dbProxy)
+      addParameters = TaskDialogParameters(TASK_ID,addLabel,TaskDialog,TASK_BUTTONCOMMIT_ID,self.dbProxy.addTask,True,self.dbProxy)
       self.addObject(addParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add Task',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -51,9 +51,9 @@ class TasksDialog(DimensionBaseDialog):
     selectedObjt = self.objts[self.selectedLabel]
     updateLabel = 'Edit Task'
     try:
-      updateParameters = TaskDialogParameters(armid.TASK_ID,updateLabel,TaskDialog,armid.TASK_BUTTONCOMMIT_ID,self.dbProxy.updateTask,False,self.dbProxy)
+      updateParameters = TaskDialogParameters(TASK_ID,updateLabel,TaskDialog,TASK_BUTTONCOMMIT_ID,self.dbProxy.updateTask,False,self.dbProxy)
       self.updateObject(selectedObjt,updateParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),updateLabel,wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -62,7 +62,7 @@ class TasksDialog(DimensionBaseDialog):
   def onDelete(self,evt):
     try:
       self.deleteObject('No task','Delete task',self.dbProxy.deleteTask)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Delete Task',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()

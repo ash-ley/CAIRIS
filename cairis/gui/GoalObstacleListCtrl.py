@@ -17,9 +17,9 @@
 
 
 import wx
-import armid
-import ARM
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
 from GoalObstacleDialog import GoalObstacleDialog
 
 class GoalObstacleListCtrl(wx.ListCtrl):
@@ -63,7 +63,7 @@ class GoalObstacleListCtrl(wx.ListCtrl):
       obsItem = self.GetItem(self.theSelectedIdx,1)
       obsName = obsItem.GetText()
       dlg = GoalObstacleDialog(self,goalName,obsName,self.theEnvironmentName) 
-      if (dlg.ShowModal() == armid.GOALOBSTACLE_BUTTONCOMMIT_ID):
+      if (dlg.ShowModal() == GOALOBSTACLE_BUTTONCOMMIT_ID):
         self.theGOFlags[(goalName,obsName)] = dlg.ignore()
         if (dlg.ignore() == True):
           self.SetStringItem(self.theSelectedIdx,2,'Ignore')

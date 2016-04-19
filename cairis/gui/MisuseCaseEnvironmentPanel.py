@@ -17,15 +17,15 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from EnvironmentListCtrl import EnvironmentListCtrl
-from MisuseCaseEnvironmentProperties import MisuseCaseEnvironmentProperties
+from cairis.core.MisuseCaseEnvironmentProperties import MisuseCaseEnvironmentProperties
 from MisuseCaseNotebook import MisuseCaseNotebook
 
 
 class MisuseCaseEnvironmentPanel(wx.Panel):
   def __init__(self,parent,dp):
-    wx.Panel.__init__(self,parent,armid.MISUSECASE_PANELENVIRONMENT_ID)
+    wx.Panel.__init__(self,parent,MISUSECASE_PANELENVIRONMENT_ID)
     self.dbProxy = dp
     self.theEnvironmentDictionary = {}
     self.theSelectedIdx = -1
@@ -37,7 +37,7 @@ class MisuseCaseEnvironmentPanel(wx.Panel):
     environmentBox = wx.StaticBox(self)
     environmentListSizer = wx.StaticBoxSizer(environmentBox,wx.HORIZONTAL)
     mainSizer.Add(environmentListSizer,0,wx.EXPAND)
-    self.environmentList = EnvironmentListCtrl(self,armid.MISUSECASE_LISTENVIRONMENTS_ID,self.dbProxy)
+    self.environmentList = EnvironmentListCtrl(self,MISUSECASE_LISTENVIRONMENTS_ID,self.dbProxy)
     self.environmentList.Unbind(wx.EVT_RIGHT_DOWN)
     environmentListSizer.Add(self.environmentList,1,wx.EXPAND)
     environmentDimSizer = wx.BoxSizer(wx.VERTICAL)
@@ -51,15 +51,15 @@ class MisuseCaseEnvironmentPanel(wx.Panel):
 
     self.SetSizer(mainSizer)
 
-    self.objectiveCtrl = self.notebook.FindWindowById(armid.MISUSECASE_TEXTOBJECTIVE_ID)
-    self.attackerList = self.notebook.FindWindowById(armid.MISUSECASE_LISTATTACKERS_ID)
-    self.assetList = self.notebook.FindWindowById(armid.MISUSECASE_LISTASSETS_ID)
-    self.threatCtrl = self.notebook.FindWindowById(armid.MISUSECASE_TEXTTHREAT_ID)
-    self.lhoodCtrl = self.notebook.FindWindowById(armid.MISUSECASE_TEXTLIKELIHOOD_ID)
-    self.vulCtrl = self.notebook.FindWindowById(armid.MISUSECASE_TEXTVULNERABILITY_ID)
-    self.sevCtrl = self.notebook.FindWindowById(armid.MISUSECASE_TEXTSEVERITY_ID)
-    self.ratingCtrl = self.notebook.FindWindowById(armid.MISUSECASE_TEXTSCORE_ID)
-    self.narrativeCtrl = self.notebook.FindWindowById(armid.MISUSECASE_TEXTNARRATIVE_ID)
+    self.objectiveCtrl = self.notebook.FindWindowById(MISUSECASE_TEXTOBJECTIVE_ID)
+    self.attackerList = self.notebook.FindWindowById(MISUSECASE_LISTATTACKERS_ID)
+    self.assetList = self.notebook.FindWindowById(MISUSECASE_LISTASSETS_ID)
+    self.threatCtrl = self.notebook.FindWindowById(MISUSECASE_TEXTTHREAT_ID)
+    self.lhoodCtrl = self.notebook.FindWindowById(MISUSECASE_TEXTLIKELIHOOD_ID)
+    self.vulCtrl = self.notebook.FindWindowById(MISUSECASE_TEXTVULNERABILITY_ID)
+    self.sevCtrl = self.notebook.FindWindowById(MISUSECASE_TEXTSEVERITY_ID)
+    self.ratingCtrl = self.notebook.FindWindowById(MISUSECASE_TEXTSCORE_ID)
+    self.narrativeCtrl = self.notebook.FindWindowById(MISUSECASE_TEXTNARRATIVE_ID)
 
 
     self.environmentList.Bind(wx.EVT_LIST_INSERT_ITEM,self.OnAddEnvironment)

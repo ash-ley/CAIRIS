@@ -17,8 +17,8 @@
 
 
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from GoalRefinementDialog import GoalRefinementDialog
 
 class GoalAssociationListCtrl(wx.ListCtrl):
@@ -43,11 +43,11 @@ class GoalAssociationListCtrl(wx.ListCtrl):
     self.SetColumnWidth(4,200)
     self.theSelectedIdx = -1
     self.theDimMenu = wx.Menu()
-    self.theDimMenu.Append(armid.SGA_MENUADD_ID,'Add')
-    self.theDimMenu.Append(armid.SGA_MENUDELETE_ID,'Delete')
+    self.theDimMenu.Append(SGA_MENUADD_ID,'Add')
+    self.theDimMenu.Append(SGA_MENUDELETE_ID,'Delete')
     self.Bind(wx.EVT_RIGHT_DOWN,self.OnRightDown)
-    wx.EVT_MENU(self.theDimMenu,armid.SGA_MENUADD_ID,self.onAddAssociation)
-    wx.EVT_MENU(self.theDimMenu,armid.SGA_MENUDELETE_ID,self.onDeleteAssociation)
+    wx.EVT_MENU(self.theDimMenu,SGA_MENUADD_ID,self.onAddAssociation)
+    wx.EVT_MENU(self.theDimMenu,SGA_MENUDELETE_ID,self.onDeleteAssociation)
 
     self.Bind(wx.EVT_LIST_ITEM_SELECTED,self.OnItemSelected)
     self.Bind(wx.EVT_LIST_ITEM_DESELECTED,self.OnItemDeselected)
@@ -61,7 +61,7 @@ class GoalAssociationListCtrl(wx.ListCtrl):
 
   def onAddAssociation(self,evt):
     dlg = GoalRefinementDialog(self,self.dbProxy,self.theCurrentEnvironment,isGoal=self.goalList)
-    if (dlg.ShowModal() == armid.GOALREFINEMENT_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == GOALREFINEMENT_BUTTONCOMMIT_ID):
       self.theSelectedIdx = self.GetItemCount()
       self.InsertStringItem(self.theSelectedIdx,dlg.goal())
       self.SetStringItem(self.theSelectedIdx,1,dlg.goalDimension())
@@ -96,7 +96,7 @@ class GoalAssociationListCtrl(wx.ListCtrl):
     rationale = self.GetItem(self.theSelectedIdx,4)
      
     dlg = GoalRefinementDialog(self,self.dbProxy,self.theCurrentEnvironment,goal,goalDim.GetText(),refinement.GetText(),alternate.GetText())
-    if (dlg.ShowModal() == armid.GOALREFINEMENT_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == GOALREFINEMENT_BUTTONCOMMIT_ID):
       self.SetStringItem(self.theSelectedIdx,0,dlg.goal())
       self.SetStringItem(self.theSelectedIdx,1,dlg.goalDimension())
       self.SetStringItem(self.theSelectedIdx,2,dlg.refinement())

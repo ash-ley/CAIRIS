@@ -17,14 +17,14 @@
 
 
 import wx
-import armid
-import ARM
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
 from ConnectorDialog import ConnectorDialog
-from ConnectorParameters import ConnectorParameters
+from cairis.core.ConnectorParameters import ConnectorParameters
 
 class ConnectorListCtrl(wx.ListCtrl):
-  def __init__(self,parent,winId = armid.COMPONENTVIEW_LISTCONNECTORS_ID):
+  def __init__(self,parent,winId = COMPONENTVIEW_LISTCONNECTORS_ID):
     wx.ListCtrl.__init__(self,parent,winId,size=wx.DefaultSize,style=wx.LC_REPORT)
     b = Borg()
     self.dbProxy = b.dbProxy
@@ -51,11 +51,11 @@ class ConnectorListCtrl(wx.ListCtrl):
     self.SetColumnWidth(9,100)
     self.theSelectedIdx = -1
     self.theDimMenu = wx.Menu()
-    self.theDimMenu.Append(armid.AA_MENUADD_ID,'Add')
-    self.theDimMenu.Append(armid.AA_MENUDELETE_ID,'Delete')
+    self.theDimMenu.Append(AA_MENUADD_ID,'Add')
+    self.theDimMenu.Append(AA_MENUDELETE_ID,'Delete')
     self.Bind(wx.EVT_RIGHT_DOWN,self.OnRightDown)
-    wx.EVT_MENU(self.theDimMenu,armid.AA_MENUADD_ID,self.onAddConnector)
-    wx.EVT_MENU(self.theDimMenu,armid.AA_MENUDELETE_ID,self.onDeleteConnector)
+    wx.EVT_MENU(self.theDimMenu,AA_MENUADD_ID,self.onAddConnector)
+    wx.EVT_MENU(self.theDimMenu,AA_MENUDELETE_ID,self.onDeleteConnector)
 
     self.Bind(wx.EVT_LIST_ITEM_SELECTED,self.OnItemSelected)
     self.Bind(wx.EVT_LIST_ITEM_DESELECTED,self.OnItemDeselected)
@@ -68,7 +68,7 @@ class ConnectorListCtrl(wx.ListCtrl):
 
   def onAddConnector(self,evt):
     dlg = ConnectorDialog(self)
-    if (dlg.ShowModal() == armid.CONNECTOR_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == CONNECTOR_BUTTONCOMMIT_ID):
       self.theSelectedIdx = self.GetItemCount()
       self.InsertStringItem(self.theSelectedIdx,dlg.name())
       self.SetStringItem(self.theSelectedIdx,1,dlg.fromComponent())
@@ -113,7 +113,7 @@ class ConnectorListCtrl(wx.ListCtrl):
     arName = self.GetItem(self.theSelectedIdx,9)
      
     dlg = ConnectorDialog(self,conName,fromComponent.GetText(),fromRole.GetText(),fromInterface.GetText(),toComponent.GetText(),toInterface.GetText(),toRole.GetText(),assetName.GetText(),pName.GetText(),arName.GetText())
-    if (dlg.ShowModal() == armid.CONNECTOR_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == CONNECTOR_BUTTONCOMMIT_ID):
       self.SetStringItem(self.theSelectedIdx,0,dlg.name())
       self.SetStringItem(self.theSelectedIdx,1,dlg.fromComponent())
       self.SetStringItem(self.theSelectedIdx,2,dlg.fromRole())

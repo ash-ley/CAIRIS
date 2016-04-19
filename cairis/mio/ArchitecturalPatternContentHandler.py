@@ -17,15 +17,15 @@
 
 
 from xml.sax.handler import ContentHandler,EntityResolver
-from ComponentViewParameters import ComponentViewParameters
-from ComponentParameters import ComponentParameters
-from ConnectorParameters import ConnectorParameters
-from RoleParameters import RoleParameters
-from ValueTypeParameters import ValueTypeParameters
-from TemplateAssetParameters import TemplateAssetParameters
-from TemplateRequirementParameters import TemplateRequirementParameters
-from TemplateGoalParameters import TemplateGoalParameters
-from Borg import Borg
+from cairis.core.ComponentViewParameters import ComponentViewParameters
+from cairis.core.ComponentParameters import ComponentParameters
+from cairis.core.ConnectorParameters import ConnectorParameters
+from cairis.core.RoleParameters import RoleParameters
+from cairis.core.ValueTypeParameters import ValueTypeParameters
+from cairis.core.TemplateAssetParameters import TemplateAssetParameters
+from cairis.core.TemplateRequirementParameters import TemplateRequirementParameters
+from cairis.core.TemplateGoalParameters import TemplateGoalParameters
+from cairis.core.Borg import Borg
 
 def a2i(spLabel):
   if spLabel == 'Low':

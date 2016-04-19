@@ -22,7 +22,7 @@ import gtk.glade
 import os
 from DomainNodeDialog import DomainNodeDialog
 
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 def build(url):
   dim,objtName = url.split('#')
@@ -30,7 +30,7 @@ def build(url):
     b = Borg()
     proxy = b.dbProxy
     builder = gtk.Builder()
-    gladeFile = './config/imvnodes/imvnodes.xml'
+    gladeFile = b.configDir + '/imvnodes/imvnodes.xml'
     builder.add_from_file(gladeFile)
     objt = proxy.dimensionObject(objtName,'domain')
     dlg = DomainNodeDialog(objt,builder)

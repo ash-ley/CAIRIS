@@ -18,27 +18,27 @@
 
 import wx
 import wx.richtext
-import armid
-from ARM import *
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
 from DimensionNameDialog import DimensionNameDialog
 from CodeDialog import CodeDialog
 from MemoDialog import MemoDialog
-from MemoParameters import MemoParameters
+from cairis.core.MemoParameters import MemoParameters
 from DialogClassParameters import DialogClassParameters
 
 class CodingTextCtrl(wx.richtext.RichTextCtrl):
   def __init__(self, parent, winId):
     wx.richtext.RichTextCtrl.__init__(self,parent,winId,style=wx.TE_MULTILINE)
     self.codingMenu = wx.Menu()
-    self.ocItem = self.codingMenu.Append(armid.BVNTC_TEXTOPENCODING_ID,'Open Coding')
-    self.clItem = self.codingMenu.Append(armid.BVNTC_LISTALPHABET_ID,'Alphabet')
-    self.dcItem = self.codingMenu.Append(armid.BVNTC_CMDUNLINKCODES_ID,'Unlink codes')
-    self.meItem = self.codingMenu.Append(armid.BVNTC_CMDMEMO_ID,'Memo')
+    self.ocItem = self.codingMenu.Append(BVNTC_TEXTOPENCODING_ID,'Open Coding')
+    self.clItem = self.codingMenu.Append(BVNTC_LISTALPHABET_ID,'Alphabet')
+    self.dcItem = self.codingMenu.Append(BVNTC_CMDUNLINKCODES_ID,'Unlink codes')
+    self.meItem = self.codingMenu.Append(BVNTC_CMDMEMO_ID,'Memo')
 
-    wx.EVT_MENU(self,armid.BVNTC_TEXTOPENCODING_ID,self.onOpenCoding)
-    wx.EVT_MENU(self,armid.BVNTC_LISTALPHABET_ID,self.onListAlphabet)
-    wx.EVT_MENU(self,armid.BVNTC_CMDMEMO_ID,self.onMemo)
+    wx.EVT_MENU(self,BVNTC_TEXTOPENCODING_ID,self.onOpenCoding)
+    wx.EVT_MENU(self,BVNTC_LISTALPHABET_ID,self.onListAlphabet)
+    wx.EVT_MENU(self,BVNTC_CMDMEMO_ID,self.onMemo)
     self.Bind(wx.EVT_RIGHT_DOWN, self.onRightClick)
     self.Bind(wx.EVT_TEXT_URL,self.onUrl)
 
@@ -67,17 +67,17 @@ class CodingTextCtrl(wx.richtext.RichTextCtrl):
     self.theSelectionStart = selRange.GetStart()
     self.theSelectionEnd = selRange.GetEnd()
     if (self.theSelection == ''):
-      self.codingMenu.Enable(armid.BVNTC_TEXTOPENCODING_ID,False) 
-      self.codingMenu.Enable(armid.BVNTC_LISTALPHABET_ID,False) 
-      self.codingMenu.Enable(armid.BVNTC_CMDUNLINKCODES_ID,False) 
+      self.codingMenu.Enable(BVNTC_TEXTOPENCODING_ID,False) 
+      self.codingMenu.Enable(BVNTC_LISTALPHABET_ID,False) 
+      self.codingMenu.Enable(BVNTC_CMDUNLINKCODES_ID,False) 
     else:
-      self.codingMenu.Enable(armid.BVNTC_TEXTOPENCODING_ID,True) 
-      self.codingMenu.Enable(armid.BVNTC_LISTALPHABET_ID,True) 
+      self.codingMenu.Enable(BVNTC_TEXTOPENCODING_ID,True) 
+      self.codingMenu.Enable(BVNTC_LISTALPHABET_ID,True) 
       
       if ((self.theSelectionStart,self.theSelectionEnd) in self.theCodes):
-        self.codingMenu.Enable(armid.BVNTC_CMDUNLINKCODES_ID,True) 
+        self.codingMenu.Enable(BVNTC_CMDUNLINKCODES_ID,True) 
       else:
-        self.codingMenu.Enable(armid.BVNTC_CMDUNLINKCODES_ID,False) 
+        self.codingMenu.Enable(BVNTC_CMDUNLINKCODES_ID,False) 
 
   def getTextSelection(self):
     self.theSelection = self.GetStringSelection()
@@ -109,7 +109,7 @@ class CodingTextCtrl(wx.richtext.RichTextCtrl):
     b = Borg()
     codes = b.dbProxy.getDimensionNames('code',False)
     cDlg = DimensionNameDialog(self,'code',codes,'Select')
-    if (cDlg.ShowModal() == armid.DIMNAME_BUTTONACTION_ID):
+    if (cDlg.ShowModal() == DIMNAME_BUTTONACTION_ID):
       codeName = cDlg.dimensionName()
       self.addCode(codeName)
     cDlg.Destroy()
@@ -123,8 +123,8 @@ class CodingTextCtrl(wx.richtext.RichTextCtrl):
     dlg.Destroy()
 
   def onMemo(self,evt):
-    dlg = MemoDialog(self,DialogClassParameters(armid.MEMO_ID,'Add/Edit Memo'))
-    if (dlg.ShowModal() == armid.MEMO_BUTTONCOMMIT_ID):
+    dlg = MemoDialog(self,DialogClassParameters(MEMO_ID,'Add/Edit Memo'))
+    if (dlg.ShowModal() == MEMO_BUTTONCOMMIT_ID):
       memoName = dlg.name()
       memoTxt = dlg.memo()
       self.addMemo(memoName,memoTxt)
@@ -145,7 +145,7 @@ class CodingTextCtrl(wx.richtext.RichTextCtrl):
       cmValue = self.theCodes[(fromIdx,toIdx)]
       b = Borg() 
       cmObjt = b.dbProxy.dimensionObject(cmValue,'code') 
-      dlg = CodeDialog(self,DialogClassParameters(armid.CODE_ID,'View Code'))
+      dlg = CodeDialog(self,DialogClassParameters(CODE_ID,'View Code'))
       dlg.load(cmObjt)
       dlg.ShowModal()
     except KeyError:
@@ -156,9 +156,9 @@ class CodingTextCtrl(wx.richtext.RichTextCtrl):
       cmValue = self.theMemos[(fromIdx,toIdx)]
       b = Borg() 
       cmObjt = b.dbProxy.dimensionObject(cmValue[0],'memo') 
-      dlg = MemoDialog(self,DialogClassParameters(armid.MEMO_ID,'View Memo'))
+      dlg = MemoDialog(self,DialogClassParameters(MEMO_ID,'View Memo'))
       dlg.load(cmObjt)
-      if (dlg.ShowModal() == armid.MEMO_BUTTONCOMMIT_ID):
+      if (dlg.ShowModal() == MEMO_BUTTONCOMMIT_ID):
         memoName = dlg.name()
         memoTxt = dlg.memo()
         self.theMemos[(fromIdx,toIdx)] = (memoName,memoTxt)

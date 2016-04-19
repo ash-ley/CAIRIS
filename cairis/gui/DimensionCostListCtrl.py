@@ -17,8 +17,8 @@
 
 
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from ResponseCostDialog import ResponseCostDialog
 
 class DimensionCostListCtrl(wx.ListCtrl):
@@ -30,14 +30,14 @@ class DimensionCostListCtrl(wx.ListCtrl):
     self.InsertColumn(1,'Cost')
     self.SetColumnWidth(1,150)
     self.theDimMenu = wx.Menu()
-    self.theDimMenu.Append(armid.COSTLISTCTRL_MENUADD_ID,'Add')
-    self.theDimMenu.Append(armid.COSTLISTCTRL_MENUDELETE_ID,'Delete')
+    self.theDimMenu.Append(COSTLISTCTRL_MENUADD_ID,'Add')
+    self.theDimMenu.Append(COSTLISTCTRL_MENUDELETE_ID,'Delete')
     self.theSelectedIdx = -1
     self.Bind(wx.EVT_RIGHT_DOWN,self.OnRightDown)
     self.Bind(wx.EVT_LIST_ITEM_SELECTED,self.OnItemSelected)
     self.Bind(wx.EVT_LIST_ITEM_DESELECTED,self.OnItemDeselected)
-    wx.EVT_MENU(self.theDimMenu,armid.COSTLISTCTRL_MENUADD_ID,self.onAddResponse)
-    wx.EVT_MENU(self.theDimMenu,armid.COSTLISTCTRL_MENUDELETE_ID,self.onDeleteResponse)
+    wx.EVT_MENU(self.theDimMenu,COSTLISTCTRL_MENUADD_ID,self.onAddResponse)
+    wx.EVT_MENU(self.theDimMenu,COSTLISTCTRL_MENUDELETE_ID,self.onDeleteResponse)
 
   def OnItemSelected(self,evt):
     self.theSelectedIdx = evt.GetIndex()
@@ -50,7 +50,7 @@ class DimensionCostListCtrl(wx.ListCtrl):
 
   def onAddResponse(self,evt):
     dlg = ResponseCostDialog(self)
-    if (dlg.ShowModal() == armid.RESPONSECOST_BUTTONADD_ID):
+    if (dlg.ShowModal() == RESPONSECOST_BUTTONADD_ID):
       responseName = dlg.response()
       responseCost = dlg.cost()
       idx = self.GetItemCount()

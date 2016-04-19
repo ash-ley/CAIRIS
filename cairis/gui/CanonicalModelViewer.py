@@ -22,8 +22,8 @@ import kaosxdot
 import NodeDialogFactory
 import ModelMenuFactory
 import os
-from ARM import *
-from Borg import *
+from cairis.core.ARM import *
+from cairis.core.Borg import *
 
 class CanonicalModelViewer(kaosxdot.KaosDotWindow):
   def __init__(self,environmentName,modelType,locsName = ''):

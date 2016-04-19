@@ -17,21 +17,21 @@
 
 
 import wx
-import armid
-import Asset
+from cairis.core.armid import *
+import cairis.core.Asset
 from TemplateAssetDialog import TemplateAssetDialog
 from DialogClassParameters import DialogClassParameters
-import ARM
+from cairis.core.ARM import *
 from DimensionBaseDialog import DimensionBaseDialog
 
 class TemplateAssetsDialog(DimensionBaseDialog):
   def __init__(self,parent):
-    DimensionBaseDialog.__init__(self,parent,armid.TEMPLATEASSETS_ID,'Template Assets',(930,300),'asset.png')
+    DimensionBaseDialog.__init__(self,parent,TEMPLATEASSETS_ID,'Template Assets',(930,300),'asset.png')
     self.rmFrame = parent
-    idList = [armid.TEMPLATEASSETS_ASSETLIST_ID,armid.TEMPLATEASSETS_BUTTONADD_ID,armid.TEMPLATEASSETS_BUTTONDELETE_ID]
+    idList = [TEMPLATEASSETS_ASSETLIST_ID,TEMPLATEASSETS_BUTTONADD_ID,TEMPLATEASSETS_BUTTONDELETE_ID]
     columnList = ['Name','Type']
     self.buildControls(idList,columnList,self.dbProxy.getTemplateAssets,'template_asset')
-    listCtrl = self.FindWindowById(armid.TEMPLATEASSETS_ASSETLIST_ID)
+    listCtrl = self.FindWindowById(TEMPLATEASSETS_ASSETLIST_ID)
     listCtrl.SetColumnWidth(0,150)
     listCtrl.SetColumnWidth(1,150)
 
@@ -42,9 +42,9 @@ class TemplateAssetsDialog(DimensionBaseDialog):
 
   def onAdd(self,evt):
     try:
-      addParameters = DialogClassParameters(armid.TEMPLATEASSET_ID,'Add template asset',TemplateAssetDialog,armid.TEMPLATEASSET_BUTTONCOMMIT_ID,self.dbProxy.addTemplateAsset,True)
+      addParameters = DialogClassParameters(TEMPLATEASSET_ID,'Add template asset',TemplateAssetDialog,TEMPLATEASSET_BUTTONCOMMIT_ID,self.dbProxy.addTemplateAsset,True)
       self.addObject(addParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add template asset',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -54,9 +54,9 @@ class TemplateAssetsDialog(DimensionBaseDialog):
     selectedObjt = self.objts[self.selectedLabel]
     assetId = selectedObjt.id()
     try:
-      updateParameters = DialogClassParameters(armid.TEMPLATEASSET_ID,'Edit template asset',TemplateAssetDialog,armid.TEMPLATEASSET_BUTTONCOMMIT_ID,self.dbProxy.updateTemplateAsset,False)
+      updateParameters = DialogClassParameters(TEMPLATEASSET_ID,'Edit template asset',TemplateAssetDialog,TEMPLATEASSET_BUTTONCOMMIT_ID,self.dbProxy.updateTemplateAsset,False)
       self.updateObject(selectedObjt,updateParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Edit template asset',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy
@@ -64,7 +64,7 @@ class TemplateAssetsDialog(DimensionBaseDialog):
   def onDelete(self,evt):
     try:
       self.deleteObject('No template asset','Delete template asset',self.dbProxy.deleteTemplateAsset)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Delete template asset',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy

@@ -18,31 +18,31 @@
 
 #$URL$
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 class StepSynopsisPanel(wx.Panel):
   def __init__(self,parent):
-    wx.Panel.__init__(self,parent,armid.STEPSYNOPSIS_ID)
+    wx.Panel.__init__(self,parent,STEPSYNOPSIS_ID)
     b = Borg()
     self.dbProxy = b.dbProxy
     mainSizer = wx.BoxSizer(wx.VERTICAL)
-    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Synopsis',(87,30),armid.STEPSYNOPSIS_TEXTSYNOPSIS_ID),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Synopsis',(87,30),STEPSYNOPSIS_TEXTSYNOPSIS_ID),0,wx.EXPAND)
     actorSizer = wx.BoxSizer(wx.HORIZONTAL)
     mainSizer.Add(actorSizer,0,wx.EXPAND)
-    actorSizer.Add(WidgetFactory.buildComboSizerList(self,'Actor Type',(87,30),armid.STEPSYNOPSIS_COMBOACTORTYPE_ID,['asset','role']),1,wx.EXPAND)
-    actorSizer.Add(WidgetFactory.buildComboSizerList(self,'Actor',(87,30),armid.STEPSYNOPSIS_COMBOACTORNAME_ID,['']),1,wx.EXPAND)
+    actorSizer.Add(WidgetFactory.buildComboSizerList(self,'Actor Type',(87,30),STEPSYNOPSIS_COMBOACTORTYPE_ID,['asset','role']),1,wx.EXPAND)
+    actorSizer.Add(WidgetFactory.buildComboSizerList(self,'Actor',(87,30),STEPSYNOPSIS_COMBOACTORNAME_ID,['']),1,wx.EXPAND)
     mainSizer.Add(wx.StaticText(self,-1,''),1,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildCommitButtonSizer(self,armid.STEPSYNOPSIS_BUTTONCOMMIT_ID,True),0,wx.ALIGN_CENTER)
+    mainSizer.Add(WidgetFactory.buildCommitButtonSizer(self,STEPSYNOPSIS_BUTTONCOMMIT_ID,True),0,wx.ALIGN_CENTER)
     self.SetSizer(mainSizer)
-    wx.EVT_COMBOBOX(self,armid.STEPSYNOPSIS_COMBOACTORTYPE_ID,self.onActorType)
+    wx.EVT_COMBOBOX(self,STEPSYNOPSIS_COMBOACTORTYPE_ID,self.onActorType)
 
 
   def load(self,stepSyn,stepActor,stepActorType):
-    synCtrl = self.FindWindowById(armid.STEPSYNOPSIS_TEXTSYNOPSIS_ID)
-    actorTypeCtrl = self.FindWindowById(armid.STEPSYNOPSIS_COMBOACTORTYPE_ID)
-    actorCtrl = self.FindWindowById(armid.STEPSYNOPSIS_COMBOACTORNAME_ID)
+    synCtrl = self.FindWindowById(STEPSYNOPSIS_TEXTSYNOPSIS_ID)
+    actorTypeCtrl = self.FindWindowById(STEPSYNOPSIS_COMBOACTORTYPE_ID)
+    actorCtrl = self.FindWindowById(STEPSYNOPSIS_COMBOACTORNAME_ID)
     synCtrl.SetValue(stepSyn)
     actorTypeCtrl.SetValue(stepActorType)
     if stepActor != '':
@@ -54,6 +54,6 @@ class StepSynopsisPanel(wx.Panel):
 
   def setActorNames(self,actorType):
     aNames = self.dbProxy.getDimensionNames(actorType)
-    actorCtrl = self.FindWindowById(armid.STEPSYNOPSIS_COMBOACTORNAME_ID)
+    actorCtrl = self.FindWindowById(STEPSYNOPSIS_COMBOACTORNAME_ID)
     actorCtrl.SetItems(aNames)
     actorCtrl.SetValue('')

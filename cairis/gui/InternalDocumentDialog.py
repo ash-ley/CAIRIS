@@ -17,9 +17,9 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from InternalDocumentPanel import InternalDocumentPanel
-from InternalDocumentParameters import InternalDocumentParameters
+from cairis.core.InternalDocumentParameters import InternalDocumentParameters
 import DialogClassParameters
 
 class InternalDocumentDialog(wx.Dialog):
@@ -41,7 +41,7 @@ class InternalDocumentDialog(wx.Dialog):
     self.panel.buildControls(parameters.createFlag())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.INTERNALDOCUMENT_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,INTERNALDOCUMENT_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,objt):
     self.theId = objt.id()
@@ -50,9 +50,9 @@ class InternalDocumentDialog(wx.Dialog):
 
   def onCommit(self,evt):
     commitLabel = self.commitVerb + ' internal document'
-    nameCtrl = self.FindWindowById(armid.INTERNALDOCUMENT_TEXTNAME_ID)
-    descCtrl = self.FindWindowById(armid.INTERNALDOCUMENT_TEXTDESCRIPTION_ID)
-    contCtrl = self.FindWindowById(armid.INTERNALDOCUMENT_TEXTCONTENT_ID)
+    nameCtrl = self.FindWindowById(INTERNALDOCUMENT_TEXTNAME_ID)
+    descCtrl = self.FindWindowById(INTERNALDOCUMENT_TEXTDESCRIPTION_ID)
+    contCtrl = self.FindWindowById(INTERNALDOCUMENT_TEXTCONTENT_ID)
 
     self.theName = nameCtrl.GetValue()
     self.theDescription = descCtrl.GetValue()
@@ -76,7 +76,7 @@ class InternalDocumentDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.INTERNALDOCUMENT_BUTTONCOMMIT_ID)
+      self.EndModal(INTERNALDOCUMENT_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = InternalDocumentParameters(self.theName,self.theDescription,self.theContent,self.theCodes,self.theMemos)

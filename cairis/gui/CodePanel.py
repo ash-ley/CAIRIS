@@ -17,14 +17,14 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from BasePanel import BasePanel
-import Code
+import cairis.core.Code
 from CodeNotebook import CodeNotebook
 
 class CodePanel(BasePanel):
   def __init__(self,parent):
-    BasePanel.__init__(self,parent,armid.CODE_ID)
+    BasePanel.__init__(self,parent,CODE_ID)
     self.theId = None
     
   def buildControls(self,isCreate,lbl=''):
@@ -33,13 +33,13 @@ class CodePanel(BasePanel):
     nb = CodeNotebook(self)
     mainSizer.Add(nb,1,wx.EXPAND)
     if lbl != 'View Code':
-      mainSizer.Add(self.buildCommitButtonSizer(armid.CODE_BUTTONCOMMIT_ID,isCreate),0,wx.CENTER)
+      mainSizer.Add(self.buildCommitButtonSizer(CODE_BUTTONCOMMIT_ID,isCreate),0,wx.CENTER)
     else:
-      nameCtrl = self.FindWindowById(armid.CODE_TEXTNAME_ID)
-      typeCtrl = self.FindWindowById(armid.CODE_COMBOTYPE_ID)
-      descCtrl = self.FindWindowById(armid.CODE_TEXTDESCRIPTION_ID)
-      incCritCtrl = self.FindWindowById(armid.CODE_TEXTINCLUSIONCRITERIA_ID)
-      codeEgCtrl = self.FindWindowById(armid.CODE_TEXTEXAMPLE_ID)
+      nameCtrl = self.FindWindowById(CODE_TEXTNAME_ID)
+      typeCtrl = self.FindWindowById(CODE_COMBOTYPE_ID)
+      descCtrl = self.FindWindowById(CODE_TEXTDESCRIPTION_ID)
+      incCritCtrl = self.FindWindowById(CODE_TEXTINCLUSIONCRITERIA_ID)
+      codeEgCtrl = self.FindWindowById(CODE_TEXTEXAMPLE_ID)
       nameCtrl.Disable()
       typeCtrl.Disable()
       descCtrl.Disable()
@@ -52,11 +52,11 @@ class CodePanel(BasePanel):
 
   def loadControls(self,objt,isReadOnly=False):
     self.theId = objt.id()
-    nameCtrl = self.FindWindowById(armid.CODE_TEXTNAME_ID)
-    typeCtrl = self.FindWindowById(armid.CODE_COMBOTYPE_ID)
-    descCtrl = self.FindWindowById(armid.CODE_TEXTDESCRIPTION_ID)
-    incCritCtrl = self.FindWindowById(armid.CODE_TEXTINCLUSIONCRITERIA_ID)
-    codeEgCtrl = self.FindWindowById(armid.CODE_TEXTEXAMPLE_ID)
+    nameCtrl = self.FindWindowById(CODE_TEXTNAME_ID)
+    typeCtrl = self.FindWindowById(CODE_COMBOTYPE_ID)
+    descCtrl = self.FindWindowById(CODE_TEXTDESCRIPTION_ID)
+    incCritCtrl = self.FindWindowById(CODE_TEXTINCLUSIONCRITERIA_ID)
+    codeEgCtrl = self.FindWindowById(CODE_TEXTEXAMPLE_ID)
 
     nameCtrl.SetValue(objt.name())
     typeCtrl.SetValue(objt.type())

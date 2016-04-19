@@ -18,7 +18,7 @@
 
 import sys
 import gtk
-from Target import Target
+from cairis.core.Target import Target
 from NDImplementationDecorator import NDImplementationDecorator
 
 class CountermeasureNodeDialog:

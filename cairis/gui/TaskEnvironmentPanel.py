@@ -17,14 +17,14 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from EnvironmentListCtrl import EnvironmentListCtrl
-from TaskEnvironmentProperties import TaskEnvironmentProperties
+from cairis.core.TaskEnvironmentProperties import TaskEnvironmentProperties
 from TaskEnvironmentNotebook import TaskEnvironmentNotebook
 
 class TaskEnvironmentPanel(wx.Panel):
   def __init__(self,parent,dp):
-    wx.Panel.__init__(self,parent,armid.TASK_PANELENVIRONMENT_ID)
+    wx.Panel.__init__(self,parent,TASK_PANELENVIRONMENT_ID)
     self.dbProxy = dp
     self.theTaskId = None
     self.theEnvironmentDictionary = {}
@@ -34,7 +34,7 @@ class TaskEnvironmentPanel(wx.Panel):
     environmentBox = wx.StaticBox(self)
     environmentListSizer = wx.StaticBoxSizer(environmentBox,wx.HORIZONTAL)
     mainSizer.Add(environmentListSizer,0,wx.EXPAND)
-    self.environmentList = EnvironmentListCtrl(self,armid.TASK_LISTENVIRONMENTS_ID,self.dbProxy)
+    self.environmentList = EnvironmentListCtrl(self,TASK_LISTENVIRONMENTS_ID,self.dbProxy)
     environmentListSizer.Add(self.environmentList,1,wx.EXPAND)
     environmentDimSizer = wx.BoxSizer(wx.VERTICAL)
     mainSizer.Add(environmentDimSizer,1,wx.EXPAND)
@@ -45,13 +45,13 @@ class TaskEnvironmentPanel(wx.Panel):
     self.notebook = TaskEnvironmentNotebook(self,self.dbProxy)
     nbBoxSizer.Add(self.notebook,1,wx.EXPAND)
 
-    self.dependenciesCtrl = self.notebook.FindWindowById(armid.TASK_TEXTDEPENDENCIES_ID)
-    self.personaList = self.notebook.FindWindowById(armid.TASK_LISTPERSONAS_ID)
-    self.assetList = self.notebook.FindWindowById(armid.TASK_LISTASSETS_ID)
-    self.caList = self.notebook.FindWindowById(armid.TASK_LISTCONCERNASSOCIATIONS_ID)
-    self.narrativeCtrl = self.notebook.FindWindowById(armid.TASK_TEXTNARRATIVE_ID)
-    self.consequencesCtrl = self.notebook.FindWindowById(armid.TASK_TEXTCONSEQUENCES_ID)
-    self.benefitsCtrl = self.notebook.FindWindowById(armid.TASK_TEXTBENEFITS_ID)
+    self.dependenciesCtrl = self.notebook.FindWindowById(TASK_TEXTDEPENDENCIES_ID)
+    self.personaList = self.notebook.FindWindowById(TASK_LISTPERSONAS_ID)
+    self.assetList = self.notebook.FindWindowById(TASK_LISTASSETS_ID)
+    self.caList = self.notebook.FindWindowById(TASK_LISTCONCERNASSOCIATIONS_ID)
+    self.narrativeCtrl = self.notebook.FindWindowById(TASK_TEXTNARRATIVE_ID)
+    self.consequencesCtrl = self.notebook.FindWindowById(TASK_TEXTCONSEQUENCES_ID)
+    self.benefitsCtrl = self.notebook.FindWindowById(TASK_TEXTBENEFITS_ID)
 
     self.SetSizer(mainSizer)
 
@@ -66,9 +66,9 @@ class TaskEnvironmentPanel(wx.Panel):
     self.benefitsCtrl.Disable()
 
     self.theDimMenu = wx.Menu()
-    self.theDimMenu.Append(armid.DIMLIST_MENUADD_ID,'Add Goal')
+    self.theDimMenu.Append(DIMLIST_MENUADD_ID,'Add Goal')
     self.Bind(wx.EVT_RIGHT_DOWN,self.OnRightDown)
-    wx.EVT_MENU(self.theDimMenu,armid.DIMLIST_MENUADD_ID,self.onAddGoal)
+    wx.EVT_MENU(self.theDimMenu,DIMLIST_MENUADD_ID,self.onAddGoal)
 
   def OnRightDown(self,evt):
     self.PopupMenu(self.theDimMenu)

@@ -17,13 +17,13 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
-import MySQLDatabaseProxy
+import cairis.core.MySQLDatabaseProxy
 
 class CountermeasureTaskPersonaDialog(wx.Dialog):
   def __init__(self,parent,taskName,personaName,duration,frequency,demands,goalSupport):
-    wx.Dialog.__init__(self,parent,armid.TASKPERSONA_ID,'Add Task Persona',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,400))
+    wx.Dialog.__init__(self,parent,TASKPERSONA_ID,'Add Task Persona',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,400))
     self.theDuration = ''
     self.theFrequency = ''
     self.theDemands = ''
@@ -31,36 +31,36 @@ class CountermeasureTaskPersonaDialog(wx.Dialog):
     mainSizer = wx.BoxSizer(wx.VERTICAL)
 
     suPropertyValues = ['High Help','Medium Help','Low Help','None','Low Hindrance','Medium Hindrance','High Hindrance']
-    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Task',(87,30),armid.COUNTERMEASURETASKPERSONA_TEXTTASK_ID,isReadOnly = True),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Persona',(87,30),armid.COUNTERMEASURETASKPERSONA_TEXTPERSONA_ID,isReadOnly = True),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Duration',(87,30),armid.COUNTERMEASURETASKPERSONA_COMBODURATION_ID,suPropertyValues),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Frequency',(87,30),armid.COUNTERMEASURETASKPERSONA_COMBOFREQUENCY_ID,suPropertyValues),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Demands',(87,30),armid.COUNTERMEASURETASKPERSONA_COMBODEMANDS_ID,suPropertyValues),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Goal Conflict',(87,30),armid.COUNTERMEASURETASKPERSONA_COMBOGOALSUPPORT_ID,suPropertyValues),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Task',(87,30),COUNTERMEASURETASKPERSONA_TEXTTASK_ID,isReadOnly = True),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Persona',(87,30),COUNTERMEASURETASKPERSONA_TEXTPERSONA_ID,isReadOnly = True),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Duration',(87,30),COUNTERMEASURETASKPERSONA_COMBODURATION_ID,suPropertyValues),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Frequency',(87,30),COUNTERMEASURETASKPERSONA_COMBOFREQUENCY_ID,suPropertyValues),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Demands',(87,30),COUNTERMEASURETASKPERSONA_COMBODEMANDS_ID,suPropertyValues),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Goal Conflict',(87,30),COUNTERMEASURETASKPERSONA_COMBOGOALSUPPORT_ID,suPropertyValues),0,wx.EXPAND)
     mainSizer.Add(wx.StaticText(self,-1),1,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,armid.COUNTERMEASURETASKPERSONA_BUTTONADD_ID),0,wx.ALIGN_CENTER)
+    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,COUNTERMEASURETASKPERSONA_BUTTONADD_ID),0,wx.ALIGN_CENTER)
     self.SetSizer(mainSizer)
 
-    wx.EVT_BUTTON(self,armid.COUNTERMEASURETASKPERSONA_BUTTONADD_ID,self.onAdd)
+    wx.EVT_BUTTON(self,COUNTERMEASURETASKPERSONA_BUTTONADD_ID,self.onAdd)
    
-    taskCtrl = self.FindWindowById(armid.COUNTERMEASURETASKPERSONA_TEXTTASK_ID)
+    taskCtrl = self.FindWindowById(COUNTERMEASURETASKPERSONA_TEXTTASK_ID)
     taskCtrl.SetValue(taskName)
-    personaCtrl = self.FindWindowById(armid.COUNTERMEASURETASKPERSONA_TEXTPERSONA_ID)
+    personaCtrl = self.FindWindowById(COUNTERMEASURETASKPERSONA_TEXTPERSONA_ID)
     personaCtrl.SetValue(personaName)
-    durCtrl = self.FindWindowById(armid.COUNTERMEASURETASKPERSONA_COMBODURATION_ID)
+    durCtrl = self.FindWindowById(COUNTERMEASURETASKPERSONA_COMBODURATION_ID)
     durCtrl.SetStringSelection(duration)
-    freqCtrl = self.FindWindowById(armid.COUNTERMEASURETASKPERSONA_COMBOFREQUENCY_ID)
+    freqCtrl = self.FindWindowById(COUNTERMEASURETASKPERSONA_COMBOFREQUENCY_ID)
     freqCtrl.SetStringSelection(frequency)
-    demCtrl = self.FindWindowById(armid.COUNTERMEASURETASKPERSONA_COMBODEMANDS_ID)
+    demCtrl = self.FindWindowById(COUNTERMEASURETASKPERSONA_COMBODEMANDS_ID)
     demCtrl.SetStringSelection(demands)
-    gsupCtrl = self.FindWindowById(armid.COUNTERMEASURETASKPERSONA_COMBOGOALSUPPORT_ID)
+    gsupCtrl = self.FindWindowById(COUNTERMEASURETASKPERSONA_COMBOGOALSUPPORT_ID)
     gsupCtrl.SetStringSelection(goalSupport)
 
   def onAdd(self,evt):
-    durCtrl = self.FindWindowById(armid.COUNTERMEASURETASKPERSONA_COMBODURATION_ID)
-    freqCtrl = self.FindWindowById(armid.COUNTERMEASURETASKPERSONA_COMBOFREQUENCY_ID)
-    demCtrl = self.FindWindowById(armid.COUNTERMEASURETASKPERSONA_COMBODEMANDS_ID)
-    gsupCtrl = self.FindWindowById(armid.COUNTERMEASURETASKPERSONA_COMBOGOALSUPPORT_ID)
+    durCtrl = self.FindWindowById(COUNTERMEASURETASKPERSONA_COMBODURATION_ID)
+    freqCtrl = self.FindWindowById(COUNTERMEASURETASKPERSONA_COMBOFREQUENCY_ID)
+    demCtrl = self.FindWindowById(COUNTERMEASURETASKPERSONA_COMBODEMANDS_ID)
+    gsupCtrl = self.FindWindowById(COUNTERMEASURETASKPERSONA_COMBOGOALSUPPORT_ID)
     self.theDuration = durCtrl.GetStringSelection()
     self.theFrequency = freqCtrl.GetStringSelection()
     self.theDemands = demCtrl.GetStringSelection()
@@ -87,7 +87,7 @@ class CountermeasureTaskPersonaDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.COUNTERMEASURETASKPERSONA_BUTTONADD_ID)
+      self.EndModal(COUNTERMEASURETASKPERSONA_BUTTONADD_ID)
 
   def duration(self): return self.theDuration
   def frequency(self): return self.theFrequency

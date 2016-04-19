@@ -18,15 +18,15 @@
 
 #$URL$ $Id: ExceptionListCtrl.py 337 2010-11-07 23:58:53Z shaf $
 import wx
-import armid
-import ARM
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
 from ExceptionDialog import ExceptionDialog
-import ObstacleFactory
+import cairis.core.ObstacleFactory
 
 class ExceptionListCtrl(wx.ListCtrl):
   def __init__(self,parent,envName,stepGrid):
-    wx.ListCtrl.__init__(self,parent,armid.USECASE_LISTEXCEPTIONS_ID,size=wx.DefaultSize,style=wx.LC_REPORT)
+    wx.ListCtrl.__init__(self,parent,USECASE_LISTEXCEPTIONS_ID,size=wx.DefaultSize,style=wx.LC_REPORT)
     self.stepGrid = stepGrid
     self.theEnvironmentName = envName
     self.theLastSelection = ''
@@ -35,13 +35,13 @@ class ExceptionListCtrl(wx.ListCtrl):
 
     self.theSelectedIdx = -1
     self.theExcMenu = wx.Menu()
-    self.theExcMenu.Append(armid.DIMLIST_MENUADD_ID,'Add')
-    self.theExcMenu.Append(armid.DIMLIST_MENUDELETE_ID,'Delete')
-    self.theExcMenu.Append(armid.DIMLIST_MENUGENERATE_ID,'Generate Obstacle')
+    self.theExcMenu.Append(DIMLIST_MENUADD_ID,'Add')
+    self.theExcMenu.Append(DIMLIST_MENUDELETE_ID,'Delete')
+    self.theExcMenu.Append(DIMLIST_MENUGENERATE_ID,'Generate Obstacle')
     self.Bind(wx.EVT_RIGHT_DOWN,self.OnRightDown)
-    wx.EVT_MENU(self.theExcMenu,armid.DIMLIST_MENUADD_ID,self.onAddException)
-    wx.EVT_MENU(self.theExcMenu,armid.DIMLIST_MENUDELETE_ID,self.onDeleteException)
-    wx.EVT_MENU(self.theExcMenu,armid.DIMLIST_MENUGENERATE_ID,self.onGenerateObstacle)
+    wx.EVT_MENU(self.theExcMenu,DIMLIST_MENUADD_ID,self.onAddException)
+    wx.EVT_MENU(self.theExcMenu,DIMLIST_MENUDELETE_ID,self.onDeleteException)
+    wx.EVT_MENU(self.theExcMenu,DIMLIST_MENUGENERATE_ID,self.onGenerateObstacle)
 
     self.Bind(wx.EVT_LIST_ITEM_SELECTED,self.OnItemSelected)
     self.Bind(wx.EVT_LIST_ITEM_DESELECTED,self.OnItemDeselected)
@@ -62,7 +62,7 @@ class ExceptionListCtrl(wx.ListCtrl):
 
   def onAddException(self,evt):
     dlg = ExceptionDialog(self,self.theEnvironmentName)
-    if (dlg.ShowModal() == armid.EXCEPTION_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == EXCEPTION_BUTTONCOMMIT_ID):
       exc = dlg.parameters()
       pos = self.stepGrid.GetGridCursorRow()
       table = self.stepGrid.GetTable()
@@ -92,7 +92,7 @@ class ExceptionListCtrl(wx.ListCtrl):
      
     exc = self.stepGrid.stepException(excName)
     dlg = ExceptionDialog(self,self.theEnvironmentName,exc[0],exc[1],exc[2],exc[3],exc[4])
-    if (dlg.ShowModal() == armid.EXCEPTION_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == EXCEPTION_BUTTONCOMMIT_ID):
       updExc = dlg.parameters()
       self.stepGrid.setStepException(self.theSelectedIdx,excName,updExc)
       self.SetStringItem(self.theSelectedIdx,0,updExc[0])

@@ -17,7 +17,7 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from BasePanel import BasePanel
 from CodingTextCtrl import CodingTextCtrl
 
@@ -37,14 +37,14 @@ class SummaryPage(BasePanel):
   def __init__(self,parent):
     BasePanel.__init__(self,parent,-1)
     topSizer = wx.BoxSizer(wx.VERTICAL)
-    topSizer.Add(self.buildTextSizer('Name',(87,30),armid.INTERNALDOCUMENT_TEXTNAME_ID),0,wx.EXPAND)
-    topSizer.Add(self.buildMLTextSizer('Description',(87,30),armid.INTERNALDOCUMENT_TEXTDESCRIPTION_ID),1,wx.EXPAND)
+    topSizer.Add(self.buildTextSizer('Name',(87,30),INTERNALDOCUMENT_TEXTNAME_ID),0,wx.EXPAND)
+    topSizer.Add(self.buildMLTextSizer('Description',(87,30),INTERNALDOCUMENT_TEXTDESCRIPTION_ID),1,wx.EXPAND)
     self.SetSizer(topSizer)
 
 class InternalDocumentNotebook(wx.Notebook):
   def __init__(self,parent):
     wx.Notebook.__init__(self,parent,-1)
     p1 = SummaryPage(self)
-    p2 = ContentPage(self,armid.INTERNALDOCUMENT_TEXTCONTENT_ID)
+    p2 = ContentPage(self,INTERNALDOCUMENT_TEXTCONTENT_ID)
     self.AddPage(p1,'Summary')
     self.AddPage(p2,'Content')

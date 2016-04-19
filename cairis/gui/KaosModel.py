@@ -16,16 +16,16 @@
 #  under the License.
 
 
-from Borg import Borg
-import DotTrace
+from cairis.core.Borg import Borg
+import cairis.core.DotTrace
 import pydot
 import wx
 import os
-import ARM
+from cairis.core.ARM import *
 import gtk
-from colourcodes import usabilityColourCode
-from colourcodes import threatColourCode
-from colourcodes import obstacleColourCode
+from cairis.core.colourcodes import usabilityColourCode
+from cairis.core.colourcodes import threatColourCode
+from cairis.core.colourcodes import obstacleColourCode
 
 class KaosModel:
   def __init__(self,associations,envName,kaosModelType = 'goal',goalName = ''):
@@ -88,7 +88,10 @@ class KaosModel:
           if (currentScore > highestScore):
             highestScore = currentScore
         ellipseColour = threatColourCode(highestScore)
-      self.theGraph.add_node(pydot.Node(objtName,shape='ellipse',style='filled',color=ellipseColour,fontcolor='white',fontname=self.fontName,fontsize=self.fontSize,URL=objtUrl))
+        ellipseFontColour = 'white'
+        if highestScore < 2:
+          ellipseFontColour = 'black'
+      self.theGraph.add_node(pydot.Node(objtName,shape='ellipse',style='filled',color=ellipseColour,fontcolor=ellipseFontColour,fontname=self.fontName,fontsize=self.fontSize,URL=objtUrl))
     elif (dimName == 'persona'):
       objt = self.dbProxy.dimensionObject(objtName,'persona')
       if (objt.assumption() == True):
@@ -285,5 +288,5 @@ class KaosModel:
 
       return self.layout()
     except ARM.DatabaseProxyException, errTxt:
-      raise ARM.ARMException(errTxt)
+      raise ARMException(errTxt)
 

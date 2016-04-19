@@ -17,9 +17,9 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from PersonaCharacteristicNotebook import PersonaCharacteristicNotebook
-from TaskCharacteristicParameters import TaskCharacteristicParameters
+from cairis.core.TaskCharacteristicParameters import TaskCharacteristicParameters
 import WidgetFactory
 
 class TaskCharacteristicDialog(wx.Dialog):
@@ -50,19 +50,19 @@ class TaskCharacteristicDialog(wx.Dialog):
     mainSizer = wx.BoxSizer(wx.VERTICAL)
     self.panel = PersonaCharacteristicNotebook(self,True,self.showTaskCombo)
     mainSizer.Add(self.panel,1,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildCommitButtonSizer(self,armid.TASKCHARACTERISTIC_BUTTONCOMMIT_ID,True),0,wx.CENTER)
+    mainSizer.Add(WidgetFactory.buildCommitButtonSizer(self,TASKCHARACTERISTIC_BUTTONCOMMIT_ID,True),0,wx.CENTER)
 
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.TASKCHARACTERISTIC_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,TASKCHARACTERISTIC_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,objt):
     self.theId = objt.id()
-    buttonCtrl = self.FindWindowById(armid.TASKCHARACTERISTIC_BUTTONCOMMIT_ID)
+    buttonCtrl = self.FindWindowById(TASKCHARACTERISTIC_BUTTONCOMMIT_ID)
     buttonCtrl.SetLabel('Edit')
     self.panel.loadControls(objt)
 
     if (self.inTask and self.showTaskCombo):
-      pCtrl = self.FindWindowById(armid.TASKCHARACTERISTIC_COMBOTASK_ID)
+      pCtrl = self.FindWindowById(TASKCHARACTERISTIC_COMBOTASK_ID)
       pCtrl.SetValue(objt.task())
 
     self.commitVerb = 'Edit'
@@ -70,11 +70,11 @@ class TaskCharacteristicDialog(wx.Dialog):
   def onCommit(self,evt):
     commitLabel = self.commitVerb + ' task characteristic'
 
-    qualCtrl = self.FindWindowById(armid.PERSONACHARACTERISTIC_TEXTQUALIFIER_ID)
-    charCtrl = self.FindWindowById(armid.PERSONACHARACTERISTIC_TEXTCHARACTERISTIC_ID)
-    groundsCtrl = self.FindWindowById(armid.PERSONACHARACTERISTIC_LISTGROUNDS_ID)
-    warrantCtrl = self.FindWindowById(armid.PERSONACHARACTERISTIC_LISTWARRANT_ID)
-    rebuttalCtrl = self.FindWindowById(armid.PERSONACHARACTERISTIC_LISTREBUTTAL_ID)
+    qualCtrl = self.FindWindowById(PERSONACHARACTERISTIC_TEXTQUALIFIER_ID)
+    charCtrl = self.FindWindowById(PERSONACHARACTERISTIC_TEXTCHARACTERISTIC_ID)
+    groundsCtrl = self.FindWindowById(PERSONACHARACTERISTIC_LISTGROUNDS_ID)
+    warrantCtrl = self.FindWindowById(PERSONACHARACTERISTIC_LISTWARRANT_ID)
+    rebuttalCtrl = self.FindWindowById(PERSONACHARACTERISTIC_LISTREBUTTAL_ID)
 
     self.theModalQualifier = qualCtrl.GetValue()
     self.theCharacteristic = charCtrl.GetValue()
@@ -84,7 +84,7 @@ class TaskCharacteristicDialog(wx.Dialog):
  
     
     if (self.inTask == False):
-      pCtrl = self.FindWindowById(armid.TASKCHARACTERISTIC_COMBOTASK_ID)
+      pCtrl = self.FindWindowById(TASKCHARACTERISTIC_COMBOTASK_ID)
       self.theTaskName = pCtrl.GetValue()
 
     if len(self.theTaskName) == 0:
@@ -108,7 +108,7 @@ class TaskCharacteristicDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.TASKCHARACTERISTIC_BUTTONCOMMIT_ID)
+      self.EndModal(TASKCHARACTERISTIC_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = TaskCharacteristicParameters(self.theTaskName,self.theModalQualifier,self.theCharacteristic,self.theGrounds,self.theWarrant,[],self.theRebuttal)

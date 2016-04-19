@@ -17,12 +17,12 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 from DictionaryEntryDialog import DictionaryEntryDialog
 
 class DictionaryListCtrl(wx.ListCtrl):
   def __init__(self,parent):
-    wx.ListCtrl.__init__(self,parent,armid.PROJECTSETTINGS_LISTDICTIONARY_ID,size=wx.DefaultSize,style=wx.LC_REPORT | wx.LC_SORT_ASCENDING)
+    wx.ListCtrl.__init__(self,parent,PROJECTSETTINGS_LISTDICTIONARY_ID,size=wx.DefaultSize,style=wx.LC_REPORT | wx.LC_SORT_ASCENDING)
     self.keys = []
     self.InsertColumn(0,'Name')
     self.SetColumnWidth(0,150)
@@ -30,14 +30,14 @@ class DictionaryListCtrl(wx.ListCtrl):
     self.SetColumnWidth(1,300)
     self.theSelectedIdx = -1
     self.theMenu = wx.Menu()
-    self.theMenu.Append(armid.DICTIONARYLISTCTRL_MENUADD_ID,'Add')
-    self.theMenu.Append(armid.DICTIONARYLISTCTRL_MENUDELETE_ID,'Delete')
+    self.theMenu.Append(DICTIONARYLISTCTRL_MENUADD_ID,'Add')
+    self.theMenu.Append(DICTIONARYLISTCTRL_MENUDELETE_ID,'Delete')
     self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK,self.OnRightDown)
     self.Bind(wx.EVT_LIST_ITEM_SELECTED,self.OnItemSelected)
     self.Bind(wx.EVT_LIST_ITEM_DESELECTED,self.OnItemDeselected)
     self.Bind(wx.EVT_LIST_ITEM_ACTIVATED,self.onEntryActivated)
-    wx.EVT_MENU(self.theMenu,armid.DICTIONARYLISTCTRL_MENUADD_ID,self.onAddEntry)
-    wx.EVT_MENU(self.theMenu,armid.DICTIONARYLISTCTRL_MENUDELETE_ID,self.onDeleteEntry)
+    wx.EVT_MENU(self.theMenu,DICTIONARYLISTCTRL_MENUADD_ID,self.onAddEntry)
+    wx.EVT_MENU(self.theMenu,DICTIONARYLISTCTRL_MENUDELETE_ID,self.onDeleteEntry)
 
   def OnItemSelected(self,evt):
     self.theSelectedIdx = evt.GetIndex()
@@ -50,7 +50,7 @@ class DictionaryListCtrl(wx.ListCtrl):
 
   def onAddEntry(self,evt):
     dlg = DictionaryEntryDialog(self)
-    if (dlg.ShowModal() == armid.DICTIONARYENTRY_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == DICTIONARYENTRY_BUTTONCOMMIT_ID):
       name = dlg.name()
       definition = dlg.definition()
       idx = self.GetItemCount()
@@ -74,7 +74,7 @@ class DictionaryListCtrl(wx.ListCtrl):
     definition = self.GetItem(self.theSelectedIdx,1)
      
     dlg = DictionaryEntryDialog(self,name,definition.GetText())
-    if (dlg.ShowModal() == armid.DICTIONARYENTRY_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == DICTIONARYENTRY_BUTTONCOMMIT_ID):
       self.SetStringItem(self.theSelectedIdx,0,dlg.name())
       self.SetStringItem(self.theSelectedIdx,1,dlg.definition())
 

@@ -17,12 +17,12 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
 import os
-from Borg import Borg
-import ARM
-from PersonaParameters import PersonaParameters
+from cairis.core.Borg import Borg
+from cairis.core.ARM import *
+from cairis.core.PersonaParameters import PersonaParameters
 from PersonaPanel import PersonaPanel
 
 class PersonaDialog(wx.Dialog):
@@ -54,7 +54,7 @@ class PersonaDialog(wx.Dialog):
     self.panel.buildControls(parameters.createFlag())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.PERSONA_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,PERSONA_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,persona):
     self.thePersonaId = persona.id()
@@ -71,19 +71,19 @@ class PersonaDialog(wx.Dialog):
    
 
   def onCommit(self,evt):
-    nameCtrl = self.FindWindowById(armid.PERSONA_TEXTNAME_ID)
-    tagCtrl = self.FindWindowById(armid.PERSONA_TAGS_ID)
-    typeCtrl = self.FindWindowById(armid.PERSONA_COMBOTYPE_ID)
-    assumptionCtrl = self.FindWindowById(armid.PERSONA_CHECKASSUMPTION_ID)
-    activitiesCtrl = self.FindWindowById(armid.PERSONA_TEXTACTIVITIES_ID)
-    attitudesCtrl = self.FindWindowById(armid.PERSONA_TEXTATTITUDES_ID)
-    aptitudesCtrl = self.FindWindowById(armid.PERSONA_TEXTAPTITUDES_ID)
-    motivationsCtrl = self.FindWindowById(armid.PERSONA_TEXTMOTIVATIONS_ID)
-    skillsCtrl = self.FindWindowById(armid.PERSONA_TEXTSKILLS_ID)
-    intrinsicCtrl = self.FindWindowById(armid.PERSONA_TEXTINTRINSIC_ID)
-    contextualCtrl = self.FindWindowById(armid.PERSONA_TEXTCONTEXTUAL_ID)
-    imageCtrl = self.FindWindowById(armid.PERSONA_IMAGEPERSONAIMAGE_ID)
-    environmentCtrl = self.FindWindowById(armid.PERSONA_PANELENVIRONMENT_ID)
+    nameCtrl = self.FindWindowById(PERSONA_TEXTNAME_ID)
+    tagCtrl = self.FindWindowById(PERSONA_TAGS_ID)
+    typeCtrl = self.FindWindowById(PERSONA_COMBOTYPE_ID)
+    assumptionCtrl = self.FindWindowById(PERSONA_CHECKASSUMPTION_ID)
+    activitiesCtrl = self.FindWindowById(PERSONA_TEXTACTIVITIES_ID)
+    attitudesCtrl = self.FindWindowById(PERSONA_TEXTATTITUDES_ID)
+    aptitudesCtrl = self.FindWindowById(PERSONA_TEXTAPTITUDES_ID)
+    motivationsCtrl = self.FindWindowById(PERSONA_TEXTMOTIVATIONS_ID)
+    skillsCtrl = self.FindWindowById(PERSONA_TEXTSKILLS_ID)
+    intrinsicCtrl = self.FindWindowById(PERSONA_TEXTINTRINSIC_ID)
+    contextualCtrl = self.FindWindowById(PERSONA_TEXTCONTEXTUAL_ID)
+    imageCtrl = self.FindWindowById(PERSONA_IMAGEPERSONAIMAGE_ID)
+    environmentCtrl = self.FindWindowById(PERSONA_PANELENVIRONMENT_ID)
 
     self.thePersonaName = nameCtrl.GetValue()
     self.theTags = tagCtrl.tags()
@@ -91,7 +91,7 @@ class PersonaDialog(wx.Dialog):
       b = Borg()
       try:
         b.dbProxy.nameCheck(self.thePersonaName,'persona')
-      except ARM.ARMException,errorText:
+      except ARMException,errorText:
         dlg = wx.MessageDialog(self,str(errorText),'Add persona',wx.OK | wx.ICON_ERROR)
         dlg.ShowModal()
         dlg.Destroy()
@@ -189,7 +189,7 @@ class PersonaDialog(wx.Dialog):
           dlg.ShowModal()
           dlg.Destroy()
           return
-      self.EndModal(armid.PERSONA_BUTTONCOMMIT_ID)
+      self.EndModal(PERSONA_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = PersonaParameters(self.thePersonaName,self.theActivities,self.theAttitudes,self.theAptitudes,self.theMotivations,self.theSkills,self.theIntrinsic,self.theContextual,self.theImage,self.isAssumption,self.theType,self.theTags,self.theEnvironmentProperties,self.theCodes)

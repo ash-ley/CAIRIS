@@ -17,9 +17,9 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
-from ValueTypeParameters import ValueTypeParameters
+from cairis.core.ValueTypeParameters import ValueTypeParameters
 from ValueTypePanel import ValueTypePanel
 
 class ValueTypeDialog(wx.Dialog):
@@ -42,28 +42,28 @@ class ValueTypeDialog(wx.Dialog):
     self.panel.buildControls(parameters.createFlag())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.VALUETYPE_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,VALUETYPE_BUTTONCOMMIT_ID,self.onCommit)
 
   def load(self,objt):
     self.theValueTypeId = objt.id()
     self.panel.loadControls(objt)
     self.theCommitVerb = 'Edit'
     if (self.theValueType == 'severity' or self.theValueType == 'likelihood'):
-      nameCtrl = self.FindWindowById(armid.VALUETYPE_TEXTNAME_ID)
+      nameCtrl = self.FindWindowById(VALUETYPE_TEXTNAME_ID)
       nameCtrl.Disable()
     if (self.theValueType != 'access_right' and self.theValueType != 'protocol' and self.theValueType != 'privilege' and self.theValueType != 'surface_type'):
-      scoreCtrl = self.FindWindowById(armid.VALUETYPE_TEXTSCORE_ID)
+      scoreCtrl = self.FindWindowById(VALUETYPE_TEXTSCORE_ID)
       scoreCtrl.Hide()
-      ratCtrl = self.FindWindowById(armid.VALUETYPE_TEXTRATIONALE_ID)
+      ratCtrl = self.FindWindowById(VALUETYPE_TEXTRATIONALE_ID)
       ratCtrl.Hide()
 
      
    
   def onCommit(self,evt):
-    nameCtrl = self.FindWindowById(armid.VALUETYPE_TEXTNAME_ID)
-    scoreCtrl = self.FindWindowById(armid.VALUETYPE_TEXTSCORE_ID)
-    descCtrl = self.FindWindowById(armid.VALUETYPE_TEXTDESCRIPTION_ID)
-    ratCtrl = self.FindWindowById(armid.VALUETYPE_TEXTRATIONALE_ID)
+    nameCtrl = self.FindWindowById(VALUETYPE_TEXTNAME_ID)
+    scoreCtrl = self.FindWindowById(VALUETYPE_TEXTSCORE_ID)
+    descCtrl = self.FindWindowById(VALUETYPE_TEXTDESCRIPTION_ID)
+    ratCtrl = self.FindWindowById(VALUETYPE_TEXTRATIONALE_ID)
 
     self.theName = nameCtrl.GetValue()
     self.theScore = scoreCtrl.GetValue()
@@ -93,7 +93,7 @@ class ValueTypeDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.VALUETYPE_BUTTONCOMMIT_ID)
+      self.EndModal(VALUETYPE_BUTTONCOMMIT_ID)
 
   def parameters(self):
     parameters = ValueTypeParameters(self.theName,self.theDescription,self.theValueType,self.theEnvironmentName,self.theScore,self.theRationale)

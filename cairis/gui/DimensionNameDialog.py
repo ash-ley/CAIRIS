@@ -17,14 +17,14 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import os
-import ARM
-from Borg import *
+from cairis.core.ARM import *
+from cairis.core.Borg import *
 
 class DimensionNameDialog(wx.Dialog):
   def __init__(self,parent,dimensionName,dimensions,actionVerb,dialogSize=wx.DefaultSize):
-    wx.Dialog.__init__(self,parent,armid.DIMNAME_ID,actionVerb + ' ' + dimensionName,style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=dialogSize)
+    wx.Dialog.__init__(self,parent,DIMNAME_ID,actionVerb + ' ' + dimensionName,style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=dialogSize)
 
     mainSizer = wx.BoxSizer(wx.VERTICAL)
     if (dimensionName == 'usecase_contribution'):
@@ -45,20 +45,20 @@ class DimensionNameDialog(wx.Dialog):
     self.theSelectedDimensions = []
     self.theDimensions = dimensions
 
-    self.dimList = wx.ListBox(self,armid.DIMNAME_LISTDIM_ID,choices=dimensions,style=wx.LB_MULTIPLE)
+    self.dimList = wx.ListBox(self,DIMNAME_LISTDIM_ID,choices=dimensions,style=wx.LB_MULTIPLE)
     mainSizer.Add(self.dimList,1,wx.EXPAND)
     
     buttonSizer = wx.BoxSizer(wx.HORIZONTAL)
     mainSizer.Add(buttonSizer,0,wx.CENTER)
-    actionButton = wx.Button(self,armid.DIMNAME_BUTTONACTION_ID,actionVerb)
+    actionButton = wx.Button(self,DIMNAME_BUTTONACTION_ID,actionVerb)
     buttonSizer.Add(actionButton)
     cancelButton = wx.Button(self,wx.ID_CANCEL,"Cancel")
     buttonSizer.Add(cancelButton)
     self.SetSizer(mainSizer)
 
-    wx.EVT_LIST_ITEM_SELECTED(self.dimList,armid.DIMNAME_LISTDIM_ID,self.onItemSelected)
-    wx.EVT_LIST_ITEM_DESELECTED(self.dimList,armid.DIMNAME_LISTDIM_ID,self.onItemDeselected)
-    wx.EVT_BUTTON(self,armid.DIMNAME_BUTTONACTION_ID,self.onAdd)
+    wx.EVT_LIST_ITEM_SELECTED(self.dimList,DIMNAME_LISTDIM_ID,self.onItemSelected)
+    wx.EVT_LIST_ITEM_DESELECTED(self.dimList,DIMNAME_LISTDIM_ID,self.onItemDeselected)
+    wx.EVT_BUTTON(self,DIMNAME_BUTTONACTION_ID,self.onAdd)
 
     b = Borg()
     dimIcon = wx.Icon(b.imageDir + '/' + dimIconFile,wx.BITMAP_TYPE_PNG)
@@ -81,7 +81,7 @@ class DimensionNameDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.DIMNAME_BUTTONACTION_ID)
+      self.EndModal(DIMNAME_BUTTONACTION_ID)
 
   def dimensionNames(self): 
     dimensionNames = []

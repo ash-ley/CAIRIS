@@ -17,8 +17,8 @@
 
 
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from AssetAssociationDialog import AssetAssociationDialog
 
 class AssetAssociationListCtrl(wx.ListCtrl):
@@ -47,11 +47,11 @@ class AssetAssociationListCtrl(wx.ListCtrl):
     self.SetColumnWidth(8,100)
     self.theSelectedIdx = -1
     self.theDimMenu = wx.Menu()
-    self.theDimMenu.Append(armid.AA_MENUADD_ID,'Add')
-    self.theDimMenu.Append(armid.AA_MENUDELETE_ID,'Delete')
+    self.theDimMenu.Append(AA_MENUADD_ID,'Add')
+    self.theDimMenu.Append(AA_MENUDELETE_ID,'Delete')
     self.Bind(wx.EVT_RIGHT_DOWN,self.OnRightDown)
-    wx.EVT_MENU(self.theDimMenu,armid.AA_MENUADD_ID,self.onAddAssociation)
-    wx.EVT_MENU(self.theDimMenu,armid.AA_MENUDELETE_ID,self.onDeleteAssociation)
+    wx.EVT_MENU(self.theDimMenu,AA_MENUADD_ID,self.onAddAssociation)
+    wx.EVT_MENU(self.theDimMenu,AA_MENUDELETE_ID,self.onDeleteAssociation)
 
     self.Bind(wx.EVT_LIST_ITEM_SELECTED,self.OnItemSelected)
     self.Bind(wx.EVT_LIST_ITEM_DESELECTED,self.OnItemDeselected)
@@ -66,7 +66,7 @@ class AssetAssociationListCtrl(wx.ListCtrl):
   def onAddAssociation(self,evt):
     syProperties,syRationale = self.assetPropertyList.properties()
     dlg = AssetAssociationDialog(self,self.dbProxy,self.theCurrentEnvironment,syProperties)
-    if (dlg.ShowModal() == armid.ASSETASSOCIATION_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == ASSETASSOCIATION_BUTTONCOMMIT_ID):
       self.theSelectedIdx = self.GetItemCount()
       self.InsertStringItem(self.theSelectedIdx,str(dlg.headNavigation()))
       self.SetStringItem(self.theSelectedIdx,1,dlg.headAdornment())
@@ -110,7 +110,7 @@ class AssetAssociationListCtrl(wx.ListCtrl):
      
     syProperties,syRationale = self.assetPropertyList.properties()
     dlg = AssetAssociationDialog(self,self.dbProxy,self.theCurrentEnvironment,syProperties,headNav,headAdornment.GetText(),headNry.GetText(),headRole.GetText(),tailRole.GetText(),tailNry.GetText(),tailAdornment.GetText(),int(tailNav.GetText()),tailAsset.GetText())
-    if (dlg.ShowModal() == armid.ASSETASSOCIATION_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == ASSETASSOCIATION_BUTTONCOMMIT_ID):
       self.SetStringItem(self.theSelectedIdx,0,str(dlg.headNavigation()))
       self.SetStringItem(self.theSelectedIdx,1,dlg.headAdornment())
       self.SetStringItem(self.theSelectedIdx,2,dlg.headMultiplicity())

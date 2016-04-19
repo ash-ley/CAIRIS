@@ -18,10 +18,10 @@
 
 #$Id: DialogClassParametersFactory.py 415 2011-01-21 14:59:08Z shaf $
 import wx
-import armid
+from cairis.core.armid import *
 from ResponseDialogParameters import ResponseDialogParameters
 from DialogClassParameters import DialogClassParameters
-from Borg import Borg
+from cairis.core.Borg import Borg
 from DocumentReferenceDialog import DocumentReferenceDialog
 from AssetDialog import AssetDialog
 from AttackerDialog import AttackerDialog
@@ -59,145 +59,145 @@ def build(dimLabel):
 
   if (dimLabel == 'Document Reference'):
     dimName = 'document_reference'
-    dcp = DialogClassParameters(armid.DOCUMENTREFERENCE_ID,'Edit Document Reference')
+    dcp = DialogClassParameters(DOCUMENTREFERENCE_ID,'Edit Document Reference')
     dlg = DocumentReferenceDialog
-    dlgCode = armid.DOCUMENTREFERENCE_BUTTONCOMMIT_ID
+    dlgCode = DOCUMENTREFERENCE_BUTTONCOMMIT_ID
     ufn = b.dbProxy.updateDocumentReference
   elif (dimLabel == 'Asset'):
     dimName = 'asset'
-    dcp = DialogClassParameters(armid.ASSET_ID,'Edit Asset')
+    dcp = DialogClassParameters(ASSET_ID,'Edit Asset')
     dlg = AssetDialog
-    dlgCode = armid.ASSET_BUTTONCOMMIT_ID
+    dlgCode = ASSET_BUTTONCOMMIT_ID
     ufn = b.dbProxy.updateAsset
   elif (dimLabel == 'Attacker'):
     dimName = 'attacker'
-    dcp = DialogClassParameters(armid.ATTACKER_ID,'Edit Attacker')
+    dcp = DialogClassParameters(ATTACKER_ID,'Edit Attacker')
     dlg = AttackerDialog
-    dlgCode = armid.ATTACKER_BUTTONCOMMIT_ID
+    dlgCode = ATTACKER_BUTTONCOMMIT_ID
     ufn = b.dbProxy.updateAttacker
   elif (dimLabel == 'Goal'):
     dimName = 'goal'
-    dcp = DialogClassParameters(armid.GOAL_ID,'Edit Goal')
+    dcp = DialogClassParameters(GOAL_ID,'Edit Goal')
     dlg = GoalDialog
-    dlgCode = armid.GOAL_BUTTONCOMMIT_ID
+    dlgCode = GOAL_BUTTONCOMMIT_ID
     ufn = b.dbProxy.updateGoal
   elif (dimLabel == 'Obstacle'):
     dimName = 'obstacle'
-    dcp = DialogClassParameters(armid.OBSTACLE_ID,'Edit Obstacle')
+    dcp = DialogClassParameters(OBSTACLE_ID,'Edit Obstacle')
     dlg = ObstacleDialog
-    dlgCode = armid.OBSTACLE_BUTTONCOMMIT_ID
+    dlgCode = OBSTACLE_BUTTONCOMMIT_ID
     ufn = b.dbProxy.updateObstacle
   elif (dimLabel == 'Vulnerability'):
     dimName = 'vulnerability'
-    dcp = DialogClassParameters(armid.VULNERABILITY_ID,'Edit Vulnerability')
+    dcp = DialogClassParameters(VULNERABILITY_ID,'Edit Vulnerability')
     dlg = VulnerabilityDialog
-    dlgCode = armid.VULNERABILITY_BUTTONCOMMIT_ID
+    dlgCode = VULNERABILITY_BUTTONCOMMIT_ID
     ufn = b.dbProxy.updateVulnerability
   elif (dimLabel == 'Threat'):
     dimName = 'threat'
-    dcp = DialogClassParameters(armid.THREAT_ID,'Edit Threat')
+    dcp = DialogClassParameters(THREAT_ID,'Edit Threat')
     dlg = ThreatDialog
-    dlgCode = armid.THREAT_BUTTONCOMMIT_ID
+    dlgCode = THREAT_BUTTONCOMMIT_ID
     ufn = b.dbProxy.updateThreat
   elif (dimLabel == 'Misuse Case'):
     dimName = 'misusecase'
     dlg = MisuseCaseDialog
-    dlgCode = armid.MISUSECASE_BUTTONCOMMIT_ID
+    dlgCode = MISUSECASE_BUTTONCOMMIT_ID
     ufn = b.dbProxy.updateMisuseCase
   elif (dimLabel == 'Task'):
     dimName = 'task'
-    dcp = DialogClassParameters(armid.TASK_ID,'Edit Task')
+    dcp = DialogClassParameters(TASK_ID,'Edit Task')
     dlg = TaskDialog
-    dlgCode = armid.TASK_BUTTONCOMMIT_ID
+    dlgCode = TASK_BUTTONCOMMIT_ID
     ufn = b.dbProxy.updateTask
   elif (dimLabel == 'Use Case'):
     dimName = 'usecase'
-    dcp = DialogClassParameters(armid.USECASE_ID,'Edit Use Case')
+    dcp = DialogClassParameters(USECASE_ID,'Edit Use Case')
     dlg = UseCaseDialog
-    dlgCode = armid.USECASE_BUTTONCOMMIT_ID
+    dlgCode = USECASE_BUTTONCOMMIT_ID
     ufn = b.dbProxy.updateUseCase
   elif (dimLabel == 'Persona'):
     dimName = 'persona'
-    dcp = DialogClassParameters(armid.PERSONA_ID,'Edit Persona')
+    dcp = DialogClassParameters(PERSONA_ID,'Edit Persona')
     dlg = PersonaDialog
-    dlgCode = armid.PERSONA_BUTTONCOMMIT_ID
+    dlgCode = PERSONA_BUTTONCOMMIT_ID
     ufn = b.dbProxy.updatePersona
   elif (dimLabel == 'Persona Characteristic'):
     dimName = 'persona_characteristic'
-    dcp = DialogClassParameters(armid.PERSONACHARACTERISTIC_ID,'Edit Persona Characteristic')
+    dcp = DialogClassParameters(PERSONACHARACTERISTIC_ID,'Edit Persona Characteristic')
     dlg = PersonaCharacteristicDialog
-    dlgCode = armid.PERSONACHARACTERISTIC_BUTTONCOMMIT_ID
+    dlgCode = PERSONACHARACTERISTIC_BUTTONCOMMIT_ID
     ufn = b.dbProxy.updatePersonaCharacteristic
   elif (dimLabel == 'Task Characteristic'):
     dimName = 'task_characteristic'
-    dcp = DialogClassParameters(armid.TASKCHARACTERISTIC_ID,'Edit Task Characteristic')
+    dcp = DialogClassParameters(TASKCHARACTERISTIC_ID,'Edit Task Characteristic')
     dlg = TaskCharacteristicDialog
-    dlgCode = armid.TASKCHARACTERISTIC_BUTTONCOMMIT_ID
+    dlgCode = TASKCHARACTERISTIC_BUTTONCOMMIT_ID
     ufn = b.dbProxy.updateTaskCharacteristic
   elif (dimLabel == 'Concept Reference'):
     dimName = 'concept_reference'
-    dcp = DialogClassParameters(armid.CONCEPTREFERENCE_ID,'Edit Concept Reference')
+    dcp = DialogClassParameters(CONCEPTREFERENCE_ID,'Edit Concept Reference')
     dlg = ConceptReferenceDialog
-    dlgCode = armid.CONCEPTREFERENCE_BUTTONCOMMIT_ID
+    dlgCode = CONCEPTREFERENCE_BUTTONCOMMIT_ID
     ufn = b.dbProxy.updateConceptReference
   elif (dimLabel == 'Domain Property'):
     dimName = 'domainproperty'
-    dcp = DialogClassParameters(armid.DOMAINPROPERTY_ID,'Edit Domain Property')
+    dcp = DialogClassParameters(DOMAINPROPERTY_ID,'Edit Domain Property')
     dlg = DomainPropertyDialog
-    dlgCode = armid.DOMAINPROPERTY_BUTTONCOMMIT_ID
+    dlgCode = DOMAINPROPERTY_BUTTONCOMMIT_ID
     ufn = b.dbProxy.updateDomainProperty
   elif (dimLabel == 'Role'):
     dimName = 'role'
-    dcp = DialogClassParameters(armid.ROLE_ID,'Edit Role')
+    dcp = DialogClassParameters(ROLE_ID,'Edit Role')
     dlg = RoleDialog
-    dlgCode = armid.ROLE_BUTTONCOMMIT_ID
+    dlgCode = ROLE_BUTTONCOMMIT_ID
     ufn = b.dbProxy.updateRole
   elif (dimLabel == 'Accept'):
     dimName = 'response'
-    dcp = ResponseDialogParameters(armid.RESPONSE_ID,'Edit Response',respPanel = AcceptEnvironmentPanel, respType = 'Accept')
+    dcp = ResponseDialogParameters(RESPONSE_ID,'Edit Response',respPanel = AcceptEnvironmentPanel, respType = 'Accept')
     dlg = ResponseDialog
-    dlgCode = armid.RESPONSE_BUTTONCOMMIT_ID
+    dlgCode = RESPONSE_BUTTONCOMMIT_ID
     ufn = b.dbProxy.updateResponse
   elif (dimLabel == 'Transfer'):
     dimName = 'response'
-    dcp = ResponseDialogParameters(armid.RESPONSE_ID,'Edit Response',respPanel = TransferEnvironmentPanel, respType = 'Transfer')
+    dcp = ResponseDialogParameters(RESPONSE_ID,'Edit Response',respPanel = TransferEnvironmentPanel, respType = 'Transfer')
     dlg = ResponseDialog
-    dlgCode = armid.RESPONSE_BUTTONCOMMIT_ID
+    dlgCode = RESPONSE_BUTTONCOMMIT_ID
     ufn = b.dbProxy.updateResponse
   elif (dimLabel == 'Mitigate'):
     dimName = 'response'
-    dcp = ResponseDialogParameters(armid.RESPONSE_ID,'Edit Response',respPanel = MitigateEnvironmentPanel, respType = 'Mitigate')
+    dcp = ResponseDialogParameters(RESPONSE_ID,'Edit Response',respPanel = MitigateEnvironmentPanel, respType = 'Mitigate')
     dlg = ResponseDialog
-    dlgCode = armid.RESPONSE_BUTTONCOMMIT_ID
+    dlgCode = RESPONSE_BUTTONCOMMIT_ID
     ufn = b.dbProxy.updateResponse
   elif (dimLabel == 'Countermeasure'):
     dimName = 'countermeasure'
-    dcp = DialogClassParameters(armid.COUNTERMEASURE_ID,'Edit Countermeasure')
+    dcp = DialogClassParameters(COUNTERMEASURE_ID,'Edit Countermeasure')
     dlg = CountermeasureDialog
-    dlgCode = armid.COUNTERMEASURE_BUTTONCOMMIT_ID
+    dlgCode = COUNTERMEASURE_BUTTONCOMMIT_ID
     ufn = b.dbProxy.updateCountermeasure
   elif (dimLabel == 'External Document'):
     dimName = 'external_document'
-    dcp = DialogClassParameters(armid.EXTERNALDOCUMENT_ID,'Edit External Document')
+    dcp = DialogClassParameters(EXTERNALDOCUMENT_ID,'Edit External Document')
     dlg = ExternalDocumentDialog
-    dlgCode = armid.EXTERNALDOCUMENT_BUTTONCOMMIT_ID
+    dlgCode = EXTERNALDOCUMENT_BUTTONCOMMIT_ID
     ufn = b.dbProxy.updateExternalDocument
   elif (dimLabel == 'Code'):
     dimName = 'code'
-    dcp = DialogClassParameters(armid.CODE_ID,'Edit Code')
+    dcp = DialogClassParameters(CODE_ID,'Edit Code')
     dlg = CodeDialog
-    dlgCode = armid.CODE_BUTTONCOMMIT_ID
+    dlgCode = CODE_BUTTONCOMMIT_ID
     ufn = b.dbProxy.updateCode
   elif (dimLabel == 'Memo'):
     dimName = 'memo'
-    dcp = DialogClassParameters(armid.MEMO_ID,'Edit Memo')
+    dcp = DialogClassParameters(MEMO_ID,'Edit Memo')
     dlg = MemoDialog
-    dlgCode = armid.MEMO_BUTTONCOMMIT_ID
+    dlgCode = MEMO_BUTTONCOMMIT_ID
     ufn = b.dbProxy.updateMemo
   elif (dimLabel == 'Internal Document'):
     dimName = 'internal_document'
-    dcp = DialogClassParameters(armid.INTERNALDOCUMENT_ID,'Edit Internal Document')
+    dcp = DialogClassParameters(INTERNALDOCUMENT_ID,'Edit Internal Document')
     dlg = InternalDocumentDialog
-    dlgCode = armid.INTERNALDOCUMENT_BUTTONCOMMIT_ID
+    dlgCode = INTERNALDOCUMENT_BUTTONCOMMIT_ID
     ufn = b.dbProxy.updateInternalDocument
   return (dcp,dimName,dlg,dlgCode,ufn)

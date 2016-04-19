@@ -17,15 +17,15 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
 from SingleObstaclePanel import SingleObstaclePanel
-from ObstacleParameters import ObstacleParameters
-from ObstacleEnvironmentProperties import ObstacleEnvironmentProperties
+from cairis.core.ObstacleParameters import ObstacleParameters
+from cairis.core.ObstacleEnvironmentProperties import ObstacleEnvironmentProperties
 
 class SingleObstacleDialog(wx.Dialog):
   def __init__(self,parent,envName):
-    wx.Dialog.__init__(self,parent,armid.OBSTACLE_ID,'New Obstacle',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(500,400))
+    wx.Dialog.__init__(self,parent,OBSTACLE_ID,'New Obstacle',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(500,400))
     self.theCommitVerb = 'Create'
     self.theEnvironmentName = envName
     self.theObstacleName = ''
@@ -39,15 +39,15 @@ class SingleObstacleDialog(wx.Dialog):
     self.panel = SingleObstaclePanel(self)
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.OBSTACLE_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,OBSTACLE_BUTTONCOMMIT_ID,self.onCommit)
 
   def onCommit(self,evt):
-    nameCtrl = self.FindWindowById(armid.OBSTACLE_TEXTNAME_ID)
-    definitionCtrl = self.FindWindowById(armid.OBSTACLE_TEXTDEFINITION_ID)
-    categoryCtrl = self.FindWindowById(armid.OBSTACLE_COMBOCATEGORY_ID)
-    goalAssociationCtrl = self.FindWindowById(armid.OBSTACLE_LISTGOALS_ID)
-    subGoalAssociationCtrl = self.FindWindowById(armid.OBSTACLE_LISTSUBGOALS_ID)
-    cCtrl = self.FindWindowById(armid.OBSTACLE_LISTCONCERNS_ID)
+    nameCtrl = self.FindWindowById(OBSTACLE_TEXTNAME_ID)
+    definitionCtrl = self.FindWindowById(OBSTACLE_TEXTDEFINITION_ID)
+    categoryCtrl = self.FindWindowById(OBSTACLE_COMBOCATEGORY_ID)
+    goalAssociationCtrl = self.FindWindowById(OBSTACLE_LISTGOALS_ID)
+    subGoalAssociationCtrl = self.FindWindowById(OBSTACLE_LISTSUBGOALS_ID)
+    cCtrl = self.FindWindowById(OBSTACLE_LISTCONCERNS_ID)
 
     self.theObstacleName = nameCtrl.GetValue()
     self.theObstacleDefinition = definitionCtrl.GetValue()
@@ -75,7 +75,7 @@ class SingleObstacleDialog(wx.Dialog):
       dlg.ShowModal()
       dlg.Destroy()
       return
-    self.EndModal(armid.OBSTACLE_BUTTONCOMMIT_ID)
+    self.EndModal(OBSTACLE_BUTTONCOMMIT_ID)
 
   def parameters(self):
     properties = ObstacleEnvironmentProperties(self.theEnvironmentName,'',self.theObstacleDefinition,self.theObstacleCategory,self.theAssociations,self.theSubAssociations,self.theConcerns)

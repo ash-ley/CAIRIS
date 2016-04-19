@@ -18,7 +18,7 @@
 
 import wx
 import wx.grid
-import armid
+from cairis.core.armid import *
 
 class ThreatTable(wx.grid.PyGridTableBase):
   def __init__(self,threats):
@@ -102,7 +102,7 @@ class ThreatTable(wx.grid.PyGridTableBase):
 
 class ThreatGrid(wx.grid.Grid):
   def __init__(self,parent,threats):
-    wx.grid.Grid.__init__(self,parent,armid.ENVIRONMENT_GRIDTHREATS_ID)
+    wx.grid.Grid.__init__(self,parent,ENVIRONMENT_GRIDTHREATS_ID)
     self.SetTable(ThreatTable(threats))
     self.SetRowLabelSize(0)
     for x in range(self.GetNumberRows()):

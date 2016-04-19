@@ -19,7 +19,7 @@
 import wx
 import wx.lib.imagebrowser
 import wx.combo
-import armid
+from cairis.core.armid import *
 
 from GoalListCtrl import GoalListCtrl
 from DimensionListBox import DimensionListBox
@@ -27,8 +27,8 @@ from ThreatListBox import ThreatListBox
 from VulnerabilityListBox import VulnerabilityListBox
 from ResponsibilityListBox import ResponsibilityListBox
 from AssociationComboBox import AssociationComboBox
-from Borg import Borg
-import Trace
+from cairis.core.Borg import Borg
+import cairis.core.Trace
 
 def buildComboSizer(parent,labelTxt,widgetSize,winId,objtDictionary):
   csBox = wx.StaticBox(parent,-1,labelTxt)
@@ -138,7 +138,7 @@ def buildAddDeleteCloseButtonSizer(parent,addId,deleteId,orientation=wx.VERTICAL
   addButton = wx.Button(parent,addId,"Add")
   buttonSizer.Add(addButton)
   if (parent.__class__.__name__ == 'VulnerabilitiesDialog' or parent.__class__.__name__ == 'ThreatsDialog'):
-    importButton = wx.Button(parent,armid.CC_DIRECTORYIMPORT_ID,'Import')
+    importButton = wx.Button(parent,CC_DIRECTORYIMPORT_ID,'Import')
     buttonSizer.Add(importButton)
   deleteButton = wx.Button(parent,deleteId,"Delete")
   buttonSizer.Add(deleteButton)

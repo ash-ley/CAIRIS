@@ -17,13 +17,13 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
-import MySQLDatabaseProxy
+import cairis.core.MySQLDatabaseProxy
 
 class GoalRefinementDialog(wx.Dialog):
   def __init__(self,parent,dp,envName,subGoal='',subGoalDim='',refinement='',alternate='',rationale='',isGoal=False):
-    wx.Dialog.__init__(self,parent,armid.GOALREFINEMENT_ID,'Add Goal Refinement',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,400))
+    wx.Dialog.__init__(self,parent,GOALREFINEMENT_ID,'Add Goal Refinement',style=wx.DEFAULT_DIALOG_STYLE|wx.MAXIMIZE_BOX|wx.THICK_FRAME|wx.RESIZE_BORDER,size=(400,400))
     self.dbProxy = dp
     self.theCurrentEnvironment = envName
     self.theGoal = subGoal
@@ -44,41 +44,41 @@ class GoalRefinementDialog(wx.Dialog):
     goalTitle = 'Sub-Goal'
     if isGoal == True:
       goalTitle = 'Goal'
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Type',(87,30),armid.GOALREFINEMENT_COMBOGOALDIMENSION_ID,goalDims),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,goalTitle,(87,30),armid.GOALREFINEMENT_COMBOGOAL_ID,goals),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Refinement',(87,30),armid.GOALREFINEMENT_COMBOREFINEMENT_ID,refNames),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Alternate',(87,30),armid.GOALREFINEMENT_COMBOALTERNATE_ID,altNames),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildMLTextSizer(self,'Rationale',(87,60),armid.GOALREFINEMENT_TEXTRATIONALE_ID),1,wx.EXPAND,1,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,armid.GOALREFINEMENT_BUTTONCOMMIT_ID),0,wx.ALIGN_CENTER)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Type',(87,30),GOALREFINEMENT_COMBOGOALDIMENSION_ID,goalDims),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,goalTitle,(87,30),GOALREFINEMENT_COMBOGOAL_ID,goals),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Refinement',(87,30),GOALREFINEMENT_COMBOREFINEMENT_ID,refNames),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildComboSizerList(self,'Alternate',(87,30),GOALREFINEMENT_COMBOALTERNATE_ID,altNames),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildMLTextSizer(self,'Rationale',(87,60),GOALREFINEMENT_TEXTRATIONALE_ID),1,wx.EXPAND,1,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildAddCancelButtonSizer(self,GOALREFINEMENT_BUTTONCOMMIT_ID),0,wx.ALIGN_CENTER)
     self.SetSizer(mainSizer)
 
-    wx.EVT_COMBOBOX(self,armid.GOALREFINEMENT_COMBOGOALDIMENSION_ID,self.onDimChange)
-    wx.EVT_BUTTON(self,armid.GOALREFINEMENT_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_COMBOBOX(self,GOALREFINEMENT_COMBOGOALDIMENSION_ID,self.onDimChange)
+    wx.EVT_BUTTON(self,GOALREFINEMENT_BUTTONCOMMIT_ID,self.onCommit)
     self.commitLabel = 'Add'
     if (len(self.theGoal) > 0):
       self.commitLabel = 'Edit'
       self.SetLabel('Edit Goal Refinement')
-      subGoalCtrl = self.FindWindowById(armid.GOALREFINEMENT_COMBOGOAL_ID)
+      subGoalCtrl = self.FindWindowById(GOALREFINEMENT_COMBOGOAL_ID)
       subGoalCtrl.SetStringSelection(self.theGoal)
-      dimCtrl = self.FindWindowById(armid.GOALREFINEMENT_COMBOGOALDIMENSION_ID)
+      dimCtrl = self.FindWindowById(GOALREFINEMENT_COMBOGOALDIMENSION_ID)
       dimCtrl.SetStringSelection(self.theGoalDimension)
-      refCtrl = self.FindWindowById(armid.GOALREFINEMENT_COMBOREFINEMENT_ID)
+      refCtrl = self.FindWindowById(GOALREFINEMENT_COMBOREFINEMENT_ID)
       refCtrl.SetStringSelection(self.theRefinement)
-      altCtrl = self.FindWindowById(armid.GOALREFINEMENT_COMBOALTERNATE_ID)
+      altCtrl = self.FindWindowById(GOALREFINEMENT_COMBOALTERNATE_ID)
       altCtrl.SetStringSelection(self.theAlternateFlag)
-      ratCtrl = self.FindWindowById(armid.GOALREFINEMENT_TEXTRATIONALE_ID)
+      ratCtrl = self.FindWindowById(GOALREFINEMENT_TEXTRATIONALE_ID)
       ratCtrl.SetValue(self.theRationale)
-      buttonCtrl = self.FindWindowById(armid.GOALREFINEMENT_BUTTONCOMMIT_ID)
+      buttonCtrl = self.FindWindowById(GOALREFINEMENT_BUTTONCOMMIT_ID)
       buttonCtrl.SetLabel('Edit')
       
 
   def onDimChange(self,evt):
-    goalDimCtrl = self.FindWindowById(armid.GOALREFINEMENT_COMBOGOALDIMENSION_ID)
+    goalDimCtrl = self.FindWindowById(GOALREFINEMENT_COMBOGOALDIMENSION_ID)
     goalDimName = goalDimCtrl.GetStringSelection()
-    subGoalCtrl = self.FindWindowById(armid.GOALREFINEMENT_COMBOGOAL_ID)
+    subGoalCtrl = self.FindWindowById(GOALREFINEMENT_COMBOGOAL_ID)
 
     if (goalDimName != ''):
-      goalCtrl = self.FindWindowById(armid.GOALASSOCIATION_COMBOGOAL_ID)
+      goalCtrl = self.FindWindowById(GOALASSOCIATION_COMBOGOAL_ID)
       if (goalDimName == 'goal'):
         subGoalCtrl.SetItems(self.dbProxy.environmentGoals(self.theCurrentEnvironment))
       elif (goalDimName == 'requirement'):
@@ -107,11 +107,11 @@ class GoalRefinementDialog(wx.Dialog):
         subGoalCtrl.SetItems(self.dbProxy.getDimensionNames('role'))
 
   def onCommit(self,evt):
-    subGoalCtrl = self.FindWindowById(armid.GOALREFINEMENT_COMBOGOAL_ID)
-    dimCtrl = self.FindWindowById(armid.GOALREFINEMENT_COMBOGOALDIMENSION_ID)
-    refCtrl = self.FindWindowById(armid.GOALREFINEMENT_COMBOREFINEMENT_ID)
-    altCtrl = self.FindWindowById(armid.GOALREFINEMENT_COMBOALTERNATE_ID)
-    ratCtrl = self.FindWindowById(armid.GOALREFINEMENT_TEXTRATIONALE_ID)
+    subGoalCtrl = self.FindWindowById(GOALREFINEMENT_COMBOGOAL_ID)
+    dimCtrl = self.FindWindowById(GOALREFINEMENT_COMBOGOALDIMENSION_ID)
+    refCtrl = self.FindWindowById(GOALREFINEMENT_COMBOREFINEMENT_ID)
+    altCtrl = self.FindWindowById(GOALREFINEMENT_COMBOALTERNATE_ID)
+    ratCtrl = self.FindWindowById(GOALREFINEMENT_TEXTRATIONALE_ID)
 
     self.theGoal = subGoalCtrl.GetStringSelection()
     self.theGoalDimension = dimCtrl.GetStringSelection()
@@ -142,7 +142,7 @@ class GoalRefinementDialog(wx.Dialog):
     else:
       if (len(self.theRationale) == 0):
         self.theRationale = 'None'
-      self.EndModal(armid.GOALREFINEMENT_BUTTONCOMMIT_ID)
+      self.EndModal(GOALREFINEMENT_BUTTONCOMMIT_ID)
 
   def goal(self): return self.theGoal
   def goalDimension(self): return self.theGoalDimension

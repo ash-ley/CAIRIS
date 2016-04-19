@@ -17,13 +17,13 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
-import ObjectFactory
-import ARM
-from Borg import Borg
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
+import cairis.core.ObjectFactory
 from DialogClassParameters import DialogClassParameters
-from RiskParameters import RiskParameters
+from cairis.core.RiskParameters import RiskParameters
 from RiskDialogParameters import RiskDialogParameters
 from RiskPanel import RiskPanel
 from MisuseCaseDialog import MisuseCaseDialog
@@ -47,8 +47,8 @@ class RiskDialog(wx.Dialog):
     self.panel.buildControls(parameters.createFlag())
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.RISK_BUTTONCOMMIT_ID,self.onCommit)
-    wx.EVT_BUTTON(self,armid.RISK_BUTTONMISUSECASE_ID,self.onMisuseCase)
+    wx.EVT_BUTTON(self,RISK_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,RISK_BUTTONMISUSECASE_ID,self.onMisuseCase)
 
   def load(self,risk):
     self.theRiskId = risk.id()
@@ -56,21 +56,21 @@ class RiskDialog(wx.Dialog):
     self.panel.loadControls(risk)
     self.commitVerb = 'Edit'
     if (self.theMisuseCase != None):
-      mcButton = self.FindWindowById(armid.RISK_BUTTONMISUSECASE_ID)
+      mcButton = self.FindWindowById(RISK_BUTTONMISUSECASE_ID)
       mcButton.SetLabel('Edit Misuse Case')
     
 
   def onMisuseCase(self,evt):
-    nameCtrl = self.FindWindowById(armid.RISK_TEXTNAME_ID)
-    threatCtrl = self.FindWindowById(armid.RISK_COMBOTHREAT_ID)
-    vulCtrl = self.FindWindowById(armid.RISK_COMBOVULNERABILITY_ID)
+    nameCtrl = self.FindWindowById(RISK_TEXTNAME_ID)
+    threatCtrl = self.FindWindowById(RISK_COMBOTHREAT_ID)
+    vulCtrl = self.FindWindowById(RISK_COMBOVULNERABILITY_ID)
 
     riskName = nameCtrl.GetValue() 
     if (self.commitVerb == 'Create'):
       b = Borg()
       try:
         b.dbProxy.nameCheck(riskName,'risk')
-      except ARM.ARMException,errorText:
+      except ARMException,errorText:
         dlg = wx.MessageDialog(self,str(errorText),'Add Misuse Case',wx.OK | wx.ICON_ERROR)
         dlg.ShowModal()
         dlg.Destroy()
@@ -106,19 +106,19 @@ class RiskDialog(wx.Dialog):
       dlg.loadMisuseCase(self.theMisuseCase)
     else:
       dlg.loadRiskComponents(riskName,threatName,vulnerabilityName)
-    if (dlg.ShowModal() == armid.MISUSECASE_BUTTONCOMMIT_ID):
+    if (dlg.ShowModal() == MISUSECASE_BUTTONCOMMIT_ID):
       if (self.theMisuseCase != None):
-        self.theMisuseCase = ObjectFactory.build(self.theMisuseCase.id(),dlg.parameters())
+        self.theMisuseCase = cairis.core.ObjectFactory.build(self.theMisuseCase.id(),dlg.parameters())
       else:
-        self.theMisuseCase = ObjectFactory.build(-1,dlg.parameters())
-      mcButton = self.FindWindowById(armid.RISK_BUTTONMISUSECASE_ID)
+        self.theMisuseCase = cairis.core.ObjectFactory.build(-1,dlg.parameters())
+      mcButton = self.FindWindowById(RISK_BUTTONMISUSECASE_ID)
       mcButton.SetLabel('Edit Misuse Case')
 
   def onCommit(self,evt):
-    nameCtrl = self.FindWindowById(armid.RISK_TEXTNAME_ID)
-    threatCtrl = self.FindWindowById(armid.RISK_COMBOTHREAT_ID)
-    vulCtrl = self.FindWindowById(armid.RISK_COMBOVULNERABILITY_ID)
-    tagCtrl = self.FindWindowById(armid.RISK_TAGS_ID)
+    nameCtrl = self.FindWindowById(RISK_TEXTNAME_ID)
+    threatCtrl = self.FindWindowById(RISK_COMBOTHREAT_ID)
+    vulCtrl = self.FindWindowById(RISK_COMBOVULNERABILITY_ID)
+    tagCtrl = self.FindWindowById(RISK_TAGS_ID)
 
     commitLabel = self.commitVerb + ' risk'
     self.theRiskName = nameCtrl.GetValue() 
@@ -128,7 +128,7 @@ class RiskDialog(wx.Dialog):
     if (self.commitVerb == 'Create'):
       try:
         b.dbProxy.nameCheck(self.theRiskName,'risk')
-      except ARM.ARMException,errorText:
+      except ARMException,errorText:
         dlg = wx.MessageDialog(self,str(errorText),commitLabel,wx.OK | wx.ICON_ERROR)
         dlg.ShowModal()
         dlg.Destroy()
@@ -158,7 +158,7 @@ class RiskDialog(wx.Dialog):
       dlg.Destroy()
       return
     else:
-      self.EndModal(armid.RISK_BUTTONCOMMIT_ID)
+      self.EndModal(RISK_BUTTONCOMMIT_ID)
 
   def parameters(self): 
     parameters = RiskParameters(self.theRiskName,self.theThreatName,self.theVulnerabilityName,self.theMisuseCase,self.theTags)

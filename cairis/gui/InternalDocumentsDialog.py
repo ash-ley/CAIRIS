@@ -17,21 +17,21 @@
 
 
 import wx
-import armid
-import InternalDocument
+from cairis.core.armid import *
+import cairis.core.InternalDocument
 from InternalDocumentDialog import InternalDocumentDialog
 from DialogClassParameters import DialogClassParameters
-import ARM
+from cairis.core.ARM import *
 from DimensionBaseDialog import DimensionBaseDialog
 
 class InternalDocumentsDialog(DimensionBaseDialog):
   def __init__(self,parent):
-    DimensionBaseDialog.__init__(self,parent,armid.INTERNALDOCUMENTS_ID,'Internal Documents',(930,300),'persona.png')
+    DimensionBaseDialog.__init__(self,parent,INTERNALDOCUMENTS_ID,'Internal Documents',(930,300),'persona.png')
     self.theMainWindow = parent
-    idList = [armid.INTERNALDOCUMENTS_DOCLIST_ID,armid.INTERNALDOCUMENTS_BUTTONADD_ID,armid.INTERNALDOCUMENTS_BUTTONDELETE_ID]
+    idList = [INTERNALDOCUMENTS_DOCLIST_ID,INTERNALDOCUMENTS_BUTTONADD_ID,INTERNALDOCUMENTS_BUTTONDELETE_ID]
     columnList = ['Name']
     self.buildControls(idList,columnList,self.dbProxy.getInternalDocuments,'internal_document')
-    listCtrl = self.FindWindowById(armid.INTERNALDOCUMENTS_DOCLIST_ID)
+    listCtrl = self.FindWindowById(INTERNALDOCUMENTS_DOCLIST_ID)
     listCtrl.SetColumnWidth(0,300)
 
 
@@ -40,9 +40,9 @@ class InternalDocumentsDialog(DimensionBaseDialog):
 
   def onAdd(self,evt):
     try:
-      addParameters = DialogClassParameters(armid.INTERNALDOCUMENT_ID,'Add Internal Document',InternalDocumentDialog,armid.INTERNALDOCUMENT_BUTTONCOMMIT_ID,self.dbProxy.addInternalDocument,True)
+      addParameters = DialogClassParameters(INTERNALDOCUMENT_ID,'Add Internal Document',InternalDocumentDialog,INTERNALDOCUMENT_BUTTONCOMMIT_ID,self.dbProxy.addInternalDocument,True)
       self.addObject(addParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add internal document',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -52,9 +52,9 @@ class InternalDocumentsDialog(DimensionBaseDialog):
     selectedObjt = self.objts[self.selectedLabel]
     objtId = selectedObjt.id()
     try:
-      updateParameters = DialogClassParameters(armid.INTERNALDOCUMENT_ID,'Edit Internal Document',InternalDocumentDialog,armid.INTERNALDOCUMENT_BUTTONCOMMIT_ID,self.dbProxy.updateInternalDocument,False)
+      updateParameters = DialogClassParameters(INTERNALDOCUMENT_ID,'Edit Internal Document',InternalDocumentDialog,INTERNALDOCUMENT_BUTTONCOMMIT_ID,self.dbProxy.updateInternalDocument,False)
       self.updateObject(selectedObjt,updateParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Edit internal document',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy
@@ -62,7 +62,7 @@ class InternalDocumentsDialog(DimensionBaseDialog):
   def onDelete(self,evt):
     try:
       self.deleteObject('No internal document','Delete internal document',self.dbProxy.deleteInternalDocument)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Delete external document',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy

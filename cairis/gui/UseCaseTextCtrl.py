@@ -17,13 +17,13 @@
 
 
 import wx
-import armid
-from ARM import *
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.ARM import *
+from cairis.core.Borg import Borg
 from SingleGoalDialog import SingleGoalDialog
-from GoalAssociationParameters import GoalAssociationParameters
+from cairis.core.GoalAssociationParameters import GoalAssociationParameters
 from SingleRequirementDialog import SingleRequirementDialog
-import RequirementFactory
+import cairis.core.RequirementFactory
 
 
 class UseCaseTextCtrl(wx.TextCtrl):
@@ -35,14 +35,14 @@ class UseCaseTextCtrl(wx.TextCtrl):
     self.theEnvironmentName = ''
 
     self.theDimMenu = wx.Menu()
-    self.theDimMenu.Append(armid.UCTCTRL_MENUGOAL_ID,'Refining Goal')
-    self.theDimMenu.Append(armid.UCTCTRL_MENUREQUIREMENT_ID,'Refining Requirement')
+    self.theDimMenu.Append(UCTCTRL_MENUGOAL_ID,'Refining Goal')
+    self.theDimMenu.Append(UCTCTRL_MENUREQUIREMENT_ID,'Refining Requirement')
     self.Bind(wx.EVT_RIGHT_DOWN,self.OnRightDown)
-    wx.EVT_MENU(self.theDimMenu,armid.UCTCTRL_MENUGOAL_ID,self.onGoal)
-    wx.EVT_MENU(self.theDimMenu,armid.UCTCTRL_MENUREQUIREMENT_ID,self.onRequirement)
-    self.goalItem = self.theDimMenu.FindItemById(armid.UCTCTRL_MENUGOAL_ID)
+    wx.EVT_MENU(self.theDimMenu,UCTCTRL_MENUGOAL_ID,self.onGoal)
+    wx.EVT_MENU(self.theDimMenu,UCTCTRL_MENUREQUIREMENT_ID,self.onRequirement)
+    self.goalItem = self.theDimMenu.FindItemById(UCTCTRL_MENUGOAL_ID)
     self.goalItem.Enable(False)
-    self.reqItem = self.theDimMenu.FindItemById(armid.UCTCTRL_MENUREQUIREMENT_ID)
+    self.reqItem = self.theDimMenu.FindItemById(UCTCTRL_MENUREQUIREMENT_ID)
     self.reqItem.Enable(False)
 
   def setUseCase(self,ucName):
@@ -63,7 +63,7 @@ class UseCaseTextCtrl(wx.TextCtrl):
   def onGoal(self,evt):
     try:
       dlg = SingleGoalDialog(self,self.theEnvironmentName)
-      if (dlg.ShowModal() == armid.GOAL_BUTTONCOMMIT_ID):
+      if (dlg.ShowModal() == GOAL_BUTTONCOMMIT_ID):
         gp = dlg.parameters()
         self.dbProxy.addGoal(gp)
         gap = GoalAssociationParameters(self.theEnvironmentName,gp.name(),'goal','and',self.theUseCaseName,'usecase',0,'')
@@ -79,14 +79,14 @@ class UseCaseTextCtrl(wx.TextCtrl):
     try:
       ucId = self.dbProxy.getDimensionId(self.theUseCaseName,'usecase')
       dlg = SingleRequirementDialog(self)
-      if (dlg.ShowModal() == armid.SINGLEREQUIREMENT_BUTTONCOMMIT_ID):
+      if (dlg.ShowModal() == SINGLEREQUIREMENT_BUTTONCOMMIT_ID):
         refName = dlg.referrer()
         completeReqLabel = self.dbProxy.lastRequirementLabel(refName)
         referrer,reqLabel = completeReqLabel.split('-')
         reqId = self.dbProxy.newId()
         reqLabel = int(reqLabel)
         reqLabel += 1
-        r = RequirementFactory.build(reqId,reqLabel,dlg.description(),dlg.priority(),dlg.rationale(),dlg.fitCriterion(),dlg.originator(),dlg.type(),refName)
+        r = cairis.core.RequirementFactory.build(reqId,reqLabel,dlg.description(),dlg.priority(),dlg.rationale(),dlg.fitCriterion(),dlg.originator(),dlg.type(),refName)
         isAsset = True
         if (dlg.referrerType() == 'environment'):
           isAsset = False

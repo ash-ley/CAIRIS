@@ -16,7 +16,7 @@
 #  under the License.
 
 
-import armid
+from cairis.core.armid import *
 import wx
 from StepGrid import StepGrid
 from ExceptionDialog import ExceptionDialog
@@ -24,7 +24,7 @@ from ExceptionListCtrl import ExceptionListCtrl
 
 class StepPanel(wx.Panel):
   def __init__(self,parent,envName):
-    wx.Panel.__init__(self,parent,armid.USECASE_PANELFLOW_ID)
+    wx.Panel.__init__(self,parent,USECASE_PANELFLOW_ID)
     self.theEnvironmentName = envName
     self.theUseCase = ''
     mainSizer = wx.BoxSizer(wx.VERTICAL)

@@ -17,10 +17,10 @@
 
 
 import wx
-import armid
-import ARM
+from cairis.core.armid import *
+from cairis.core.ARM import *
 from WeaknessAnalysisPanel import WeaknessAnalysisPanel
-from Borg import Borg
+from cairis.core.Borg import Borg
 
 class WeaknessAnalysisDialog(wx.Dialog):
   def __init__(self,parent,cvName,envName):
@@ -33,12 +33,12 @@ class WeaknessAnalysisDialog(wx.Dialog):
     self.panel = WeaknessAnalysisPanel(self,cvName,envName)
     mainSizer.Add(self.panel,1,wx.EXPAND)
     self.SetSizer(mainSizer)
-    wx.EVT_BUTTON(self,armid.WEAKNESSANALYSIS_BUTTONCOMMIT_ID,self.onCommit)
+    wx.EVT_BUTTON(self,WEAKNESSANALYSIS_BUTTONCOMMIT_ID,self.onCommit)
 
   def onCommit(self,evt):
-    thrList = self.FindWindowById(armid.WEAKNESSANALYSIS_LISTTHREATS_ID)
-    vulList = self.FindWindowById(armid.WEAKNESSANALYSIS_LISTVULNERABILITIES_ID)
-    goList = self.FindWindowById(armid.WEAKNESSANALYSIS_LISTGOALOBSTACLE_ID)
+    thrList = self.FindWindowById(WEAKNESSANALYSIS_LISTTHREATS_ID)
+    vulList = self.FindWindowById(WEAKNESSANALYSIS_LISTVULNERABILITIES_ID)
+    goList = self.FindWindowById(WEAKNESSANALYSIS_LISTGOALOBSTACLE_ID)
 
     thrDict = thrList.dimensions() 
     for thrName in thrDict:
@@ -52,7 +52,7 @@ class WeaknessAnalysisDialog(wx.Dialog):
         self.theVulnerabilityTargets.append(target) 
 
     self.theGoalObstacles = goList.dimensions()
-    self.EndModal(armid.WEAKNESSANALYSIS_BUTTONCOMMIT_ID)
+    self.EndModal(WEAKNESSANALYSIS_BUTTONCOMMIT_ID)
   def targets(self):
     return self.theThreatTargets + self.theVulnerabilityTargets
 

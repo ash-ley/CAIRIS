@@ -20,8 +20,8 @@ import os
 import pprint
 import random
 import wx
-import armid
-from Borg import Borg
+from cairis.core.armid import *
+from cairis.core.Borg import Borg
 
 import matplotlib
 matplotlib.use('WXAgg')
@@ -52,7 +52,7 @@ def riskColourCode(riskScore):
 
 class RiskScatterPanel(wx.Panel):
   def __init__(self,parent):
-    wx.Panel.__init__(self,parent,armid.RISKSCATTER_ID)
+    wx.Panel.__init__(self,parent,RISKSCATTER_ID)
     b = Borg()
     self.dbProxy = b.dbProxy
     self.dpi = 100
@@ -64,7 +64,7 @@ class RiskScatterPanel(wx.Panel):
     self.toolbar = NavigationToolbar(self.canvas)
 
     envs = self.dbProxy.getDimensionNames('environment')
-    self.envCombo = wx.ComboBox(self,armid.RISKSCATTER_COMBOENVIRONMENT_ID,envs[0],choices=envs,size=(300,-1),style=wx.CB_DROPDOWN)
+    self.envCombo = wx.ComboBox(self,RISKSCATTER_COMBOENVIRONMENT_ID,envs[0],choices=envs,size=(300,-1),style=wx.CB_DROPDOWN)
     self.envCombo.Bind(wx.EVT_COMBOBOX,self.onEnvironmentChange)
     
     self.vbox = wx.BoxSizer(wx.VERTICAL)

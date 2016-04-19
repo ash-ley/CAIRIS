@@ -16,16 +16,16 @@
 #  under the License.
 
 
-import Asset
-import Attacker
-import Threat
-import Risk
-import Mitigation
-import Persona
-import Scenario
-import MisuseCase
-import Vulnerability
-import Requirement
+import cairis.core.Asset
+import cairis.core.Attacker
+import cairis.core.Threat
+import cairis.core.Risk
+import cairis.core.Mitigation
+import cairis.core.Persona
+import cairis.core.Scenario
+import cairis.core.MisuseCase
+import cairis.core.Vulnerability
+import cairis.core.Requirement
 import AssetPanel
 import AttackerPanel
 import ThreatPanel
@@ -35,7 +35,7 @@ import PersonaPanel
 import ScenarioPanel
 import MisuseCasePanel
 import RequirementPanel
-import ARM
+from cairis.core.ARM import *
 
 def build(objt,parent):
   panel = 0

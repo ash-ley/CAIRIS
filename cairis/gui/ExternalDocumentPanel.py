@@ -17,32 +17,32 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
-import ExternalDocument
+import cairis.core.ExternalDocument
 
 class ExternalDocumentPanel(wx.Panel):
   def __init__(self,parent):
-    wx.Panel.__init__(self,parent,armid.EXTERNALDOCUMENT_ID)
+    wx.Panel.__init__(self,parent,EXTERNALDOCUMENT_ID)
     self.theId = None
     
   def buildControls(self,isCreate,isUpdateable=True):
     mainSizer = wx.BoxSizer(wx.VERTICAL)
-    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Name',(87,30),armid.EXTERNALDOCUMENT_TEXTNAME_ID),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Version',(87,30),armid.EXTERNALDOCUMENT_TEXTVERSION_ID),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Date',(87,30),armid.EXTERNALDOCUMENT_TEXTDATE_ID),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Authors',(87,30),armid.EXTERNALDOCUMENT_TEXTAUTHORS_ID),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildMLTextSizer(self,'Description',(87,30),armid.EXTERNALDOCUMENT_TEXTDESCRIPTION_ID),1,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildCommitButtonSizer(self,armid.EXTERNALDOCUMENT_BUTTONCOMMIT_ID,isCreate),0,wx.CENTER)
+    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Name',(87,30),EXTERNALDOCUMENT_TEXTNAME_ID),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Version',(87,30),EXTERNALDOCUMENT_TEXTVERSION_ID),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Date',(87,30),EXTERNALDOCUMENT_TEXTDATE_ID),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Authors',(87,30),EXTERNALDOCUMENT_TEXTAUTHORS_ID),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildMLTextSizer(self,'Description',(87,30),EXTERNALDOCUMENT_TEXTDESCRIPTION_ID),1,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildCommitButtonSizer(self,EXTERNALDOCUMENT_BUTTONCOMMIT_ID,isCreate),0,wx.CENTER)
     self.SetSizer(mainSizer)
 
   def loadControls(self,objt,isReadOnly=False):
     self.theId = objt.id()
-    nameCtrl = self.FindWindowById(armid.EXTERNALDOCUMENT_TEXTNAME_ID)
-    versionCtrl = self.FindWindowById(armid.EXTERNALDOCUMENT_TEXTVERSION_ID)
-    dateCtrl = self.FindWindowById(armid.EXTERNALDOCUMENT_TEXTDATE_ID)
-    authorsCtrl = self.FindWindowById(armid.EXTERNALDOCUMENT_TEXTAUTHORS_ID)
-    descCtrl = self.FindWindowById(armid.EXTERNALDOCUMENT_TEXTDESCRIPTION_ID)
+    nameCtrl = self.FindWindowById(EXTERNALDOCUMENT_TEXTNAME_ID)
+    versionCtrl = self.FindWindowById(EXTERNALDOCUMENT_TEXTVERSION_ID)
+    dateCtrl = self.FindWindowById(EXTERNALDOCUMENT_TEXTDATE_ID)
+    authorsCtrl = self.FindWindowById(EXTERNALDOCUMENT_TEXTAUTHORS_ID)
+    descCtrl = self.FindWindowById(EXTERNALDOCUMENT_TEXTDESCRIPTION_ID)
 
     nameCtrl.SetValue(objt.name())
     versionCtrl.SetValue(objt.version())

@@ -17,9 +17,9 @@
 
 
 from xml.sax.handler import ContentHandler,EntityResolver
-from TemplateAssetParameters import TemplateAssetParameters
-from SecurityPatternParameters import SecurityPatternParameters
-from Borg import Borg
+from cairis.core.TemplateAssetParameters import TemplateAssetParameters
+from cairis.core.SecurityPatternParameters import SecurityPatternParameters
+from cairis.core.Borg import Borg
 
 
 def a2i(spLabel):

@@ -17,20 +17,20 @@
 
 
 import wx
-import armid
-import Dependency
+from cairis.core.armid import *
+import cairis.core.Dependency
 from DependencyDialog import DependencyDialog
 from DialogClassParameters import DialogClassParameters
-import ARM
+from cairis.core.ARM import *
 from DimensionBaseDialog import DimensionBaseDialog
 
 class DependenciesDialog(DimensionBaseDialog):
   def __init__(self,parent):
-    DimensionBaseDialog.__init__(self,parent,armid.DEPENDENCIES_ID,'Dependencies',(1080,300),'dependencyassociation.png')
-    idList = [armid.DEPENDENCIES_DEPENDENCYLIST_ID,armid.DEPENDENCIES_BUTTONADD_ID,armid.DEPENDENCIES_BUTTONDELETE_ID]
+    DimensionBaseDialog.__init__(self,parent,DEPENDENCIES_ID,'Dependencies',(1080,300),'dependencyassociation.png')
+    idList = [DEPENDENCIES_DEPENDENCYLIST_ID,DEPENDENCIES_BUTTONADD_ID,DEPENDENCIES_BUTTONDELETE_ID]
     columnList = ['Environment','Depender','Dependee','Noun','Dependency']
     self.buildControls(idList,columnList,self.dbProxy.getDependencies,'dependency')
-    listCtrl = self.FindWindowById(armid.DEPENDENCIES_DEPENDENCYLIST_ID)
+    listCtrl = self.FindWindowById(DEPENDENCIES_DEPENDENCYLIST_ID)
     listCtrl.SetColumnWidth(0,150)
     listCtrl.SetColumnWidth(1,150)
     listCtrl.SetColumnWidth(2,150)
@@ -47,16 +47,16 @@ class DependenciesDialog(DimensionBaseDialog):
 
   def onAdd(self,evt):
     try:
-      addParameters = DialogClassParameters(armid.DEPENDENCY_ID,'Add depencency',DependencyDialog,armid.DEPENDENCY_BUTTONCOMMIT_ID,self.dbProxy.addDependency,True)
+      addParameters = DialogClassParameters(DEPENDENCY_ID,'Add depencency',DependencyDialog,DEPENDENCY_BUTTONCOMMIT_ID,self.dbProxy.addDependency,True)
       self.addObject(addParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add dependency',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
       return
 
   def dependencyLabel(self):
-    listCtrl = self.FindWindowById(armid.DEPENDENCIES_DEPENDENCYLIST_ID)
+    listCtrl = self.FindWindowById(DEPENDENCIES_DEPENDENCYLIST_ID)
     env = listCtrl.GetItemText(self.selectedIdx)
     depender = listCtrl.GetItem(self.selectedIdx,1)
     dependee = listCtrl.GetItem(self.selectedIdx,2)
@@ -65,7 +65,7 @@ class DependenciesDialog(DimensionBaseDialog):
     return env + '/' + depender.GetText() + '/' + dependee.GetText() + '/' + dependency.GetText()
 
   def deprecatedLabel(self):
-    listCtrl = self.FindWindowById(armid.DEPENDENCIES_DEPENDENCYLIST_ID)
+    listCtrl = self.FindWindowById(DEPENDENCIES_DEPENDENCYLIST_ID)
     env = listCtrl.GetItemText(self.selectedIdx)
     depender = listCtrl.GetItem(self.selectedIdx,1)
     dependee = listCtrl.GetItem(self.selectedIdx,2)
@@ -76,9 +76,9 @@ class DependenciesDialog(DimensionBaseDialog):
     selectedObjt = self.objts[self.dependencyLabel()]
     goalId = selectedObjt.id()
     try:
-      updateParameters = DialogClassParameters(armid.DEPENDENCY_ID,'Edit depencency',DependencyDialog,armid.DEPENDENCY_BUTTONCOMMIT_ID,self.dbProxy.updateDependency,False)
+      updateParameters = DialogClassParameters(DEPENDENCY_ID,'Edit depencency',DependencyDialog,DEPENDENCY_BUTTONCOMMIT_ID,self.dbProxy.updateDependency,False)
       self.updateObject(selectedObjt,updateParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Edit dependency',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy
@@ -86,7 +86,7 @@ class DependenciesDialog(DimensionBaseDialog):
   def onDelete(self,evt):
     try:
       self.deleteObject('No dependency','Delete dependency',self.dbProxy.deleteDependency)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Delete dependency',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy

@@ -17,28 +17,28 @@
 
 
 import wx
-import armid
+from cairis.core.armid import *
 import WidgetFactory
 from MisuseCaseEnvironmentPanel import MisuseCaseEnvironmentPanel
 
 class MisuseCasePanel(wx.Panel):
   def __init__(self,parent,dp):
-    wx.Panel.__init__(self,parent,armid.MISUSECASE_ID)
+    wx.Panel.__init__(self,parent,MISUSECASE_ID)
     self.dbProxy = dp
  
   def buildControls(self,isCreate = True):
     mainSizer = wx.BoxSizer(wx.VERTICAL)
-    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Name',(87,30),armid.MISUSECASE_TEXTNAME_ID,isReadOnly=True),0,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Risk',(87,30),armid.MISUSECASE_TEXTRISK_ID,isReadOnly=True),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Name',(87,30),MISUSECASE_TEXTNAME_ID,isReadOnly=True),0,wx.EXPAND)
+    mainSizer.Add(WidgetFactory.buildTextSizer(self,'Risk',(87,30),MISUSECASE_TEXTRISK_ID,isReadOnly=True),0,wx.EXPAND)
     thrSizer = wx.BoxSizer(wx.HORIZONTAL)
 
     self.environmentPanel = MisuseCaseEnvironmentPanel(self,self.dbProxy)
     mainSizer.Add(self.environmentPanel,1,wx.EXPAND)
-    mainSizer.Add(WidgetFactory.buildCommitButtonSizer(self,armid.MISUSECASE_BUTTONCOMMIT_ID,isCreate),0,wx.ALIGN_CENTER)
+    mainSizer.Add(WidgetFactory.buildCommitButtonSizer(self,MISUSECASE_BUTTONCOMMIT_ID,isCreate),0,wx.ALIGN_CENTER)
     self.SetSizer(mainSizer)
 
-    self.nameCtrl = self.FindWindowById(armid.MISUSECASE_TEXTNAME_ID)
-    self.riskCtrl = self.FindWindowById(armid.MISUSECASE_TEXTRISK_ID)
+    self.nameCtrl = self.FindWindowById(MISUSECASE_TEXTNAME_ID)
+    self.riskCtrl = self.FindWindowById(MISUSECASE_TEXTRISK_ID)
 
   def loadMisuseCase(self,mc):
     self.nameCtrl.SetValue(mc.name())

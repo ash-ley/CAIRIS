@@ -17,21 +17,21 @@
 
 
 import wx
-import armid
-import Code
+from cairis.core.armid import *
+import cairis.core.Code
 from CodeDialog import CodeDialog
 from DialogClassParameters import DialogClassParameters
-import ARM
+from cairis.core.ARM import *
 from DimensionBaseDialog import DimensionBaseDialog
 
 class CodesDialog(DimensionBaseDialog):
   def __init__(self,parent):
-    DimensionBaseDialog.__init__(self,parent,armid.CODES_ID,'Codes',(930,300),'persona.png')
+    DimensionBaseDialog.__init__(self,parent,CODES_ID,'Codes',(930,300),'persona.png')
     self.theMainWindow = parent
-    idList = [armid.CODES_DOCLIST_ID,armid.CODES_BUTTONADD_ID,armid.CODES_BUTTONDELETE_ID]
+    idList = [CODES_DOCLIST_ID,CODES_BUTTONADD_ID,CODES_BUTTONDELETE_ID]
     columnList = ['Name','Type','Description']
     self.buildControls(idList,columnList,self.dbProxy.getCodes,'code')
-    listCtrl = self.FindWindowById(armid.CODES_DOCLIST_ID)
+    listCtrl = self.FindWindowById(CODES_DOCLIST_ID)
     listCtrl.SetColumnWidth(0,100)
     listCtrl.SetColumnWidth(1,100)
     listCtrl.SetColumnWidth(2,300)
@@ -44,9 +44,9 @@ class CodesDialog(DimensionBaseDialog):
 
   def onAdd(self,evt):
     try:
-      addParameters = DialogClassParameters(armid.CODE_ID,'Add Code',CodeDialog,armid.CODE_BUTTONCOMMIT_ID,self.dbProxy.addCode,True)
+      addParameters = DialogClassParameters(CODE_ID,'Add Code',CodeDialog,CODE_BUTTONCOMMIT_ID,self.dbProxy.addCode,True)
       self.addObject(addParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Add code',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy()
@@ -56,9 +56,9 @@ class CodesDialog(DimensionBaseDialog):
     selectedObjt = self.objts[self.selectedLabel]
     objtId = selectedObjt.id()
     try:
-      updateParameters = DialogClassParameters(armid.CODE_ID,'Edit Code',CodeDialog,armid.CODE_BUTTONCOMMIT_ID,self.dbProxy.updateCode,False)
+      updateParameters = DialogClassParameters(CODE_ID,'Edit Code',CodeDialog,CODE_BUTTONCOMMIT_ID,self.dbProxy.updateCode,False)
       self.updateObject(selectedObjt,updateParameters)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Edit code',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy
@@ -66,7 +66,7 @@ class CodesDialog(DimensionBaseDialog):
   def onDelete(self,evt):
     try:
       self.deleteObject('No code','Delete code',self.dbProxy.deleteCode)
-    except ARM.ARMException,errorText:
+    except ARMException,errorText:
       dlg = wx.MessageDialog(self,str(errorText),'Delete code',wx.OK | wx.ICON_ERROR)
       dlg.ShowModal()
       dlg.Destroy

@@ -18,9 +18,9 @@
 
 from ReferenceListCtrl import ReferenceListCtrl
 from WarrantListCtrl import WarrantListCtrl
-from PersonaCharacteristic import PersonaCharacteristic
-from Borg import Borg
-import armid
+from cairis.core.PersonaCharacteristic import PersonaCharacteristic
+from cairis.core.Borg import Borg
+from cairis.core.armid import *
 import wx
 
 class GeneralPage(wx.Panel):
@@ -35,19 +35,19 @@ class GeneralPage(wx.Panel):
       tBox = wx.StaticBox(self,-1,'Task')
       tBoxSizer = wx.StaticBoxSizer(tBox,wx.VERTICAL)
       topSizer.Add(tBoxSizer,0,wx.EXPAND)
-      self.taskCtrl = wx.ComboBox(self,armid.TASKCHARACTERISTIC_COMBOTASK_ID,'',choices=tasks,size=wx.DefaultSize,style=wx.CB_READONLY)
+      self.taskCtrl = wx.ComboBox(self,TASKCHARACTERISTIC_COMBOTASK_ID,'',choices=tasks,size=wx.DefaultSize,style=wx.CB_READONLY)
       tBoxSizer.Add(self.taskCtrl,0,wx.EXPAND)
 
     qBox = wx.StaticBox(self,-1,'Modal Qualifier')
     qBoxSizer = wx.StaticBoxSizer(qBox,wx.VERTICAL)
     topSizer.Add(qBoxSizer,0,wx.EXPAND)
-    self.qualifierCtrl = wx.TextCtrl(self,armid.PERSONACHARACTERISTIC_TEXTQUALIFIER_ID,'')
+    self.qualifierCtrl = wx.TextCtrl(self,PERSONACHARACTERISTIC_TEXTQUALIFIER_ID,'')
     qBoxSizer.Add(self.qualifierCtrl,0,wx.EXPAND)
 
     defBox = wx.StaticBox(self,-1,'Definition')
     defBoxSizer = wx.StaticBoxSizer(defBox,wx.VERTICAL)
     topSizer.Add(defBoxSizer,1,wx.EXPAND)
-    self.definitionCtrl = wx.TextCtrl(self,armid.PERSONACHARACTERISTIC_TEXTCHARACTERISTIC_ID,'',style=wx.TE_MULTILINE)
+    self.definitionCtrl = wx.TextCtrl(self,PERSONACHARACTERISTIC_TEXTCHARACTERISTIC_ID,'',style=wx.TE_MULTILINE)
     defBoxSizer.Add(self.definitionCtrl,1,wx.EXPAND)
 
     self.SetSizer(topSizer)
@@ -70,7 +70,7 @@ class BackingPage(wx.Panel):
     pBox = wx.StaticBox(self,-1)
     pBoxSizer = wx.StaticBoxSizer(pBox,wx.HORIZONTAL)
     topSizer.Add(pBoxSizer,1,wx.EXPAND)
-    self.backingList = wx.ListCtrl(self,armid.PERSONACHARACTERISTIC_LISTBACKING_ID,size=wx.DefaultSize,style=wx.LC_REPORT)
+    self.backingList = wx.ListCtrl(self,PERSONACHARACTERISTIC_LISTBACKING_ID,size=wx.DefaultSize,style=wx.LC_REPORT)
     self.backingList.InsertColumn(0,'Backing')
     self.backingList.SetColumnWidth(0,150)
     self.backingList.InsertColumn(1,'Warrant')
@@ -85,22 +85,22 @@ class WarrantPage(wx.Panel):
     pBox = wx.StaticBox(self,-1)
     pBoxSizer = wx.StaticBoxSizer(pBox,wx.HORIZONTAL)
     topSizer.Add(pBoxSizer,1,wx.EXPAND)
-    backingList = backingPage.FindWindowById(armid.PERSONACHARACTERISTIC_LISTBACKING_ID)
+    backingList = backingPage.FindWindowById(PERSONACHARACTERISTIC_LISTBACKING_ID)
     refList = WarrantListCtrl(self,backingList,isTask,pName)
     pBoxSizer.Add(refList,1,wx.EXPAND)
     self.SetSizer(topSizer)
 
 class PersonaCharacteristicNotebook(wx.Notebook):
   def __init__(self,parent,pName = '',isTask = False,taskComboShown = True):
-    wx.Notebook.__init__(self,parent,armid.ASSET_NOTEBOOKENVIRONMENT_ID)
+    wx.Notebook.__init__(self,parent,ASSET_NOTEBOOKENVIRONMENT_ID)
     self.thePersona = pName
     genPage = GeneralPage(self,isTask,taskComboShown)
-    groundsPage = ReferencePage(self,armid.PERSONACHARACTERISTIC_LISTGROUNDS_ID,'grounds',self.thePersona)
+    groundsPage = ReferencePage(self,PERSONACHARACTERISTIC_LISTGROUNDS_ID,'grounds',self.thePersona)
 
     backingPage = BackingPage(self)
     warrantPage = WarrantPage(self,backingPage,isTask,self.thePersona)
 
-    rebPage = ReferencePage(self,armid.PERSONACHARACTERISTIC_LISTREBUTTAL_ID,'rebuttal',self.thePersona)
+    rebPage = ReferencePage(self,PERSONACHARACTERISTIC_LISTREBUTTAL_ID,'rebuttal',self.thePersona)
     self.AddPage(genPage,'General')
     self.AddPage(groundsPage,'Grounds')
     self.AddPage(warrantPage,'Warrant')
@@ -109,11 +109,11 @@ class PersonaCharacteristicNotebook(wx.Notebook):
 
 
   def loadControls(self,objt):
-    qualCtrl = self.FindWindowById(armid.PERSONACHARACTERISTIC_TEXTQUALIFIER_ID)
-    charCtrl = self.FindWindowById(armid.PERSONACHARACTERISTIC_TEXTCHARACTERISTIC_ID)
-    groundsCtrl = self.FindWindowById(armid.PERSONACHARACTERISTIC_LISTGROUNDS_ID)
-    warrantCtrl = self.FindWindowById(armid.PERSONACHARACTERISTIC_LISTWARRANT_ID)
-    rebuttalCtrl = self.FindWindowById(armid.PERSONACHARACTERISTIC_LISTREBUTTAL_ID)
+    qualCtrl = self.FindWindowById(PERSONACHARACTERISTIC_TEXTQUALIFIER_ID)
+    charCtrl = self.FindWindowById(PERSONACHARACTERISTIC_TEXTCHARACTERISTIC_ID)
+    groundsCtrl = self.FindWindowById(PERSONACHARACTERISTIC_LISTGROUNDS_ID)
+    warrantCtrl = self.FindWindowById(PERSONACHARACTERISTIC_LISTWARRANT_ID)
+    rebuttalCtrl = self.FindWindowById(PERSONACHARACTERISTIC_LISTREBUTTAL_ID)
 
     qualCtrl.SetValue(objt.qualifier())
     charCtrl.SetValue(objt.characteristic())     
